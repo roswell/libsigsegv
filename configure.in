@@ -293,7 +293,7 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_macos_ppc" = yes; then
 fi
 if test -z "$CFG_FAULT"; then
   case "$host_os" in
-    mingw*)
+    mingw* | cygwin*)
       FAULT_CONTEXT='CONTEXT'
       FAULT_CONTEXT_INCLUDE='#include <windows.h>'
       CFG_FAULT=fault-win32.h # nonexistent, just a dummy
@@ -529,7 +529,7 @@ AC_CACHE_CHECK([if the system supports catching stack overflow],
   else
     case "$host_os" in
       beos*) sv_cv_have_stack_overflow_recovery=yes ;;
-      mingw*) sv_cv_have_stack_overflow_recovery=yes ;;
+      mingw* | cygwin*) sv_cv_have_stack_overflow_recovery=yes ;;
       *) sv_cv_have_stack_overflow_recovery=no ;;
     esac
   fi
@@ -696,7 +696,7 @@ AC_DEFINE_UNQUOTED(CFG_LEAVE, "$CFG_LEAVE",
   [The name of the file implementing sigsegv_reset_onstack_flag.])
 
 case "$host_os" in
-  mingw*) CFG_HANDLER=handler-win32.c ;;
+  mingw* | cygwin*) CFG_HANDLER=handler-win32.c ;;
   *)
     if test $sv_cv_have_sigsegv_recovery = no \
        && test $sv_cv_have_stack_overflow_recovery = no; then

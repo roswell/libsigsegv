@@ -1,3 +1,14 @@
+2002-04-17  Paolo Bonzini  <bonzini@gnu.org>
+
+	Support for Cygwin.
+	* configure.in: Treat cygwin* like mingw*.
+	* src/handler-win32.c [CYGWIN] (exception_list, _except_list,
+	debug_get_except_list, cygwin_exception_handler,
+	libsigsegv_exception_handler, do_install_main_exception_filter): New
+	definitions.
+	(install_main_exception_filter): New function.
+	(sigsegv_install_handler, stackoverflow_install_handler): Call it.
+
 2003-04-26  Bruno Haible  <bruno@clisp.org>
 
 	* configure.in: Don't set sv_cv_have_stack_overflow_recovery=yes if

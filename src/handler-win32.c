@@ -1,5 +1,6 @@
 /* Fault handler information.  Woe32 version.
-   Copyright (C) 1993-1999, 2002  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 1993-1999, 2002-2003  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2003  Paolo Bonzini <bonzini@gnu.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -186,17 +187,91 @@ main_exception_filter (EXCEPTION_POINTERS *ExceptionInfo)
   return EXCEPTION_CONTINUE_SEARCH;
 }
 
-static int main_exception_filter_installed = 0;
+#if defined __CYGWIN__ && defined __i386__
+
+/* In Cygwin programs, SetUnhandledExceptionFilter has no effect because Cygwin
+   installs a global exception handler.  We have to dig deep in order to install
+   our main_exception_filter.  */
+
+/* Data structures for the current thread's exception handler chain.
+   On the x86 Windows uses register fs, offset 0 to point to the current
+   exception handler; Cygwin mucks with it, so we must do the same... :-/ */
+
+/* Magic taken from winsup/cygwin/include/exceptions.h.  */
+
+struct exception_list
+  {
+    struct exception_list *prev;
+    int (*handler) (EXCEPTION_RECORD *, void *, CONTEXT *, void *);
+  };
+typedef struct exception_list exception_list;
+
+/* Magic taken from winsup/cygwin/exceptions.cc.  */
+
+__asm__ (".equ __except_list,0");
+
+extern exception_list *_except_list __asm__ ("%fs:__except_list");
+
+/* For debugging.  _except_list is not otherwise accessible from gdb.  */
+static exception_list *
+debug_get_except_list ()
+{
+  return _except_list;
+}
+
+/* Cygwin's original exception handler.  */
+static int (*cygwin_exception_handler) (EXCEPTION_RECORD *, void *, CONTEXT *, void *);
+
+/* Our exception handler.  */
+static int
+libsigsegv_exception_handler (EXCEPTION_RECORD *exception, void *frame, CONTEXT *context, void *dispatch)
+{
+  EXCEPTION_POINTERS ExceptionInfo;
+  ExceptionInfo.ExceptionRecord = exception;
+  ExceptionInfo.ContextRecord = context;
+  if (main_exception_filter (&ExceptionInfo) == EXCEPTION_CONTINUE_SEARCH)
+    return cygwin_exception_handler (exception, frame, context, dispatch);
+  else
+    return 0;
+}
+
+static void
+do_install_main_exception_filter ()
+{
+  /* We cannot insert any handler into the chain, because such handlers
+     must lie on the stack (?).  Instead, we have to replace(!) Cygwin's
+     global exception handler.  */
+  cygwin_exception_handler = _except_list->handler;
+  _except_list->handler = libsigsegv_exception_handler;
+}
+
+#else
+
+static void
+do_install_main_exception_filter ()
+{
+  SetUnhandledExceptionFilter ((LPTOP_LEVEL_EXCEPTION_FILTER) &main_exception_filter);
+}
+
+#endif
+
+static void
+install_main_exception_filter ()
+{
+  static int main_exception_filter_installed = 0;
+
+  if (!main_exception_filter_installed)
+    {
+      do_install_main_exception_filter ();
+      main_exception_filter_installed = 1;
+    }
+}
 
 int
 sigsegv_install_handler (sigsegv_handler_t handler)
 {
   user_handler = handler;
-  if (!main_exception_filter_installed)
-    {
-      SetUnhandledExceptionFilter ((LPTOP_LEVEL_EXCEPTION_FILTER) &main_exception_filter);
-      main_exception_filter_installed = 1;
-    }
+  install_main_exception_filter ();
   return 0;
 }
 
@@ -218,11 +293,7 @@ stackoverflow_install_handler (stackoverflow_handler_t handler,
   stk_user_handler = handler;
   stk_extra_stack = (unsigned long) extra_stack;
   stk_extra_stack_size = extra_stack_size;
-  if (!main_exception_filter_installed)
-    {
-      SetUnhandledExceptionFilter ((LPTOP_LEVEL_EXCEPTION_FILTER) &main_exception_filter);
-      main_exception_filter_installed = 1;
-    }
+  install_main_exception_filter ();
   return 0;
 }
 
