@@ -1,3 +1,8 @@
+2003-05-03  Paolo Bonzini  <bonzini@gnu.org>
+
+	* configure.in: Tweak 2003-04-26 patch so that it works on mingw32 and
+	Cygwin.
+
 2003-05-02  Bruno Haible  <bruno@clisp.org>
 
 	* src/handler-unix.c: Add special case for stack handling on IA-64.

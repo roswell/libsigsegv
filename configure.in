@@ -560,17 +560,18 @@ AC_CACHE_CHECK([if the system supports catching stack overflow],
                sv_cv_have_stack_overflow_recovery,
 [
   dnl It requires either sigaltstack() or the BeOS set_signal_stack() function,
-  dnl and it requires (see src/handler-unix.c) a fault-*.h or a stackvma-*.c.
+  dnl and on Unix it requires a fault-*.h or a stackvma-*.c with certain
+  dnl properties (see src/handler-unix.c).
   if test "$sv_cv_sigaltstack" != no; then
-    sv_cv_have_stack_overflow_recovery=yes
+    sv_cv_have_stack_overflow_recovery=maybe
   else
     case "$host_os" in
-      beos*) sv_cv_have_stack_overflow_recovery=yes ;;
+      beos*) sv_cv_have_stack_overflow_recovery=maybe ;;
       mingw* | cygwin*) sv_cv_have_stack_overflow_recovery=yes ;;
       *) sv_cv_have_stack_overflow_recovery=no ;;
     esac
   fi
-  if test $sv_cv_have_stack_overflow_recovery = yes; then
+  if test $sv_cv_have_stack_overflow_recovery = maybe; then
     if test -n "$CFG_FAULT"; then
       AC_EGREP_CPP([xyzzy], [
 #include "src/$CFG_FAULT"
