@@ -494,10 +494,11 @@ else
     beos*) CFG_STACKVMA=stackvma-beos.c ;;
   esac
 fi
-if test -n "$CFG_STACKVMA"; then
-  AC_DEFINE_UNQUOTED(CFG_STACKVMA, "$CFG_STACKVMA",
-    [The name of the file determining the stack virtual memory area.])
+if test -z "$CFG_STACKVMA"; then
+  CFG_STACKVMA=stackvma-none.c
 fi
+AC_DEFINE_UNQUOTED(CFG_STACKVMA, "$CFG_STACKVMA",
+  [The name of the file determining the stack virtual memory area.])
 
 AC_CHECK_FUNCS([getrlimit setrlimit])
 
@@ -623,10 +624,11 @@ case "$host_os" in
   # test actually works. i.e. sv_cv_leave_handler_longjmp would be 'yes'.
   beos*) CFG_LEAVE=leave-nop.c ;;
 esac
-if test -n "$CFG_LEAVE"; then
-  AC_DEFINE_UNQUOTED(CFG_LEAVE, "$CFG_LEAVE",
-    [The name of the file implementing sigsegv_reset_onstack_flag.])
+if test -z "$CFG_LEAVE"; then
+  CFG_LEAVE=leave-none.c
 fi
+AC_DEFINE_UNQUOTED(CFG_LEAVE, "$CFG_LEAVE",
+  [The name of the file implementing sigsegv_reset_onstack_flag.])
 
 case "$host_os" in
   mingw*) CFG_HANDLER=handler-win32.c ;;

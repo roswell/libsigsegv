@@ -17,8 +17,4 @@
 
 #include "config.h"
 
-#ifdef CFG_STACKVMA
-# include CFG_STACKVMA
-#else
-# include "stackvma-none.c"
-#endif
+#include CFG_STACKVMA
