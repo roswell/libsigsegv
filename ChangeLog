@@ -8,6 +8,9 @@
 	* autoconf/config.sub: Update.
 	* autoconf/missing: Update from automake-1.9.5.
 
+	* m4/libtool.m4: Upgrade to libtool-1.5.14 with gettext modifications.
+	* autoconf/ltmain.sh: Likewise.
+
 2005-03-02  Bruno Haible  <bruno@clisp.org>
 
 	* src/fault-aix5.h: New file.
