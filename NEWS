@@ -1,7 +1,8 @@
 New in 2.2:
 
 * Support for new versions of MacOS X contributed by Paolo Bonzini.
-
+* Improved support for AIX 5, contributed by Bruno Haible.
+
 New in 2.1:
 
 * Support for MacOS X contributed by Paolo Bonzini.
