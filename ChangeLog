@@ -1,5 +1,14 @@
 2003-05-01  Bruno Haible  <bruno@clisp.org>
 
+	Support for OpenBSD/i386.
+	* src/fault-openbsd.h: New file.
+	* src/fault-openbsd-i386.h: New file.
+	* src/Makefile.am (noinst_HEADERS): Add them.
+	* configure.in: If the POSIX test works and the OS is OpenBSD, use
+	fault-openbsd.h instead of fault-posix.h.
+
+2003-05-01  Bruno Haible  <bruno@clisp.org>
+
 	* src/fault-hpux-hppa.h: Make it work on machines with 64-bit registers
 	as well.
 	* configure.in: Likewise.
