@@ -40,12 +40,13 @@ noinst_HEADERS = \
   fault-openbsd.h fault-openbsd-i386.h \
   fault-osf.h fault-osf-alpha.h \
   fault-posix.h fault-solaris.h fault-solaris-i386.h fault-solaris-sparc.h \
+  machfault.h machfault-macos-i386.h machfault-macos-powerpc.h \
   signals.h signals-bsd.h signals-hpux.h signals-hurd.h signals-macos.h \
   leave.h \
   stackvma.h
 
 EXTRA_DIST = \
-  handler-none.c handler-unix.c handler-win32.c \
+  handler-none.c handler-unix.c handler-macos.c handler-win32.c \
   stackvma-none.c stackvma-linux.c stackvma-freebsd.c stackvma-procfs.c \
   stackvma-beos.c stackvma-mach.c \
   leave-none.c leave-nop.c leave-sigaltstack.c leave-setcontext.c \

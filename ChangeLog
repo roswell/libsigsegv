@@ -21,6 +21,9 @@
 	* src/machfault-macos-powerpc.h (SIGSEGV_FAULT_ADDRESS): Add a second
 	argument.
 	* src/machfault-macos-i386.h: New file.
+	* src/Makefile.am (EXTRA_DIST): Add handler-macos.c.
+	(NOINST_HEADERS): Add machfault.h, machfault-macos-i386.h,
+	machfault-macos-powerpc.h.
 	* configure.in (CFG_HANDLER): Initialize to empty.
 	(CFG_MACHFAULT): New substituted variable.
 	On MacOS X PowerPC+i386, use CFG_HANDLER=handler-macos.c
