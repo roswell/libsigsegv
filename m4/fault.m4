@@ -1,4 +1,4 @@
-# fault.m4 serial 3
+# fault.m4 serial 4
 dnl Copyright (C) 2002-2003 Bruno Haible <bruno@clisp.org>
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
