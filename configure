@@ -8859,6 +8859,8 @@ void sigsegv_handler (int sig, siginfo_t *sip, void *ucp)
 {
   void *fault_address = (void *) (sip->si_addr);
   handler_called++;
+  if (handler_called == 10)
+    exit (4);
   if (fault_address != (void*)(page + 0x678))
     exit (3);
   if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
@@ -9038,6 +9040,8 @@ void sigsegv_handler (int sig, struct sigcontext sc)
 {
   void *fault_address = (void *) (sc.cr2);
   handler_called++;
+  if (handler_called == 10)
+    exit (4);
   if (fault_address != (void*)(page + 0x678))
     exit (3);
   if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
@@ -9219,6 +9223,8 @@ void sigsegv_handler (int sig, unsigned int more)
 {
   void *fault_address = (void *) (((unsigned long *) &more) [21]);
   handler_called++;
+  if (handler_called == 10)
+    exit (4);
   if (fault_address != (void*)(page + 0x678))
     exit (3);
   if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
@@ -9402,6 +9408,8 @@ void sigsegv_handler (int sig, int code, struct sigcontext *scp)
 {
   void *fault_address = (void *) (get_fault_addr (scp));
   handler_called++;
+  if (handler_called == 10)
+    exit (4);
   if (fault_address != (void*)(page + 0x678))
     exit (3);
   if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
@@ -9583,6 +9591,8 @@ void sigsegv_handler (int sig, struct sigcontext *scp)
 {
   void *fault_address = (void *) (scp->regs->dar);
   handler_called++;
+  if (handler_called == 10)
+    exit (4);
   if (fault_address != (void*)(page + 0x678))
     exit (3);
   if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
@@ -9765,6 +9775,8 @@ void sigsegv_handler (int sig, siginfo_t *sip, void *ucp)
 {
   void *fault_address = (void *) (sip->si_ptr);
   handler_called++;
+  if (handler_called == 10)
+    exit (4);
   if (fault_address != (void*)(page + 0x678))
     exit (3);
   if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
@@ -9944,6 +9956,8 @@ void sigsegv_handler (int sig, int code, struct sigcontext *scp, void *addr)
 {
   void *fault_address = (void *) (addr);
   handler_called++;
+  if (handler_called == 10)
+    exit (4);
   if (fault_address != (void*)(page + 0x678))
     exit (3);
   if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
@@ -10125,6 +10139,8 @@ void sigsegv_handler (int sig, int code, struct sigcontext *scp)
 {
   void *fault_address = (void *) ((unsigned long) scp->sc_badvaddr);
   handler_called++;
+  if (handler_called == 10)
+    exit (4);
   if (fault_address != (void*)(page + 0x678))
     exit (3);
   if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
@@ -10316,6 +10332,8 @@ void sigsegv_handler (int sig, int code, struct sigcontext *scp)
 {
   void *fault_address = (void *) (GET_CR21 (scp->sc_sl.sl_ss));
   handler_called++;
+  if (handler_called == 10)
+    exit (4);
   if (fault_address != (void*)(page + 0x678))
     exit (3);
   if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
@@ -10497,6 +10515,8 @@ void sigsegv_handler (int sig, int code, struct sigcontext *scp)
 {
   void *fault_address = (void *) (scp->sc_traparg_a0);
   handler_called++;
+  if (handler_called == 10)
+    exit (4);
   if (fault_address != (void*)(page + 0x678))
     exit (3);
   if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
@@ -10678,6 +10698,8 @@ void sigsegv_handler (int sig, int code, struct sigcontext *scp)
 {
   void *fault_address = (void *) (get_fault_addr (scp));
   handler_called++;
+  if (handler_called == 10)
+    exit (4);
   if (fault_address != (void*)(page + 0x678))
     exit (3);
   if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
@@ -10859,6 +10881,8 @@ void sigsegv_handler (int sig, int code, struct sigcontext *scp)
 {
   void *fault_address = (void *) (scp->sc_jmpbuf.jmp_context.o_vaddr);
   handler_called++;
+  if (handler_called == 10)
+    exit (4);
   if (fault_address != (void*)(page + 0x678))
     exit (3);
   if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
@@ -11040,6 +11064,8 @@ void sigsegv_handler (int sig, int code, struct sigcontext *scp)
 {
   void *fault_address = (void *) (get_fault_addr (scp));
   handler_called++;
+  if (handler_called == 10)
+    exit (4);
   if (fault_address != (void*)(page + 0x678))
     exit (3);
   if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
@@ -11221,6 +11247,8 @@ void sigsegv_handler (int sig, int code, struct sigcontext *scp)
 {
   void *fault_address = (void *) (code);
   handler_called++;
+  if (handler_called == 10)
+    exit (4);
   if (fault_address != (void*)(page + 0x678))
     exit (3);
   if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)

@@ -48,6 +48,8 @@ void sigsegv_handler ($5)
 {
   void *fault_address = (void *) ($6);
   handler_called++;
+  if (handler_called == 10)
+    exit (4);
   if (fault_address != (void*)(page + 0x678))
     exit (3);
   if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
