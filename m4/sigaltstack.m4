@@ -29,10 +29,10 @@ AC_DEFUN([SV_SIGALTSTACK],
   AC_CACHE_CHECK([for working sigaltstack], sv_cv_sigaltstack, [
     if test "$ac_cv_func_sigaltstack" = yes; then
       case "$host_os" in
-        macos* | darwin*)
-          # On MacOS X, just assume that if it compiles, it will work.
-          # If we were to perform the real test, 1 Crash Report dialog window
-          # would pop up.
+        macos* | darwin[[6-9]]* | darwin[[1-9]][[0-9]]*)
+          # On MacOS X 10.2 or newer, just assume that if it compiles, it will
+          # work. If we were to perform the real test, 1 Crash Report dialog
+          # window would pop up.
           AC_LINK_IFELSE([
             AC_LANG_PROGRAM([[#include <signal.h>]],
               [[int x = SA_ONSTACK; stack_t ss; sigaltstack ((stack_t*)0, &ss);]])],

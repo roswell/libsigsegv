@@ -98,11 +98,11 @@ SV_MMAP_ANON
 
 # How to write a SIGSEGV handler with access to the fault address.
 
-# On MacOS X, we don't need these tests, because we'll end up using
-# handler-macos.c anyway. If we were to perform the tests, 5 Crash Report
+# On MacOS X 10.2 or newer, we don't need these tests, because we'll end up
+# using handler-macos.c anyway. If we were to perform the tests, 5 Crash Report
 # dialog windows would pop up.
 case "$host_os" in
-  macos* | darwin*) ;;
+  macos* | darwin[[6-9]]* | darwin[[1-9]][[0-9]]*) ;;
   *)
 
 dnl FIXME: Put in some more known values into the third argument.
@@ -353,7 +353,7 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_posix" = yes; then
 fi
 if test -z "$CFG_FAULT"; then
   case "$host_os" in
-    macos* | darwin*)
+    macos* | darwin[[6-9]]* | darwin[[1-9]][[0-9]]*)
       case "$host_cpu" in
         powerpc* | rs6000)
           CFG_MACHFAULT=machfault-macos-powerpc.h
@@ -703,11 +703,11 @@ AC_SUBST(HAVE_STACK_OVERFLOW_RECOVERY)
 # How to longjmp out of a signal handler, in such a way that the
 # alternate signal stack remains functional.
 
-# On MacOS X, we don't need these tests, because we'll end up using
-# handler-macos.c anyway. If we were to perform the tests, 2 Crash Report
+# On MacOS X 10.2 or newer, we don't need these tests, because we'll end up
+# using handler-macos.c anyway. If we were to perform the tests, 2 Crash Report
 # dialog windows would pop up.
 case "$host_os" in
-  macos* | darwin*) ;;
+  macos* | darwin[[6-9]]* | darwin[[1-9]][[0-9]]*) ;;
   *)
 
 dnl FIXME: Put in some more known values into the third argument.
@@ -761,11 +761,11 @@ esac
 # How to siglongjmp out of a signal handler, in such a way that the
 # alternate signal stack remains functional.
 
-# On MacOS X, we don't need these tests, because we'll end up using
-# handler-macos.c anyway. If we were to perform the tests, 2 Crash Report
+# On MacOS X 10.2 or newer, we don't need these tests, because we'll end up
+# using handler-macos.c anyway. If we were to perform the tests, 2 Crash Report
 # dialog windows would pop up.
 case "$host_os" in
-  macos* | darwin*) ;;
+  macos* | darwin[[6-9]]* | darwin[[1-9]][[0-9]]*) ;;
   *)
 
 dnl FIXME: Put in some more known values into the third argument.

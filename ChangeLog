@@ -1,8 +1,8 @@
 2005-02-27  Bruno Haible  <bruno@clisp.org>
 
-	* configure.in: Skip tests that are not needed on MacOS X.
+	* configure.in: Skip tests that are not needed on MacOS X >= 10.2.
 	* m4/sigaltstack.m4 (SV_SIGALTSTACK): Don't perform the test on
-	MacOS X.
+	MacOS X >= 10.2.
 
 2005-02-18  Bruno Haible  <bruno@clisp.org>
 
