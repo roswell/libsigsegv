@@ -1,5 +1,9 @@
 2005-03-02  Bruno Haible  <bruno@clisp.org>
 
+	* Version 2.2 released.
+
+2005-03-02  Bruno Haible  <bruno@clisp.org>
+
 	* src/fault-aix5.h: New file.
 	* src/fault-aix5-powerpc.h: New file.
 	* src/Makefile.am (noinst_HEADERS): Add them.
