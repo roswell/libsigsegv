@@ -17,7 +17,7 @@
    Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 
 #define USE_64BIT_REGS(mc) \
-  (((mc).ss_flags & SS_WIDEREGS) && ((mc).ss_flags & SS_NARROWISINVALID)
+  (((mc).ss_flags & SS_WIDEREGS) && ((mc).ss_flags & SS_NARROWISINVALID))
 
 /* Extract the cr21 register from an mcontext_t.
    See the comments in /usr/include/machine/save_state.h.  */

@@ -147,7 +147,7 @@ dnl FIXME: Put in some more known values into the third argument.
 SV_TRY_FAULT([HP-UX HPPA], sv_cv_fault_hpux_hppa, [hppa*-*-hpux11*],
   [
 #define USE_64BIT_REGS(mc) \
-  (((mc).ss_flags & SS_WIDEREGS) && ((mc).ss_flags & SS_NARROWISINVALID)
+  (((mc).ss_flags & SS_WIDEREGS) && ((mc).ss_flags & SS_NARROWISINVALID))
 #define GET_CR21(mc) \
   (USE_64BIT_REGS(mc) ? (mc).ss_wide.ss_64.ss_cr21 : (mc).ss_narrow.ss_cr21)
 ],
