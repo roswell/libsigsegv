@@ -46,6 +46,9 @@ AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
+CFG_HANDLER = @CFG_HANDLER@
+CFG_LEAVE = @CFG_LEAVE@
+CFG_STACKVMA = @CFG_STACKVMA@
 CFLAGS = @CFLAGS@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
@@ -140,6 +143,7 @@ noinst_HEADERS = \
   fault-linux-powerpc.h fault-linux-s390.h fault-linux-sh.h \
   fault-linux-sparc.h fault-linux-x86_64.h \
   fault-macos-i386.h fault-macos-powerpc.h fault-macos-powerpc.c \
+  fault-netbsd-alpha.h fault-netbsd-alpha.c \
   fault-none.h \
   fault-openbsd.h fault-openbsd-i386.h \
   fault-osf.h fault-osf-alpha.h \
@@ -431,6 +435,12 @@ uninstall-am: uninstall-info-am uninstall-libLTLIBRARIES uninstall-local
 	tags uninstall uninstall-am uninstall-info-am \
 	uninstall-libLTLIBRARIES uninstall-local
 
+
+# Dependencies.
+handler.$(OBJEXT) : ../config.h sigsegv.h @CFG_HANDLER@ $(noinst_HEADERS) 
+stackvma.$(OBJEXT) : ../config.h @CFG_STACKVMA@ stackvma.h
+leave.$(OBJEXT) : ../config.h @CFG_LEAVE@
+dispatcher.$(OBJEXT) : sigsegv.h
 
 # Special rules for installing sigsegv.h.
 

@@ -46,6 +46,9 @@ AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
+CFG_HANDLER = @CFG_HANDLER@
+CFG_LEAVE = @CFG_LEAVE@
+CFG_STACKVMA = @CFG_STACKVMA@
 CFLAGS = @CFLAGS@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
@@ -477,6 +480,10 @@ uninstall-am: uninstall-info-am
 	mostlyclean-compile mostlyclean-generic mostlyclean-libtool pdf \
 	pdf-am ps ps-am tags uninstall uninstall-am uninstall-info-am
 
+
+# The following rule is necessary to avoid a toplevel "make -n" failure.
+../src/libsigsegv.la :
+	cd ../src && $(MAKE) libsigsegv.la
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
