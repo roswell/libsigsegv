@@ -1,4 +1,4 @@
-New in 1.96:
+New in 2.0:
 
 * Modernized infrastructure.
 * Added support for catching stack overflow on AIX 4, HP-UX, and BeOS.
