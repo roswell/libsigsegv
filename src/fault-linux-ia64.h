@@ -18,5 +18,7 @@
 #include <asm/sigcontext.h>
 
 #define SIGSEGV_FAULT_HANDLER_ARGLIST  int sig, int code, struct sigcontext *scp /* FIXME */
+#define SIGSEGV_FAULT_HANDLER_ARGLIST  int sig, siginfo_t *sip, void *ucp /* FIXME */
+#define SIGSEGV_FAULT_ADDRESS  sip->si_addr /* FIXME */
 #define SIGSEGV_FAULT_CONTEXT  scp
 #define SIGSEGV_FAULT_STACKPOINTER  scp->sc_gr[12]
