@@ -1,5 +1,5 @@
-# sigaltstack.m4 serial 3 (libsigsegv-2.2)
-dnl Copyright (C) 2002-2003 Bruno Haible <bruno@clisp.org>
+# sigaltstack.m4 serial 4 (libsigsegv-2.2)
+dnl Copyright (C) 2002-2004 Bruno Haible <bruno@clisp.org>
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
 dnl Public License, this file may be distributed as part of a program
@@ -87,9 +87,11 @@ int main ()
           dnl FIXME: Put in some more known values here.
           case "$host_os" in
             *)
-              AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <signal.h>]],
-                [[int x = SA_ONSTACK; stack_t ss; sigaltstack ((stack_t*)0, &ss);]])],
-                sv_cv_sigaltstack="guessing yes", sv_cv_sigaltstack=no)
+              AC_LINK_IFELSE([
+                AC_LANG_PROGRAM([[#include <signal.h>]],
+                  [[int x = SA_ONSTACK; stack_t ss; sigaltstack ((stack_t*)0, &ss);]])],
+                [sv_cv_sigaltstack="guessing yes"],
+                [sv_cv_sigaltstack=no])
               ;;
           esac
         ])
