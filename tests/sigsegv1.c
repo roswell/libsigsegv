@@ -71,6 +71,14 @@ main ()
       fprintf (stderr, "mprotect failed.\n");
       exit (2);
     }
+  /* Test whether it's possible to make it read-write after it was read-only.
+     This is not possible on Cygwin.  */
+  if (mprotect ((void *) page, 0x4000, PROT_READ_WRITE) < 0
+      || mprotect ((void *) page, 0x4000, PROT_READ) < 0)
+    {
+      fprintf (stderr, "mprotect failed.\n");
+      exit (2);
+    }
 
   /* Install the SIGSEGV handler.  */
   sigsegv_install_handler (&handler);

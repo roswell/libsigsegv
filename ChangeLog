@@ -1,3 +1,10 @@
+2003-10-29  Bruno Haible  <bruno@clisp.org>
+
+	* tests/sigsegv1.c (main): Add a check whether mprotect with
+	PROT_READ_WRITE really works.
+	* tests/sigsegv2.c (main): Likewise.
+	Reported by Ullal Devappa Kini <wmbfqj@vsnl.net>.
+
 2003-08-21  Bruno Haible  <bruno@clisp.org>
 
 	* Version 2.1 released.

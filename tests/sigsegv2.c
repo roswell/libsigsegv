@@ -79,7 +79,11 @@ main ()
     }
   area1 = (unsigned long) p;
   sigsegv_register (&dispatcher, (void *) area1, 0x4000, &area_handler, &area1);
-  mprotect ((void *) area1, 0x4000, PROT_NONE);
+  if (mprotect ((void *) area1, 0x4000, PROT_NONE) < 0)
+    {
+      fprintf (stderr, "mprotect failed.\n");
+      exit (2);
+    }
 
   p = mmap_zeromap ((void *) 0x0BEE0000, 0x4000);
   if (p == (void *)(-1))
@@ -89,7 +93,17 @@ main ()
     }
   area2 = (unsigned long) p;
   sigsegv_register (&dispatcher, (void *) area2, 0x4000, &area_handler, &area2);
-  mprotect ((void *) area2, 0x4000, PROT_READ);
+  if (mprotect ((void *) area2, 0x4000, PROT_READ) < 0)
+    {
+      fprintf (stderr, "mprotect failed.\n");
+      exit (2);
+    }
+  if (mprotect ((void *) area2, 0x4000, PROT_READ_WRITE) < 0
+      || mprotect ((void *) area2, 0x4000, PROT_READ) < 0)
+    {
+      fprintf (stderr, "mprotect failed.\n");
+      exit (2);
+    }
 
   p = mmap_zeromap ((void *) 0x06990000, 0x4000);
   if (p == (void *)(-1))
