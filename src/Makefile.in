@@ -72,11 +72,11 @@ depcomp =
 am__depfiles_maybe =
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
-LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(DEFS) \
+LTCOMPILE = $(LIBTOOL) --mode=compile --tag=CC $(CC) $(DEFS) \
 	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
 	$(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
-LINK = $(LIBTOOL) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+LINK = $(LIBTOOL) --mode=link --tag=CC $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
 SOURCES = $(libsigsegv_la_SOURCES)
 DIST_SOURCES = $(libsigsegv_la_SOURCES)
@@ -88,6 +88,7 @@ ACLOCAL = @ACLOCAL@
 AMDEP_FALSE = @AMDEP_FALSE@
 AMDEP_TRUE = @AMDEP_TRUE@
 AMTAR = @AMTAR@
+AR = @AR@
 AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
@@ -100,6 +101,10 @@ CFG_STACKVMA = @CFG_STACKVMA@
 CFLAGS = @CFLAGS@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
+CXX = @CXX@
+CXXCPP = @CXXCPP@
+CXXDEPMODE = @CXXDEPMODE@
+CXXFLAGS = @CXXFLAGS@
 CYGPATH_W = @CYGPATH_W@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
@@ -109,9 +114,11 @@ ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGREP = @EGREP@
 EXEEXT = @EXEEXT@
+F77 = @F77@
 FAULT_CONTEXT = @FAULT_CONTEXT@
 FAULT_CONTEXT_INCLUDE = @FAULT_CONTEXT_INCLUDE@
 FAULT_CONTEXT_INCLUDE2 = @FAULT_CONTEXT_INCLUDE2@
+FFLAGS = @FFLAGS@
 HAVE_SIGSEGV_RECOVERY = @HAVE_SIGSEGV_RECOVERY@
 HAVE_STACK_OVERFLOW_RECOVERY = @HAVE_STACK_OVERFLOW_RECOVERY@
 INSTALL_DATA = @INSTALL_DATA@
@@ -140,11 +147,16 @@ SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
 VERSION = @VERSION@
+ac_ct_AR = @ac_ct_AR@
 ac_ct_CC = @ac_ct_CC@
+ac_ct_CXX = @ac_ct_CXX@
+ac_ct_F77 = @ac_ct_F77@
 ac_ct_RANLIB = @ac_ct_RANLIB@
 ac_ct_STRIP = @ac_ct_STRIP@
 am__fastdepCC_FALSE = @am__fastdepCC_FALSE@
 am__fastdepCC_TRUE = @am__fastdepCC_TRUE@
+am__fastdepCXX_FALSE = @am__fastdepCXX_FALSE@
+am__fastdepCXX_TRUE = @am__fastdepCXX_TRUE@
 am__include = @am__include@
 am__leading_dot = @am__leading_dot@
 am__quote = @am__quote@
@@ -198,12 +210,13 @@ noinst_HEADERS = \
   fault-openbsd.h fault-openbsd-i386.h \
   fault-osf.h fault-osf-alpha.h \
   fault-posix.h fault-solaris.h fault-solaris-i386.h fault-solaris-sparc.h \
+  machfault.h machfault-macos-i386.h machfault-macos-powerpc.h \
   signals.h signals-bsd.h signals-hpux.h signals-hurd.h signals-macos.h \
   leave.h \
   stackvma.h
 
 EXTRA_DIST = \
-  handler-none.c handler-unix.c handler-win32.c \
+  handler-none.c handler-unix.c handler-macos.c handler-win32.c \
   stackvma-none.c stackvma-linux.c stackvma-freebsd.c stackvma-procfs.c \
   stackvma-beos.c stackvma-mach.c \
   leave-none.c leave-nop.c leave-sigaltstack.c leave-setcontext.c \
@@ -497,6 +510,7 @@ uninstall-local:
 
 sigsegv.h.msvc : sigsegv.h.in
 	sed -e 's/@''FAULT_CONTEXT_INCLUDE''@/#include <windows.h>/' \
+	    -e 's/@''FAULT_CONTEXT_INCLUDE2''@//' \
 	    -e 's/@''FAULT_CONTEXT''@/CONTEXT/' \
 	    -e 's/@''HAVE_SIGSEGV_RECOVERY''@/1/' \
 	    -e 's/@''HAVE_STACK_OVERFLOW_RECOVERY''@/1/' \
