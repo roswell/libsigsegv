@@ -32,7 +32,6 @@ noinst_HEADERS = \
   fault-linux-ia64.h fault-linux-m68k.h fault-linux-m68k.c fault-linux-mips.h \
   fault-linux-powerpc.h fault-linux-s390.h fault-linux-sh.h \
   fault-linux-sparc.h fault-linux-x86_64.h \
-  fault-macos-i386.h fault-macos-powerpc.h fault-macos-powerpc.c \
   fault-netbsd-alpha.h fault-netbsd-alpha.c \
   fault-none.h \
   fault-openbsd.h fault-openbsd-i386.h \
@@ -45,7 +44,7 @@ noinst_HEADERS = \
   stackvma.h
 
 EXTRA_DIST = \
-  handler-none.c handler-unix.c handler-win32.c handler-macos.c \
+  handler-none.c handler-macos.c handler-unix.c handler-win32.c \
   stackvma-none.c stackvma-linux.c stackvma-freebsd.c stackvma-procfs.c \
   stackvma-beos.c stackvma-mach.c \
   leave-none.c leave-nop.c leave-sigaltstack.c leave-setcontext.c \
