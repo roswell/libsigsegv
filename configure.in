@@ -132,6 +132,14 @@ SV_TRY_FAULT([Linux/PowerPC], sv_cv_fault_linux_powerpc, [],
   [scp->regs->dar])
 
 dnl FIXME: Put in some more known values into the third argument.
+SV_TRY_FAULT([Linux/HPPA], sv_cv_fault_linux_hppa, [],
+  [],
+  [int sig, siginfo_t *sip, void *ucp],
+  [sip->si_ptr],
+  [action.sa_sigaction = &sigsegv_handler;
+   action.sa_flags = SA_SIGINFO;])
+
+dnl FIXME: Put in some more known values into the third argument.
 SV_TRY_FAULT([BSD], sv_cv_fault_bsd, [i?86-*-freebsd[4-9]*],
   [],
   [int sig, int code, struct sigcontext *scp, void *addr],
@@ -236,6 +244,11 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_linux_powerpc" = yes; then
   esac
   FAULT_CONTEXT='struct sigcontext'
 fi
+if test -z "$CFG_FAULT" && test "$sv_cv_fault_linux_hppa" = yes; then
+  case "$host_cpu" in
+    hppa* | parisc*) CFG_FAULT=fault-linux-hppa.h ;;
+  esac
+fi
 if test -z "$CFG_FAULT" && test "$sv_cv_fault_hurd" = yes; then
   CFG_FAULT=fault-hurd.h
   FAULT_CONTEXT='struct sigcontext'
@@ -337,11 +350,6 @@ else
         cris)
           CFG_FAULT=fault-linux-cris.h
           FAULT_CONTEXT='struct sigcontext'
-          ;;
-        hppa* | parisc*)
-          CFG_FAULT=fault-linux-hppa.h
-          FAULT_CONTEXT='ucontext_t'
-          FAULT_CONTEXT_INCLUDE='#include <ucontext.h>'
           ;;
         ia64)
           CFG_FAULT=fault-linux-ia64.h

@@ -1,5 +1,15 @@
 2003-05-01  Bruno Haible  <bruno@clisp.org>
 
+	Support for Linux/HPPA.
+	* fault-linux-hppa.h: Don't include <siginfo.h>.
+	(SIGSEGV_FAULT_ADDRESS): Change.
+	(SIGSEGV_FAULT_ADDRESS_FROM_SIGINFO): Define it, otherwise the value
+	passed for sip is 0.
+	(SIGSEGV_FAULT_CONTEXT, SIGSEGV_FAULT_STACKPOINTER): Remove macros.
+	* configure.in: Improve Linux/HPPA support.
+
+2003-05-01  Bruno Haible  <bruno@clisp.org>
+
 	Support for OpenBSD/i386.
 	* src/fault-openbsd.h: New file.
 	* src/fault-openbsd-i386.h: New file.
