@@ -20114,6 +20114,13 @@ _ACEOF
 
 # How to write a SIGSEGV handler with access to the fault address.
 
+# On MacOS X 10.2 or newer, we don't need these tests, because we'll end up
+# using handler-macos.c anyway. If we were to perform the tests, 5 Crash Report
+# dialog windows would pop up.
+case "$host_os" in
+  macos* | darwin[6-9]* | darwin[1-9][0-9]*) ;;
+  *)
+
 
 
 
@@ -22270,7 +22277,7 @@ else
 
     if test "$cross_compiling" = yes; then
   case "$host" in
-         *-*-aix*) sv_cv_fault_aix=yes ;;
+         *-*-aix[34]*) sv_cv_fault_aix=yes ;;
          *)
            cat >conftest.$ac_ext <<_ACEOF
 
@@ -23035,6 +23042,10 @@ echo "$as_me:$LINENO: result: $sv_cv_fault_hurd" >&5
 echo "${ECHO_T}$sv_cv_fault_hurd" >&6
 
 
+# End of MacOS X special casing.
+    ;;
+esac
+
 CFG_HANDLER=
 CFG_FAULT=
 CFG_MACHFAULT=
@@ -23043,8 +23054,8 @@ FAULT_CONTEXT_INCLUDE=
 FAULT_CONTEXT_INCLUDE2=
 if test -z "$CFG_FAULT" && test "$sv_cv_fault_aix" = yes; then
   case "$host_cpu" in
-    powerpc* | rs6000) CFG_FAULT=fault-aix-powerpc.h ;;
-    *) CFG_FAULT=fault-aix.h ;;
+    powerpc* | rs6000) CFG_FAULT=fault-aix3-powerpc.h ;;
+    *) CFG_FAULT=fault-aix3.h ;;
   esac
   FAULT_CONTEXT='struct sigcontext'
 fi
@@ -23155,6 +23166,12 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_posix" = yes; then
           *) CFG_FAULT=fault-solaris.h ;;
         esac
         ;;
+      aix*)
+        case "$host_cpu" in
+          powerpc* | rs6000) CFG_FAULT=fault-aix5-powerpc.h ;;
+          *) CFG_FAULT=fault-aix5.h ;;
+        esac
+        ;;
       *)
         CFG_FAULT=fault-posix.h
         ;;
@@ -23165,7 +23182,7 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_posix" = yes; then
 fi
 if test -z "$CFG_FAULT"; then
   case "$host_os" in
-    macos* | darwin*)
+    macos* | darwin[6-9]* | darwin[1-9][0-9]*)
       case "$host_cpu" in
         powerpc* | rs6000)
           CFG_MACHFAULT=machfault-macos-powerpc.h
@@ -23803,13 +23820,14 @@ if test "${sv_cv_sigaltstack+set}" = set; then
 else
 
     if test "$ac_cv_func_sigaltstack" = yes; then
-      if test "$cross_compiling" = yes; then
+      case "$host_os" in
+        macos* | darwin[6-9]* | darwin[1-9][0-9]*)
+          # On MacOS X 10.2 or newer, just assume that if it compiles, it will
+          # work. If we were to perform the real test, 1 Crash Report dialog
+          # window would pop up.
+          cat >conftest.$ac_ext <<_ACEOF
 
-                    case "$host_os" in
-            *)
-              cat >conftest.$ac_ext <<_ACEOF
-
-                /* confdefs.h.  */
+            /* confdefs.h.  */
 _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
@@ -23854,13 +23872,66 @@ sv_cv_sigaltstack=no
 fi
 rm -f conftest.err conftest.$ac_objext \
       conftest$ac_exeext conftest.$ac_ext
-              ;;
-          esac
+          ;;
+        *)
+          if test "$cross_compiling" = yes; then
+
+                            case "$host_os" in
+                *)
+                  cat >conftest.$ac_ext <<_ACEOF
+
+                    /* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+#include <signal.h>
+int
+main ()
+{
+int x = SA_ONSTACK; stack_t ss; sigaltstack ((stack_t*)0, &ss);
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  sv_cv_sigaltstack="guessing yes"
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+sv_cv_sigaltstack=no
+fi
+rm -f conftest.err conftest.$ac_objext \
+      conftest$ac_exeext conftest.$ac_ext
+                  ;;
+              esac
 
 else
   cat >conftest.$ac_ext <<_ACEOF
 
-        /* confdefs.h.  */
+            /* confdefs.h.  */
 _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
@@ -23940,6 +24011,8 @@ sv_cv_sigaltstack=no
 fi
 rm -f core *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
 fi
+          ;;
+      esac
     else
       sv_cv_sigaltstack=no
     fi
@@ -23962,7 +24035,7 @@ if test "${sv_cv_have_stack_overflow_recovery+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
 
-          if test -n "$CFG_MACHFAULT"; then
+          if test "$CFG_MACHFAULT" != fault-none.h; then
     sv_cv_have_stack_overflow_recovery=yes
   else
     if test "$sv_cv_sigaltstack" != no; then
@@ -24054,6 +24127,13 @@ fi
 
 # How to longjmp out of a signal handler, in such a way that the
 # alternate signal stack remains functional.
+
+# On MacOS X 10.2 or newer, we don't need these tests, because we'll end up
+# using handler-macos.c anyway. If we were to perform the tests, 2 Crash Report
+# dialog windows would pop up.
+case "$host_os" in
+  macos* | darwin[6-9]* | darwin[1-9][0-9]*) ;;
+  *)
 
 
 
@@ -24431,8 +24511,19 @@ echo "$as_me:$LINENO: result: $sv_cv_leave_handler_longjmp_setcontext" >&5
 echo "${ECHO_T}$sv_cv_leave_handler_longjmp_setcontext" >&6
 
 
+# End of MacOS X special casing.
+    ;;
+esac
+
 # How to siglongjmp out of a signal handler, in such a way that the
 # alternate signal stack remains functional.
+
+# On MacOS X 10.2 or newer, we don't need these tests, because we'll end up
+# using handler-macos.c anyway. If we were to perform the tests, 2 Crash Report
+# dialog windows would pop up.
+case "$host_os" in
+  macos* | darwin[6-9]* | darwin[1-9][0-9]*) ;;
+  *)
 
 
 
@@ -24803,6 +24894,10 @@ fi
 echo "$as_me:$LINENO: result: $sv_cv_leave_handler_siglongjmp_setcontext" >&5
 echo "${ECHO_T}$sv_cv_leave_handler_siglongjmp_setcontext" >&6
 
+
+# End of MacOS X special casing.
+    ;;
+esac
 
 CFG_LEAVE=
 if test "$sv_cv_leave_handler_longjmp" != no; then
