@@ -1,3 +1,18 @@
+2004-08-16  Bruno Haible  <bruno@clisp.org>
+
+	Support for MacOS X 10.3 on PowerPC.
+	* src/fault-macosdarwin5-powerpc.h: Renamed from
+	src/fault-macos-powerpc.h.
+	* src/fault-macosdarwin5-powerpc.c: Renamed from
+	src/fault-macos-powerpc.c.
+	* src/fault-macosdarwin7-powerpc.h: New file.
+	* src/fault-macosdarwin7-powerpc.c: New file.
+	* src/Makefile.am (noinst_HEADERS): Update.
+	* configure.in: Test the method for MacOSX/Darwin5 PowerPC only after
+	the method for MacOSX/Darwin7 PowerPC failed.
+	Substitute FAULT_CONTEXT_INCLUDE2.
+	* src/sigsegv.h.in: Insert @FAULT_CONTEXT_INCLUDE2@.
+
 2003-12-09  Paolo Bonzini  <bonzini@gnu.org>
 
 	* src/handler-macos.c: Completed; removed dependency on

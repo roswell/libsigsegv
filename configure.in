@@ -1,7 +1,7 @@
 dnl Autoconf configuration for libsigsegv.
 dnl Process this file with autoconf to produce a configure script.
 dnl
-dnl Copyright (C) 2002-2003  Bruno Haible <bruno@clisp.org>
+dnl Copyright (C) 2002-2004  Bruno Haible <bruno@clisp.org>
 dnl
 dnl This program is free software; you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
@@ -182,11 +182,21 @@ SV_TRY_FAULT([AIX], sv_cv_fault_aix, [*-*-aix*],
   [int sig, int code, struct sigcontext *scp],
   [scp->sc_jmpbuf.jmp_context.o_vaddr])
 
-SV_TRY_FAULT([MacOSX PowerPC], sv_cv_fault_macos_ppc,
-  [powerpc-*-macos* | powerpc-*-darwin*],
-  [#include "$srcdir/src/fault-macos-powerpc.c"],
+SV_TRY_FAULT([MacOSX/Darwin7 PowerPC], sv_cv_fault_macosdarwin7_ppc,
+  [powerpc-*-darwin7*],
+  [#include "$srcdir/src/fault-macosdarwin7-powerpc.c"],
+  [int sig, siginfo_t *sip, ucontext_t *ucp],
+  [get_fault_addr (sip, ucp)],
+  [action.sa_sigaction = &sigsegv_handler;
+   action.sa_flags = SA_SIGINFO;])
+
+if test "$sv_cv_fault_macosdarwin7_ppc" != yes; then
+SV_TRY_FAULT([MacOSX/Darwin5 PowerPC], sv_cv_fault_macosdarwin5_ppc,
+  [powerpc-*-darwin5*],
+  [#include "$srcdir/src/fault-macosdarwin5-powerpc.c"],
   [int sig, int code, struct sigcontext *scp],
   [get_fault_addr (scp)])
+fi
 
 dnl FIXME: Put in some more known values into the third argument.
 SV_TRY_FAULT([Hurd], sv_cv_fault_hurd, [],
@@ -202,6 +212,7 @@ dnl false positives.
 CFG_FAULT=
 FAULT_CONTEXT=void
 FAULT_CONTEXT_INCLUDE=
+FAULT_CONTEXT_INCLUDE2=
 dnl
 dnl First the cases where the OS provides the fault address.
 dnl
@@ -339,10 +350,20 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_linux_m68k" = yes; then
       ;;
   esac
 fi
-if test -z "$CFG_FAULT" && test "$sv_cv_fault_macos_ppc" = yes; then
+if test -z "$CFG_FAULT" && test "$sv_cv_fault_macosdarwin7_ppc" = yes; then
   case "$host_cpu" in
     powerpc* | rs6000)
-      CFG_FAULT=fault-macos-powerpc.h
+      CFG_FAULT=fault-macosdarwin7-powerpc.h
+      FAULT_CONTEXT='ucontext_t'
+      FAULT_CONTEXT_INCLUDE='#include <signal.h>'
+      FAULT_CONTEXT_INCLUDE2='#include <ucontext.h>'
+      ;;
+  esac
+fi
+if test -z "$CFG_FAULT" && test "$sv_cv_fault_macosdarwin5_ppc" = yes; then
+  case "$host_cpu" in
+    powerpc* | rs6000)
+      CFG_FAULT=fault-macosdarwin5-powerpc.h
       FAULT_CONTEXT='struct sigcontext'
       ;;
   esac
@@ -429,6 +450,7 @@ AC_DEFINE_UNQUOTED(CFG_FAULT, "$CFG_FAULT",
   [The name of the include file describing the fault handler.])
 AC_SUBST(FAULT_CONTEXT)
 AC_SUBST(FAULT_CONTEXT_INCLUDE)
+AC_SUBST(FAULT_CONTEXT_INCLUDE2)
 
 AC_MSG_CHECKING([if the system supports catching SIGSEGV])
 AC_MSG_RESULT([$sv_cv_have_sigsegv_recovery])

@@ -1,5 +1,5 @@
 ## Makefile for libsigsegv/src.
-## Copyright (C) 2002-2003 Bruno Haible <bruno@clisp.org>
+## Copyright (C) 2002-2004 Bruno Haible <bruno@clisp.org>
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -32,7 +32,9 @@ noinst_HEADERS = \
   fault-linux-ia64.h fault-linux-m68k.h fault-linux-m68k.c fault-linux-mips.h \
   fault-linux-powerpc.h fault-linux-s390.h fault-linux-sh.h \
   fault-linux-sparc.h fault-linux-x86_64.h \
-  fault-macos-i386.h fault-macos-powerpc.h fault-macos-powerpc.c \
+  fault-macos-i386.h \
+  fault-macosdarwin5-powerpc.h fault-macosdarwin5-powerpc.c \
+  fault-macosdarwin7-powerpc.h fault-macosdarwin7-powerpc.c \
   fault-netbsd-alpha.h fault-netbsd-alpha.c \
   fault-none.h \
   fault-openbsd.h fault-openbsd-i386.h \
