@@ -4,6 +4,12 @@
 
 2005-03-02  Bruno Haible  <bruno@clisp.org>
 
+	* autoconf/config.guess: Update.
+	* autoconf/config.sub: Update.
+	* autoconf/missing: Update from automake-1.9.5.
+
+2005-03-02  Bruno Haible  <bruno@clisp.org>
+
 	* src/fault-aix5.h: New file.
 	* src/fault-aix5-powerpc.h: New file.
 	* src/Makefile.am (noinst_HEADERS): Add them.
