@@ -1,4 +1,4 @@
-# fault.m4 serial 3
+# fault.m4 serial 5 (libsigsegv-2.2)
 dnl Copyright (C) 2002-2003 Bruno Haible <bruno@clisp.org>
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
@@ -14,7 +14,8 @@ AC_DEFUN([SV_TRY_FAULT], [
   AC_REQUIRE([AC_CANONICAL_HOST])
 
   AC_CACHE_CHECK([whether a fault handler according to $1 works], [$2], [
-    AC_RUN_IFELSE([AC_LANG_SOURCE([[
+    AC_RUN_IFELSE([
+      AC_LANG_SOURCE([[
 #include <stdlib.h>
 #include <signal.h>
 #if HAVE_SYS_SIGNAL_H
@@ -98,19 +99,25 @@ int main ()
     exit (1);
   /* Test passed!  */
   return 0;
-}]])],[$2=yes],[$2=no],[case "$host" in
+}]])],
+      [$2=yes],
+      [$2=no],
+      [case "$host" in
          m4_if([$3], [], [], [[$3]) $2=yes ;;])
          *)
-           AC_LINK_IFELSE([AC_LANG_PROGRAM([[
+           AC_LINK_IFELSE([
+             AC_LANG_PROGRAM([[
 #include <signal.h>
 $4
 void sigsegv_handler ($5)
 {
   void *fault_address = (void *) ($6);
 }
-]], [[struct sigaction action;
+]],
+               [[struct sigaction action;
 $7]])],
-             [$2="guessing no"], [$2=no])
+             [$2="guessing no"],
+             [$2=no])
            ;;
        esac
       ])

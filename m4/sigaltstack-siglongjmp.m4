@@ -1,5 +1,5 @@
-# sigaltstack-siglongjmp.m4 serial 1 (libsigsegv-2.0)
-dnl Copyright (C) 2002 Bruno Haible <bruno@clisp.org>
+# sigaltstack-siglongjmp.m4 serial 2 (libsigsegv-2.2)
+dnl Copyright (C) 2002-2003 Bruno Haible <bruno@clisp.org>
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
 dnl Public License, this file may be distributed as part of a program
@@ -16,7 +16,8 @@ AC_DEFUN([SV_TRY_LEAVE_HANDLER_SIGLONGJMP],
   AC_REQUIRE([AC_CANONICAL_HOST])
 
   AC_CACHE_CHECK([whether a signal handler can be left through siglongjmp$1], [$2], [
-    AC_RUN_IFELSE([AC_LANG_SOURCE([[
+    AC_RUN_IFELSE([
+      AC_LANG_SOURCE([[
 #include <stdlib.h>
 #include <signal.h>
 #include <setjmp.h>
@@ -77,7 +78,10 @@ int main ()
       exit (2);
     }
   exit (0);
-}]])],[$2=yes],[$2=no],[case "$host" in
+}]])],
+      [$2=yes],
+      [$2=no],
+      [case "$host" in
          m4_if([$3], [], [], [[$3]) $2=yes ;;])
          *) $2="guessing no" ;;
        esac

@@ -1,3 +1,12 @@
+2003-12-05  Bruno Haible  <bruno@clisp.org>
+
+	* m4/fault.m4: Tweak indentation. Bump serial number.
+	* m4/getpagesize.m4: Likewise.
+	* m4/mmap-anon.m4: Likewise.
+	* m4/sigaltstack.m4: Likewise.
+	* m4/sigaltstack-longjmp.m4: Likewise.
+	* m4/sigaltstack-siglongjmp.m4: Likewise.
+
 2003-12-05  Paolo Bonzini  <bonzini@gnu.org>
 
 	* aclocal.m4: Regenerate with Automake 1.7h.
@@ -22,12 +31,12 @@
 	* autoconf/install.sh: Likewise.
 	* autoconf/missing: Likewise.
 	* autoconf/mkinstalldirs: Delete.
-	* config/fault.m4: autoupdate and manuallytweak.
-	* config/sigaltstack.m4: Likewise.
-	* config/sigaltstack-longjmp.m4: Likewise.
-	* config/sigaltstack-siglongjmp.m4: Likewise.
-	* config/mmap-anon.m4: Likewise.
-	* config/getpagesize.m4: Likewise.
+	* m4/fault.m4: autoupdate and manually tweak.
+	* m4/sigaltstack.m4: Likewise.
+	* m4/sigaltstack-longjmp.m4: Likewise.
+	* m4/sigaltstack-siglongjmp.m4: Likewise.
+	* m4/mmap-anon.m4: Likewise.
+	* m4/getpagesize.m4: Likewise.
 
 2003-10-29  Bruno Haible  <bruno@clisp.org>
 
