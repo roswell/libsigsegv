@@ -1,3 +1,9 @@
+2003-12-09  Paolo Bonzini  <bonzini@gnu.org>
+
+	* src/handler-macos.c: Completed; removed dependency on
+	signals.
+	* src/machfault-macos-powerpc.h: Reorganized.
+
 2003-12-08  Paolo Bonzini  <bonzini@gnu.org>
             Bruno Haible  <bruno@clisp.org>
 
