@@ -1,3 +1,9 @@
+2003-05-02  Bruno Haible  <bruno@clisp.org>
+
+	* src/handler-unix.c: Add special case for stack handling on IA-64.
+	* src/fault-linux-ia64.h: Complete the port.
+	* configure.in: Improve Linux/IA-64 support.
+
 2003-05-01  Bruno Haible  <bruno@clisp.org>
 
 	* configure.in: Don't use fault-hurd.h on NetBSD/alpha. It does not

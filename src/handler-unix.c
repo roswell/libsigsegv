@@ -145,6 +145,9 @@ sigsegv_handler (SIGSEGV_FAULT_HANDLER_ARGLIST)
           /* See whether it was a stack overflow. If so, longjump away.  */
 #ifdef SIGSEGV_FAULT_STACKPOINTER
           unsigned long old_sp = (unsigned long) (SIGSEGV_FAULT_STACKPOINTER);
+#ifdef __ia64
+          unsigned long old_bsp = (unsigned long) (SIGSEGV_FAULT_BSP_POINTER);
+#endif
 #endif
 
 #if HAVE_STACKVMA
@@ -158,9 +161,15 @@ sigsegv_handler (SIGSEGV_FAULT_HANDLER_ARGLIST)
                 {
                   /* Heuristic AC: If the fault_address is nearer to the stack
                      segment's [start,end] than to the previous segment, we
-                     consider it a stack overflow.  */
+                     consider it a stack overflow.
+                     In the case of IA-64, we know that the previous segment
+                     is the up-growing bsp segment, and either of the two
+                     stacks can overflow.  */
                   unsigned long addr = (unsigned long) address;
 
+#ifdef __ia64
+                  if (addr >= vma.prev_end && addr <= vma.end - 1)
+#else
 #if STACK_DIRECTION < 0
                   if (addr >= vma.start
                       ? (addr <= vma.end - 1)
@@ -170,12 +179,17 @@ sigsegv_handler (SIGSEGV_FAULT_HANDLER_ARGLIST)
                       ? (addr >= vma.start)
                       : (addr - vma.end < (vma.next_start - vma.end) / 2))
 #endif
+#endif
 #else
           /* Heuristic AB: If the fault address is near the stack pointer,
              it's a stack overflow.  */
           unsigned long addr = (unsigned long) address;
 
-          if (addr <= old_sp + 4096 && old_sp <= addr + 4096)
+          if ((addr <= old_sp + 4096 && old_sp <= addr + 4096)
+#ifdef __ia64
+              || (addr <= old_bsp + 4096 && old_bsp <= addr + 4096)
+#endif
+             )
             {
                 {
 #endif

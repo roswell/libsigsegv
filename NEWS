@@ -2,8 +2,8 @@ New in 2.1:
 
 * Support for MacOS X contributed by Paolo Bonzini.
 * Support for Cygwin contributed by Paolo Bonzini.
+* Support for Linux/ia64 and Linux/hppa contributed by Bruno Haible.
 * Support for OpenBSD/i386 contributed by Bruno Haible.
-* Support for Linux/hppa contributed by Bruno Haible.
 
 New in 2.0:
 
