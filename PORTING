@@ -4,6 +4,7 @@ Successfully tested platforms
 __PLATFORM__________________________________SIGSEGV__STACK_OVERFLOW__VERSION___
                                            |         |           |
 alpha-dec-osf4.0d                          |   yes   |   yes     | 1.95
+alpha-dec-osf4.0f                          |   yes   |   yes     | 2.0
 alpha-dec-osf5.1                           |   yes   |   yes     | 1.95
 alphaev67-unknown-linux2.4.17-gnu-glibc2.1 |   yes   |   yes     | 1.95
 armv4l-unknown-linux2.4.9-gnu-glibc2.2     |   yes   |   no      | 2.0.1
@@ -36,7 +37,7 @@ powerpc-ibm-aix4.3.3.0                     |   yes   |   yes     | 1.95
 powerpc-apple-darwin5.5                    |   yes   |   no      | 2.0.1
 powerpc-unknown-linux2.2.17-gnu-glibc2.1   |   no    |   yes     | 1.95
 powerpc-unknown-linux2.2.17-gnu-glibc2.2   |   yes   |   yes     | 2.0.1
-sparc-sun-solaris2.7                       |   yes   |   yes     | 1.95
+sparc-sun-solaris2.7                       |   yes   |   yes     | 2.0
 sparc-sun-solaris2.8                       |   yes   |   yes     | 1.95
 sparc64-unknown-linux2.2.18-gnu-glibc2.1   |   no    |   no      | 1.95
 
