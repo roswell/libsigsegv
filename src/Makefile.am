@@ -1,5 +1,5 @@
 ## Makefile for libsigsegv/src.
-## Copyright (C) 2002-2004 Bruno Haible <bruno@clisp.org>
+## Copyright (C) 2002-2005 Bruno Haible <bruno@clisp.org>
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -55,7 +55,7 @@ EXTRA_DIST = \
 INCLUDES = -I. -I$(srcdir)
 DEFS = @DEFS@
 
-libsigsegv_la_SOURCES = handler.c stackvma.c leave.c dispatcher.c
+libsigsegv_la_SOURCES = handler.c stackvma.c leave.c dispatcher.c version.c
 
 libsigsegv_la_LDFLAGS = -lc -no-undefined
 

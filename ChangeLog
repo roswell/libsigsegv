@@ -1,3 +1,13 @@
+2005-01-29  Bruno Haible  <bruno@clisp.org>
+
+	* src/sigsegv.h.in (_LIBSIGSEGV_VERSION): New macro.
+	(_libsigsegv_version): New declaration.
+	* src/version.c; New file.
+	* src/Makefile.am (libsigsegv_la_SOURCES): Add version.c.
+	* Makefile.msvc (OBJECTS): Add version.obj.
+	(version.obj): New rule.
+	Suggested by Sam Steingold.
+
 2004-08-25  Bruno Haible  <bruno@clisp.org>
 
 	* m4/libtool.m4: Upgrade to libtool-1.5.6.
