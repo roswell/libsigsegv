@@ -1,5 +1,11 @@
 2002-09-30  Bruno Haible  <bruno@clisp.org>
 
+	Better Linux/PowerPC support.
+	* configure.in: Change Linux/PowerPC support.
+	* src/fault-linux-powerpc.h (SIGSEGV_FAULT_ADDRESS): New macro.
+
+2002-09-30  Bruno Haible  <bruno@clisp.org>
+
 	Better Linux/m68k support.
 	* configure.in: Change Linux/m68k support.
 	* src/fault-linux-m68k.c: New file.

@@ -18,5 +18,6 @@
 #include <asm/sigcontext.h>
 
 #define SIGSEGV_FAULT_HANDLER_ARGLIST  int sig, struct sigcontext *scp
+#define SIGSEGV_FAULT_ADDRESS  scp->regs->dar
 #define SIGSEGV_FAULT_CONTEXT  scp
 #define SIGSEGV_FAULT_STACKPOINTER  scp->regs->gpr[1]

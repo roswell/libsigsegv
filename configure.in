@@ -122,6 +122,12 @@ SV_TRY_FAULT([Linux/m68k], sv_cv_fault_linux_m68k, [],
   [get_fault_addr (scp)])
 
 dnl FIXME: Put in some more known values into the third argument.
+SV_TRY_FAULT([Linux/PowerPC], sv_cv_fault_linux_powerpc, [],
+  [#include <asm/sigcontext.h>].
+  [int sig, struct sigcontext *scp],
+  [scp->regs->dar])
+
+dnl FIXME: Put in some more known values into the third argument.
 SV_TRY_FAULT([BSD], sv_cv_fault_bsd, [i?86-*-freebsd[4-9]*],
   [],
   [int sig, int code, struct sigcontext *scp, void *addr],
@@ -212,6 +218,12 @@ fi
 if test -z "$CFG_FAULT" && test "$sv_cv_fault_linux_i386_old" = yes; then
   case "$host_cpu" in
     i?86 | x86_64) CFG_FAULT=fault-linux-i386-old.h ;;
+  esac
+  FAULT_CONTEXT='struct sigcontext'
+fi
+if test -z "$CFG_FAULT" && test "$sv_cv_fault_linux_powerpc" = yes; then
+  case "$host_cpu" in
+    powerpc* | rs6000) CFG_FAULT=fault-linux-powerpc.h ;;
   esac
   FAULT_CONTEXT='struct sigcontext'
 fi
@@ -317,10 +329,6 @@ else
           ;;
         mips*)
           CFG_FAULT=fault-linux-mips.h
-          FAULT_CONTEXT='struct sigcontext'
-          ;;
-        powerpc* | rs6000)
-          CFG_FAULT=fault-linux-powerpc.h
           FAULT_CONTEXT='struct sigcontext'
           ;;
         s390*)
