@@ -1,3 +1,11 @@
+2002-09-30  Bruno Haible  <bruno@clisp.org>
+
+	MacOSX/PowerPC support.
+	* configure.in: Add MacOSX/PowerPC support.
+	* src/signals-macos.h: New file.
+	* src/fault-macos-powerpc.c: New file.
+	* src/fault-macos-powerpc.h: New file.
+
 2002-09-16  Bruno Haible  <bruno@clisp.org>
 
 	* src/fault-posix.h: Don't include <siginfo.h>. Needed for hppa-linux.

@@ -26,7 +26,7 @@ RSE_BOLD
 
 { echo; echo "${term_bold}Build Tools:${term_norm}"; } >& AS_MESSAGE_FD
 
-AM_INIT_AUTOMAKE(libsigsegv, 2.0)
+AM_INIT_AUTOMAKE(libsigsegv, 2.0.1)
 AM_CONFIG_HEADER(config.h)
 
 AC_PROG_CC
@@ -74,6 +74,8 @@ case "$host_os" in
     CFG_SIGNALS=signals-bsd.h ;;
   hpux*)
     CFG_SIGNALS=signals-hpux.h ;;
+  macos* | darwin*)
+    CFG_SIGNALS=signals-macos.h ;;
   *)
     CFG_SIGNALS=signals.h ;;
 esac
@@ -141,6 +143,12 @@ SV_TRY_FAULT([AIX], sv_cv_fault_aix, [*-*-aix*],
   [int sig, int code, struct sigcontext *scp],
   [scp->sc_jmpbuf.jmp_context.o_vaddr])
 
+SV_TRY_FAULT([MacOSX PowerPC], sv_cv_fault_macos_ppc,
+  [powerpc-*-macos* | powerpc-*-darwin*],
+  [#include "src/fault-macos-powerpc.c"],
+  [int sig, int code, struct sigcontext *scp],
+  [get_fault_addr (scp)])
+
 dnl Now determine the fault handler include file.
 dnl We prefer the platform specific include files to the generic fault-posix.h
 dnl because the former often defines SIGSEGV_FAULT_STACKPOINTER.
@@ -149,6 +157,9 @@ dnl false positives.
 CFG_FAULT=
 FAULT_CONTEXT=void
 FAULT_CONTEXT_INCLUDE=
+dnl
+dnl First the cases where the OS provides the fault address.
+dnl
 if test -z "$CFG_FAULT" && test "$sv_cv_fault_aix" = yes; then
   case "$host_cpu" in
     powerpc* | rs6000) CFG_FAULT=fault-aix-powerpc.h ;;
@@ -225,6 +236,18 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_posix" = yes; then
   FAULT_CONTEXT='ucontext_t'
   FAULT_CONTEXT_INCLUDE='#include <ucontext.h>'
 fi
+dnl
+dnl Next, the cases where there is a hairy CPU dependent way to get the
+dnl fault address.
+dnl
+if test -z "$CFG_FAULT" && test "$sv_cv_fault_macos_ppc" = yes; then
+  case "$host_cpu" in
+    powerpc* | rs6000)
+      CFG_FAULT=fault-macos-powerpc.h
+      FAULT_CONTEXT='struct sigcontext'
+      ;;
+  esac
+fi
 if test -z "$CFG_FAULT"; then
   case "$host_os" in
     mingw*)
@@ -238,7 +261,9 @@ if test -n "$CFG_FAULT"; then
   sv_cv_have_sigsegv_recovery=yes
 else
   sv_cv_have_sigsegv_recovery=no
+  dnl
   dnl No way to get the fault address. But other information is available.
+  dnl
   case "$host_os" in
     linux*)
       case "$host_cpu" in
