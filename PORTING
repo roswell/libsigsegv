@@ -43,6 +43,7 @@ i686-pc-linux2.4.19-gnu-glibc2.2           |   yes   |   yes     | 2.0
 i686-pc-linux2.4.18-gnu-glibc2.3           |   yes   |   yes     | 1.97
 i486-pc-linux2.4.20-gnu-glibc2.3           |   yes   |   yes     | 2.0
 i686-pc-linux2.4.20-gnu-glibc2.3           |   yes   |   yes     | 2.0
+i386-pc-mingw32                            |   yes   |   yes     | 2.0
 i686-pc-mingw32                            |   yes   |   yes     | 1.96
 i686-pc-win32-msvc6                        |   yes   |   yes     | 1.96
 i386-unknown-freebsd4.0                    |   yes   |   yes     | 2.1
