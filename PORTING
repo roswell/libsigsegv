@@ -68,10 +68,13 @@ i386-unknown-openbsd3.2                    |   yes   |   yes     | 2.1
 i386-unknown-openbsd3.3                    |   yes   |   yes     | 2.1
 i386-unknown-openbsd3.4                    |   yes   |   yes     | 2.2
 ia64-hp-hpux11.22                          |   yes   |   no      | 2.1
+ia64-hp-hpux11.23                          |   yes   |   no      | 2.2
 ia64-unknown-linux2.4.18-gnu-glibc2.2      |   yes   |   yes     | 2.1
 mips-sgi-irix6.5                           |   yes   |   yes     | 2.2
 nsr-tandem-nsk                             |   no    |   no      | 2.1
-rs6000-ibm-aix3.2.5                        |   yes   |   no      | 2.1
+rs6000-ibm-aix3.2.5                        |   yes   |   no      | 2.2
+rs6000-ibm-aix4.2.0.0                      |   yes   |   yes     | 2.2
+powerpc-ibm-aix4.3.2.0                     |   yes   |   yes     | 2.2
 powerpc-ibm-aix4.3.3.0                     |   yes   |   yes     | 1.95
 powerpc-ibm-aix5.2.0.0                     |   yes   |   no      | 2.1
 powerpc-apple-darwin5.5                    |   yes   |   yes     | 2.2
