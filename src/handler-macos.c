@@ -141,7 +141,7 @@ static sigsegv_handler_t user_handler = (sigsegv_handler_t)NULL;
    on an alternate stack (we cannot longjmp while in the exception
    handling thread, so we need to mimic what signals do!).  */
 static void
-altstack_handler (int sig)
+altstack_handler ()
 {
   /* We arrive here when the user refused to handle a fault.  */
 
@@ -155,6 +155,8 @@ altstack_handler (int sig)
     }
 
   /* Else, dump core.  */
+  signal (SIGSEGV, SIG_DFL);
+  signal (SIGBUS, SIG_DFL);
   raise (SIGSEGV);
 
   /* Seriously.  */
@@ -162,8 +164,7 @@ altstack_handler (int sig)
 }
 
 
-/* Handle an exception by invoking the user's fault handler and/or forwarding
-   the duty to the previously installed handlers.  */
+/* Handle an exception by invoking the user's fault handler.  */
 kern_return_t
 catch_exception_raise (mach_port_t exception_port,
                        mach_port_t thread,
@@ -242,7 +243,6 @@ catch_exception_raise (mach_port_t exception_port,
           if (done)
             return KERN_SUCCESS;
         }
-      is_stack_overflow = 0;
     }
 
   SIGSEGV_PROGRAM_COUNTER = (unsigned long) altstack_handler;
@@ -346,6 +346,8 @@ mach_initialize ()
   pthread_t thread;
 
   int dummy;
+  signal (SIGSEGV, SIG_IGN);
+  signal (SIGBUS, SIG_IGN);
   if (remember_stack_top (&dummy) == -1)
     return -1;
 

@@ -1,3 +1,19 @@
+2003-12-19  Paolo Bonzini  <bonzini@gnu.org>
+
+	* configure.in: Save results of heuristics detection
+	in CFG_HEURISTICS.
+	* src/heur-none.h: New file.
+	* src/heur-ab.h: New file.
+	* src/heur-ac.h: New file.
+	* src/heur-bc.h: New file.
+	* src/handler-macos.c (mach_initialize): Argh, had to
+	reintroduce signal (xxx, SIG_IGN).  Also, use
+	heuristics.h.
+	* src/handler-unix.c (sigsegv_handler): Replace
+	most ugly code with usage of heuristics.h.
+	* src/stackvma-mach.c (sigsegv_get_vma): Add
+	debugging printf.
+
 2003-12-09  Paolo Bonzini  <bonzini@gnu.org>
 
 	* src/handler-macos.c: Completed; removed dependency on

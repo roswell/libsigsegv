@@ -59,6 +59,13 @@ sigsegv_get_vma (unsigned long req_address, struct vma_struct *vma)
                          &inheritance, &shared, &object_name, &offset)
               == KERN_SUCCESS);
 #endif
+#if 0
+      printf ("this vma = %x...%x, joined vmas = %x...%x prev_vma = %x...%x\n",
+	      address, address + size,
+	      join_address, join_address + join_size,
+	      prev_address, prev_address + prev_size);
+#endif
+
       if (!more)
         {
           address = join_address + join_size;

@@ -62,7 +62,8 @@ ia64-unknown-linux2.4.18-gnu-glibc2.2      |   yes   |   yes     | 2.1
 mips-sgi-irix6.5                           |   yes   |   yes     | 2.1
 rs6000-ibm-aix3.2.5                        |   yes   |   no      | 2.1
 powerpc-ibm-aix4.3.3.0                     |   yes   |   yes     | 1.95
-powerpc-apple-darwin5.5                    |   yes   |   yes     | 2.0.2
+powerpc-apple-darwin5.5                    |   yes   |   yes     | 2.2
+powerpc-apple-darwin6.8                    |   yes   |   yes     | 2.2
 powerpc-unknown-linux2.2.17-gnu-glibc2.1   |   no    |   yes     | 1.95
 powerpc-unknown-linux2.2.17-gnu-glibc2.2   |   yes   |   yes     | 2.0.1
 sparc-sun-solaris2.6                       |   yes   |   yes     | 2.0
