@@ -1,3 +1,9 @@
+2003-06-24  Paolo Bonzini  <bonzini@gnu.org>
+
+	* m4/fault.m4: Exit if we detect an infinite loop.
+	* aclocal.m4: Regenerate.
+	* configure: Regenerate.
+
 2003-06-18  Bruno Haible  <bruno@clisp.org>
 
 	* autoconf/install-sh: Update from automake-1.7.5.
