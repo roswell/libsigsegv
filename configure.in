@@ -262,19 +262,30 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_bsd" = yes; then
 fi
 if test -z "$CFG_FAULT" && test "$sv_cv_fault_posix" = yes; then
   case "$host_os" in
-    solaris*)
+    openbsd*)
       case "$host_cpu" in
-        i?86 | x86_64) CFG_FAULT=fault-solaris-i386.h ;;
-        sparc*) CFG_FAULT=fault-solaris-sparc.h ;;
-        *) CFG_FAULT=fault-solaris.h ;;
+        i?86 | x86_64) CFG_FAULT=fault-openbsd-i386.h ;;
+        *) CFG_FAULT=fault-openbsd.h ;;
       esac
+      FAULT_CONTEXT='struct sigcontext'
       ;;
     *)
-      CFG_FAULT=fault-posix.h
+      case "$host_os" in
+        solaris*)
+          case "$host_cpu" in
+            i?86 | x86_64) CFG_FAULT=fault-solaris-i386.h ;;
+            sparc*) CFG_FAULT=fault-solaris-sparc.h ;;
+            *) CFG_FAULT=fault-solaris.h ;;
+          esac
+          ;;
+        *)
+          CFG_FAULT=fault-posix.h
+          ;;
+      esac
+      FAULT_CONTEXT='ucontext_t'
+      FAULT_CONTEXT_INCLUDE='#include <ucontext.h>'
       ;;
   esac
-  FAULT_CONTEXT='ucontext_t'
-  FAULT_CONTEXT_INCLUDE='#include <ucontext.h>'
 fi
 dnl
 dnl Next, the cases where there is a hairy CPU dependent way to get the
