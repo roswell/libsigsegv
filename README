@@ -1,4 +1,4 @@
-           libsigsegv  -  Handling page faults in user mode
+           GNU libsigsegv  -  Handling page faults in user mode
 
 This is a library for handling page faults in user mode. A page fault
 occurs when a program tries to access to a region of memory that is
