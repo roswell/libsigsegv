@@ -66,6 +66,10 @@ stackoverflow_handler (int emergency, stackoverflow_context_t scp)
 int
 sigsegv_handler (void *address, int emergency)
 {
+  /* This test is necessary to distinguish stack overflow and SIGSEGV.  */
+  if (!emergency)
+    return 0;
+
   pass++;
   if (pass <= 2)
     {
