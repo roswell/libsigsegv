@@ -33,6 +33,7 @@ noinst_HEADERS = \
   fault-linux-powerpc.h fault-linux-s390.h fault-linux-sh.h \
   fault-linux-sparc.h fault-linux-x86_64.h \
   fault-macos-i386.h fault-macos-powerpc.h fault-macos-powerpc.c \
+  fault-netbsd-alpha.h fault-netbsd-alpha.c \
   fault-none.h \
   fault-openbsd.h fault-openbsd-i386.h \
   fault-osf.h fault-osf-alpha.h \

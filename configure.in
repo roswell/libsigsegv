@@ -74,7 +74,7 @@ AC_CHECK_HEADERS([sys/signal.h])
 dnl List of signals that are sent when an invalid virtual memory address
 dnl is accessed, or when the stack overflows.
 case "$host_os" in
-  sunos4* | freebsd*)
+  sunos4* | freebsd* | openbsd* | netbsd*)
     CFG_SIGNALS=signals-bsd.h ;;
   hpux*)
     CFG_SIGNALS=signals-hpux.h ;;
@@ -170,6 +170,13 @@ SV_TRY_FAULT([OSF/1 Alpha], sv_cv_fault_osf_alpha,
   [scp->sc_traparg_a0])
 
 dnl FIXME: Put in some more known values into the third argument.
+SV_TRY_FAULT([NetBSD Alpha], sv_cv_fault_netbsd_alpha,
+  [alpha*-*-osf[4-9]* | alpha-*-*bsd*],
+  [#include "$srcdir/src/fault-netbsd-alpha.c"],
+  [int sig, int code, struct sigcontext *scp],
+  [get_fault_addr (scp)])
+
+dnl FIXME: Put in some more known values into the third argument.
 SV_TRY_FAULT([AIX], sv_cv_fault_aix, [*-*-aix*],
   [],
   [int sig, int code, struct sigcontext *scp],
@@ -223,6 +230,12 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_osf_alpha" = yes; then
   case "$host_cpu" in
     alpha*) CFG_FAULT=fault-osf-alpha.h ;;
     *) CFG_FAULT=fault-osf.h ;;
+  esac
+  FAULT_CONTEXT='struct sigcontext'
+fi
+if test -z "$CFG_FAULT" && test "$sv_cv_fault_netbsd_alpha" = yes; then
+  case "$host_cpu" in
+    alpha*) CFG_FAULT=fault-netbsd-alpha.h ;;
   esac
   FAULT_CONTEXT='struct sigcontext'
 fi

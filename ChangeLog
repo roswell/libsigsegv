@@ -1,3 +1,16 @@
+2003-05-14  Paolo Bonzini  <bonzini@gnu.org>
+
+	* configure.in: Use signals-bsd.h for OpenBSD and NetBSD too.
+	Support instruction decoding to get fault address for Alphas.
+	* src/fault-netbsd-alpha.h: New file.
+	* src/fault-netbsd-alpha.c: New file.
+	* src/Makefile.am (noinst_HEADERS): Add them.
+
+2003-05-14  Paolo Bonzini  <bonzini@gnu.org>
+
+	* src/dispatcher.c (insert): Fix lossage in 64-bit environments
+	(cast from void* to unsigned int).
+
 2003-05-10  Bruno Haible  <bruno@clisp.org>
 
 	* tests/Makefile.am (../src/libsigsegv.la): New rule.
