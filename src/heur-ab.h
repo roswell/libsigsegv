@@ -1,4 +1,5 @@
-/* Fault handler information.
+/* Detecting stack overflow.  Version for platforms which supply the
+   fault address and the stack pointer.
    Copyright (C) 2003  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
@@ -15,20 +16,25 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 
-/* The included file defines:
+#ifdef __ia64
+#define IS_STACK_OVERFLOW \
+  (is_stk_overflow ((unsigned long) SIGSEGV_FAULT_ADDRESS,  \
+		    (unsigned long) SIGSEGV_FAULT_STACKPOINTER) \
+   || is_stk_overflow ((unsigned long) SIGSEGV_FAULT_ADDRESS,  \
+		       (unsigned long) SIGSEGV_FAULT_BSP_POINTER))
+#else
+#define IS_STACK_OVERFLOW \
+  is_stk_overflow ((unsigned long) SIGSEGV_FAULT_ADDRESS, \
+  		   (unsigned long) SIGSEGV_FAULT_STACKPOINTER)
+#endif
 
-     SIGSEGV_STATE_TYPE
-          the machine dependent thread state type.
+static int is_stk_overflow (unsigned long addr, unsigned long sp)
+{
+  return (addr <= sp + 4096 && sp <= addr + 4096);
+}
 
-     SIGSEGV_STATE_FLAVOR
-          the corresponding flavor, to be passed to thread_get_state(),
-          for retrieving a state of type SIGSEGV_STATE_TYPE.
-
-     SIGSEGV_STATE_COUNT
-          the corresponding count (??).
-
-     SIGSEGV_FAULT_ADDRESS
-          is a macro for fetching the fault address.
- */
-
-#include CFG_MACHFAULT
+static int
+remember_stack_top (void *some_variable_on_stack)
+{
+  return 0;
+}
