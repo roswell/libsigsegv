@@ -1,3 +1,11 @@
+2005-03-02  Bruno Haible  <bruno@clisp.org>
+
+	* src/fault-aix3-powerpc.h: Renamed from src/fault-aix-powerpc.h.
+	* src/fault-aix3.h: Renamed from src/fault-aix.h.
+	* src/Makefile.am (noinst_HEADERS): Update.
+	* configure.in: Update. When cross-compiling, assume the AIX test
+	succeeds only on AIX 3 and AIX 4.
+
 2005-03-01  Bruno Haible  <bruno@clisp.org>
 
 	* configure.in: Fix test of CFG_MACHFAULT.

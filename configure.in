@@ -184,7 +184,7 @@ SV_TRY_FAULT([NetBSD Alpha], sv_cv_fault_netbsd_alpha,
   [get_fault_addr (scp)])
 
 dnl FIXME: Put in some more known values into the third argument.
-SV_TRY_FAULT([AIX], sv_cv_fault_aix, [*-*-aix*],
+SV_TRY_FAULT([AIX], sv_cv_fault_aix, [*-*-aix[34]*],
   [],
   [int sig, int code, struct sigcontext *scp],
   [scp->sc_jmpbuf.jmp_context.o_vaddr])
@@ -231,8 +231,8 @@ dnl First the cases where the OS provides the fault address.
 dnl
 if test -z "$CFG_FAULT" && test "$sv_cv_fault_aix" = yes; then
   case "$host_cpu" in
-    powerpc* | rs6000) CFG_FAULT=fault-aix-powerpc.h ;;
-    *) CFG_FAULT=fault-aix.h ;;
+    powerpc* | rs6000) CFG_FAULT=fault-aix3-powerpc.h ;;
+    *) CFG_FAULT=fault-aix3.h ;;
   esac
   FAULT_CONTEXT='struct sigcontext'
 fi
