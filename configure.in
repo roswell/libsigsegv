@@ -76,6 +76,8 @@ case "$host_os" in
     CFG_SIGNALS=signals-hpux.h ;;
   macos* | darwin*)
     CFG_SIGNALS=signals-macos.h ;;
+  gnu*)
+    CFG_SIGNALS=signals-hurd.h ;;
   *)
     CFG_SIGNALS=signals.h ;;
 esac
@@ -149,6 +151,12 @@ SV_TRY_FAULT([MacOSX PowerPC], sv_cv_fault_macos_ppc,
   [int sig, int code, struct sigcontext *scp],
   [get_fault_addr (scp)])
 
+dnl FIXME: Put in some more known values into the third argument.
+SV_TRY_FAULT([Hurd], sv_cv_fault_hurd, [],
+  [],
+  [int sig, int code, struct sigcontext *scp],
+  [code])
+
 dnl Now determine the fault handler include file.
 dnl We prefer the platform specific include files to the generic fault-posix.h
 dnl because the former often defines SIGSEGV_FAULT_STACKPOINTER.
@@ -198,6 +206,10 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_linux_i386_old" = yes; then
   case "$host_cpu" in
     i?86 | x86_64) CFG_FAULT=fault-linux-i386-old.h ;;
   esac
+  FAULT_CONTEXT='struct sigcontext'
+fi
+if test -z "$CFG_FAULT" && test "$sv_cv_fault_hurd" = yes; then
+  CFG_FAULT=fault-hurd.h
   FAULT_CONTEXT='struct sigcontext'
 fi
 if test -z "$CFG_FAULT" && test "$sv_cv_fault_bsd" = yes; then
