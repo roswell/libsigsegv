@@ -45,16 +45,21 @@ check-am: check-next
 check-next:
 	@when="Now"; \
 	if grep '^@PLATFORM@ .* @VERSION@$$' $(srcdir)/PORTING > /dev/null; then :; else \
-	  echo; \
-	  echo "Please send the following summary line via email to the author"; \
-	  echo "Bruno Haible <bruno@clisp.org> for inclusion into the list of"; \
-	  echo "successfully tested platforms (see PORTING file).  Please also"; \
-	  echo "send the config.log file; this will help improving portability"; \
-	  echo "of the package."; echo; \
-	  if test @HAVE_SIGSEGV_RECOVERY@ = 1; then have1=yes; else have1=no; fi; \
-	  if test @HAVE_STACK_OVERFLOW_RECOVERY@ = 1; then have2=yes; else have2=no; fi; \
-	  echo `cat termbold`"libsigsegv: @PLATFORM@ | $$have1 | $$have2 | @VERSION@"`cat termnorm`; \
-	  when="Then"; \
+	  case '@PLATFORM@' in \
+	    i?86-*-linux*) ;; \
+	    *) \
+	      echo; \
+	      echo "Please send the following summary line via email to the author"; \
+	      echo "Bruno Haible <bruno@clisp.org> for inclusion into the list of"; \
+	      echo "successfully tested platforms (see PORTING file).  Please also"; \
+	      echo "send the config.log file; this will help improving portability"; \
+	      echo "of the package."; echo; \
+	      if test @HAVE_SIGSEGV_RECOVERY@ = 1; then have1=yes; else have1=no; fi; \
+	      if test @HAVE_STACK_OVERFLOW_RECOVERY@ = 1; then have2=yes; else have2=no; fi; \
+	      echo `cat termbold`"libsigsegv: @PLATFORM@ | $$have1 | $$have2 | @VERSION@"`cat termnorm`; \
+	      when="Then"; \
+	      ;; \
+	  esac; \
 	fi; \
 	echo; echo "$$when please type '"`cat termbold`"make install"`cat termnorm`"' to install the package."; echo
 

@@ -1,5 +1,10 @@
 2002-09-30  Bruno Haible  <bruno@clisp.org>
 
+	* Makefile.am (check-next): Don't ask for reports from i?86-*-linux*
+	platforms.
+
+2002-09-30  Bruno Haible  <bruno@clisp.org>
+
 	Better Linux/PowerPC support.
 	* configure.in: Change Linux/PowerPC support.
 	* src/fault-linux-powerpc.h (SIGSEGV_FAULT_ADDRESS): New macro.
