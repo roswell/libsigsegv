@@ -643,7 +643,7 @@ AC_CACHE_CHECK([if the system supports catching stack overflow],
   dnl On Unix, it requires either sigaltstack() or the BeOS set_signal_stack()
   dnl function, and on Unix it requires a fault-*.h or a stackvma-*.c with
   dnl certain properties (see src/handler-unix.c).
-  if test -n "$CFG_MACHFAULT"; then
+  if test "$CFG_MACHFAULT" != fault-none.h; then
     sv_cv_have_stack_overflow_recovery=yes
   else
     if test "$sv_cv_sigaltstack" != no; then
