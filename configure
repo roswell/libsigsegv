@@ -618,7 +618,7 @@ ac_includes_default="\
 # include <unistd.h>
 #endif"
 
-ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA CYGPATH_W PACKAGE VERSION ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO AMTAR install_sh STRIP ac_ct_STRIP INSTALL_STRIP_PROGRAM mkdir_p AWK SET_MAKE am__leading_dot CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT DEPDIR am__include am__quote AMDEP_TRUE AMDEP_FALSE AMDEPBACKSLASH CCDEPMODE am__fastdepCC_TRUE am__fastdepCC_FALSE CPP build build_cpu build_vendor build_os host host_cpu host_vendor host_os PLATFORM LN_S ECHO RANLIB ac_ct_RANLIB EGREP LIBTOOL FAULT_CONTEXT FAULT_CONTEXT_INCLUDE HAVE_SIGSEGV_RECOVERY CFG_STACKVMA HAVE_STACK_OVERFLOW_RECOVERY CFG_LEAVE CFG_HANDLER RELOCATABLE LIBOBJS LTLIBOBJS'
+ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA CYGPATH_W PACKAGE VERSION ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO AMTAR install_sh STRIP ac_ct_STRIP INSTALL_STRIP_PROGRAM mkdir_p AWK SET_MAKE am__leading_dot CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT DEPDIR am__include am__quote AMDEP_TRUE AMDEP_FALSE AMDEPBACKSLASH CCDEPMODE am__fastdepCC_TRUE am__fastdepCC_FALSE CPP build build_cpu build_vendor build_os host host_cpu host_vendor host_os PLATFORM LN_S ECHO RANLIB ac_ct_RANLIB EGREP LIBTOOL HAVE_SIGSEGV_RECOVERY HAVE_STACK_OVERFLOW_RECOVERY CFG_HEURISTICS CFG_SIGNALS CFG_FAULT CFG_STACKVMA CFG_LEAVE CFG_HANDLER FAULT_CONTEXT FAULT_CONTEXT_INCLUDE RELOCATABLE LIBOBJS LTLIBOBJS'
 ac_subst_files=''
 
 # Initialize some variables set by options.
@@ -1697,7 +1697,7 @@ ac_configure="$SHELL $ac_aux_dir/configure" # This should be Cygnus configure.
 
 { echo; echo "${term_bold}Build Tools:${term_norm}"; } >& 6
 
-am__api_version="1.7h"
+am__api_version="1.8"
 # Find a good install program.  We prefer a C program (faster),
 # so one script is as good as another.  But avoid the broken or
 # incompatible versions:
@@ -8425,6 +8425,7 @@ LIBTOOL='$(SHELL) $(top_builddir)/libtool'
 
 { echo; echo "${term_bold}Optional Platform Environment:${term_norm}"; } >& 6
 
+# Headers to be included with <signal.h>.
 
 for ac_header in sys/signal.h
 do
@@ -8574,24 +8575,6 @@ _ACEOF
 fi
 
 done
-
-
-case "$host_os" in
-  sunos4* | freebsd* | openbsd* | netbsd*)
-    CFG_SIGNALS=signals-bsd.h ;;
-  hpux*)
-    CFG_SIGNALS=signals-hpux.h ;;
-  macos* | darwin*)
-    CFG_SIGNALS=signals-macos.h ;;
-  gnu*)
-    CFG_SIGNALS=signals-hurd.h ;;
-  *)
-    CFG_SIGNALS=signals.h ;;
-esac
-
-cat >>confdefs.h <<_ACEOF
-#define CFG_SIGNALS "$CFG_SIGNALS"
-_ACEOF
 
 
 # How to determine the memory page size.
@@ -8757,7 +8740,8 @@ if test "${sv_cv_func_getpagesize+set}" = set; then
 else
 
     cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
+
+      /* confdefs.h.  */
 _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
@@ -8826,7 +8810,8 @@ if test "${sv_cv_func_sysconf_pagesize+set}" = set; then
 else
 
     cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
+
+      /* confdefs.h.  */
 _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
@@ -8895,7 +8880,8 @@ if test "${sv_cv_macro_pagesize+set}" = set; then
 else
 
     cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
+
+      /* confdefs.h.  */
 _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
@@ -8974,7 +8960,8 @@ else
             sv_cv_func_mmap_anon=yes ;;
           *)
             cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
+
+              /* confdefs.h.  */
 _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
@@ -9027,7 +9014,8 @@ rm -f conftest.err conftest.$ac_objext \
 
 else
   cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
+
+      /* confdefs.h.  */
 _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
@@ -9089,7 +9077,8 @@ else
             sv_cv_func_mmap_anonymous=yes ;;
           *)
             cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
+
+              /* confdefs.h.  */
 _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
@@ -9142,7 +9131,8 @@ rm -f conftest.err conftest.$ac_objext \
 
 else
   cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
+
+      /* confdefs.h.  */
 _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
@@ -9204,7 +9194,8 @@ else
             sv_cv_func_mmap_devzero=yes ;;
           *)
             cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
+
+              /* confdefs.h.  */
 _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
@@ -9260,7 +9251,8 @@ rm -f conftest.err conftest.$ac_objext \
 
 else
   cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
+
+      /* confdefs.h.  */
 _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
@@ -9315,3132 +9307,6 @@ cat >>confdefs.h <<\_ACEOF
 _ACEOF
 
   fi
-
-
-# How to write a SIGSEGV handler with access to the fault address.
-
-
-
-
-
-  echo "$as_me:$LINENO: checking whether a fault handler according to POSIX works" >&5
-echo $ECHO_N "checking whether a fault handler according to POSIX works... $ECHO_C" >&6
-if test "${sv_cv_fault_posix+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-
-    if test "$cross_compiling" = yes; then
-  case "$host" in
-         *-*-solaris2.[7-9] | i?86-*-linux2.[4-9]* | i?86-*-freebsd[4-9]* | alpha*-dec-osf[4-9]* | *-*-hpux11* | mips-sgi-irix6*) sv_cv_fault_posix=yes ;;
-         *)
-           cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-#include <signal.h>
-
-void sigsegv_handler (int sig, siginfo_t *sip, void *ucp)
-{
-  void *fault_address = (void *) (sip->si_addr);
-}
-
-int
-main ()
-{
-struct sigaction action;
-action.sa_sigaction = &sigsegv_handler;
-   action.sa_flags = SA_SIGINFO;
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } &&
-	 { ac_try='test -z "$ac_c_werror_flag"
-			 || test ! -s conftest.err'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; } &&
-	 { ac_try='test -s conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  sv_cv_fault_posix="guessing no"
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-sv_cv_fault_posix=no
-fi
-rm -f conftest.err conftest.$ac_objext \
-      conftest$ac_exeext conftest.$ac_ext
-           ;;
-       esac
-
-else
-  cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-#include <stdlib.h>
-#include <signal.h>
-#if HAVE_SYS_SIGNAL_H
-# include <sys/signal.h>
-#endif
-
-#include <sys/types.h>
-#include <sys/mman.h>
-#if HAVE_MMAP_DEVZERO
-# include <fcntl.h>
-# ifndef MAP_FILE
-#  define MAP_FILE 0
-# endif
-#endif
-#ifndef PROT_NONE
-# define PROT_NONE 0
-#endif
-#if HAVE_MMAP_ANON
-# define zero_fd -1
-# define map_flags MAP_ANON | MAP_PRIVATE
-#elif HAVE_MMAP_ANONYMOUS
-# define zero_fd -1
-# define map_flags MAP_ANONYMOUS | MAP_PRIVATE
-#elif HAVE_MMAP_DEVZERO
-static int zero_fd;
-# define map_flags MAP_FILE | MAP_PRIVATE
-#endif
-unsigned long page;
-int handler_called = 0;
-void sigsegv_handler (int sig, siginfo_t *sip, void *ucp)
-{
-  void *fault_address = (void *) (sip->si_addr);
-  handler_called++;
-  if (handler_called == 10)
-    exit (4);
-  if (fault_address != (void*)(page + 0x678))
-    exit (3);
-  if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
-    exit (2);
-}
-void crasher (unsigned long p)
-{
-  *(int *) (p + 0x678) = 42;
-}
-int main ()
-{
-  void *p;
-  struct sigaction action;
-  /* Preparations.  */
-#if !HAVE_MMAP_ANON && !HAVE_MMAP_ANONYMOUS && HAVE_MMAP_DEVZERO
-  zero_fd = open ("/dev/zero", O_RDONLY, 0644);
-#endif
-  /* Setup some mmaped memory.  */
-#ifdef __hpux
-  /* HP-UX 10 mmap() often fails when given a hint.  So give the OS complete
-     freedom about the address range.  */
-  p = mmap ((void *) 0,          0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
-#else
-  p = mmap ((void *) 0x12340000, 0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
-#endif
-  if (p == (void *)(-1))
-    exit (2);
-  page = (unsigned long) p;
-  /* Make it read-only.  */
-  if (mprotect ((void *) page, 0x10000, PROT_READ) < 0)
-    exit (2);
-  /* Install the SIGSEGV handler.  */
-  sigemptyset(&action.sa_mask);
-action.sa_sigaction = &sigsegv_handler;
-   action.sa_flags = SA_SIGINFO;
-  sigaction (SIGSEGV, &action, (struct sigaction *) NULL);
-  sigaction (SIGBUS, &action, (struct sigaction *) NULL);
-  /* The first write access should invoke the handler and then complete.  */
-  crasher (page);
-  /* The second write access should not invoke the handler.  */
-  crasher (page);
-  /* Check that the handler was called only once.  */
-  if (handler_called != 1)
-    exit (1);
-  /* Test passed!  */
-  return 0;
-}
-_ACEOF
-rm -f conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  sv_cv_fault_posix=yes
-else
-  echo "$as_me: program exited with status $ac_status" >&5
-echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-( exit $ac_status )
-sv_cv_fault_posix=no
-fi
-rm -f core *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
-fi
-
-fi
-echo "$as_me:$LINENO: result: $sv_cv_fault_posix" >&5
-echo "${ECHO_T}$sv_cv_fault_posix" >&6
-
-
-
-
-
-
-  echo "$as_me:$LINENO: checking whether a fault handler according to Linux/i386 works" >&5
-echo $ECHO_N "checking whether a fault handler according to Linux/i386 works... $ECHO_C" >&6
-if test "${sv_cv_fault_linux_i386+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-
-    if test "$cross_compiling" = yes; then
-  case "$host" in
-         i?86-*-linux2.[2-9]*) sv_cv_fault_linux_i386=yes ;;
-         *)
-           cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-#include <signal.h>
-#include <asm/sigcontext.h>
-void sigsegv_handler (int sig, struct sigcontext sc)
-{
-  void *fault_address = (void *) (sc.cr2);
-}
-
-int
-main ()
-{
-struct sigaction action;
-
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } &&
-	 { ac_try='test -z "$ac_c_werror_flag"
-			 || test ! -s conftest.err'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; } &&
-	 { ac_try='test -s conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  sv_cv_fault_linux_i386="guessing no"
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-sv_cv_fault_linux_i386=no
-fi
-rm -f conftest.err conftest.$ac_objext \
-      conftest$ac_exeext conftest.$ac_ext
-           ;;
-       esac
-
-else
-  cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-#include <stdlib.h>
-#include <signal.h>
-#if HAVE_SYS_SIGNAL_H
-# include <sys/signal.h>
-#endif
-#include <asm/sigcontext.h>
-#include <sys/types.h>
-#include <sys/mman.h>
-#if HAVE_MMAP_DEVZERO
-# include <fcntl.h>
-# ifndef MAP_FILE
-#  define MAP_FILE 0
-# endif
-#endif
-#ifndef PROT_NONE
-# define PROT_NONE 0
-#endif
-#if HAVE_MMAP_ANON
-# define zero_fd -1
-# define map_flags MAP_ANON | MAP_PRIVATE
-#elif HAVE_MMAP_ANONYMOUS
-# define zero_fd -1
-# define map_flags MAP_ANONYMOUS | MAP_PRIVATE
-#elif HAVE_MMAP_DEVZERO
-static int zero_fd;
-# define map_flags MAP_FILE | MAP_PRIVATE
-#endif
-unsigned long page;
-int handler_called = 0;
-void sigsegv_handler (int sig, struct sigcontext sc)
-{
-  void *fault_address = (void *) (sc.cr2);
-  handler_called++;
-  if (handler_called == 10)
-    exit (4);
-  if (fault_address != (void*)(page + 0x678))
-    exit (3);
-  if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
-    exit (2);
-}
-void crasher (unsigned long p)
-{
-  *(int *) (p + 0x678) = 42;
-}
-int main ()
-{
-  void *p;
-  struct sigaction action;
-  /* Preparations.  */
-#if !HAVE_MMAP_ANON && !HAVE_MMAP_ANONYMOUS && HAVE_MMAP_DEVZERO
-  zero_fd = open ("/dev/zero", O_RDONLY, 0644);
-#endif
-  /* Setup some mmaped memory.  */
-#ifdef __hpux
-  /* HP-UX 10 mmap() often fails when given a hint.  So give the OS complete
-     freedom about the address range.  */
-  p = mmap ((void *) 0,          0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
-#else
-  p = mmap ((void *) 0x12340000, 0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
-#endif
-  if (p == (void *)(-1))
-    exit (2);
-  page = (unsigned long) p;
-  /* Make it read-only.  */
-  if (mprotect ((void *) page, 0x10000, PROT_READ) < 0)
-    exit (2);
-  /* Install the SIGSEGV handler.  */
-  sigemptyset(&action.sa_mask);
-
-  action.sa_handler = (void (*) (int)) &sigsegv_handler;
-  action.sa_flags = 0;
-
-  sigaction (SIGSEGV, &action, (struct sigaction *) NULL);
-  sigaction (SIGBUS, &action, (struct sigaction *) NULL);
-  /* The first write access should invoke the handler and then complete.  */
-  crasher (page);
-  /* The second write access should not invoke the handler.  */
-  crasher (page);
-  /* Check that the handler was called only once.  */
-  if (handler_called != 1)
-    exit (1);
-  /* Test passed!  */
-  return 0;
-}
-_ACEOF
-rm -f conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  sv_cv_fault_linux_i386=yes
-else
-  echo "$as_me: program exited with status $ac_status" >&5
-echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-( exit $ac_status )
-sv_cv_fault_linux_i386=no
-fi
-rm -f core *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
-fi
-
-fi
-echo "$as_me:$LINENO: result: $sv_cv_fault_linux_i386" >&5
-echo "${ECHO_T}$sv_cv_fault_linux_i386" >&6
-
-
-
-
-
-
-  echo "$as_me:$LINENO: checking whether a fault handler according to old Linux/i386 works" >&5
-echo $ECHO_N "checking whether a fault handler according to old Linux/i386 works... $ECHO_C" >&6
-if test "${sv_cv_fault_linux_i386_old+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-
-    if test "$cross_compiling" = yes; then
-  case "$host" in
-         i?86-*-linux2.[2-9]*) sv_cv_fault_linux_i386_old=yes ;;
-         *)
-           cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-#include <signal.h>
-
-void sigsegv_handler (int sig, unsigned int more)
-{
-  void *fault_address = (void *) (((unsigned long *) &more) [21]);
-}
-
-int
-main ()
-{
-struct sigaction action;
-
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } &&
-	 { ac_try='test -z "$ac_c_werror_flag"
-			 || test ! -s conftest.err'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; } &&
-	 { ac_try='test -s conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  sv_cv_fault_linux_i386_old="guessing no"
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-sv_cv_fault_linux_i386_old=no
-fi
-rm -f conftest.err conftest.$ac_objext \
-      conftest$ac_exeext conftest.$ac_ext
-           ;;
-       esac
-
-else
-  cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-#include <stdlib.h>
-#include <signal.h>
-#if HAVE_SYS_SIGNAL_H
-# include <sys/signal.h>
-#endif
-
-#include <sys/types.h>
-#include <sys/mman.h>
-#if HAVE_MMAP_DEVZERO
-# include <fcntl.h>
-# ifndef MAP_FILE
-#  define MAP_FILE 0
-# endif
-#endif
-#ifndef PROT_NONE
-# define PROT_NONE 0
-#endif
-#if HAVE_MMAP_ANON
-# define zero_fd -1
-# define map_flags MAP_ANON | MAP_PRIVATE
-#elif HAVE_MMAP_ANONYMOUS
-# define zero_fd -1
-# define map_flags MAP_ANONYMOUS | MAP_PRIVATE
-#elif HAVE_MMAP_DEVZERO
-static int zero_fd;
-# define map_flags MAP_FILE | MAP_PRIVATE
-#endif
-unsigned long page;
-int handler_called = 0;
-void sigsegv_handler (int sig, unsigned int more)
-{
-  void *fault_address = (void *) (((unsigned long *) &more) [21]);
-  handler_called++;
-  if (handler_called == 10)
-    exit (4);
-  if (fault_address != (void*)(page + 0x678))
-    exit (3);
-  if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
-    exit (2);
-}
-void crasher (unsigned long p)
-{
-  *(int *) (p + 0x678) = 42;
-}
-int main ()
-{
-  void *p;
-  struct sigaction action;
-  /* Preparations.  */
-#if !HAVE_MMAP_ANON && !HAVE_MMAP_ANONYMOUS && HAVE_MMAP_DEVZERO
-  zero_fd = open ("/dev/zero", O_RDONLY, 0644);
-#endif
-  /* Setup some mmaped memory.  */
-#ifdef __hpux
-  /* HP-UX 10 mmap() often fails when given a hint.  So give the OS complete
-     freedom about the address range.  */
-  p = mmap ((void *) 0,          0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
-#else
-  p = mmap ((void *) 0x12340000, 0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
-#endif
-  if (p == (void *)(-1))
-    exit (2);
-  page = (unsigned long) p;
-  /* Make it read-only.  */
-  if (mprotect ((void *) page, 0x10000, PROT_READ) < 0)
-    exit (2);
-  /* Install the SIGSEGV handler.  */
-  sigemptyset(&action.sa_mask);
-
-  action.sa_handler = (void (*) (int)) &sigsegv_handler;
-  action.sa_flags = 0;
-
-  sigaction (SIGSEGV, &action, (struct sigaction *) NULL);
-  sigaction (SIGBUS, &action, (struct sigaction *) NULL);
-  /* The first write access should invoke the handler and then complete.  */
-  crasher (page);
-  /* The second write access should not invoke the handler.  */
-  crasher (page);
-  /* Check that the handler was called only once.  */
-  if (handler_called != 1)
-    exit (1);
-  /* Test passed!  */
-  return 0;
-}
-_ACEOF
-rm -f conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  sv_cv_fault_linux_i386_old=yes
-else
-  echo "$as_me: program exited with status $ac_status" >&5
-echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-( exit $ac_status )
-sv_cv_fault_linux_i386_old=no
-fi
-rm -f core *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
-fi
-
-fi
-echo "$as_me:$LINENO: result: $sv_cv_fault_linux_i386_old" >&5
-echo "${ECHO_T}$sv_cv_fault_linux_i386_old" >&6
-
-
-
-
-
-
-  echo "$as_me:$LINENO: checking whether a fault handler according to Linux/m68k works" >&5
-echo $ECHO_N "checking whether a fault handler according to Linux/m68k works... $ECHO_C" >&6
-if test "${sv_cv_fault_linux_m68k+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-
-    if test "$cross_compiling" = yes; then
-  case "$host" in
-
-         *)
-           cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-#include <signal.h>
-#include <asm/sigcontext.h>
-#include "$srcdir/src/fault-linux-m68k.c"
-void sigsegv_handler (int sig, int code, struct sigcontext *scp)
-{
-  void *fault_address = (void *) (get_fault_addr (scp));
-}
-
-int
-main ()
-{
-struct sigaction action;
-
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } &&
-	 { ac_try='test -z "$ac_c_werror_flag"
-			 || test ! -s conftest.err'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; } &&
-	 { ac_try='test -s conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  sv_cv_fault_linux_m68k="guessing no"
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-sv_cv_fault_linux_m68k=no
-fi
-rm -f conftest.err conftest.$ac_objext \
-      conftest$ac_exeext conftest.$ac_ext
-           ;;
-       esac
-
-else
-  cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-#include <stdlib.h>
-#include <signal.h>
-#if HAVE_SYS_SIGNAL_H
-# include <sys/signal.h>
-#endif
-#include <asm/sigcontext.h>
-#include "$srcdir/src/fault-linux-m68k.c"
-#include <sys/types.h>
-#include <sys/mman.h>
-#if HAVE_MMAP_DEVZERO
-# include <fcntl.h>
-# ifndef MAP_FILE
-#  define MAP_FILE 0
-# endif
-#endif
-#ifndef PROT_NONE
-# define PROT_NONE 0
-#endif
-#if HAVE_MMAP_ANON
-# define zero_fd -1
-# define map_flags MAP_ANON | MAP_PRIVATE
-#elif HAVE_MMAP_ANONYMOUS
-# define zero_fd -1
-# define map_flags MAP_ANONYMOUS | MAP_PRIVATE
-#elif HAVE_MMAP_DEVZERO
-static int zero_fd;
-# define map_flags MAP_FILE | MAP_PRIVATE
-#endif
-unsigned long page;
-int handler_called = 0;
-void sigsegv_handler (int sig, int code, struct sigcontext *scp)
-{
-  void *fault_address = (void *) (get_fault_addr (scp));
-  handler_called++;
-  if (handler_called == 10)
-    exit (4);
-  if (fault_address != (void*)(page + 0x678))
-    exit (3);
-  if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
-    exit (2);
-}
-void crasher (unsigned long p)
-{
-  *(int *) (p + 0x678) = 42;
-}
-int main ()
-{
-  void *p;
-  struct sigaction action;
-  /* Preparations.  */
-#if !HAVE_MMAP_ANON && !HAVE_MMAP_ANONYMOUS && HAVE_MMAP_DEVZERO
-  zero_fd = open ("/dev/zero", O_RDONLY, 0644);
-#endif
-  /* Setup some mmaped memory.  */
-#ifdef __hpux
-  /* HP-UX 10 mmap() often fails when given a hint.  So give the OS complete
-     freedom about the address range.  */
-  p = mmap ((void *) 0,          0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
-#else
-  p = mmap ((void *) 0x12340000, 0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
-#endif
-  if (p == (void *)(-1))
-    exit (2);
-  page = (unsigned long) p;
-  /* Make it read-only.  */
-  if (mprotect ((void *) page, 0x10000, PROT_READ) < 0)
-    exit (2);
-  /* Install the SIGSEGV handler.  */
-  sigemptyset(&action.sa_mask);
-
-  action.sa_handler = (void (*) (int)) &sigsegv_handler;
-  action.sa_flags = 0;
-
-  sigaction (SIGSEGV, &action, (struct sigaction *) NULL);
-  sigaction (SIGBUS, &action, (struct sigaction *) NULL);
-  /* The first write access should invoke the handler and then complete.  */
-  crasher (page);
-  /* The second write access should not invoke the handler.  */
-  crasher (page);
-  /* Check that the handler was called only once.  */
-  if (handler_called != 1)
-    exit (1);
-  /* Test passed!  */
-  return 0;
-}
-_ACEOF
-rm -f conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  sv_cv_fault_linux_m68k=yes
-else
-  echo "$as_me: program exited with status $ac_status" >&5
-echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-( exit $ac_status )
-sv_cv_fault_linux_m68k=no
-fi
-rm -f core *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
-fi
-
-fi
-echo "$as_me:$LINENO: result: $sv_cv_fault_linux_m68k" >&5
-echo "${ECHO_T}$sv_cv_fault_linux_m68k" >&6
-
-
-
-
-
-
-  echo "$as_me:$LINENO: checking whether a fault handler according to Linux/PowerPC works" >&5
-echo $ECHO_N "checking whether a fault handler according to Linux/PowerPC works... $ECHO_C" >&6
-if test "${sv_cv_fault_linux_powerpc+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-
-    if test "$cross_compiling" = yes; then
-  case "$host" in
-
-         *)
-           cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-#include <signal.h>
-#include <asm/sigcontext.h>
-void sigsegv_handler (int sig, struct sigcontext *scp)
-{
-  void *fault_address = (void *) (scp->regs->dar);
-}
-
-int
-main ()
-{
-struct sigaction action;
-
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } &&
-	 { ac_try='test -z "$ac_c_werror_flag"
-			 || test ! -s conftest.err'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; } &&
-	 { ac_try='test -s conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  sv_cv_fault_linux_powerpc="guessing no"
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-sv_cv_fault_linux_powerpc=no
-fi
-rm -f conftest.err conftest.$ac_objext \
-      conftest$ac_exeext conftest.$ac_ext
-           ;;
-       esac
-
-else
-  cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-#include <stdlib.h>
-#include <signal.h>
-#if HAVE_SYS_SIGNAL_H
-# include <sys/signal.h>
-#endif
-#include <asm/sigcontext.h>
-#include <sys/types.h>
-#include <sys/mman.h>
-#if HAVE_MMAP_DEVZERO
-# include <fcntl.h>
-# ifndef MAP_FILE
-#  define MAP_FILE 0
-# endif
-#endif
-#ifndef PROT_NONE
-# define PROT_NONE 0
-#endif
-#if HAVE_MMAP_ANON
-# define zero_fd -1
-# define map_flags MAP_ANON | MAP_PRIVATE
-#elif HAVE_MMAP_ANONYMOUS
-# define zero_fd -1
-# define map_flags MAP_ANONYMOUS | MAP_PRIVATE
-#elif HAVE_MMAP_DEVZERO
-static int zero_fd;
-# define map_flags MAP_FILE | MAP_PRIVATE
-#endif
-unsigned long page;
-int handler_called = 0;
-void sigsegv_handler (int sig, struct sigcontext *scp)
-{
-  void *fault_address = (void *) (scp->regs->dar);
-  handler_called++;
-  if (handler_called == 10)
-    exit (4);
-  if (fault_address != (void*)(page + 0x678))
-    exit (3);
-  if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
-    exit (2);
-}
-void crasher (unsigned long p)
-{
-  *(int *) (p + 0x678) = 42;
-}
-int main ()
-{
-  void *p;
-  struct sigaction action;
-  /* Preparations.  */
-#if !HAVE_MMAP_ANON && !HAVE_MMAP_ANONYMOUS && HAVE_MMAP_DEVZERO
-  zero_fd = open ("/dev/zero", O_RDONLY, 0644);
-#endif
-  /* Setup some mmaped memory.  */
-#ifdef __hpux
-  /* HP-UX 10 mmap() often fails when given a hint.  So give the OS complete
-     freedom about the address range.  */
-  p = mmap ((void *) 0,          0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
-#else
-  p = mmap ((void *) 0x12340000, 0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
-#endif
-  if (p == (void *)(-1))
-    exit (2);
-  page = (unsigned long) p;
-  /* Make it read-only.  */
-  if (mprotect ((void *) page, 0x10000, PROT_READ) < 0)
-    exit (2);
-  /* Install the SIGSEGV handler.  */
-  sigemptyset(&action.sa_mask);
-
-  action.sa_handler = (void (*) (int)) &sigsegv_handler;
-  action.sa_flags = 0;
-
-  sigaction (SIGSEGV, &action, (struct sigaction *) NULL);
-  sigaction (SIGBUS, &action, (struct sigaction *) NULL);
-  /* The first write access should invoke the handler and then complete.  */
-  crasher (page);
-  /* The second write access should not invoke the handler.  */
-  crasher (page);
-  /* Check that the handler was called only once.  */
-  if (handler_called != 1)
-    exit (1);
-  /* Test passed!  */
-  return 0;
-}
-_ACEOF
-rm -f conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  sv_cv_fault_linux_powerpc=yes
-else
-  echo "$as_me: program exited with status $ac_status" >&5
-echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-( exit $ac_status )
-sv_cv_fault_linux_powerpc=no
-fi
-rm -f core *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
-fi
-
-fi
-echo "$as_me:$LINENO: result: $sv_cv_fault_linux_powerpc" >&5
-echo "${ECHO_T}$sv_cv_fault_linux_powerpc" >&6
-
-
-
-
-
-
-  echo "$as_me:$LINENO: checking whether a fault handler according to Linux/HPPA works" >&5
-echo $ECHO_N "checking whether a fault handler according to Linux/HPPA works... $ECHO_C" >&6
-if test "${sv_cv_fault_linux_hppa+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-
-    if test "$cross_compiling" = yes; then
-  case "$host" in
-
-         *)
-           cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-#include <signal.h>
-
-void sigsegv_handler (int sig, siginfo_t *sip, void *ucp)
-{
-  void *fault_address = (void *) (sip->si_ptr);
-}
-
-int
-main ()
-{
-struct sigaction action;
-action.sa_sigaction = &sigsegv_handler;
-   action.sa_flags = SA_SIGINFO;
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } &&
-	 { ac_try='test -z "$ac_c_werror_flag"
-			 || test ! -s conftest.err'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; } &&
-	 { ac_try='test -s conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  sv_cv_fault_linux_hppa="guessing no"
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-sv_cv_fault_linux_hppa=no
-fi
-rm -f conftest.err conftest.$ac_objext \
-      conftest$ac_exeext conftest.$ac_ext
-           ;;
-       esac
-
-else
-  cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-#include <stdlib.h>
-#include <signal.h>
-#if HAVE_SYS_SIGNAL_H
-# include <sys/signal.h>
-#endif
-
-#include <sys/types.h>
-#include <sys/mman.h>
-#if HAVE_MMAP_DEVZERO
-# include <fcntl.h>
-# ifndef MAP_FILE
-#  define MAP_FILE 0
-# endif
-#endif
-#ifndef PROT_NONE
-# define PROT_NONE 0
-#endif
-#if HAVE_MMAP_ANON
-# define zero_fd -1
-# define map_flags MAP_ANON | MAP_PRIVATE
-#elif HAVE_MMAP_ANONYMOUS
-# define zero_fd -1
-# define map_flags MAP_ANONYMOUS | MAP_PRIVATE
-#elif HAVE_MMAP_DEVZERO
-static int zero_fd;
-# define map_flags MAP_FILE | MAP_PRIVATE
-#endif
-unsigned long page;
-int handler_called = 0;
-void sigsegv_handler (int sig, siginfo_t *sip, void *ucp)
-{
-  void *fault_address = (void *) (sip->si_ptr);
-  handler_called++;
-  if (handler_called == 10)
-    exit (4);
-  if (fault_address != (void*)(page + 0x678))
-    exit (3);
-  if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
-    exit (2);
-}
-void crasher (unsigned long p)
-{
-  *(int *) (p + 0x678) = 42;
-}
-int main ()
-{
-  void *p;
-  struct sigaction action;
-  /* Preparations.  */
-#if !HAVE_MMAP_ANON && !HAVE_MMAP_ANONYMOUS && HAVE_MMAP_DEVZERO
-  zero_fd = open ("/dev/zero", O_RDONLY, 0644);
-#endif
-  /* Setup some mmaped memory.  */
-#ifdef __hpux
-  /* HP-UX 10 mmap() often fails when given a hint.  So give the OS complete
-     freedom about the address range.  */
-  p = mmap ((void *) 0,          0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
-#else
-  p = mmap ((void *) 0x12340000, 0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
-#endif
-  if (p == (void *)(-1))
-    exit (2);
-  page = (unsigned long) p;
-  /* Make it read-only.  */
-  if (mprotect ((void *) page, 0x10000, PROT_READ) < 0)
-    exit (2);
-  /* Install the SIGSEGV handler.  */
-  sigemptyset(&action.sa_mask);
-action.sa_sigaction = &sigsegv_handler;
-   action.sa_flags = SA_SIGINFO;
-  sigaction (SIGSEGV, &action, (struct sigaction *) NULL);
-  sigaction (SIGBUS, &action, (struct sigaction *) NULL);
-  /* The first write access should invoke the handler and then complete.  */
-  crasher (page);
-  /* The second write access should not invoke the handler.  */
-  crasher (page);
-  /* Check that the handler was called only once.  */
-  if (handler_called != 1)
-    exit (1);
-  /* Test passed!  */
-  return 0;
-}
-_ACEOF
-rm -f conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  sv_cv_fault_linux_hppa=yes
-else
-  echo "$as_me: program exited with status $ac_status" >&5
-echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-( exit $ac_status )
-sv_cv_fault_linux_hppa=no
-fi
-rm -f core *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
-fi
-
-fi
-echo "$as_me:$LINENO: result: $sv_cv_fault_linux_hppa" >&5
-echo "${ECHO_T}$sv_cv_fault_linux_hppa" >&6
-
-
-
-
-
-
-  echo "$as_me:$LINENO: checking whether a fault handler according to BSD works" >&5
-echo $ECHO_N "checking whether a fault handler according to BSD works... $ECHO_C" >&6
-if test "${sv_cv_fault_bsd+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-
-    if test "$cross_compiling" = yes; then
-  case "$host" in
-         i?86-*-freebsd[4-9]*) sv_cv_fault_bsd=yes ;;
-         *)
-           cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-#include <signal.h>
-
-void sigsegv_handler (int sig, int code, struct sigcontext *scp, void *addr)
-{
-  void *fault_address = (void *) (addr);
-}
-
-int
-main ()
-{
-struct sigaction action;
-
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } &&
-	 { ac_try='test -z "$ac_c_werror_flag"
-			 || test ! -s conftest.err'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; } &&
-	 { ac_try='test -s conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  sv_cv_fault_bsd="guessing no"
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-sv_cv_fault_bsd=no
-fi
-rm -f conftest.err conftest.$ac_objext \
-      conftest$ac_exeext conftest.$ac_ext
-           ;;
-       esac
-
-else
-  cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-#include <stdlib.h>
-#include <signal.h>
-#if HAVE_SYS_SIGNAL_H
-# include <sys/signal.h>
-#endif
-
-#include <sys/types.h>
-#include <sys/mman.h>
-#if HAVE_MMAP_DEVZERO
-# include <fcntl.h>
-# ifndef MAP_FILE
-#  define MAP_FILE 0
-# endif
-#endif
-#ifndef PROT_NONE
-# define PROT_NONE 0
-#endif
-#if HAVE_MMAP_ANON
-# define zero_fd -1
-# define map_flags MAP_ANON | MAP_PRIVATE
-#elif HAVE_MMAP_ANONYMOUS
-# define zero_fd -1
-# define map_flags MAP_ANONYMOUS | MAP_PRIVATE
-#elif HAVE_MMAP_DEVZERO
-static int zero_fd;
-# define map_flags MAP_FILE | MAP_PRIVATE
-#endif
-unsigned long page;
-int handler_called = 0;
-void sigsegv_handler (int sig, int code, struct sigcontext *scp, void *addr)
-{
-  void *fault_address = (void *) (addr);
-  handler_called++;
-  if (handler_called == 10)
-    exit (4);
-  if (fault_address != (void*)(page + 0x678))
-    exit (3);
-  if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
-    exit (2);
-}
-void crasher (unsigned long p)
-{
-  *(int *) (p + 0x678) = 42;
-}
-int main ()
-{
-  void *p;
-  struct sigaction action;
-  /* Preparations.  */
-#if !HAVE_MMAP_ANON && !HAVE_MMAP_ANONYMOUS && HAVE_MMAP_DEVZERO
-  zero_fd = open ("/dev/zero", O_RDONLY, 0644);
-#endif
-  /* Setup some mmaped memory.  */
-#ifdef __hpux
-  /* HP-UX 10 mmap() often fails when given a hint.  So give the OS complete
-     freedom about the address range.  */
-  p = mmap ((void *) 0,          0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
-#else
-  p = mmap ((void *) 0x12340000, 0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
-#endif
-  if (p == (void *)(-1))
-    exit (2);
-  page = (unsigned long) p;
-  /* Make it read-only.  */
-  if (mprotect ((void *) page, 0x10000, PROT_READ) < 0)
-    exit (2);
-  /* Install the SIGSEGV handler.  */
-  sigemptyset(&action.sa_mask);
-
-  action.sa_handler = (void (*) (int)) &sigsegv_handler;
-  action.sa_flags = 0;
-
-  sigaction (SIGSEGV, &action, (struct sigaction *) NULL);
-  sigaction (SIGBUS, &action, (struct sigaction *) NULL);
-  /* The first write access should invoke the handler and then complete.  */
-  crasher (page);
-  /* The second write access should not invoke the handler.  */
-  crasher (page);
-  /* Check that the handler was called only once.  */
-  if (handler_called != 1)
-    exit (1);
-  /* Test passed!  */
-  return 0;
-}
-_ACEOF
-rm -f conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  sv_cv_fault_bsd=yes
-else
-  echo "$as_me: program exited with status $ac_status" >&5
-echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-( exit $ac_status )
-sv_cv_fault_bsd=no
-fi
-rm -f core *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
-fi
-
-fi
-echo "$as_me:$LINENO: result: $sv_cv_fault_bsd" >&5
-echo "${ECHO_T}$sv_cv_fault_bsd" >&6
-
-
-
-
-
-
-  echo "$as_me:$LINENO: checking whether a fault handler according to IRIX works" >&5
-echo $ECHO_N "checking whether a fault handler according to IRIX works... $ECHO_C" >&6
-if test "${sv_cv_fault_irix+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-
-    if test "$cross_compiling" = yes; then
-  case "$host" in
-         mips-sgi-irix6*) sv_cv_fault_irix=yes ;;
-         *)
-           cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-#include <signal.h>
-
-void sigsegv_handler (int sig, int code, struct sigcontext *scp)
-{
-  void *fault_address = (void *) ((unsigned long) scp->sc_badvaddr);
-}
-
-int
-main ()
-{
-struct sigaction action;
-
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } &&
-	 { ac_try='test -z "$ac_c_werror_flag"
-			 || test ! -s conftest.err'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; } &&
-	 { ac_try='test -s conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  sv_cv_fault_irix="guessing no"
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-sv_cv_fault_irix=no
-fi
-rm -f conftest.err conftest.$ac_objext \
-      conftest$ac_exeext conftest.$ac_ext
-           ;;
-       esac
-
-else
-  cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-#include <stdlib.h>
-#include <signal.h>
-#if HAVE_SYS_SIGNAL_H
-# include <sys/signal.h>
-#endif
-
-#include <sys/types.h>
-#include <sys/mman.h>
-#if HAVE_MMAP_DEVZERO
-# include <fcntl.h>
-# ifndef MAP_FILE
-#  define MAP_FILE 0
-# endif
-#endif
-#ifndef PROT_NONE
-# define PROT_NONE 0
-#endif
-#if HAVE_MMAP_ANON
-# define zero_fd -1
-# define map_flags MAP_ANON | MAP_PRIVATE
-#elif HAVE_MMAP_ANONYMOUS
-# define zero_fd -1
-# define map_flags MAP_ANONYMOUS | MAP_PRIVATE
-#elif HAVE_MMAP_DEVZERO
-static int zero_fd;
-# define map_flags MAP_FILE | MAP_PRIVATE
-#endif
-unsigned long page;
-int handler_called = 0;
-void sigsegv_handler (int sig, int code, struct sigcontext *scp)
-{
-  void *fault_address = (void *) ((unsigned long) scp->sc_badvaddr);
-  handler_called++;
-  if (handler_called == 10)
-    exit (4);
-  if (fault_address != (void*)(page + 0x678))
-    exit (3);
-  if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
-    exit (2);
-}
-void crasher (unsigned long p)
-{
-  *(int *) (p + 0x678) = 42;
-}
-int main ()
-{
-  void *p;
-  struct sigaction action;
-  /* Preparations.  */
-#if !HAVE_MMAP_ANON && !HAVE_MMAP_ANONYMOUS && HAVE_MMAP_DEVZERO
-  zero_fd = open ("/dev/zero", O_RDONLY, 0644);
-#endif
-  /* Setup some mmaped memory.  */
-#ifdef __hpux
-  /* HP-UX 10 mmap() often fails when given a hint.  So give the OS complete
-     freedom about the address range.  */
-  p = mmap ((void *) 0,          0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
-#else
-  p = mmap ((void *) 0x12340000, 0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
-#endif
-  if (p == (void *)(-1))
-    exit (2);
-  page = (unsigned long) p;
-  /* Make it read-only.  */
-  if (mprotect ((void *) page, 0x10000, PROT_READ) < 0)
-    exit (2);
-  /* Install the SIGSEGV handler.  */
-  sigemptyset(&action.sa_mask);
-
-  action.sa_handler = (void (*) (int)) &sigsegv_handler;
-  action.sa_flags = 0;
-
-  sigaction (SIGSEGV, &action, (struct sigaction *) NULL);
-  sigaction (SIGBUS, &action, (struct sigaction *) NULL);
-  /* The first write access should invoke the handler and then complete.  */
-  crasher (page);
-  /* The second write access should not invoke the handler.  */
-  crasher (page);
-  /* Check that the handler was called only once.  */
-  if (handler_called != 1)
-    exit (1);
-  /* Test passed!  */
-  return 0;
-}
-_ACEOF
-rm -f conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  sv_cv_fault_irix=yes
-else
-  echo "$as_me: program exited with status $ac_status" >&5
-echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-( exit $ac_status )
-sv_cv_fault_irix=no
-fi
-rm -f core *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
-fi
-
-fi
-echo "$as_me:$LINENO: result: $sv_cv_fault_irix" >&5
-echo "${ECHO_T}$sv_cv_fault_irix" >&6
-
-
-
-
-
-
-  echo "$as_me:$LINENO: checking whether a fault handler according to HP-UX HPPA works" >&5
-echo $ECHO_N "checking whether a fault handler according to HP-UX HPPA works... $ECHO_C" >&6
-if test "${sv_cv_fault_hpux_hppa+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-
-    if test "$cross_compiling" = yes; then
-  case "$host" in
-         hppa*-*-hpux11*) sv_cv_fault_hpux_hppa=yes ;;
-         *)
-           cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-#include <signal.h>
-
-#define USE_64BIT_REGS(mc) \
-  (((mc).ss_flags & SS_WIDEREGS) && ((mc).ss_flags & SS_NARROWISINVALID))
-#define GET_CR21(mc) \
-  (USE_64BIT_REGS(mc) ? (mc).ss_wide.ss_64.ss_cr21 : (mc).ss_narrow.ss_cr21)
-
-void sigsegv_handler (int sig, int code, struct sigcontext *scp)
-{
-  void *fault_address = (void *) (GET_CR21 (scp->sc_sl.sl_ss));
-}
-
-int
-main ()
-{
-struct sigaction action;
-
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } &&
-	 { ac_try='test -z "$ac_c_werror_flag"
-			 || test ! -s conftest.err'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; } &&
-	 { ac_try='test -s conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  sv_cv_fault_hpux_hppa="guessing no"
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-sv_cv_fault_hpux_hppa=no
-fi
-rm -f conftest.err conftest.$ac_objext \
-      conftest$ac_exeext conftest.$ac_ext
-           ;;
-       esac
-
-else
-  cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-#include <stdlib.h>
-#include <signal.h>
-#if HAVE_SYS_SIGNAL_H
-# include <sys/signal.h>
-#endif
-
-#define USE_64BIT_REGS(mc) \
-  (((mc).ss_flags & SS_WIDEREGS) && ((mc).ss_flags & SS_NARROWISINVALID))
-#define GET_CR21(mc) \
-  (USE_64BIT_REGS(mc) ? (mc).ss_wide.ss_64.ss_cr21 : (mc).ss_narrow.ss_cr21)
-
-#include <sys/types.h>
-#include <sys/mman.h>
-#if HAVE_MMAP_DEVZERO
-# include <fcntl.h>
-# ifndef MAP_FILE
-#  define MAP_FILE 0
-# endif
-#endif
-#ifndef PROT_NONE
-# define PROT_NONE 0
-#endif
-#if HAVE_MMAP_ANON
-# define zero_fd -1
-# define map_flags MAP_ANON | MAP_PRIVATE
-#elif HAVE_MMAP_ANONYMOUS
-# define zero_fd -1
-# define map_flags MAP_ANONYMOUS | MAP_PRIVATE
-#elif HAVE_MMAP_DEVZERO
-static int zero_fd;
-# define map_flags MAP_FILE | MAP_PRIVATE
-#endif
-unsigned long page;
-int handler_called = 0;
-void sigsegv_handler (int sig, int code, struct sigcontext *scp)
-{
-  void *fault_address = (void *) (GET_CR21 (scp->sc_sl.sl_ss));
-  handler_called++;
-  if (handler_called == 10)
-    exit (4);
-  if (fault_address != (void*)(page + 0x678))
-    exit (3);
-  if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
-    exit (2);
-}
-void crasher (unsigned long p)
-{
-  *(int *) (p + 0x678) = 42;
-}
-int main ()
-{
-  void *p;
-  struct sigaction action;
-  /* Preparations.  */
-#if !HAVE_MMAP_ANON && !HAVE_MMAP_ANONYMOUS && HAVE_MMAP_DEVZERO
-  zero_fd = open ("/dev/zero", O_RDONLY, 0644);
-#endif
-  /* Setup some mmaped memory.  */
-#ifdef __hpux
-  /* HP-UX 10 mmap() often fails when given a hint.  So give the OS complete
-     freedom about the address range.  */
-  p = mmap ((void *) 0,          0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
-#else
-  p = mmap ((void *) 0x12340000, 0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
-#endif
-  if (p == (void *)(-1))
-    exit (2);
-  page = (unsigned long) p;
-  /* Make it read-only.  */
-  if (mprotect ((void *) page, 0x10000, PROT_READ) < 0)
-    exit (2);
-  /* Install the SIGSEGV handler.  */
-  sigemptyset(&action.sa_mask);
-
-  action.sa_handler = (void (*) (int)) &sigsegv_handler;
-  action.sa_flags = 0;
-
-  sigaction (SIGSEGV, &action, (struct sigaction *) NULL);
-  sigaction (SIGBUS, &action, (struct sigaction *) NULL);
-  /* The first write access should invoke the handler and then complete.  */
-  crasher (page);
-  /* The second write access should not invoke the handler.  */
-  crasher (page);
-  /* Check that the handler was called only once.  */
-  if (handler_called != 1)
-    exit (1);
-  /* Test passed!  */
-  return 0;
-}
-_ACEOF
-rm -f conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  sv_cv_fault_hpux_hppa=yes
-else
-  echo "$as_me: program exited with status $ac_status" >&5
-echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-( exit $ac_status )
-sv_cv_fault_hpux_hppa=no
-fi
-rm -f core *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
-fi
-
-fi
-echo "$as_me:$LINENO: result: $sv_cv_fault_hpux_hppa" >&5
-echo "${ECHO_T}$sv_cv_fault_hpux_hppa" >&6
-
-
-
-
-
-
-  echo "$as_me:$LINENO: checking whether a fault handler according to OSF/1 Alpha works" >&5
-echo $ECHO_N "checking whether a fault handler according to OSF/1 Alpha works... $ECHO_C" >&6
-if test "${sv_cv_fault_osf_alpha+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-
-    if test "$cross_compiling" = yes; then
-  case "$host" in
-         alpha*-*-osf[4-9]* | alpha*-*-linux2.[4-9]*) sv_cv_fault_osf_alpha=yes ;;
-         *)
-           cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-#include <signal.h>
-
-void sigsegv_handler (int sig, int code, struct sigcontext *scp)
-{
-  void *fault_address = (void *) (scp->sc_traparg_a0);
-}
-
-int
-main ()
-{
-struct sigaction action;
-
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } &&
-	 { ac_try='test -z "$ac_c_werror_flag"
-			 || test ! -s conftest.err'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; } &&
-	 { ac_try='test -s conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  sv_cv_fault_osf_alpha="guessing no"
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-sv_cv_fault_osf_alpha=no
-fi
-rm -f conftest.err conftest.$ac_objext \
-      conftest$ac_exeext conftest.$ac_ext
-           ;;
-       esac
-
-else
-  cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-#include <stdlib.h>
-#include <signal.h>
-#if HAVE_SYS_SIGNAL_H
-# include <sys/signal.h>
-#endif
-
-#include <sys/types.h>
-#include <sys/mman.h>
-#if HAVE_MMAP_DEVZERO
-# include <fcntl.h>
-# ifndef MAP_FILE
-#  define MAP_FILE 0
-# endif
-#endif
-#ifndef PROT_NONE
-# define PROT_NONE 0
-#endif
-#if HAVE_MMAP_ANON
-# define zero_fd -1
-# define map_flags MAP_ANON | MAP_PRIVATE
-#elif HAVE_MMAP_ANONYMOUS
-# define zero_fd -1
-# define map_flags MAP_ANONYMOUS | MAP_PRIVATE
-#elif HAVE_MMAP_DEVZERO
-static int zero_fd;
-# define map_flags MAP_FILE | MAP_PRIVATE
-#endif
-unsigned long page;
-int handler_called = 0;
-void sigsegv_handler (int sig, int code, struct sigcontext *scp)
-{
-  void *fault_address = (void *) (scp->sc_traparg_a0);
-  handler_called++;
-  if (handler_called == 10)
-    exit (4);
-  if (fault_address != (void*)(page + 0x678))
-    exit (3);
-  if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
-    exit (2);
-}
-void crasher (unsigned long p)
-{
-  *(int *) (p + 0x678) = 42;
-}
-int main ()
-{
-  void *p;
-  struct sigaction action;
-  /* Preparations.  */
-#if !HAVE_MMAP_ANON && !HAVE_MMAP_ANONYMOUS && HAVE_MMAP_DEVZERO
-  zero_fd = open ("/dev/zero", O_RDONLY, 0644);
-#endif
-  /* Setup some mmaped memory.  */
-#ifdef __hpux
-  /* HP-UX 10 mmap() often fails when given a hint.  So give the OS complete
-     freedom about the address range.  */
-  p = mmap ((void *) 0,          0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
-#else
-  p = mmap ((void *) 0x12340000, 0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
-#endif
-  if (p == (void *)(-1))
-    exit (2);
-  page = (unsigned long) p;
-  /* Make it read-only.  */
-  if (mprotect ((void *) page, 0x10000, PROT_READ) < 0)
-    exit (2);
-  /* Install the SIGSEGV handler.  */
-  sigemptyset(&action.sa_mask);
-
-  action.sa_handler = (void (*) (int)) &sigsegv_handler;
-  action.sa_flags = 0;
-
-  sigaction (SIGSEGV, &action, (struct sigaction *) NULL);
-  sigaction (SIGBUS, &action, (struct sigaction *) NULL);
-  /* The first write access should invoke the handler and then complete.  */
-  crasher (page);
-  /* The second write access should not invoke the handler.  */
-  crasher (page);
-  /* Check that the handler was called only once.  */
-  if (handler_called != 1)
-    exit (1);
-  /* Test passed!  */
-  return 0;
-}
-_ACEOF
-rm -f conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  sv_cv_fault_osf_alpha=yes
-else
-  echo "$as_me: program exited with status $ac_status" >&5
-echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-( exit $ac_status )
-sv_cv_fault_osf_alpha=no
-fi
-rm -f core *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
-fi
-
-fi
-echo "$as_me:$LINENO: result: $sv_cv_fault_osf_alpha" >&5
-echo "${ECHO_T}$sv_cv_fault_osf_alpha" >&6
-
-
-
-
-
-
-  echo "$as_me:$LINENO: checking whether a fault handler according to NetBSD Alpha works" >&5
-echo $ECHO_N "checking whether a fault handler according to NetBSD Alpha works... $ECHO_C" >&6
-if test "${sv_cv_fault_netbsd_alpha+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-
-    if test "$cross_compiling" = yes; then
-  case "$host" in
-         alpha*-*-osf[4-9]* | alpha-*-*bsd*) sv_cv_fault_netbsd_alpha=yes ;;
-         *)
-           cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-#include <signal.h>
-#include "$srcdir/src/fault-netbsd-alpha.c"
-void sigsegv_handler (int sig, int code, struct sigcontext *scp)
-{
-  void *fault_address = (void *) (get_fault_addr (scp));
-}
-
-int
-main ()
-{
-struct sigaction action;
-
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } &&
-	 { ac_try='test -z "$ac_c_werror_flag"
-			 || test ! -s conftest.err'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; } &&
-	 { ac_try='test -s conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  sv_cv_fault_netbsd_alpha="guessing no"
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-sv_cv_fault_netbsd_alpha=no
-fi
-rm -f conftest.err conftest.$ac_objext \
-      conftest$ac_exeext conftest.$ac_ext
-           ;;
-       esac
-
-else
-  cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-#include <stdlib.h>
-#include <signal.h>
-#if HAVE_SYS_SIGNAL_H
-# include <sys/signal.h>
-#endif
-#include "$srcdir/src/fault-netbsd-alpha.c"
-#include <sys/types.h>
-#include <sys/mman.h>
-#if HAVE_MMAP_DEVZERO
-# include <fcntl.h>
-# ifndef MAP_FILE
-#  define MAP_FILE 0
-# endif
-#endif
-#ifndef PROT_NONE
-# define PROT_NONE 0
-#endif
-#if HAVE_MMAP_ANON
-# define zero_fd -1
-# define map_flags MAP_ANON | MAP_PRIVATE
-#elif HAVE_MMAP_ANONYMOUS
-# define zero_fd -1
-# define map_flags MAP_ANONYMOUS | MAP_PRIVATE
-#elif HAVE_MMAP_DEVZERO
-static int zero_fd;
-# define map_flags MAP_FILE | MAP_PRIVATE
-#endif
-unsigned long page;
-int handler_called = 0;
-void sigsegv_handler (int sig, int code, struct sigcontext *scp)
-{
-  void *fault_address = (void *) (get_fault_addr (scp));
-  handler_called++;
-  if (handler_called == 10)
-    exit (4);
-  if (fault_address != (void*)(page + 0x678))
-    exit (3);
-  if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
-    exit (2);
-}
-void crasher (unsigned long p)
-{
-  *(int *) (p + 0x678) = 42;
-}
-int main ()
-{
-  void *p;
-  struct sigaction action;
-  /* Preparations.  */
-#if !HAVE_MMAP_ANON && !HAVE_MMAP_ANONYMOUS && HAVE_MMAP_DEVZERO
-  zero_fd = open ("/dev/zero", O_RDONLY, 0644);
-#endif
-  /* Setup some mmaped memory.  */
-#ifdef __hpux
-  /* HP-UX 10 mmap() often fails when given a hint.  So give the OS complete
-     freedom about the address range.  */
-  p = mmap ((void *) 0,          0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
-#else
-  p = mmap ((void *) 0x12340000, 0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
-#endif
-  if (p == (void *)(-1))
-    exit (2);
-  page = (unsigned long) p;
-  /* Make it read-only.  */
-  if (mprotect ((void *) page, 0x10000, PROT_READ) < 0)
-    exit (2);
-  /* Install the SIGSEGV handler.  */
-  sigemptyset(&action.sa_mask);
-
-  action.sa_handler = (void (*) (int)) &sigsegv_handler;
-  action.sa_flags = 0;
-
-  sigaction (SIGSEGV, &action, (struct sigaction *) NULL);
-  sigaction (SIGBUS, &action, (struct sigaction *) NULL);
-  /* The first write access should invoke the handler and then complete.  */
-  crasher (page);
-  /* The second write access should not invoke the handler.  */
-  crasher (page);
-  /* Check that the handler was called only once.  */
-  if (handler_called != 1)
-    exit (1);
-  /* Test passed!  */
-  return 0;
-}
-_ACEOF
-rm -f conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  sv_cv_fault_netbsd_alpha=yes
-else
-  echo "$as_me: program exited with status $ac_status" >&5
-echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-( exit $ac_status )
-sv_cv_fault_netbsd_alpha=no
-fi
-rm -f core *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
-fi
-
-fi
-echo "$as_me:$LINENO: result: $sv_cv_fault_netbsd_alpha" >&5
-echo "${ECHO_T}$sv_cv_fault_netbsd_alpha" >&6
-
-
-
-
-
-
-  echo "$as_me:$LINENO: checking whether a fault handler according to AIX works" >&5
-echo $ECHO_N "checking whether a fault handler according to AIX works... $ECHO_C" >&6
-if test "${sv_cv_fault_aix+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-
-    if test "$cross_compiling" = yes; then
-  case "$host" in
-         *-*-aix*) sv_cv_fault_aix=yes ;;
-         *)
-           cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-#include <signal.h>
-
-void sigsegv_handler (int sig, int code, struct sigcontext *scp)
-{
-  void *fault_address = (void *) (scp->sc_jmpbuf.jmp_context.o_vaddr);
-}
-
-int
-main ()
-{
-struct sigaction action;
-
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } &&
-	 { ac_try='test -z "$ac_c_werror_flag"
-			 || test ! -s conftest.err'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; } &&
-	 { ac_try='test -s conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  sv_cv_fault_aix="guessing no"
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-sv_cv_fault_aix=no
-fi
-rm -f conftest.err conftest.$ac_objext \
-      conftest$ac_exeext conftest.$ac_ext
-           ;;
-       esac
-
-else
-  cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-#include <stdlib.h>
-#include <signal.h>
-#if HAVE_SYS_SIGNAL_H
-# include <sys/signal.h>
-#endif
-
-#include <sys/types.h>
-#include <sys/mman.h>
-#if HAVE_MMAP_DEVZERO
-# include <fcntl.h>
-# ifndef MAP_FILE
-#  define MAP_FILE 0
-# endif
-#endif
-#ifndef PROT_NONE
-# define PROT_NONE 0
-#endif
-#if HAVE_MMAP_ANON
-# define zero_fd -1
-# define map_flags MAP_ANON | MAP_PRIVATE
-#elif HAVE_MMAP_ANONYMOUS
-# define zero_fd -1
-# define map_flags MAP_ANONYMOUS | MAP_PRIVATE
-#elif HAVE_MMAP_DEVZERO
-static int zero_fd;
-# define map_flags MAP_FILE | MAP_PRIVATE
-#endif
-unsigned long page;
-int handler_called = 0;
-void sigsegv_handler (int sig, int code, struct sigcontext *scp)
-{
-  void *fault_address = (void *) (scp->sc_jmpbuf.jmp_context.o_vaddr);
-  handler_called++;
-  if (handler_called == 10)
-    exit (4);
-  if (fault_address != (void*)(page + 0x678))
-    exit (3);
-  if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
-    exit (2);
-}
-void crasher (unsigned long p)
-{
-  *(int *) (p + 0x678) = 42;
-}
-int main ()
-{
-  void *p;
-  struct sigaction action;
-  /* Preparations.  */
-#if !HAVE_MMAP_ANON && !HAVE_MMAP_ANONYMOUS && HAVE_MMAP_DEVZERO
-  zero_fd = open ("/dev/zero", O_RDONLY, 0644);
-#endif
-  /* Setup some mmaped memory.  */
-#ifdef __hpux
-  /* HP-UX 10 mmap() often fails when given a hint.  So give the OS complete
-     freedom about the address range.  */
-  p = mmap ((void *) 0,          0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
-#else
-  p = mmap ((void *) 0x12340000, 0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
-#endif
-  if (p == (void *)(-1))
-    exit (2);
-  page = (unsigned long) p;
-  /* Make it read-only.  */
-  if (mprotect ((void *) page, 0x10000, PROT_READ) < 0)
-    exit (2);
-  /* Install the SIGSEGV handler.  */
-  sigemptyset(&action.sa_mask);
-
-  action.sa_handler = (void (*) (int)) &sigsegv_handler;
-  action.sa_flags = 0;
-
-  sigaction (SIGSEGV, &action, (struct sigaction *) NULL);
-  sigaction (SIGBUS, &action, (struct sigaction *) NULL);
-  /* The first write access should invoke the handler and then complete.  */
-  crasher (page);
-  /* The second write access should not invoke the handler.  */
-  crasher (page);
-  /* Check that the handler was called only once.  */
-  if (handler_called != 1)
-    exit (1);
-  /* Test passed!  */
-  return 0;
-}
-_ACEOF
-rm -f conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  sv_cv_fault_aix=yes
-else
-  echo "$as_me: program exited with status $ac_status" >&5
-echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-( exit $ac_status )
-sv_cv_fault_aix=no
-fi
-rm -f core *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
-fi
-
-fi
-echo "$as_me:$LINENO: result: $sv_cv_fault_aix" >&5
-echo "${ECHO_T}$sv_cv_fault_aix" >&6
-
-
-
-
-
-
-  echo "$as_me:$LINENO: checking whether a fault handler according to MacOSX PowerPC works" >&5
-echo $ECHO_N "checking whether a fault handler according to MacOSX PowerPC works... $ECHO_C" >&6
-if test "${sv_cv_fault_macos_ppc+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-
-    if test "$cross_compiling" = yes; then
-  case "$host" in
-         powerpc-*-macos* | powerpc-*-darwin*) sv_cv_fault_macos_ppc=yes ;;
-         *)
-           cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-#include <signal.h>
-#include "$srcdir/src/fault-macos-powerpc.c"
-void sigsegv_handler (int sig, int code, struct sigcontext *scp)
-{
-  void *fault_address = (void *) (get_fault_addr (scp));
-}
-
-int
-main ()
-{
-struct sigaction action;
-
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } &&
-	 { ac_try='test -z "$ac_c_werror_flag"
-			 || test ! -s conftest.err'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; } &&
-	 { ac_try='test -s conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  sv_cv_fault_macos_ppc="guessing no"
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-sv_cv_fault_macos_ppc=no
-fi
-rm -f conftest.err conftest.$ac_objext \
-      conftest$ac_exeext conftest.$ac_ext
-           ;;
-       esac
-
-else
-  cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-#include <stdlib.h>
-#include <signal.h>
-#if HAVE_SYS_SIGNAL_H
-# include <sys/signal.h>
-#endif
-#include "$srcdir/src/fault-macos-powerpc.c"
-#include <sys/types.h>
-#include <sys/mman.h>
-#if HAVE_MMAP_DEVZERO
-# include <fcntl.h>
-# ifndef MAP_FILE
-#  define MAP_FILE 0
-# endif
-#endif
-#ifndef PROT_NONE
-# define PROT_NONE 0
-#endif
-#if HAVE_MMAP_ANON
-# define zero_fd -1
-# define map_flags MAP_ANON | MAP_PRIVATE
-#elif HAVE_MMAP_ANONYMOUS
-# define zero_fd -1
-# define map_flags MAP_ANONYMOUS | MAP_PRIVATE
-#elif HAVE_MMAP_DEVZERO
-static int zero_fd;
-# define map_flags MAP_FILE | MAP_PRIVATE
-#endif
-unsigned long page;
-int handler_called = 0;
-void sigsegv_handler (int sig, int code, struct sigcontext *scp)
-{
-  void *fault_address = (void *) (get_fault_addr (scp));
-  handler_called++;
-  if (handler_called == 10)
-    exit (4);
-  if (fault_address != (void*)(page + 0x678))
-    exit (3);
-  if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
-    exit (2);
-}
-void crasher (unsigned long p)
-{
-  *(int *) (p + 0x678) = 42;
-}
-int main ()
-{
-  void *p;
-  struct sigaction action;
-  /* Preparations.  */
-#if !HAVE_MMAP_ANON && !HAVE_MMAP_ANONYMOUS && HAVE_MMAP_DEVZERO
-  zero_fd = open ("/dev/zero", O_RDONLY, 0644);
-#endif
-  /* Setup some mmaped memory.  */
-#ifdef __hpux
-  /* HP-UX 10 mmap() often fails when given a hint.  So give the OS complete
-     freedom about the address range.  */
-  p = mmap ((void *) 0,          0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
-#else
-  p = mmap ((void *) 0x12340000, 0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
-#endif
-  if (p == (void *)(-1))
-    exit (2);
-  page = (unsigned long) p;
-  /* Make it read-only.  */
-  if (mprotect ((void *) page, 0x10000, PROT_READ) < 0)
-    exit (2);
-  /* Install the SIGSEGV handler.  */
-  sigemptyset(&action.sa_mask);
-
-  action.sa_handler = (void (*) (int)) &sigsegv_handler;
-  action.sa_flags = 0;
-
-  sigaction (SIGSEGV, &action, (struct sigaction *) NULL);
-  sigaction (SIGBUS, &action, (struct sigaction *) NULL);
-  /* The first write access should invoke the handler and then complete.  */
-  crasher (page);
-  /* The second write access should not invoke the handler.  */
-  crasher (page);
-  /* Check that the handler was called only once.  */
-  if (handler_called != 1)
-    exit (1);
-  /* Test passed!  */
-  return 0;
-}
-_ACEOF
-rm -f conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  sv_cv_fault_macos_ppc=yes
-else
-  echo "$as_me: program exited with status $ac_status" >&5
-echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-( exit $ac_status )
-sv_cv_fault_macos_ppc=no
-fi
-rm -f core *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
-fi
-
-fi
-echo "$as_me:$LINENO: result: $sv_cv_fault_macos_ppc" >&5
-echo "${ECHO_T}$sv_cv_fault_macos_ppc" >&6
-
-
-
-
-
-
-  echo "$as_me:$LINENO: checking whether a fault handler according to Hurd works" >&5
-echo $ECHO_N "checking whether a fault handler according to Hurd works... $ECHO_C" >&6
-if test "${sv_cv_fault_hurd+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-
-    if test "$cross_compiling" = yes; then
-  case "$host" in
-
-         *)
-           cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-#include <signal.h>
-
-void sigsegv_handler (int sig, int code, struct sigcontext *scp)
-{
-  void *fault_address = (void *) (code);
-}
-
-int
-main ()
-{
-struct sigaction action;
-
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } &&
-	 { ac_try='test -z "$ac_c_werror_flag"
-			 || test ! -s conftest.err'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; } &&
-	 { ac_try='test -s conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  sv_cv_fault_hurd="guessing no"
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-sv_cv_fault_hurd=no
-fi
-rm -f conftest.err conftest.$ac_objext \
-      conftest$ac_exeext conftest.$ac_ext
-           ;;
-       esac
-
-else
-  cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-#include <stdlib.h>
-#include <signal.h>
-#if HAVE_SYS_SIGNAL_H
-# include <sys/signal.h>
-#endif
-
-#include <sys/types.h>
-#include <sys/mman.h>
-#if HAVE_MMAP_DEVZERO
-# include <fcntl.h>
-# ifndef MAP_FILE
-#  define MAP_FILE 0
-# endif
-#endif
-#ifndef PROT_NONE
-# define PROT_NONE 0
-#endif
-#if HAVE_MMAP_ANON
-# define zero_fd -1
-# define map_flags MAP_ANON | MAP_PRIVATE
-#elif HAVE_MMAP_ANONYMOUS
-# define zero_fd -1
-# define map_flags MAP_ANONYMOUS | MAP_PRIVATE
-#elif HAVE_MMAP_DEVZERO
-static int zero_fd;
-# define map_flags MAP_FILE | MAP_PRIVATE
-#endif
-unsigned long page;
-int handler_called = 0;
-void sigsegv_handler (int sig, int code, struct sigcontext *scp)
-{
-  void *fault_address = (void *) (code);
-  handler_called++;
-  if (handler_called == 10)
-    exit (4);
-  if (fault_address != (void*)(page + 0x678))
-    exit (3);
-  if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
-    exit (2);
-}
-void crasher (unsigned long p)
-{
-  *(int *) (p + 0x678) = 42;
-}
-int main ()
-{
-  void *p;
-  struct sigaction action;
-  /* Preparations.  */
-#if !HAVE_MMAP_ANON && !HAVE_MMAP_ANONYMOUS && HAVE_MMAP_DEVZERO
-  zero_fd = open ("/dev/zero", O_RDONLY, 0644);
-#endif
-  /* Setup some mmaped memory.  */
-#ifdef __hpux
-  /* HP-UX 10 mmap() often fails when given a hint.  So give the OS complete
-     freedom about the address range.  */
-  p = mmap ((void *) 0,          0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
-#else
-  p = mmap ((void *) 0x12340000, 0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
-#endif
-  if (p == (void *)(-1))
-    exit (2);
-  page = (unsigned long) p;
-  /* Make it read-only.  */
-  if (mprotect ((void *) page, 0x10000, PROT_READ) < 0)
-    exit (2);
-  /* Install the SIGSEGV handler.  */
-  sigemptyset(&action.sa_mask);
-
-  action.sa_handler = (void (*) (int)) &sigsegv_handler;
-  action.sa_flags = 0;
-
-  sigaction (SIGSEGV, &action, (struct sigaction *) NULL);
-  sigaction (SIGBUS, &action, (struct sigaction *) NULL);
-  /* The first write access should invoke the handler and then complete.  */
-  crasher (page);
-  /* The second write access should not invoke the handler.  */
-  crasher (page);
-  /* Check that the handler was called only once.  */
-  if (handler_called != 1)
-    exit (1);
-  /* Test passed!  */
-  return 0;
-}
-_ACEOF
-rm -f conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  sv_cv_fault_hurd=yes
-else
-  echo "$as_me: program exited with status $ac_status" >&5
-echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-( exit $ac_status )
-sv_cv_fault_hurd=no
-fi
-rm -f core *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
-fi
-
-fi
-echo "$as_me:$LINENO: result: $sv_cv_fault_hurd" >&5
-echo "${ECHO_T}$sv_cv_fault_hurd" >&6
-
-
-CFG_FAULT=
-FAULT_CONTEXT=void
-FAULT_CONTEXT_INCLUDE=
-if test -z "$CFG_FAULT" && test "$sv_cv_fault_aix" = yes; then
-  case "$host_cpu" in
-    powerpc* | rs6000) CFG_FAULT=fault-aix-powerpc.h ;;
-    *) CFG_FAULT=fault-aix.h ;;
-  esac
-  FAULT_CONTEXT='struct sigcontext'
-fi
-if test -z "$CFG_FAULT" && test "$sv_cv_fault_irix" = yes; then
-  case "$host_cpu" in
-    mips*) CFG_FAULT=fault-irix-mips.h ;;
-    *) CFG_FAULT=fault-irix.h ;;
-  esac
-  FAULT_CONTEXT='struct sigcontext'
-fi
-if test -z "$CFG_FAULT" && test "$sv_cv_fault_hpux_hppa" = yes; then
-  case "$host_cpu" in
-    hppa* | parisc*) CFG_FAULT=fault-hpux-hppa.h ;;
-    *) CFG_FAULT=fault-hpux.h ;;
-  esac
-  FAULT_CONTEXT='struct sigcontext'
-fi
-if test -z "$CFG_FAULT" && test "$sv_cv_fault_osf_alpha" = yes; then
-  case "$host_cpu" in
-    alpha*) CFG_FAULT=fault-osf-alpha.h ;;
-    *) CFG_FAULT=fault-osf.h ;;
-  esac
-  FAULT_CONTEXT='struct sigcontext'
-fi
-if test -z "$CFG_FAULT" && test "$sv_cv_fault_netbsd_alpha" = yes; then
-  case "$host_cpu" in
-    alpha*) CFG_FAULT=fault-netbsd-alpha.h ;;
-  esac
-  FAULT_CONTEXT='struct sigcontext'
-fi
-if test -z "$CFG_FAULT" && test "$sv_cv_fault_linux_i386" = yes; then
-  case "$host_cpu" in
-    i?86 | x86_64) CFG_FAULT=fault-linux-i386.h ;;
-  esac
-  FAULT_CONTEXT='struct sigcontext'
-fi
-if test -z "$CFG_FAULT" && test "$sv_cv_fault_linux_i386_old" = yes; then
-  case "$host_cpu" in
-    i?86 | x86_64) CFG_FAULT=fault-linux-i386-old.h ;;
-  esac
-  FAULT_CONTEXT='struct sigcontext'
-fi
-if test -z "$CFG_FAULT" && test "$sv_cv_fault_linux_powerpc" = yes; then
-  case "$host_cpu" in
-    powerpc* | rs6000) CFG_FAULT=fault-linux-powerpc.h ;;
-  esac
-  FAULT_CONTEXT='struct sigcontext'
-fi
-if test -z "$CFG_FAULT" && test "$sv_cv_fault_linux_hppa" = yes; then
-  case "$host_cpu" in
-    hppa* | parisc*) CFG_FAULT=fault-linux-hppa.h ;;
-  esac
-fi
-if test -z "$CFG_FAULT" && test "$sv_cv_fault_hurd" = yes; then
-  case "$host_os" in
-    netbsd*) # A false positive.
-      ;;
-    *)
-      CFG_FAULT=fault-hurd.h
-      FAULT_CONTEXT='struct sigcontext'
-      ;;
-  esac
-fi
-if test -z "$CFG_FAULT" && test "$sv_cv_fault_bsd" = yes; then
-  case "$host_os" in
-    freebsd*)
-      case "$host_cpu" in
-        i?86 | x86_64)
-          CFG_FAULT=fault-freebsd-i386.h
-          FAULT_CONTEXT='struct sigcontext'
-          ;;
-        *)
-          CFG_FAULT=fault-bsd.h
-          FAULT_CONTEXT='void'
-          ;;
-      esac
-      ;;
-    *)
-      CFG_FAULT=fault-bsd.h
-      FAULT_CONTEXT='void'
-      ;;
-  esac
-fi
-if test -z "$CFG_FAULT" && test "$sv_cv_fault_posix" = yes; then
-  case "$host_os" in
-    openbsd*)
-      case "$host_cpu" in
-        i?86 | x86_64) CFG_FAULT=fault-openbsd-i386.h ;;
-        *) CFG_FAULT=fault-openbsd.h ;;
-      esac
-      FAULT_CONTEXT='struct sigcontext'
-      ;;
-    linux*)
-      case "$host_cpu" in
-        ia64)
-          CFG_FAULT=fault-linux-ia64.h
-          FAULT_CONTEXT='struct sigcontext'
-          ;;
-      esac
-      ;;
-  esac
-  if test -z "$CFG_FAULT"; then
-    case "$host_os" in
-      solaris*)
-        case "$host_cpu" in
-          i?86 | x86_64) CFG_FAULT=fault-solaris-i386.h ;;
-          sparc*) CFG_FAULT=fault-solaris-sparc.h ;;
-          *) CFG_FAULT=fault-solaris.h ;;
-        esac
-        ;;
-      *)
-        CFG_FAULT=fault-posix.h
-        ;;
-    esac
-    FAULT_CONTEXT='ucontext_t'
-    FAULT_CONTEXT_INCLUDE='#include <ucontext.h>'
-  fi
-fi
-if test -z "$CFG_FAULT" && test "$sv_cv_fault_linux_m68k" = yes; then
-  case "$host_cpu" in
-    m68*)
-      CFG_FAULT=fault-linux-m68k.h
-      FAULT_CONTEXT='struct sigcontext'
-      ;;
-  esac
-fi
-if test -z "$CFG_FAULT" && test "$sv_cv_fault_macos_ppc" = yes; then
-  case "$host_cpu" in
-    powerpc* | rs6000)
-      CFG_FAULT=fault-macos-powerpc.h
-      FAULT_CONTEXT='struct sigcontext'
-      ;;
-  esac
-fi
-if test -z "$CFG_FAULT"; then
-  case "$host_os" in
-    mingw* | cygwin*)
-      FAULT_CONTEXT='CONTEXT'
-      FAULT_CONTEXT_INCLUDE='#include <windows.h>'
-      CFG_FAULT=fault-win32.h # nonexistent, just a dummy
-      ;;
-  esac
-fi
-if test -n "$CFG_FAULT"; then
-  sv_cv_have_sigsegv_recovery=yes
-else
-  sv_cv_have_sigsegv_recovery=no
-        case "$host_os" in
-    linux*)
-      case "$host_cpu" in
-        alpha*)
-          CFG_FAULT=fault-linux-alpha.h
-          FAULT_CONTEXT='struct sigcontext'
-          ;;
-        arm* | strongarm* | xscale*)
-          CFG_FAULT=fault-linux-arm.h
-          FAULT_CONTEXT='struct sigcontext'
-          ;;
-        cris)
-          CFG_FAULT=fault-linux-cris.h
-          FAULT_CONTEXT='struct sigcontext'
-          ;;
-        mips*)
-          CFG_FAULT=fault-linux-mips.h
-          FAULT_CONTEXT='struct sigcontext'
-          ;;
-        s390*)
-          CFG_FAULT=fault-linux-s390.h
-          FAULT_CONTEXT='struct sigcontext'
-          ;;
-        sh*)
-          CFG_FAULT=fault-linux-sh.h
-          FAULT_CONTEXT='struct sigcontext'
-          ;;
-        sparc*)
-          CFG_FAULT=fault-linux-sparc.h
-          FAULT_CONTEXT='struct sigcontext'
-          ;;
-        x86_64)
-          CFG_FAULT=fault-linux-x86_64.h
-          FAULT_CONTEXT='struct sigcontext'
-          ;;
-      esac
-      ;;
-    beos*)
-      case "$host_cpu" in
-        i?86 | x86_64) CFG_FAULT=fault-beos-i386.h ;;
-        *) CFG_FAULT=fault-beos.h ;;
-      esac
-      FAULT_CONTEXT='struct vregs'
-      ;;
-    macos* | darwin*)
-      case "$host_cpu" in
-        i?86 | x86_64) CFG_FAULT=fault-macos-i386.h ;;
-      esac
-      FAULT_CONTEXT='struct sigcontext'
-      ;;
-  esac
-fi
-echo "$as_me:$LINENO: checking for the fault handler specifics" >&5
-echo $ECHO_N "checking for the fault handler specifics... $ECHO_C" >&6
-if test -n "$CFG_FAULT"; then
-  sv_cv_fault_include=$CFG_FAULT
-else
-  sv_cv_fault_include=none
-fi
-echo "$as_me:$LINENO: result: $sv_cv_fault_include" >&5
-echo "${ECHO_T}$sv_cv_fault_include" >&6
-if test -z "$CFG_FAULT"; then
-  CFG_FAULT=fault-none.h
-fi
-
-cat >>confdefs.h <<_ACEOF
-#define CFG_FAULT "$CFG_FAULT"
-_ACEOF
-
-
-
-
-echo "$as_me:$LINENO: checking if the system supports catching SIGSEGV" >&5
-echo $ECHO_N "checking if the system supports catching SIGSEGV... $ECHO_C" >&6
-echo "$as_me:$LINENO: result: $sv_cv_have_sigsegv_recovery" >&5
-echo "${ECHO_T}$sv_cv_have_sigsegv_recovery" >&6
-if test $sv_cv_have_sigsegv_recovery != no; then
-  HAVE_SIGSEGV_RECOVERY=1
-else
-  HAVE_SIGSEGV_RECOVERY=0
-fi
-
-
-
-echo "$as_me:$LINENO: checking for stack direction" >&5
-echo $ECHO_N "checking for stack direction... $ECHO_C" >&6
-if test "${sv_cv_stack_direction_msg+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-
-  case "$host_cpu" in
-        a29k | \
-    alpha* | \
-    arc | \
-    arm* | strongarm* | xscale* | \
-    avr | \
-    c1 | c2 | c32 | c34 | c38 | \
-    clipper | \
-    cris | \
-    d30v | \
-    elxsi | \
-    fr30 | \
-    h8300 | \
-    i?86 | x86_64 | \
-    i860 | \
-    ia64 | \
-    m32r | \
-    m68* | \
-    m88k | \
-    mcore | \
-    mips* | \
-    mmix | \
-    mn10200 | \
-    mn10300 | \
-    ns32k | \
-    pdp11 | \
-    pj* | \
-    powerpc* | rs6000 | \
-    romp | \
-    s390* | \
-    sh* | \
-    sparc* | \
-    v850 | \
-    vax | \
-    xtensa)
-      sv_cv_stack_direction=-1 ;;
-    c4x | \
-    dsp16xx | \
-    i960 | \
-    hppa* | parisc* | \
-    stormy16 | \
-    we32k)
-      sv_cv_stack_direction=1 ;;
-    *)
-      if test $cross_compiling = no; then
-        cat > conftest.c <<EOF
-#include <stdio.h>
-int
-get_stack_direction ()
-{
-  auto char dummy;
-  static char *dummyaddr = (char *)0;
-  if (dummyaddr != (char *)0)
-    return &dummy > dummyaddr ? 1 : &dummy < dummyaddr ? -1 : 0;
-  else
-    {
-      dummyaddr = &dummy;
-      {
-        int result = get_stack_direction ();
-        /* The next assignment avoids tail recursion elimination
-           (IRIX 6.4 CC).  */
-        dummyaddr = (char *)0;
-        return result;
-      }
-    }
-}
-int
-main ()
-{
-  printf ("%d\n", get_stack_direction ());
-  return 0;
-}
-EOF
-        { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }
-        sv_cv_stack_direction=`./conftest`
-      else
-        sv_cv_stack_direction=0
-      fi
-      ;;
-  esac
-  case $sv_cv_stack_direction in
-    1)  sv_cv_stack_direction_msg="grows up";;
-    -1) sv_cv_stack_direction_msg="grows down";;
-    *)  sv_cv_stack_direction_msg="unknown";;
-  esac
-
-fi
-echo "$as_me:$LINENO: result: $sv_cv_stack_direction_msg" >&5
-echo "${ECHO_T}$sv_cv_stack_direction_msg" >&6
-
-cat >>confdefs.h <<_ACEOF
-#define STACK_DIRECTION $sv_cv_stack_direction
-_ACEOF
-
-
-echo "$as_me:$LINENO: checking for PIOCMAP in sys/procfs.h" >&5
-echo $ECHO_N "checking for PIOCMAP in sys/procfs.h... $ECHO_C" >&6
-if test "${sv_cv_procfsvma+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-
-  cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-#include <sys/procfs.h>
-int
-main ()
-{
-int x = PIOCNMAP + PIOCMAP; prmap_t y;
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } &&
-	 { ac_try='test -z "$ac_c_werror_flag"
-			 || test ! -s conftest.err'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; } &&
-	 { ac_try='test -s conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  sv_cv_procfsvma=yes
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-sv_cv_procfsvma=no
-fi
-rm -f conftest.err conftest.$ac_objext \
-      conftest$ac_exeext conftest.$ac_ext
-
-fi
-echo "$as_me:$LINENO: result: $sv_cv_procfsvma" >&5
-echo "${ECHO_T}$sv_cv_procfsvma" >&6
-CFG_STACKVMA=
-if test $sv_cv_procfsvma = yes; then
-  CFG_STACKVMA=stackvma-procfs.c
-else
-  case "$host_os" in
-    linux*) CFG_STACKVMA=stackvma-linux.c ;;
-    freebsd*) CFG_STACKVMA=stackvma-freebsd.c ;;
-    beos*) CFG_STACKVMA=stackvma-beos.c ;;
-    macos* | darwin*) CFG_STACKVMA=stackvma-mach.c ;;
-  esac
-fi
-if test -n "$CFG_STACKVMA"; then
-
-cat >>confdefs.h <<\_ACEOF
-#define HAVE_STACKVMA 1
-_ACEOF
-
-else
-  CFG_STACKVMA=stackvma-none.c
-fi
-
-cat >>confdefs.h <<_ACEOF
-#define CFG_STACKVMA "$CFG_STACKVMA"
-_ACEOF
-
 
 
 
@@ -12547,6 +9413,44 @@ fi
 done
 
 
+# The idea here is that some other OS than Unix may need
+# some of the detection magic, which seems plausible
+# especially for CFG_STACKVMA.
+case "$host" in
+  i?86-*-mingw* | i?86-*-cygwin*)
+    FAULT_CONTEXT='CONTEXT'
+    FAULT_CONTEXT_INCLUDE='#include <windows.h>'
+    CFG_HANDLER=handler-win32.c
+    CFG_STACKVMA=stackvma-none.c
+    CFG_FAULT=fault-none.h
+    CFG_LEAVE=leave-none.c
+    CFG_SIGNALS=signals.h
+    sv_cv_have_sigsegv_recovery=yes
+    sv_cv_have_stack_overflow_recovery=yes
+    ;;
+
+  powerpc-*-macos* | powerpc-*-darwin*)
+    FAULT_CONTEXT='ppc_exception_state_t'
+    FAULT_CONTEXT_INCLUDE='#include <mach/thread_status.h>'
+    CFG_FAULT=machfault-macos-powerpc.h
+    CFG_HANDLER=handler-macos.c
+    CFG_LEAVE=leave-none.c
+    CFG_SIGNALS=signals.h
+    CFG_STACKVMA=detect
+    sv_cv_have_sigsegv_recovery=yes
+    ;;
+
+  *)
+    FAULT_CONTEXT=void
+    FAULT_CONTEXT_INCLUDE=
+    CFG_HANDLER=handler-unix.c
+    CFG_STACKVMA=detect
+    CFG_LEAVE=detect
+    CFG_SIGNALS=detect
+
+    # Catching stack overflow requires an alternate signal stack.
+    # The old "install a guard page" trick would be unreliable, because
+    # we don't know where exactly to place the guard page.
 
 
 
@@ -12792,7 +9696,8 @@ rm -f conftest.err conftest.$ac_objext \
 
 else
   cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
+
+        /* confdefs.h.  */
 _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
@@ -12888,100 +9793,2736 @@ _ACEOF
   fi
 
 
-echo "$as_me:$LINENO: checking if the system supports catching stack overflow" >&5
-echo $ECHO_N "checking if the system supports catching stack overflow... $ECHO_C" >&6
-if test "${sv_cv_have_stack_overflow_recovery+set}" = set; then
+    # List of signals that are sent when an invalid virtual memory address
+    # is accessed, or when the stack overflows.
+    case "$host_os" in
+      sunos4* | freebsd* | openbsd* | netbsd*)
+        CFG_SIGNALS=signals-bsd.h ;;
+      hpux*)
+        CFG_SIGNALS=signals-hpux.h ;;
+      gnu*)
+        CFG_SIGNALS=signals-hurd.h ;;
+      *)
+        CFG_SIGNALS=signals.h ;;
+    esac
+
+
+
+
+
+  echo "$as_me:$LINENO: checking whether a fault handler according to POSIX works" >&5
+echo $ECHO_N "checking whether a fault handler according to POSIX works... $ECHO_C" >&6
+if test "${sv_cv_fault_posix+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
 
-        if test "$sv_cv_sigaltstack" != no; then
-    sv_cv_have_stack_overflow_recovery=maybe
-  else
-    case "$host_os" in
-      beos*) sv_cv_have_stack_overflow_recovery=maybe ;;
-      mingw* | cygwin*) sv_cv_have_stack_overflow_recovery=yes ;;
-      *) sv_cv_have_stack_overflow_recovery=no ;;
-    esac
-  fi
-  if test $sv_cv_have_stack_overflow_recovery = maybe; then
-    if test -n "$CFG_FAULT"; then
-      cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
+    if test "$cross_compiling" = yes; then
+  case "$host" in
+         *-*-solaris2.[7-9] | i?86-*-linux2.[4-9]* | i?86-*-freebsd[4-9]* | alpha*-dec-osf[4-9]* | *-*-hpux11* | mips-sgi-irix6*) sv_cv_fault_posix=yes ;;
+         *)
+           cat >conftest.$ac_ext <<_ACEOF
+
+             /* confdefs.h.  */
 _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
 
-#include "$srcdir/src/$CFG_FAULT"
-#ifdef SIGSEGV_FAULT_HANDLER_ARGLIST
-#ifdef SIGSEGV_FAULT_ADDRESS
-xyzzy
-#endif
-#endif
+#include <signal.h>
 
+void sigsegv_handler (int sig, siginfo_t *sip, void *ucp)
+{
+  void *fault_address = (void *) (sip->si_addr);
+}
+
+int
+main ()
+{
+struct sigaction action;
+action.sa_sigaction = &sigsegv_handler;
+       action.sa_flags = SA_SIGINFO;
+  ;
+  return 0;
+}
 _ACEOF
-if (eval "$ac_cpp conftest.$ac_ext") 2>&5 |
-  $EGREP "xyzzy" >/dev/null 2>&1; then
-  condA=true
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  sv_cv_fault_posix="guessing no"
 else
-  condA=false
-fi
-rm -f conftest*
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
 
-    else
-      condA=false
-    fi
-    if test -n "$CFG_FAULT"; then
-      cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
+sv_cv_fault_posix=no
+fi
+rm -f conftest.err conftest.$ac_objext \
+      conftest$ac_exeext conftest.$ac_ext
+           ;;
+       esac
+
+else
+  cat >conftest.$ac_ext <<_ACEOF
+
+      /* confdefs.h.  */
 _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
 
-#include "$srcdir/src/$CFG_FAULT"
-#ifdef SIGSEGV_FAULT_HANDLER_ARGLIST
-#ifdef SIGSEGV_FAULT_STACKPOINTER
-xyzzy
-#endif
+#include <stdlib.h>
+#include <signal.h>
+#if HAVE_SYS_SIGNAL_H
+# include <sys/signal.h>
 #endif
 
+#include <sys/types.h>
+#include <sys/mman.h>
+#if HAVE_MMAP_DEVZERO
+# include <fcntl.h>
+# ifndef MAP_FILE
+#  define MAP_FILE 0
+# endif
+#endif
+#ifndef PROT_NONE
+# define PROT_NONE 0
+#endif
+#if HAVE_MMAP_ANON
+# define zero_fd -1
+# define map_flags MAP_ANON | MAP_PRIVATE
+#elif HAVE_MMAP_ANONYMOUS
+# define zero_fd -1
+# define map_flags MAP_ANONYMOUS | MAP_PRIVATE
+#elif HAVE_MMAP_DEVZERO
+static int zero_fd;
+# define map_flags MAP_FILE | MAP_PRIVATE
+#endif
+unsigned long page;
+int handler_called = 0;
+void sigsegv_handler (int sig, siginfo_t *sip, void *ucp)
+{
+  void *fault_address = (void *) (sip->si_addr);
+  handler_called++;
+  if (handler_called == 10)
+    exit (4);
+  if (fault_address != (void*)(page + 0x678))
+    exit (3);
+  if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
+    exit (2);
+}
+void crasher (unsigned long p)
+{
+  *(int *) (p + 0x678) = 42;
+}
+int main ()
+{
+  void *p;
+  struct sigaction action;
+  /* Preparations.  */
+#if !HAVE_MMAP_ANON && !HAVE_MMAP_ANONYMOUS && HAVE_MMAP_DEVZERO
+  zero_fd = open ("/dev/zero", O_RDONLY, 0644);
+#endif
+  /* Setup some mmaped memory.  */
+#ifdef __hpux
+  /* HP-UX 10 mmap() often fails when given a hint.  So give the OS complete
+     freedom about the address range.  */
+  p = mmap ((void *) 0,          0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
+#else
+  p = mmap ((void *) 0x12340000, 0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
+#endif
+  if (p == (void *)(-1))
+    exit (2);
+  page = (unsigned long) p;
+  /* Make it read-only.  */
+  if (mprotect ((void *) page, 0x10000, PROT_READ) < 0)
+    exit (2);
+  /* Install the SIGSEGV handler.  */
+  sigemptyset(&action.sa_mask);
+action.sa_sigaction = &sigsegv_handler;
+       action.sa_flags = SA_SIGINFO;
+  sigaction (SIGSEGV, &action, (struct sigaction *) NULL);
+  sigaction (SIGBUS, &action, (struct sigaction *) NULL);
+  /* The first write access should invoke the handler and then complete.  */
+  crasher (page);
+  /* The second write access should not invoke the handler.  */
+  crasher (page);
+  /* Check that the handler was called only once.  */
+  if (handler_called != 1)
+    exit (1);
+  /* Test passed!  */
+  return 0;
+}
 _ACEOF
-if (eval "$ac_cpp conftest.$ac_ext") 2>&5 |
-  $EGREP "xyzzy" >/dev/null 2>&1; then
-  condB=true
+rm -f conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  sv_cv_fault_posix=yes
 else
-  condB=false
-fi
-rm -f conftest*
+  echo "$as_me: program exited with status $ac_status" >&5
+echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
 
-    else
-      condB=false
-    fi
-    if test "$CFG_STACKVMA" != "stackvma-none.c"; then
-      condC=true
-    else
-      condC=false
-    fi
-    if { $condA && $condB; } || { $condA && $condC; } || { $condB && $condC; }; then
-      sv_cv_have_stack_overflow_recovery=yes
-    else
-      sv_cv_have_stack_overflow_recovery=no
-    fi
-  fi
+( exit $ac_status )
+sv_cv_fault_posix=no
+fi
+rm -f core *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
+fi
 
 fi
-echo "$as_me:$LINENO: result: $sv_cv_have_stack_overflow_recovery" >&5
-echo "${ECHO_T}$sv_cv_have_stack_overflow_recovery" >&6
-if test $sv_cv_have_stack_overflow_recovery != no; then
-  HAVE_STACK_OVERFLOW_RECOVERY=1
+echo "$as_me:$LINENO: result: $sv_cv_fault_posix" >&5
+echo "${ECHO_T}$sv_cv_fault_posix" >&6
+
+
+
+
+
+
+  echo "$as_me:$LINENO: checking whether a fault handler according to Linux/i386 works" >&5
+echo $ECHO_N "checking whether a fault handler according to Linux/i386 works... $ECHO_C" >&6
+if test "${sv_cv_fault_linux_i386+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
 else
-  HAVE_STACK_OVERFLOW_RECOVERY=0
+
+    if test "$cross_compiling" = yes; then
+  case "$host" in
+         i?86-*-linux2.[2-9]*) sv_cv_fault_linux_i386=yes ;;
+         *)
+           cat >conftest.$ac_ext <<_ACEOF
+
+             /* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+#include <signal.h>
+#include <asm/sigcontext.h>
+void sigsegv_handler (int sig, struct sigcontext sc)
+{
+  void *fault_address = (void *) (sc.cr2);
+}
+
+int
+main ()
+{
+struct sigaction action;
+
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  sv_cv_fault_linux_i386="guessing no"
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+sv_cv_fault_linux_i386=no
+fi
+rm -f conftest.err conftest.$ac_objext \
+      conftest$ac_exeext conftest.$ac_ext
+           ;;
+       esac
+
+else
+  cat >conftest.$ac_ext <<_ACEOF
+
+      /* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+#include <stdlib.h>
+#include <signal.h>
+#if HAVE_SYS_SIGNAL_H
+# include <sys/signal.h>
+#endif
+#include <asm/sigcontext.h>
+#include <sys/types.h>
+#include <sys/mman.h>
+#if HAVE_MMAP_DEVZERO
+# include <fcntl.h>
+# ifndef MAP_FILE
+#  define MAP_FILE 0
+# endif
+#endif
+#ifndef PROT_NONE
+# define PROT_NONE 0
+#endif
+#if HAVE_MMAP_ANON
+# define zero_fd -1
+# define map_flags MAP_ANON | MAP_PRIVATE
+#elif HAVE_MMAP_ANONYMOUS
+# define zero_fd -1
+# define map_flags MAP_ANONYMOUS | MAP_PRIVATE
+#elif HAVE_MMAP_DEVZERO
+static int zero_fd;
+# define map_flags MAP_FILE | MAP_PRIVATE
+#endif
+unsigned long page;
+int handler_called = 0;
+void sigsegv_handler (int sig, struct sigcontext sc)
+{
+  void *fault_address = (void *) (sc.cr2);
+  handler_called++;
+  if (handler_called == 10)
+    exit (4);
+  if (fault_address != (void*)(page + 0x678))
+    exit (3);
+  if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
+    exit (2);
+}
+void crasher (unsigned long p)
+{
+  *(int *) (p + 0x678) = 42;
+}
+int main ()
+{
+  void *p;
+  struct sigaction action;
+  /* Preparations.  */
+#if !HAVE_MMAP_ANON && !HAVE_MMAP_ANONYMOUS && HAVE_MMAP_DEVZERO
+  zero_fd = open ("/dev/zero", O_RDONLY, 0644);
+#endif
+  /* Setup some mmaped memory.  */
+#ifdef __hpux
+  /* HP-UX 10 mmap() often fails when given a hint.  So give the OS complete
+     freedom about the address range.  */
+  p = mmap ((void *) 0,          0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
+#else
+  p = mmap ((void *) 0x12340000, 0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
+#endif
+  if (p == (void *)(-1))
+    exit (2);
+  page = (unsigned long) p;
+  /* Make it read-only.  */
+  if (mprotect ((void *) page, 0x10000, PROT_READ) < 0)
+    exit (2);
+  /* Install the SIGSEGV handler.  */
+  sigemptyset(&action.sa_mask);
+
+  action.sa_handler = (void (*) (int)) &sigsegv_handler;
+  action.sa_flags = 0;
+
+  sigaction (SIGSEGV, &action, (struct sigaction *) NULL);
+  sigaction (SIGBUS, &action, (struct sigaction *) NULL);
+  /* The first write access should invoke the handler and then complete.  */
+  crasher (page);
+  /* The second write access should not invoke the handler.  */
+  crasher (page);
+  /* Check that the handler was called only once.  */
+  if (handler_called != 1)
+    exit (1);
+  /* Test passed!  */
+  return 0;
+}
+_ACEOF
+rm -f conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  sv_cv_fault_linux_i386=yes
+else
+  echo "$as_me: program exited with status $ac_status" >&5
+echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+( exit $ac_status )
+sv_cv_fault_linux_i386=no
+fi
+rm -f core *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
 fi
 
+fi
+echo "$as_me:$LINENO: result: $sv_cv_fault_linux_i386" >&5
+echo "${ECHO_T}$sv_cv_fault_linux_i386" >&6
 
-# How to longjmp out of a signal handler, in such a way that the
-# alternate signal stack remains functional.
+
+
+
+
+
+  echo "$as_me:$LINENO: checking whether a fault handler according to old Linux/i386 works" >&5
+echo $ECHO_N "checking whether a fault handler according to old Linux/i386 works... $ECHO_C" >&6
+if test "${sv_cv_fault_linux_i386_old+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+
+    if test "$cross_compiling" = yes; then
+  case "$host" in
+         i?86-*-linux2.[2-9]*) sv_cv_fault_linux_i386_old=yes ;;
+         *)
+           cat >conftest.$ac_ext <<_ACEOF
+
+             /* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+#include <signal.h>
+
+void sigsegv_handler (int sig, unsigned int more)
+{
+  void *fault_address = (void *) (((unsigned long *) &more) [21]);
+}
+
+int
+main ()
+{
+struct sigaction action;
+
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  sv_cv_fault_linux_i386_old="guessing no"
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+sv_cv_fault_linux_i386_old=no
+fi
+rm -f conftest.err conftest.$ac_objext \
+      conftest$ac_exeext conftest.$ac_ext
+           ;;
+       esac
+
+else
+  cat >conftest.$ac_ext <<_ACEOF
+
+      /* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+#include <stdlib.h>
+#include <signal.h>
+#if HAVE_SYS_SIGNAL_H
+# include <sys/signal.h>
+#endif
+
+#include <sys/types.h>
+#include <sys/mman.h>
+#if HAVE_MMAP_DEVZERO
+# include <fcntl.h>
+# ifndef MAP_FILE
+#  define MAP_FILE 0
+# endif
+#endif
+#ifndef PROT_NONE
+# define PROT_NONE 0
+#endif
+#if HAVE_MMAP_ANON
+# define zero_fd -1
+# define map_flags MAP_ANON | MAP_PRIVATE
+#elif HAVE_MMAP_ANONYMOUS
+# define zero_fd -1
+# define map_flags MAP_ANONYMOUS | MAP_PRIVATE
+#elif HAVE_MMAP_DEVZERO
+static int zero_fd;
+# define map_flags MAP_FILE | MAP_PRIVATE
+#endif
+unsigned long page;
+int handler_called = 0;
+void sigsegv_handler (int sig, unsigned int more)
+{
+  void *fault_address = (void *) (((unsigned long *) &more) [21]);
+  handler_called++;
+  if (handler_called == 10)
+    exit (4);
+  if (fault_address != (void*)(page + 0x678))
+    exit (3);
+  if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
+    exit (2);
+}
+void crasher (unsigned long p)
+{
+  *(int *) (p + 0x678) = 42;
+}
+int main ()
+{
+  void *p;
+  struct sigaction action;
+  /* Preparations.  */
+#if !HAVE_MMAP_ANON && !HAVE_MMAP_ANONYMOUS && HAVE_MMAP_DEVZERO
+  zero_fd = open ("/dev/zero", O_RDONLY, 0644);
+#endif
+  /* Setup some mmaped memory.  */
+#ifdef __hpux
+  /* HP-UX 10 mmap() often fails when given a hint.  So give the OS complete
+     freedom about the address range.  */
+  p = mmap ((void *) 0,          0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
+#else
+  p = mmap ((void *) 0x12340000, 0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
+#endif
+  if (p == (void *)(-1))
+    exit (2);
+  page = (unsigned long) p;
+  /* Make it read-only.  */
+  if (mprotect ((void *) page, 0x10000, PROT_READ) < 0)
+    exit (2);
+  /* Install the SIGSEGV handler.  */
+  sigemptyset(&action.sa_mask);
+
+  action.sa_handler = (void (*) (int)) &sigsegv_handler;
+  action.sa_flags = 0;
+
+  sigaction (SIGSEGV, &action, (struct sigaction *) NULL);
+  sigaction (SIGBUS, &action, (struct sigaction *) NULL);
+  /* The first write access should invoke the handler and then complete.  */
+  crasher (page);
+  /* The second write access should not invoke the handler.  */
+  crasher (page);
+  /* Check that the handler was called only once.  */
+  if (handler_called != 1)
+    exit (1);
+  /* Test passed!  */
+  return 0;
+}
+_ACEOF
+rm -f conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  sv_cv_fault_linux_i386_old=yes
+else
+  echo "$as_me: program exited with status $ac_status" >&5
+echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+( exit $ac_status )
+sv_cv_fault_linux_i386_old=no
+fi
+rm -f core *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
+fi
+
+fi
+echo "$as_me:$LINENO: result: $sv_cv_fault_linux_i386_old" >&5
+echo "${ECHO_T}$sv_cv_fault_linux_i386_old" >&6
+
+
+
+
+
+
+  echo "$as_me:$LINENO: checking whether a fault handler according to Linux/m68k works" >&5
+echo $ECHO_N "checking whether a fault handler according to Linux/m68k works... $ECHO_C" >&6
+if test "${sv_cv_fault_linux_m68k+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+
+    if test "$cross_compiling" = yes; then
+  case "$host" in
+
+         *)
+           cat >conftest.$ac_ext <<_ACEOF
+
+             /* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+#include <signal.h>
+#include <asm/sigcontext.h>
+    #include "$srcdir/src/fault-linux-m68k.c"
+void sigsegv_handler (int sig, int code, struct sigcontext *scp)
+{
+  void *fault_address = (void *) (get_fault_addr (scp));
+}
+
+int
+main ()
+{
+struct sigaction action;
+
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  sv_cv_fault_linux_m68k="guessing no"
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+sv_cv_fault_linux_m68k=no
+fi
+rm -f conftest.err conftest.$ac_objext \
+      conftest$ac_exeext conftest.$ac_ext
+           ;;
+       esac
+
+else
+  cat >conftest.$ac_ext <<_ACEOF
+
+      /* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+#include <stdlib.h>
+#include <signal.h>
+#if HAVE_SYS_SIGNAL_H
+# include <sys/signal.h>
+#endif
+#include <asm/sigcontext.h>
+    #include "$srcdir/src/fault-linux-m68k.c"
+#include <sys/types.h>
+#include <sys/mman.h>
+#if HAVE_MMAP_DEVZERO
+# include <fcntl.h>
+# ifndef MAP_FILE
+#  define MAP_FILE 0
+# endif
+#endif
+#ifndef PROT_NONE
+# define PROT_NONE 0
+#endif
+#if HAVE_MMAP_ANON
+# define zero_fd -1
+# define map_flags MAP_ANON | MAP_PRIVATE
+#elif HAVE_MMAP_ANONYMOUS
+# define zero_fd -1
+# define map_flags MAP_ANONYMOUS | MAP_PRIVATE
+#elif HAVE_MMAP_DEVZERO
+static int zero_fd;
+# define map_flags MAP_FILE | MAP_PRIVATE
+#endif
+unsigned long page;
+int handler_called = 0;
+void sigsegv_handler (int sig, int code, struct sigcontext *scp)
+{
+  void *fault_address = (void *) (get_fault_addr (scp));
+  handler_called++;
+  if (handler_called == 10)
+    exit (4);
+  if (fault_address != (void*)(page + 0x678))
+    exit (3);
+  if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
+    exit (2);
+}
+void crasher (unsigned long p)
+{
+  *(int *) (p + 0x678) = 42;
+}
+int main ()
+{
+  void *p;
+  struct sigaction action;
+  /* Preparations.  */
+#if !HAVE_MMAP_ANON && !HAVE_MMAP_ANONYMOUS && HAVE_MMAP_DEVZERO
+  zero_fd = open ("/dev/zero", O_RDONLY, 0644);
+#endif
+  /* Setup some mmaped memory.  */
+#ifdef __hpux
+  /* HP-UX 10 mmap() often fails when given a hint.  So give the OS complete
+     freedom about the address range.  */
+  p = mmap ((void *) 0,          0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
+#else
+  p = mmap ((void *) 0x12340000, 0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
+#endif
+  if (p == (void *)(-1))
+    exit (2);
+  page = (unsigned long) p;
+  /* Make it read-only.  */
+  if (mprotect ((void *) page, 0x10000, PROT_READ) < 0)
+    exit (2);
+  /* Install the SIGSEGV handler.  */
+  sigemptyset(&action.sa_mask);
+
+  action.sa_handler = (void (*) (int)) &sigsegv_handler;
+  action.sa_flags = 0;
+
+  sigaction (SIGSEGV, &action, (struct sigaction *) NULL);
+  sigaction (SIGBUS, &action, (struct sigaction *) NULL);
+  /* The first write access should invoke the handler and then complete.  */
+  crasher (page);
+  /* The second write access should not invoke the handler.  */
+  crasher (page);
+  /* Check that the handler was called only once.  */
+  if (handler_called != 1)
+    exit (1);
+  /* Test passed!  */
+  return 0;
+}
+_ACEOF
+rm -f conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  sv_cv_fault_linux_m68k=yes
+else
+  echo "$as_me: program exited with status $ac_status" >&5
+echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+( exit $ac_status )
+sv_cv_fault_linux_m68k=no
+fi
+rm -f core *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
+fi
+
+fi
+echo "$as_me:$LINENO: result: $sv_cv_fault_linux_m68k" >&5
+echo "${ECHO_T}$sv_cv_fault_linux_m68k" >&6
+
+
+
+
+
+
+  echo "$as_me:$LINENO: checking whether a fault handler according to Linux/PowerPC works" >&5
+echo $ECHO_N "checking whether a fault handler according to Linux/PowerPC works... $ECHO_C" >&6
+if test "${sv_cv_fault_linux_powerpc+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+
+    if test "$cross_compiling" = yes; then
+  case "$host" in
+
+         *)
+           cat >conftest.$ac_ext <<_ACEOF
+
+             /* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+#include <signal.h>
+#include <asm/sigcontext.h>
+void sigsegv_handler (int sig, struct sigcontext *scp)
+{
+  void *fault_address = (void *) (scp->regs->dar);
+}
+
+int
+main ()
+{
+struct sigaction action;
+
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  sv_cv_fault_linux_powerpc="guessing no"
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+sv_cv_fault_linux_powerpc=no
+fi
+rm -f conftest.err conftest.$ac_objext \
+      conftest$ac_exeext conftest.$ac_ext
+           ;;
+       esac
+
+else
+  cat >conftest.$ac_ext <<_ACEOF
+
+      /* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+#include <stdlib.h>
+#include <signal.h>
+#if HAVE_SYS_SIGNAL_H
+# include <sys/signal.h>
+#endif
+#include <asm/sigcontext.h>
+#include <sys/types.h>
+#include <sys/mman.h>
+#if HAVE_MMAP_DEVZERO
+# include <fcntl.h>
+# ifndef MAP_FILE
+#  define MAP_FILE 0
+# endif
+#endif
+#ifndef PROT_NONE
+# define PROT_NONE 0
+#endif
+#if HAVE_MMAP_ANON
+# define zero_fd -1
+# define map_flags MAP_ANON | MAP_PRIVATE
+#elif HAVE_MMAP_ANONYMOUS
+# define zero_fd -1
+# define map_flags MAP_ANONYMOUS | MAP_PRIVATE
+#elif HAVE_MMAP_DEVZERO
+static int zero_fd;
+# define map_flags MAP_FILE | MAP_PRIVATE
+#endif
+unsigned long page;
+int handler_called = 0;
+void sigsegv_handler (int sig, struct sigcontext *scp)
+{
+  void *fault_address = (void *) (scp->regs->dar);
+  handler_called++;
+  if (handler_called == 10)
+    exit (4);
+  if (fault_address != (void*)(page + 0x678))
+    exit (3);
+  if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
+    exit (2);
+}
+void crasher (unsigned long p)
+{
+  *(int *) (p + 0x678) = 42;
+}
+int main ()
+{
+  void *p;
+  struct sigaction action;
+  /* Preparations.  */
+#if !HAVE_MMAP_ANON && !HAVE_MMAP_ANONYMOUS && HAVE_MMAP_DEVZERO
+  zero_fd = open ("/dev/zero", O_RDONLY, 0644);
+#endif
+  /* Setup some mmaped memory.  */
+#ifdef __hpux
+  /* HP-UX 10 mmap() often fails when given a hint.  So give the OS complete
+     freedom about the address range.  */
+  p = mmap ((void *) 0,          0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
+#else
+  p = mmap ((void *) 0x12340000, 0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
+#endif
+  if (p == (void *)(-1))
+    exit (2);
+  page = (unsigned long) p;
+  /* Make it read-only.  */
+  if (mprotect ((void *) page, 0x10000, PROT_READ) < 0)
+    exit (2);
+  /* Install the SIGSEGV handler.  */
+  sigemptyset(&action.sa_mask);
+
+  action.sa_handler = (void (*) (int)) &sigsegv_handler;
+  action.sa_flags = 0;
+
+  sigaction (SIGSEGV, &action, (struct sigaction *) NULL);
+  sigaction (SIGBUS, &action, (struct sigaction *) NULL);
+  /* The first write access should invoke the handler and then complete.  */
+  crasher (page);
+  /* The second write access should not invoke the handler.  */
+  crasher (page);
+  /* Check that the handler was called only once.  */
+  if (handler_called != 1)
+    exit (1);
+  /* Test passed!  */
+  return 0;
+}
+_ACEOF
+rm -f conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  sv_cv_fault_linux_powerpc=yes
+else
+  echo "$as_me: program exited with status $ac_status" >&5
+echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+( exit $ac_status )
+sv_cv_fault_linux_powerpc=no
+fi
+rm -f core *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
+fi
+
+fi
+echo "$as_me:$LINENO: result: $sv_cv_fault_linux_powerpc" >&5
+echo "${ECHO_T}$sv_cv_fault_linux_powerpc" >&6
+
+
+
+
+
+
+  echo "$as_me:$LINENO: checking whether a fault handler according to Linux/HPPA works" >&5
+echo $ECHO_N "checking whether a fault handler according to Linux/HPPA works... $ECHO_C" >&6
+if test "${sv_cv_fault_linux_hppa+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+
+    if test "$cross_compiling" = yes; then
+  case "$host" in
+
+         *)
+           cat >conftest.$ac_ext <<_ACEOF
+
+             /* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+#include <signal.h>
+
+void sigsegv_handler (int sig, siginfo_t *sip, void *ucp)
+{
+  void *fault_address = (void *) (sip->si_ptr);
+}
+
+int
+main ()
+{
+struct sigaction action;
+action.sa_sigaction = &sigsegv_handler;
+       action.sa_flags = SA_SIGINFO;
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  sv_cv_fault_linux_hppa="guessing no"
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+sv_cv_fault_linux_hppa=no
+fi
+rm -f conftest.err conftest.$ac_objext \
+      conftest$ac_exeext conftest.$ac_ext
+           ;;
+       esac
+
+else
+  cat >conftest.$ac_ext <<_ACEOF
+
+      /* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+#include <stdlib.h>
+#include <signal.h>
+#if HAVE_SYS_SIGNAL_H
+# include <sys/signal.h>
+#endif
+
+#include <sys/types.h>
+#include <sys/mman.h>
+#if HAVE_MMAP_DEVZERO
+# include <fcntl.h>
+# ifndef MAP_FILE
+#  define MAP_FILE 0
+# endif
+#endif
+#ifndef PROT_NONE
+# define PROT_NONE 0
+#endif
+#if HAVE_MMAP_ANON
+# define zero_fd -1
+# define map_flags MAP_ANON | MAP_PRIVATE
+#elif HAVE_MMAP_ANONYMOUS
+# define zero_fd -1
+# define map_flags MAP_ANONYMOUS | MAP_PRIVATE
+#elif HAVE_MMAP_DEVZERO
+static int zero_fd;
+# define map_flags MAP_FILE | MAP_PRIVATE
+#endif
+unsigned long page;
+int handler_called = 0;
+void sigsegv_handler (int sig, siginfo_t *sip, void *ucp)
+{
+  void *fault_address = (void *) (sip->si_ptr);
+  handler_called++;
+  if (handler_called == 10)
+    exit (4);
+  if (fault_address != (void*)(page + 0x678))
+    exit (3);
+  if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
+    exit (2);
+}
+void crasher (unsigned long p)
+{
+  *(int *) (p + 0x678) = 42;
+}
+int main ()
+{
+  void *p;
+  struct sigaction action;
+  /* Preparations.  */
+#if !HAVE_MMAP_ANON && !HAVE_MMAP_ANONYMOUS && HAVE_MMAP_DEVZERO
+  zero_fd = open ("/dev/zero", O_RDONLY, 0644);
+#endif
+  /* Setup some mmaped memory.  */
+#ifdef __hpux
+  /* HP-UX 10 mmap() often fails when given a hint.  So give the OS complete
+     freedom about the address range.  */
+  p = mmap ((void *) 0,          0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
+#else
+  p = mmap ((void *) 0x12340000, 0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
+#endif
+  if (p == (void *)(-1))
+    exit (2);
+  page = (unsigned long) p;
+  /* Make it read-only.  */
+  if (mprotect ((void *) page, 0x10000, PROT_READ) < 0)
+    exit (2);
+  /* Install the SIGSEGV handler.  */
+  sigemptyset(&action.sa_mask);
+action.sa_sigaction = &sigsegv_handler;
+       action.sa_flags = SA_SIGINFO;
+  sigaction (SIGSEGV, &action, (struct sigaction *) NULL);
+  sigaction (SIGBUS, &action, (struct sigaction *) NULL);
+  /* The first write access should invoke the handler and then complete.  */
+  crasher (page);
+  /* The second write access should not invoke the handler.  */
+  crasher (page);
+  /* Check that the handler was called only once.  */
+  if (handler_called != 1)
+    exit (1);
+  /* Test passed!  */
+  return 0;
+}
+_ACEOF
+rm -f conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  sv_cv_fault_linux_hppa=yes
+else
+  echo "$as_me: program exited with status $ac_status" >&5
+echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+( exit $ac_status )
+sv_cv_fault_linux_hppa=no
+fi
+rm -f core *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
+fi
+
+fi
+echo "$as_me:$LINENO: result: $sv_cv_fault_linux_hppa" >&5
+echo "${ECHO_T}$sv_cv_fault_linux_hppa" >&6
+
+
+
+
+
+
+  echo "$as_me:$LINENO: checking whether a fault handler according to BSD works" >&5
+echo $ECHO_N "checking whether a fault handler according to BSD works... $ECHO_C" >&6
+if test "${sv_cv_fault_bsd+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+
+    if test "$cross_compiling" = yes; then
+  case "$host" in
+         i?86-*-freebsd[4-9]*) sv_cv_fault_bsd=yes ;;
+         *)
+           cat >conftest.$ac_ext <<_ACEOF
+
+             /* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+#include <signal.h>
+
+void sigsegv_handler (int sig, int code, struct sigcontext *scp, void *addr)
+{
+  void *fault_address = (void *) (addr);
+}
+
+int
+main ()
+{
+struct sigaction action;
+
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  sv_cv_fault_bsd="guessing no"
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+sv_cv_fault_bsd=no
+fi
+rm -f conftest.err conftest.$ac_objext \
+      conftest$ac_exeext conftest.$ac_ext
+           ;;
+       esac
+
+else
+  cat >conftest.$ac_ext <<_ACEOF
+
+      /* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+#include <stdlib.h>
+#include <signal.h>
+#if HAVE_SYS_SIGNAL_H
+# include <sys/signal.h>
+#endif
+
+#include <sys/types.h>
+#include <sys/mman.h>
+#if HAVE_MMAP_DEVZERO
+# include <fcntl.h>
+# ifndef MAP_FILE
+#  define MAP_FILE 0
+# endif
+#endif
+#ifndef PROT_NONE
+# define PROT_NONE 0
+#endif
+#if HAVE_MMAP_ANON
+# define zero_fd -1
+# define map_flags MAP_ANON | MAP_PRIVATE
+#elif HAVE_MMAP_ANONYMOUS
+# define zero_fd -1
+# define map_flags MAP_ANONYMOUS | MAP_PRIVATE
+#elif HAVE_MMAP_DEVZERO
+static int zero_fd;
+# define map_flags MAP_FILE | MAP_PRIVATE
+#endif
+unsigned long page;
+int handler_called = 0;
+void sigsegv_handler (int sig, int code, struct sigcontext *scp, void *addr)
+{
+  void *fault_address = (void *) (addr);
+  handler_called++;
+  if (handler_called == 10)
+    exit (4);
+  if (fault_address != (void*)(page + 0x678))
+    exit (3);
+  if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
+    exit (2);
+}
+void crasher (unsigned long p)
+{
+  *(int *) (p + 0x678) = 42;
+}
+int main ()
+{
+  void *p;
+  struct sigaction action;
+  /* Preparations.  */
+#if !HAVE_MMAP_ANON && !HAVE_MMAP_ANONYMOUS && HAVE_MMAP_DEVZERO
+  zero_fd = open ("/dev/zero", O_RDONLY, 0644);
+#endif
+  /* Setup some mmaped memory.  */
+#ifdef __hpux
+  /* HP-UX 10 mmap() often fails when given a hint.  So give the OS complete
+     freedom about the address range.  */
+  p = mmap ((void *) 0,          0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
+#else
+  p = mmap ((void *) 0x12340000, 0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
+#endif
+  if (p == (void *)(-1))
+    exit (2);
+  page = (unsigned long) p;
+  /* Make it read-only.  */
+  if (mprotect ((void *) page, 0x10000, PROT_READ) < 0)
+    exit (2);
+  /* Install the SIGSEGV handler.  */
+  sigemptyset(&action.sa_mask);
+
+  action.sa_handler = (void (*) (int)) &sigsegv_handler;
+  action.sa_flags = 0;
+
+  sigaction (SIGSEGV, &action, (struct sigaction *) NULL);
+  sigaction (SIGBUS, &action, (struct sigaction *) NULL);
+  /* The first write access should invoke the handler and then complete.  */
+  crasher (page);
+  /* The second write access should not invoke the handler.  */
+  crasher (page);
+  /* Check that the handler was called only once.  */
+  if (handler_called != 1)
+    exit (1);
+  /* Test passed!  */
+  return 0;
+}
+_ACEOF
+rm -f conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  sv_cv_fault_bsd=yes
+else
+  echo "$as_me: program exited with status $ac_status" >&5
+echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+( exit $ac_status )
+sv_cv_fault_bsd=no
+fi
+rm -f core *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
+fi
+
+fi
+echo "$as_me:$LINENO: result: $sv_cv_fault_bsd" >&5
+echo "${ECHO_T}$sv_cv_fault_bsd" >&6
+
+
+
+
+
+
+  echo "$as_me:$LINENO: checking whether a fault handler according to IRIX works" >&5
+echo $ECHO_N "checking whether a fault handler according to IRIX works... $ECHO_C" >&6
+if test "${sv_cv_fault_irix+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+
+    if test "$cross_compiling" = yes; then
+  case "$host" in
+         mips-sgi-irix6*) sv_cv_fault_irix=yes ;;
+         *)
+           cat >conftest.$ac_ext <<_ACEOF
+
+             /* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+#include <signal.h>
+
+void sigsegv_handler (int sig, int code, struct sigcontext *scp)
+{
+  void *fault_address = (void *) ((unsigned long) scp->sc_badvaddr);
+}
+
+int
+main ()
+{
+struct sigaction action;
+
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  sv_cv_fault_irix="guessing no"
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+sv_cv_fault_irix=no
+fi
+rm -f conftest.err conftest.$ac_objext \
+      conftest$ac_exeext conftest.$ac_ext
+           ;;
+       esac
+
+else
+  cat >conftest.$ac_ext <<_ACEOF
+
+      /* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+#include <stdlib.h>
+#include <signal.h>
+#if HAVE_SYS_SIGNAL_H
+# include <sys/signal.h>
+#endif
+
+#include <sys/types.h>
+#include <sys/mman.h>
+#if HAVE_MMAP_DEVZERO
+# include <fcntl.h>
+# ifndef MAP_FILE
+#  define MAP_FILE 0
+# endif
+#endif
+#ifndef PROT_NONE
+# define PROT_NONE 0
+#endif
+#if HAVE_MMAP_ANON
+# define zero_fd -1
+# define map_flags MAP_ANON | MAP_PRIVATE
+#elif HAVE_MMAP_ANONYMOUS
+# define zero_fd -1
+# define map_flags MAP_ANONYMOUS | MAP_PRIVATE
+#elif HAVE_MMAP_DEVZERO
+static int zero_fd;
+# define map_flags MAP_FILE | MAP_PRIVATE
+#endif
+unsigned long page;
+int handler_called = 0;
+void sigsegv_handler (int sig, int code, struct sigcontext *scp)
+{
+  void *fault_address = (void *) ((unsigned long) scp->sc_badvaddr);
+  handler_called++;
+  if (handler_called == 10)
+    exit (4);
+  if (fault_address != (void*)(page + 0x678))
+    exit (3);
+  if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
+    exit (2);
+}
+void crasher (unsigned long p)
+{
+  *(int *) (p + 0x678) = 42;
+}
+int main ()
+{
+  void *p;
+  struct sigaction action;
+  /* Preparations.  */
+#if !HAVE_MMAP_ANON && !HAVE_MMAP_ANONYMOUS && HAVE_MMAP_DEVZERO
+  zero_fd = open ("/dev/zero", O_RDONLY, 0644);
+#endif
+  /* Setup some mmaped memory.  */
+#ifdef __hpux
+  /* HP-UX 10 mmap() often fails when given a hint.  So give the OS complete
+     freedom about the address range.  */
+  p = mmap ((void *) 0,          0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
+#else
+  p = mmap ((void *) 0x12340000, 0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
+#endif
+  if (p == (void *)(-1))
+    exit (2);
+  page = (unsigned long) p;
+  /* Make it read-only.  */
+  if (mprotect ((void *) page, 0x10000, PROT_READ) < 0)
+    exit (2);
+  /* Install the SIGSEGV handler.  */
+  sigemptyset(&action.sa_mask);
+
+  action.sa_handler = (void (*) (int)) &sigsegv_handler;
+  action.sa_flags = 0;
+
+  sigaction (SIGSEGV, &action, (struct sigaction *) NULL);
+  sigaction (SIGBUS, &action, (struct sigaction *) NULL);
+  /* The first write access should invoke the handler and then complete.  */
+  crasher (page);
+  /* The second write access should not invoke the handler.  */
+  crasher (page);
+  /* Check that the handler was called only once.  */
+  if (handler_called != 1)
+    exit (1);
+  /* Test passed!  */
+  return 0;
+}
+_ACEOF
+rm -f conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  sv_cv_fault_irix=yes
+else
+  echo "$as_me: program exited with status $ac_status" >&5
+echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+( exit $ac_status )
+sv_cv_fault_irix=no
+fi
+rm -f core *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
+fi
+
+fi
+echo "$as_me:$LINENO: result: $sv_cv_fault_irix" >&5
+echo "${ECHO_T}$sv_cv_fault_irix" >&6
+
+
+
+
+
+
+  echo "$as_me:$LINENO: checking whether a fault handler according to HP-UX HPPA works" >&5
+echo $ECHO_N "checking whether a fault handler according to HP-UX HPPA works... $ECHO_C" >&6
+if test "${sv_cv_fault_hpux_hppa+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+
+    if test "$cross_compiling" = yes; then
+  case "$host" in
+         hppa*-*-hpux11*) sv_cv_fault_hpux_hppa=yes ;;
+         *)
+           cat >conftest.$ac_ext <<_ACEOF
+
+             /* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+#include <signal.h>
+
+#    define USE_64BIT_REGS(mc) \
+      (((mc).ss_flags & SS_WIDEREGS) && ((mc).ss_flags & SS_NARROWISINVALID))
+#    define GET_CR21(mc) \
+      (USE_64BIT_REGS(mc) ? (mc).ss_wide.ss_64.ss_cr21 : (mc).ss_narrow.ss_cr21)
+
+void sigsegv_handler (int sig, int code, struct sigcontext *scp)
+{
+  void *fault_address = (void *) (GET_CR21 (scp->sc_sl.sl_ss));
+}
+
+int
+main ()
+{
+struct sigaction action;
+
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  sv_cv_fault_hpux_hppa="guessing no"
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+sv_cv_fault_hpux_hppa=no
+fi
+rm -f conftest.err conftest.$ac_objext \
+      conftest$ac_exeext conftest.$ac_ext
+           ;;
+       esac
+
+else
+  cat >conftest.$ac_ext <<_ACEOF
+
+      /* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+#include <stdlib.h>
+#include <signal.h>
+#if HAVE_SYS_SIGNAL_H
+# include <sys/signal.h>
+#endif
+
+#    define USE_64BIT_REGS(mc) \
+      (((mc).ss_flags & SS_WIDEREGS) && ((mc).ss_flags & SS_NARROWISINVALID))
+#    define GET_CR21(mc) \
+      (USE_64BIT_REGS(mc) ? (mc).ss_wide.ss_64.ss_cr21 : (mc).ss_narrow.ss_cr21)
+
+#include <sys/types.h>
+#include <sys/mman.h>
+#if HAVE_MMAP_DEVZERO
+# include <fcntl.h>
+# ifndef MAP_FILE
+#  define MAP_FILE 0
+# endif
+#endif
+#ifndef PROT_NONE
+# define PROT_NONE 0
+#endif
+#if HAVE_MMAP_ANON
+# define zero_fd -1
+# define map_flags MAP_ANON | MAP_PRIVATE
+#elif HAVE_MMAP_ANONYMOUS
+# define zero_fd -1
+# define map_flags MAP_ANONYMOUS | MAP_PRIVATE
+#elif HAVE_MMAP_DEVZERO
+static int zero_fd;
+# define map_flags MAP_FILE | MAP_PRIVATE
+#endif
+unsigned long page;
+int handler_called = 0;
+void sigsegv_handler (int sig, int code, struct sigcontext *scp)
+{
+  void *fault_address = (void *) (GET_CR21 (scp->sc_sl.sl_ss));
+  handler_called++;
+  if (handler_called == 10)
+    exit (4);
+  if (fault_address != (void*)(page + 0x678))
+    exit (3);
+  if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
+    exit (2);
+}
+void crasher (unsigned long p)
+{
+  *(int *) (p + 0x678) = 42;
+}
+int main ()
+{
+  void *p;
+  struct sigaction action;
+  /* Preparations.  */
+#if !HAVE_MMAP_ANON && !HAVE_MMAP_ANONYMOUS && HAVE_MMAP_DEVZERO
+  zero_fd = open ("/dev/zero", O_RDONLY, 0644);
+#endif
+  /* Setup some mmaped memory.  */
+#ifdef __hpux
+  /* HP-UX 10 mmap() often fails when given a hint.  So give the OS complete
+     freedom about the address range.  */
+  p = mmap ((void *) 0,          0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
+#else
+  p = mmap ((void *) 0x12340000, 0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
+#endif
+  if (p == (void *)(-1))
+    exit (2);
+  page = (unsigned long) p;
+  /* Make it read-only.  */
+  if (mprotect ((void *) page, 0x10000, PROT_READ) < 0)
+    exit (2);
+  /* Install the SIGSEGV handler.  */
+  sigemptyset(&action.sa_mask);
+
+  action.sa_handler = (void (*) (int)) &sigsegv_handler;
+  action.sa_flags = 0;
+
+  sigaction (SIGSEGV, &action, (struct sigaction *) NULL);
+  sigaction (SIGBUS, &action, (struct sigaction *) NULL);
+  /* The first write access should invoke the handler and then complete.  */
+  crasher (page);
+  /* The second write access should not invoke the handler.  */
+  crasher (page);
+  /* Check that the handler was called only once.  */
+  if (handler_called != 1)
+    exit (1);
+  /* Test passed!  */
+  return 0;
+}
+_ACEOF
+rm -f conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  sv_cv_fault_hpux_hppa=yes
+else
+  echo "$as_me: program exited with status $ac_status" >&5
+echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+( exit $ac_status )
+sv_cv_fault_hpux_hppa=no
+fi
+rm -f core *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
+fi
+
+fi
+echo "$as_me:$LINENO: result: $sv_cv_fault_hpux_hppa" >&5
+echo "${ECHO_T}$sv_cv_fault_hpux_hppa" >&6
+
+
+
+
+
+
+  echo "$as_me:$LINENO: checking whether a fault handler according to OSF/1 Alpha works" >&5
+echo $ECHO_N "checking whether a fault handler according to OSF/1 Alpha works... $ECHO_C" >&6
+if test "${sv_cv_fault_osf_alpha+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+
+    if test "$cross_compiling" = yes; then
+  case "$host" in
+         alpha*-*-osf[4-9]* | alpha*-*-linux2.[4-9]*) sv_cv_fault_osf_alpha=yes ;;
+         *)
+           cat >conftest.$ac_ext <<_ACEOF
+
+             /* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+#include <signal.h>
+
+void sigsegv_handler (int sig, int code, struct sigcontext *scp)
+{
+  void *fault_address = (void *) (scp->sc_traparg_a0);
+}
+
+int
+main ()
+{
+struct sigaction action;
+
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  sv_cv_fault_osf_alpha="guessing no"
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+sv_cv_fault_osf_alpha=no
+fi
+rm -f conftest.err conftest.$ac_objext \
+      conftest$ac_exeext conftest.$ac_ext
+           ;;
+       esac
+
+else
+  cat >conftest.$ac_ext <<_ACEOF
+
+      /* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+#include <stdlib.h>
+#include <signal.h>
+#if HAVE_SYS_SIGNAL_H
+# include <sys/signal.h>
+#endif
+
+#include <sys/types.h>
+#include <sys/mman.h>
+#if HAVE_MMAP_DEVZERO
+# include <fcntl.h>
+# ifndef MAP_FILE
+#  define MAP_FILE 0
+# endif
+#endif
+#ifndef PROT_NONE
+# define PROT_NONE 0
+#endif
+#if HAVE_MMAP_ANON
+# define zero_fd -1
+# define map_flags MAP_ANON | MAP_PRIVATE
+#elif HAVE_MMAP_ANONYMOUS
+# define zero_fd -1
+# define map_flags MAP_ANONYMOUS | MAP_PRIVATE
+#elif HAVE_MMAP_DEVZERO
+static int zero_fd;
+# define map_flags MAP_FILE | MAP_PRIVATE
+#endif
+unsigned long page;
+int handler_called = 0;
+void sigsegv_handler (int sig, int code, struct sigcontext *scp)
+{
+  void *fault_address = (void *) (scp->sc_traparg_a0);
+  handler_called++;
+  if (handler_called == 10)
+    exit (4);
+  if (fault_address != (void*)(page + 0x678))
+    exit (3);
+  if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
+    exit (2);
+}
+void crasher (unsigned long p)
+{
+  *(int *) (p + 0x678) = 42;
+}
+int main ()
+{
+  void *p;
+  struct sigaction action;
+  /* Preparations.  */
+#if !HAVE_MMAP_ANON && !HAVE_MMAP_ANONYMOUS && HAVE_MMAP_DEVZERO
+  zero_fd = open ("/dev/zero", O_RDONLY, 0644);
+#endif
+  /* Setup some mmaped memory.  */
+#ifdef __hpux
+  /* HP-UX 10 mmap() often fails when given a hint.  So give the OS complete
+     freedom about the address range.  */
+  p = mmap ((void *) 0,          0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
+#else
+  p = mmap ((void *) 0x12340000, 0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
+#endif
+  if (p == (void *)(-1))
+    exit (2);
+  page = (unsigned long) p;
+  /* Make it read-only.  */
+  if (mprotect ((void *) page, 0x10000, PROT_READ) < 0)
+    exit (2);
+  /* Install the SIGSEGV handler.  */
+  sigemptyset(&action.sa_mask);
+
+  action.sa_handler = (void (*) (int)) &sigsegv_handler;
+  action.sa_flags = 0;
+
+  sigaction (SIGSEGV, &action, (struct sigaction *) NULL);
+  sigaction (SIGBUS, &action, (struct sigaction *) NULL);
+  /* The first write access should invoke the handler and then complete.  */
+  crasher (page);
+  /* The second write access should not invoke the handler.  */
+  crasher (page);
+  /* Check that the handler was called only once.  */
+  if (handler_called != 1)
+    exit (1);
+  /* Test passed!  */
+  return 0;
+}
+_ACEOF
+rm -f conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  sv_cv_fault_osf_alpha=yes
+else
+  echo "$as_me: program exited with status $ac_status" >&5
+echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+( exit $ac_status )
+sv_cv_fault_osf_alpha=no
+fi
+rm -f core *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
+fi
+
+fi
+echo "$as_me:$LINENO: result: $sv_cv_fault_osf_alpha" >&5
+echo "${ECHO_T}$sv_cv_fault_osf_alpha" >&6
+
+
+
+
+
+
+  echo "$as_me:$LINENO: checking whether a fault handler according to NetBSD Alpha works" >&5
+echo $ECHO_N "checking whether a fault handler according to NetBSD Alpha works... $ECHO_C" >&6
+if test "${sv_cv_fault_netbsd_alpha+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+
+    if test "$cross_compiling" = yes; then
+  case "$host" in
+         alpha*-*-osf[4-9]* | alpha-*-*bsd*) sv_cv_fault_netbsd_alpha=yes ;;
+         *)
+           cat >conftest.$ac_ext <<_ACEOF
+
+             /* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+#include <signal.h>
+#include "$srcdir/src/fault-netbsd-alpha.c"
+void sigsegv_handler (int sig, int code, struct sigcontext *scp)
+{
+  void *fault_address = (void *) (get_fault_addr (scp));
+}
+
+int
+main ()
+{
+struct sigaction action;
+
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  sv_cv_fault_netbsd_alpha="guessing no"
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+sv_cv_fault_netbsd_alpha=no
+fi
+rm -f conftest.err conftest.$ac_objext \
+      conftest$ac_exeext conftest.$ac_ext
+           ;;
+       esac
+
+else
+  cat >conftest.$ac_ext <<_ACEOF
+
+      /* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+#include <stdlib.h>
+#include <signal.h>
+#if HAVE_SYS_SIGNAL_H
+# include <sys/signal.h>
+#endif
+#include "$srcdir/src/fault-netbsd-alpha.c"
+#include <sys/types.h>
+#include <sys/mman.h>
+#if HAVE_MMAP_DEVZERO
+# include <fcntl.h>
+# ifndef MAP_FILE
+#  define MAP_FILE 0
+# endif
+#endif
+#ifndef PROT_NONE
+# define PROT_NONE 0
+#endif
+#if HAVE_MMAP_ANON
+# define zero_fd -1
+# define map_flags MAP_ANON | MAP_PRIVATE
+#elif HAVE_MMAP_ANONYMOUS
+# define zero_fd -1
+# define map_flags MAP_ANONYMOUS | MAP_PRIVATE
+#elif HAVE_MMAP_DEVZERO
+static int zero_fd;
+# define map_flags MAP_FILE | MAP_PRIVATE
+#endif
+unsigned long page;
+int handler_called = 0;
+void sigsegv_handler (int sig, int code, struct sigcontext *scp)
+{
+  void *fault_address = (void *) (get_fault_addr (scp));
+  handler_called++;
+  if (handler_called == 10)
+    exit (4);
+  if (fault_address != (void*)(page + 0x678))
+    exit (3);
+  if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
+    exit (2);
+}
+void crasher (unsigned long p)
+{
+  *(int *) (p + 0x678) = 42;
+}
+int main ()
+{
+  void *p;
+  struct sigaction action;
+  /* Preparations.  */
+#if !HAVE_MMAP_ANON && !HAVE_MMAP_ANONYMOUS && HAVE_MMAP_DEVZERO
+  zero_fd = open ("/dev/zero", O_RDONLY, 0644);
+#endif
+  /* Setup some mmaped memory.  */
+#ifdef __hpux
+  /* HP-UX 10 mmap() often fails when given a hint.  So give the OS complete
+     freedom about the address range.  */
+  p = mmap ((void *) 0,          0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
+#else
+  p = mmap ((void *) 0x12340000, 0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
+#endif
+  if (p == (void *)(-1))
+    exit (2);
+  page = (unsigned long) p;
+  /* Make it read-only.  */
+  if (mprotect ((void *) page, 0x10000, PROT_READ) < 0)
+    exit (2);
+  /* Install the SIGSEGV handler.  */
+  sigemptyset(&action.sa_mask);
+
+  action.sa_handler = (void (*) (int)) &sigsegv_handler;
+  action.sa_flags = 0;
+
+  sigaction (SIGSEGV, &action, (struct sigaction *) NULL);
+  sigaction (SIGBUS, &action, (struct sigaction *) NULL);
+  /* The first write access should invoke the handler and then complete.  */
+  crasher (page);
+  /* The second write access should not invoke the handler.  */
+  crasher (page);
+  /* Check that the handler was called only once.  */
+  if (handler_called != 1)
+    exit (1);
+  /* Test passed!  */
+  return 0;
+}
+_ACEOF
+rm -f conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  sv_cv_fault_netbsd_alpha=yes
+else
+  echo "$as_me: program exited with status $ac_status" >&5
+echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+( exit $ac_status )
+sv_cv_fault_netbsd_alpha=no
+fi
+rm -f core *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
+fi
+
+fi
+echo "$as_me:$LINENO: result: $sv_cv_fault_netbsd_alpha" >&5
+echo "${ECHO_T}$sv_cv_fault_netbsd_alpha" >&6
+
+
+
+
+
+
+  echo "$as_me:$LINENO: checking whether a fault handler according to AIX works" >&5
+echo $ECHO_N "checking whether a fault handler according to AIX works... $ECHO_C" >&6
+if test "${sv_cv_fault_aix+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+
+    if test "$cross_compiling" = yes; then
+  case "$host" in
+         *-*-aix*) sv_cv_fault_aix=yes ;;
+         *)
+           cat >conftest.$ac_ext <<_ACEOF
+
+             /* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+#include <signal.h>
+
+void sigsegv_handler (int sig, int code, struct sigcontext *scp)
+{
+  void *fault_address = (void *) (scp->sc_jmpbuf.jmp_context.o_vaddr);
+}
+
+int
+main ()
+{
+struct sigaction action;
+
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  sv_cv_fault_aix="guessing no"
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+sv_cv_fault_aix=no
+fi
+rm -f conftest.err conftest.$ac_objext \
+      conftest$ac_exeext conftest.$ac_ext
+           ;;
+       esac
+
+else
+  cat >conftest.$ac_ext <<_ACEOF
+
+      /* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+#include <stdlib.h>
+#include <signal.h>
+#if HAVE_SYS_SIGNAL_H
+# include <sys/signal.h>
+#endif
+
+#include <sys/types.h>
+#include <sys/mman.h>
+#if HAVE_MMAP_DEVZERO
+# include <fcntl.h>
+# ifndef MAP_FILE
+#  define MAP_FILE 0
+# endif
+#endif
+#ifndef PROT_NONE
+# define PROT_NONE 0
+#endif
+#if HAVE_MMAP_ANON
+# define zero_fd -1
+# define map_flags MAP_ANON | MAP_PRIVATE
+#elif HAVE_MMAP_ANONYMOUS
+# define zero_fd -1
+# define map_flags MAP_ANONYMOUS | MAP_PRIVATE
+#elif HAVE_MMAP_DEVZERO
+static int zero_fd;
+# define map_flags MAP_FILE | MAP_PRIVATE
+#endif
+unsigned long page;
+int handler_called = 0;
+void sigsegv_handler (int sig, int code, struct sigcontext *scp)
+{
+  void *fault_address = (void *) (scp->sc_jmpbuf.jmp_context.o_vaddr);
+  handler_called++;
+  if (handler_called == 10)
+    exit (4);
+  if (fault_address != (void*)(page + 0x678))
+    exit (3);
+  if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
+    exit (2);
+}
+void crasher (unsigned long p)
+{
+  *(int *) (p + 0x678) = 42;
+}
+int main ()
+{
+  void *p;
+  struct sigaction action;
+  /* Preparations.  */
+#if !HAVE_MMAP_ANON && !HAVE_MMAP_ANONYMOUS && HAVE_MMAP_DEVZERO
+  zero_fd = open ("/dev/zero", O_RDONLY, 0644);
+#endif
+  /* Setup some mmaped memory.  */
+#ifdef __hpux
+  /* HP-UX 10 mmap() often fails when given a hint.  So give the OS complete
+     freedom about the address range.  */
+  p = mmap ((void *) 0,          0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
+#else
+  p = mmap ((void *) 0x12340000, 0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
+#endif
+  if (p == (void *)(-1))
+    exit (2);
+  page = (unsigned long) p;
+  /* Make it read-only.  */
+  if (mprotect ((void *) page, 0x10000, PROT_READ) < 0)
+    exit (2);
+  /* Install the SIGSEGV handler.  */
+  sigemptyset(&action.sa_mask);
+
+  action.sa_handler = (void (*) (int)) &sigsegv_handler;
+  action.sa_flags = 0;
+
+  sigaction (SIGSEGV, &action, (struct sigaction *) NULL);
+  sigaction (SIGBUS, &action, (struct sigaction *) NULL);
+  /* The first write access should invoke the handler and then complete.  */
+  crasher (page);
+  /* The second write access should not invoke the handler.  */
+  crasher (page);
+  /* Check that the handler was called only once.  */
+  if (handler_called != 1)
+    exit (1);
+  /* Test passed!  */
+  return 0;
+}
+_ACEOF
+rm -f conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  sv_cv_fault_aix=yes
+else
+  echo "$as_me: program exited with status $ac_status" >&5
+echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+( exit $ac_status )
+sv_cv_fault_aix=no
+fi
+rm -f core *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
+fi
+
+fi
+echo "$as_me:$LINENO: result: $sv_cv_fault_aix" >&5
+echo "${ECHO_T}$sv_cv_fault_aix" >&6
+
+
+
+
+
+
+  echo "$as_me:$LINENO: checking whether a fault handler according to Hurd works" >&5
+echo $ECHO_N "checking whether a fault handler according to Hurd works... $ECHO_C" >&6
+if test "${sv_cv_fault_hurd+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+
+    if test "$cross_compiling" = yes; then
+  case "$host" in
+
+         *)
+           cat >conftest.$ac_ext <<_ACEOF
+
+             /* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+#include <signal.h>
+
+void sigsegv_handler (int sig, int code, struct sigcontext *scp)
+{
+  void *fault_address = (void *) (code);
+}
+
+int
+main ()
+{
+struct sigaction action;
+
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  sv_cv_fault_hurd="guessing no"
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+sv_cv_fault_hurd=no
+fi
+rm -f conftest.err conftest.$ac_objext \
+      conftest$ac_exeext conftest.$ac_ext
+           ;;
+       esac
+
+else
+  cat >conftest.$ac_ext <<_ACEOF
+
+      /* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+#include <stdlib.h>
+#include <signal.h>
+#if HAVE_SYS_SIGNAL_H
+# include <sys/signal.h>
+#endif
+
+#include <sys/types.h>
+#include <sys/mman.h>
+#if HAVE_MMAP_DEVZERO
+# include <fcntl.h>
+# ifndef MAP_FILE
+#  define MAP_FILE 0
+# endif
+#endif
+#ifndef PROT_NONE
+# define PROT_NONE 0
+#endif
+#if HAVE_MMAP_ANON
+# define zero_fd -1
+# define map_flags MAP_ANON | MAP_PRIVATE
+#elif HAVE_MMAP_ANONYMOUS
+# define zero_fd -1
+# define map_flags MAP_ANONYMOUS | MAP_PRIVATE
+#elif HAVE_MMAP_DEVZERO
+static int zero_fd;
+# define map_flags MAP_FILE | MAP_PRIVATE
+#endif
+unsigned long page;
+int handler_called = 0;
+void sigsegv_handler (int sig, int code, struct sigcontext *scp)
+{
+  void *fault_address = (void *) (code);
+  handler_called++;
+  if (handler_called == 10)
+    exit (4);
+  if (fault_address != (void*)(page + 0x678))
+    exit (3);
+  if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
+    exit (2);
+}
+void crasher (unsigned long p)
+{
+  *(int *) (p + 0x678) = 42;
+}
+int main ()
+{
+  void *p;
+  struct sigaction action;
+  /* Preparations.  */
+#if !HAVE_MMAP_ANON && !HAVE_MMAP_ANONYMOUS && HAVE_MMAP_DEVZERO
+  zero_fd = open ("/dev/zero", O_RDONLY, 0644);
+#endif
+  /* Setup some mmaped memory.  */
+#ifdef __hpux
+  /* HP-UX 10 mmap() often fails when given a hint.  So give the OS complete
+     freedom about the address range.  */
+  p = mmap ((void *) 0,          0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
+#else
+  p = mmap ((void *) 0x12340000, 0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
+#endif
+  if (p == (void *)(-1))
+    exit (2);
+  page = (unsigned long) p;
+  /* Make it read-only.  */
+  if (mprotect ((void *) page, 0x10000, PROT_READ) < 0)
+    exit (2);
+  /* Install the SIGSEGV handler.  */
+  sigemptyset(&action.sa_mask);
+
+  action.sa_handler = (void (*) (int)) &sigsegv_handler;
+  action.sa_flags = 0;
+
+  sigaction (SIGSEGV, &action, (struct sigaction *) NULL);
+  sigaction (SIGBUS, &action, (struct sigaction *) NULL);
+  /* The first write access should invoke the handler and then complete.  */
+  crasher (page);
+  /* The second write access should not invoke the handler.  */
+  crasher (page);
+  /* Check that the handler was called only once.  */
+  if (handler_called != 1)
+    exit (1);
+  /* Test passed!  */
+  return 0;
+}
+_ACEOF
+rm -f conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  sv_cv_fault_hurd=yes
+else
+  echo "$as_me: program exited with status $ac_status" >&5
+echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+( exit $ac_status )
+sv_cv_fault_hurd=no
+fi
+rm -f core *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
+fi
+
+fi
+echo "$as_me:$LINENO: result: $sv_cv_fault_hurd" >&5
+echo "${ECHO_T}$sv_cv_fault_hurd" >&6
+
+
+                                    CFG_FAULT=fault-none.h
+    if test "$sv_cv_fault_aix" = yes; then
+      case "$host_cpu" in
+        powerpc* | rs6000) CFG_FAULT=fault-aix-powerpc.h ;;
+        *) CFG_FAULT=fault-aix.h ;;
+      esac
+      FAULT_CONTEXT='struct sigcontext'
+    fi
+    if test "$CFG_FAULT" = fault-none.h && test "$sv_cv_fault_irix" = yes; then
+      case "$host_cpu" in
+        mips*) CFG_FAULT=fault-irix-mips.h ;;
+        *) CFG_FAULT=fault-irix.h ;;
+      esac
+      FAULT_CONTEXT='struct sigcontext'
+    fi
+    if test "$CFG_FAULT" = fault-none.h && test "$sv_cv_fault_hpux_hppa" = yes; then
+      case "$host_cpu" in
+        hppa* | parisc*) CFG_FAULT=fault-hpux-hppa.h ;;
+        *) CFG_FAULT=fault-hpux.h ;;
+      esac
+      FAULT_CONTEXT='struct sigcontext'
+    fi
+    if test "$CFG_FAULT" = fault-none.h && test "$sv_cv_fault_osf_alpha" = yes; then
+      case "$host_cpu" in
+        alpha*) CFG_FAULT=fault-osf-alpha.h ;;
+        *) CFG_FAULT=fault-osf.h ;;
+      esac
+      FAULT_CONTEXT='struct sigcontext'
+    fi
+    if test "$CFG_FAULT" = fault-none.h && test "$sv_cv_fault_netbsd_alpha" = yes; then
+      case "$host_cpu" in
+        alpha*) CFG_FAULT=fault-netbsd-alpha.h ;;
+      esac
+      FAULT_CONTEXT='struct sigcontext'
+    fi
+    if test "$CFG_FAULT" = fault-none.h && test "$sv_cv_fault_linux_i386" = yes; then
+      case "$host_cpu" in
+        i?86 | x86_64) CFG_FAULT=fault-linux-i386.h ;;
+      esac
+      FAULT_CONTEXT='struct sigcontext'
+    fi
+    if test "$CFG_FAULT" = fault-none.h && test "$sv_cv_fault_linux_i386_old" = yes; then
+      case "$host_cpu" in
+        i?86 | x86_64) CFG_FAULT=fault-linux-i386-old.h ;;
+      esac
+      FAULT_CONTEXT='struct sigcontext'
+    fi
+    if test "$CFG_FAULT" = fault-none.h && test "$sv_cv_fault_linux_powerpc" = yes; then
+      case "$host_cpu" in
+        powerpc* | rs6000) CFG_FAULT=fault-linux-powerpc.h ;;
+      esac
+      FAULT_CONTEXT='struct sigcontext'
+    fi
+    if test "$CFG_FAULT" = fault-none.h && test "$sv_cv_fault_linux_hppa" = yes; then
+      case "$host_cpu" in
+        hppa* | parisc*) CFG_FAULT=fault-linux-hppa.h ;;
+      esac
+    fi
+    if test "$CFG_FAULT" = fault-none.h && test "$sv_cv_fault_hurd" = yes; then
+      case "$host_os" in
+        netbsd*) # A false positive.
+          ;;
+        *)
+          CFG_FAULT=fault-hurd.h
+          FAULT_CONTEXT='struct sigcontext'
+          ;;
+      esac
+    fi
+    if test "$CFG_FAULT" = fault-none.h && test "$sv_cv_fault_bsd" = yes; then
+      case "$host_os" in
+        freebsd*)
+          case "$host_cpu" in
+            i?86 | x86_64)
+              CFG_FAULT=fault-freebsd-i386.h
+              FAULT_CONTEXT='struct sigcontext'
+              ;;
+            *)
+              CFG_FAULT=fault-bsd.h
+              FAULT_CONTEXT='void'
+              ;;
+          esac
+          ;;
+        *)
+          CFG_FAULT=fault-bsd.h
+          FAULT_CONTEXT='void'
+          ;;
+      esac
+    fi
+    if test "$CFG_FAULT" = fault-none.h && test "$sv_cv_fault_posix" = yes; then
+      case "$host_os" in
+        openbsd*)
+          case "$host_cpu" in
+            i?86 | x86_64) CFG_FAULT=fault-openbsd-i386.h ;;
+            *) CFG_FAULT=fault-openbsd.h ;;
+          esac
+          FAULT_CONTEXT='struct sigcontext'
+          ;;
+        linux*)
+          case "$host_cpu" in
+            ia64)
+              CFG_FAULT=fault-linux-ia64.h
+              FAULT_CONTEXT='struct sigcontext'
+              ;;
+          esac
+          ;;
+      esac
+      if test "$CFG_FAULT" = fault-none.h; then
+        case "$host_os" in
+          solaris*)
+            case "$host_cpu" in
+              i?86 | x86_64) CFG_FAULT=fault-solaris-i386.h ;;
+              sparc*) CFG_FAULT=fault-solaris-sparc.h ;;
+              *) CFG_FAULT=fault-solaris.h ;;
+            esac
+            ;;
+          *)
+            CFG_FAULT=fault-posix.h
+            ;;
+        esac
+        FAULT_CONTEXT='ucontext_t'
+        FAULT_CONTEXT_INCLUDE='#include <ucontext.h>'
+      fi
+    fi
+                    if test "$CFG_FAULT" = fault-none.h && test "$sv_cv_fault_linux_m68k" = yes; then
+      case "$host_cpu" in
+        m68*)
+          CFG_FAULT=fault-linux-m68k.h
+          FAULT_CONTEXT='struct sigcontext'
+          ;;
+      esac
+    fi
+    if test "$CFG_FAULT" = fault-none.h; then
+      sv_cv_have_sigsegv_recovery=no
+                        case "$host_os" in
+        linux*)
+          case "$host_cpu" in
+            alpha*)
+              CFG_FAULT=fault-linux-alpha.h
+              FAULT_CONTEXT='struct sigcontext'
+              ;;
+            arm* | strongarm* | xscale*)
+              CFG_FAULT=fault-linux-arm.h
+              FAULT_CONTEXT='struct sigcontext'
+              ;;
+            cris)
+              CFG_FAULT=fault-linux-cris.h
+              FAULT_CONTEXT='struct sigcontext'
+              ;;
+            mips*)
+              CFG_FAULT=fault-linux-mips.h
+              FAULT_CONTEXT='struct sigcontext'
+              ;;
+            s390*)
+              CFG_FAULT=fault-linux-s390.h
+              FAULT_CONTEXT='struct sigcontext'
+              ;;
+            sh*)
+              CFG_FAULT=fault-linux-sh.h
+              FAULT_CONTEXT='struct sigcontext'
+              ;;
+            sparc*)
+              CFG_FAULT=fault-linux-sparc.h
+              FAULT_CONTEXT='struct sigcontext'
+              ;;
+            x86_64)
+              CFG_FAULT=fault-linux-x86_64.h
+              FAULT_CONTEXT='struct sigcontext'
+              ;;
+          esac
+          ;;
+        beos*)
+          case "$host_cpu" in
+            i?86 | x86_64) CFG_FAULT=fault-beos-i386.h ;;
+            *) CFG_FAULT=fault-beos.h ;;
+          esac
+          FAULT_CONTEXT='struct vregs'
+          ;;
+      esac
+    else
+      sv_cv_have_sigsegv_recovery=yes
+    fi
+
+    # How to longjmp out of a signal handler, in such a way that the
+    # alternate signal stack remains functional.
+    CFG_LEAVE=leave-none.c
 
 
 
@@ -13001,7 +12542,8 @@ else
 
 else
   cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
+
+      /* confdefs.h.  */
 _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
@@ -13117,7 +12659,8 @@ else
 
 else
   cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
+
+      /* confdefs.h.  */
 _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
@@ -13127,9 +12670,9 @@ cat >>conftest.$ac_ext <<_ACEOF
 #include <signal.h>
 #include <setjmp.h>
 
-#ifndef SS_ONSTACK
-#define SS_ONSTACK SA_ONSTACK
-#endif
+#    ifndef SS_ONSTACK
+#    define SS_ONSTACK SA_ONSTACK
+#    endif
 
 #if HAVE_SETRLIMIT
 # include <sys/types.h>
@@ -13144,12 +12687,12 @@ void stackoverflow_handler (int sig)
   pass++;
   sigprocmask (SIG_SETMASK, &mainsigset, NULL);
   { stack_t ss;
-   if (sigaltstack (NULL, &ss) >= 0)
-     {
-       ss.ss_flags &= ~SS_ONSTACK;
-       sigaltstack (&ss, NULL);
-     }
-   }
+       if (sigaltstack (NULL, &ss) >= 0)
+         {
+           ss.ss_flags &= ~SS_ONSTACK;
+           sigaltstack (&ss, NULL);
+         }
+       }
   longjmp (mainloop, pass);
 }
 int recurse (int n)
@@ -13243,7 +12786,8 @@ else
 
 else
   cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
+
+      /* confdefs.h.  */
 _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
@@ -13253,9 +12797,9 @@ cat >>conftest.$ac_ext <<_ACEOF
 #include <signal.h>
 #include <setjmp.h>
 #include <ucontext.h>
-#ifndef SS_ONSTACK
-#define SS_ONSTACK SA_ONSTACK
-#endif
+#    ifndef SS_ONSTACK
+#    define SS_ONSTACK SA_ONSTACK
+#    endif
 
 #if HAVE_SETRLIMIT
 # include <sys/types.h>
@@ -13270,17 +12814,17 @@ void stackoverflow_handler (int sig)
   pass++;
   sigprocmask (SIG_SETMASK, &mainsigset, NULL);
   { static int fl;
-   static ucontext_t uc;
-   fl = 0;
-   if (getcontext (&uc) >= 0)
-     if (fl == 0)
-       if (uc.uc_stack.ss_flags & SS_ONSTACK)
-         {
-           uc.uc_stack.ss_flags &= ~SS_ONSTACK;
-           fl = 1;
-           setcontext (&uc);
-         }
-   }
+       static ucontext_t uc;
+       fl = 0;
+       if (getcontext (&uc) >= 0)
+         if (fl == 0)
+           if (uc.uc_stack.ss_flags & SS_ONSTACK)
+             {
+               uc.uc_stack.ss_flags &= ~SS_ONSTACK;
+               fl = 1;
+               setcontext (&uc);
+             }
+       }
   longjmp (mainloop, pass);
 }
 int recurse (int n)
@@ -13356,8 +12900,8 @@ echo "$as_me:$LINENO: result: $sv_cv_leave_handler_longjmp_setcontext" >&5
 echo "${ECHO_T}$sv_cv_leave_handler_longjmp_setcontext" >&6
 
 
-# How to siglongjmp out of a signal handler, in such a way that the
-# alternate signal stack remains functional.
+    # How to siglongjmp out of a signal handler, in such a way that the
+    # alternate signal stack remains functional.
 
 
 
@@ -13377,7 +12921,8 @@ else
 
 else
   cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
+
+      /* confdefs.h.  */
 _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
@@ -13491,7 +13036,8 @@ else
 
 else
   cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
+
+      /* confdefs.h.  */
 _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
@@ -13501,9 +13047,9 @@ cat >>conftest.$ac_ext <<_ACEOF
 #include <signal.h>
 #include <setjmp.h>
 
-#ifndef SS_ONSTACK
-#define SS_ONSTACK SA_ONSTACK
-#endif
+#    ifndef SS_ONSTACK
+#    define SS_ONSTACK SA_ONSTACK
+#    endif
 
 #if HAVE_SETRLIMIT
 # include <sys/types.h>
@@ -13516,12 +13062,12 @@ void stackoverflow_handler (int sig)
 {
   pass++;
   { stack_t ss;
-   if (sigaltstack (NULL, &ss) >= 0)
-     {
-       ss.ss_flags &= ~SS_ONSTACK;
-       sigaltstack (&ss, NULL);
-     }
-   }
+       if (sigaltstack (NULL, &ss) >= 0)
+         {
+           ss.ss_flags &= ~SS_ONSTACK;
+           sigaltstack (&ss, NULL);
+         }
+       }
   siglongjmp (mainloop, pass);
 }
 int recurse (int n)
@@ -13615,7 +13161,8 @@ else
 
 else
   cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
+
+      /* confdefs.h.  */
 _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
@@ -13625,9 +13172,9 @@ cat >>conftest.$ac_ext <<_ACEOF
 #include <signal.h>
 #include <setjmp.h>
 #include <ucontext.h>
-#ifndef SS_ONSTACK
-#define SS_ONSTACK SA_ONSTACK
-#endif
+#    ifndef SS_ONSTACK
+#    define SS_ONSTACK SA_ONSTACK
+#    endif
 
 #if HAVE_SETRLIMIT
 # include <sys/types.h>
@@ -13640,17 +13187,17 @@ void stackoverflow_handler (int sig)
 {
   pass++;
   { static int fl;
-   static ucontext_t uc;
-   fl = 0;
-   if (getcontext(&uc) >= 0)
-     if (fl == 0)
-       if (uc.uc_stack.ss_flags & SS_ONSTACK)
-         {
-           uc.uc_stack.ss_flags &= ~SS_ONSTACK;
-           fl = 1;
-           setcontext(&uc);
-         }
-   }
+       static ucontext_t uc;
+       fl = 0;
+       if (getcontext(&uc) >= 0)
+         if (fl == 0)
+           if (uc.uc_stack.ss_flags & SS_ONSTACK)
+             {
+               uc.uc_stack.ss_flags &= ~SS_ONSTACK;
+               fl = 1;
+               setcontext(&uc);
+             }
+       }
   siglongjmp (mainloop, pass);
 }
 int recurse (int n)
@@ -13726,49 +13273,338 @@ echo "$as_me:$LINENO: result: $sv_cv_leave_handler_siglongjmp_setcontext" >&5
 echo "${ECHO_T}$sv_cv_leave_handler_siglongjmp_setcontext" >&6
 
 
-CFG_LEAVE=
-if test "$sv_cv_leave_handler_longjmp" != no; then
-  CFG_LEAVE=leave-nop.c
-else
-  if test "$sv_cv_leave_handler_longjmp_sigaltstack" != no; then
-    CFG_LEAVE=leave-sigaltstack.c
-  else
-    if test "$sv_cv_leave_handler_longjmp_setcontext" != no; then
-      CFG_LEAVE=leave-setcontext.c
+    if test "$sv_cv_leave_handler_longjmp" != no; then
+      CFG_LEAVE=leave-nop.c
+    else
+      if test "$sv_cv_leave_handler_longjmp_sigaltstack" != no; then
+        CFG_LEAVE=leave-sigaltstack.c
+      else
+        if test "$sv_cv_leave_handler_longjmp_setcontext" != no; then
+          CFG_LEAVE=leave-setcontext.c
+        fi
+      fi
     fi
+    case "$host_os" in
+      # On BeOS, the 6 tests fail because sigaltstack() doesn't exist.
+      # If one uses set_signal_stack() instead of sigaltstack(), the first
+      # test actually works. i.e. sv_cv_leave_handler_longjmp would be 'yes'.
+      beos*)
+	CFG_LEAVE=leave-nop.c
+        sv_cv_have_stack_overflow_recovery=yes
+	;;
+      *)
+	if test "$sv_cv_sigaltstack" = no; then
+          sv_cv_have_stack_overflow_recovery=no
+        fi
+	;;
+    esac
+    ;;
+esac
+
+echo "$as_me:$LINENO: checking if the system supports catching SIGSEGV" >&5
+echo $ECHO_N "checking if the system supports catching SIGSEGV... $ECHO_C" >&6
+echo "$as_me:$LINENO: result: $sv_cv_have_sigsegv_recovery" >&5
+echo "${ECHO_T}$sv_cv_have_sigsegv_recovery" >&6
+if test $sv_cv_have_sigsegv_recovery != no; then
+  HAVE_SIGSEGV_RECOVERY=1
+else
+  HAVE_SIGSEGV_RECOVERY=0
+fi
+
+
+echo "$as_me:$LINENO: checking for stack direction" >&5
+echo $ECHO_N "checking for stack direction... $ECHO_C" >&6
+if test "${sv_cv_stack_direction_msg+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+
+  case "$host_cpu" in
+        a29k | \
+    alpha* | \
+    arc | \
+    arm* | strongarm* | xscale* | \
+    avr | \
+    c1 | c2 | c32 | c34 | c38 | \
+    clipper | \
+    cris | \
+    d30v | \
+    elxsi | \
+    fr30 | \
+    h8300 | \
+    i?86 | x86_64 | \
+    i860 | \
+    ia64 | \
+    m32r | \
+    m68* | \
+    m88k | \
+    mcore | \
+    mips* | \
+    mmix | \
+    mn10200 | \
+    mn10300 | \
+    ns32k | \
+    pdp11 | \
+    pj* | \
+    powerpc* | rs6000 | \
+    romp | \
+    s390* | \
+    sh* | \
+    sparc* | \
+    v850 | \
+    vax | \
+    xtensa)
+      sv_cv_stack_direction=-1 ;;
+    c4x | \
+    dsp16xx | \
+    i960 | \
+    hppa* | parisc* | \
+    stormy16 | \
+    we32k)
+      sv_cv_stack_direction=1 ;;
+    *)
+      if test $cross_compiling = no; then
+        cat > conftest.c <<EOF
+#include <stdio.h>
+int
+get_stack_direction ()
+{
+  auto char dummy;
+  static char *dummyaddr = (char *)0;
+  if (dummyaddr != (char *)0)
+    return &dummy > dummyaddr ? 1 : &dummy < dummyaddr ? -1 : 0;
+  else
+    {
+      dummyaddr = &dummy;
+      {
+        int result = get_stack_direction ();
+        /* The next assignment avoids tail recursion elimination
+           (IRIX 6.4 CC).  */
+        dummyaddr = (char *)0;
+        return result;
+      }
+    }
+}
+int
+main ()
+{
+  printf ("%d\n", get_stack_direction ());
+  return 0;
+}
+EOF
+        { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }
+        sv_cv_stack_direction=`./conftest`
+      else
+        sv_cv_stack_direction=0
+      fi
+      ;;
+  esac
+  case $sv_cv_stack_direction in
+    1)  sv_cv_stack_direction_msg="grows up";;
+    -1) sv_cv_stack_direction_msg="grows down";;
+    *)  sv_cv_stack_direction_msg="unknown";;
+  esac
+
+fi
+echo "$as_me:$LINENO: result: $sv_cv_stack_direction_msg" >&5
+echo "${ECHO_T}$sv_cv_stack_direction_msg" >&6
+
+cat >>confdefs.h <<_ACEOF
+#define STACK_DIRECTION $sv_cv_stack_direction
+_ACEOF
+
+
+if test "$CFG_STACKVMA" = detect; then
+  CFG_STACKVMA=stackvma-none.c
+    echo "$as_me:$LINENO: checking for PIOCMAP in sys/procfs.h" >&5
+echo $ECHO_N "checking for PIOCMAP in sys/procfs.h... $ECHO_C" >&6
+if test "${sv_cv_procfsvma+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+
+    cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+#include <sys/procfs.h>
+int
+main ()
+{
+int x = PIOCNMAP + PIOCMAP; prmap_t y;
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  sv_cv_procfsvma=yes
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+sv_cv_procfsvma=no
+fi
+rm -f conftest.err conftest.$ac_objext \
+      conftest$ac_exeext conftest.$ac_ext
+
+fi
+echo "$as_me:$LINENO: result: $sv_cv_procfsvma" >&5
+echo "${ECHO_T}$sv_cv_procfsvma" >&6
+  if test $sv_cv_procfsvma = yes; then
+    CFG_STACKVMA=stackvma-procfs.c
+  else
+    case "$host_os" in
+      darwin*|macos*) CFG_STACKVMA=stackvma-mach.c ;;
+      linux*) CFG_STACKVMA=stackvma-linux.c ;;
+      freebsd*) CFG_STACKVMA=stackvma-freebsd.c ;;
+      beos*) CFG_STACKVMA=stackvma-beos.c ;;
+    esac
   fi
 fi
-case "$host_os" in
-  # On BeOS, the 6 tests fail because sigaltstack() doesn't exist.
-  # If one uses set_signal_stack() instead of sigaltstack(), the first
-  # test actually works. i.e. sv_cv_leave_handler_longjmp would be 'yes'.
-  beos*) CFG_LEAVE=leave-nop.c ;;
-esac
-if test -z "$CFG_LEAVE"; then
-  CFG_LEAVE=leave-none.c
+
+echo "$as_me:$LINENO: checking if the system supplies the stack pointer" >&5
+echo $ECHO_N "checking if the system supplies the stack pointer... $ECHO_C" >&6
+if test "${sv_cv_have_fault_stack_pointer+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+
+cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+#include "$srcdir/src/$CFG_FAULT"
+#ifdef SIGSEGV_FAULT_STACKPOINTER
+xyzzy
+#endif
+
+_ACEOF
+if (eval "$ac_cpp conftest.$ac_ext") 2>&5 |
+  $EGREP "xyzzy" >/dev/null 2>&1; then
+  sv_cv_have_fault_stack_pointer=yes
+else
+  sv_cv_have_fault_stack_pointer=no
 fi
+rm -f conftest*
+
+
+fi
+echo "$as_me:$LINENO: result: $sv_cv_have_fault_stack_pointer" >&5
+echo "${ECHO_T}$sv_cv_have_fault_stack_pointer" >&6
+
+echo "$as_me:$LINENO: checking if the virtual memory area for an address can be found" >&5
+echo $ECHO_N "checking if the virtual memory area for an address can be found... $ECHO_C" >&6
+if test "$CFG_STACKVMA" != "stackvma-none.c"; then
+  echo "$as_me:$LINENO: result: yes" >&5
+echo "${ECHO_T}yes" >&6
+else
+  echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6
+fi
+
+# Now we can pick a stack overflow detection heuristic.  From best to worst:
+# - stack pointer near bottom of stack
+# - fault address near bottom of stack
+# - fault address near stack pointer
+case "$sv_cv_have_sigsegv_recovery:$sv_cv_have_fault_stack_pointer:$CFG_STACKVMA" in
+  yes:yes:stackvma-none.c) CFG_HEURISTICS=heur-ab.h ;;
+  *:*:stackvma-none.c) CFG_HEURISTICS=heur-none.h ;;
+  yes:*:*) CFG_HEURISTICS=heur-ac.h ;;
+  *:yes:*) CFG_HEURISTICS=heur-bc.h ;;
+esac
+
+echo "$as_me:$LINENO: checking if the system supports catching stack overflow" >&5
+echo $ECHO_N "checking if the system supports catching stack overflow... $ECHO_C" >&6
+if test "${sv_cv_have_stack_overflow_recovery+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+
+if test "$CFG_HEURISTICS" = heur-none.h; then
+  sv_cv_have_stack_overflow_recovery=no
+else
+  sv_cv_have_stack_overflow_recovery=yes
+fi
+
+fi
+echo "$as_me:$LINENO: result: $sv_cv_have_stack_overflow_recovery" >&5
+echo "${ECHO_T}$sv_cv_have_stack_overflow_recovery" >&6
+
+if test $sv_cv_have_stack_overflow_recovery != no; then
+  HAVE_STACK_OVERFLOW_RECOVERY=1
+else
+  HAVE_STACK_OVERFLOW_RECOVERY=0
+fi
+
+
+if test $sv_cv_have_sigsegv_recovery = no \
+   && test $sv_cv_have_stack_overflow_recovery = no; then
+  CFG_HANDLER=handler-none.c
+fi
+
+
+cat >>confdefs.h <<_ACEOF
+#define CFG_HEURISTICS "$CFG_HEURISTICS"
+_ACEOF
+
+
+cat >>confdefs.h <<_ACEOF
+#define CFG_SIGNALS "$CFG_SIGNALS"
+_ACEOF
+
+
+cat >>confdefs.h <<_ACEOF
+#define CFG_FAULT "$CFG_FAULT"
+_ACEOF
+
 
 cat >>confdefs.h <<_ACEOF
 #define CFG_LEAVE "$CFG_LEAVE"
 _ACEOF
 
 
+cat >>confdefs.h <<_ACEOF
+#define CFG_STACKVMA "$CFG_STACKVMA"
+_ACEOF
 
-case "$host_os" in
-  mingw* | cygwin*) CFG_HANDLER=handler-win32.c ;;
-  *)
-    if test $sv_cv_have_sigsegv_recovery = no \
-       && test $sv_cv_have_stack_overflow_recovery = no; then
-      CFG_HANDLER=handler-none.c
-    else
-      CFG_HANDLER=handler-unix.c
-    fi
-    ;;
-esac
 
 cat >>confdefs.h <<_ACEOF
 #define CFG_HANDLER "$CFG_HANDLER"
 _ACEOF
+
+
+
+
+
+
+
+
 
 
 
@@ -14635,13 +14471,16 @@ s,@RANLIB@,$RANLIB,;t t
 s,@ac_ct_RANLIB@,$ac_ct_RANLIB,;t t
 s,@EGREP@,$EGREP,;t t
 s,@LIBTOOL@,$LIBTOOL,;t t
-s,@FAULT_CONTEXT@,$FAULT_CONTEXT,;t t
-s,@FAULT_CONTEXT_INCLUDE@,$FAULT_CONTEXT_INCLUDE,;t t
 s,@HAVE_SIGSEGV_RECOVERY@,$HAVE_SIGSEGV_RECOVERY,;t t
-s,@CFG_STACKVMA@,$CFG_STACKVMA,;t t
 s,@HAVE_STACK_OVERFLOW_RECOVERY@,$HAVE_STACK_OVERFLOW_RECOVERY,;t t
+s,@CFG_HEURISTICS@,$CFG_HEURISTICS,;t t
+s,@CFG_SIGNALS@,$CFG_SIGNALS,;t t
+s,@CFG_FAULT@,$CFG_FAULT,;t t
+s,@CFG_STACKVMA@,$CFG_STACKVMA,;t t
 s,@CFG_LEAVE@,$CFG_LEAVE,;t t
 s,@CFG_HANDLER@,$CFG_HANDLER,;t t
+s,@FAULT_CONTEXT@,$FAULT_CONTEXT,;t t
+s,@FAULT_CONTEXT_INCLUDE@,$FAULT_CONTEXT_INCLUDE,;t t
 s,@RELOCATABLE@,$RELOCATABLE,;t t
 s,@LIBOBJS@,$LIBOBJS,;t t
 s,@LTLIBOBJS@,$LTLIBOBJS,;t t

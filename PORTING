@@ -93,6 +93,10 @@ them is stored in a platform dependent file; the file is chosen in configure.
     This is a file among stackvma-*.c.
     configure chooses and sets the variable CFG_STACKVMA.
 
+  * How to determine if a fault is actually a stack overflow (more on
+    this later).  This is a file among heur-*.h.
+    configure chooses and sets the variable CFG_HEURISTICS.
+
   * How to leave a signal handler that is executing on the alternate
     signal stack.
     This is a file among leave-*.c.
@@ -118,3 +122,68 @@ For each of these, the approach should be:
   - Verify that "make" and "make check" pass.
 
 For non-Unix systems, a separate handler-<os>.c is likely to be needed.
+There are already two of them, namely handler-win32.c and handler-mach.c;
+the latter is configurable with a machfault-<os>-<cpu>.h file similarly to
+the generic Unix port.
+
+If this is the case, you should add code at the top of the configure script
+which chooses it depending on the host system's triplet.  There is a case
+statement with an arm for each such file, which also enables some or all of
+the other parts of the configuration by setting the CFG_* variables.  A
+value of "detect" will try to use the existing configuration machinery to
+detect the most appropriate file.
+
+Try to make the handler-<os>.c file as generic as possible; the
+handler-unix.c and handler-mach.c are good examples of this.  If possible,
+move the platform dependencies to CFG_FAULT, and maybe try to detect them
+as part of the configuration process.  If an operating system is composed
+of more than one layer (such as Darwin's BSD and Mach layers, or Cygwin's
+Win32 and POSIX layers) pick the most appropriate one instead of relying
+on both: otherwise, the code will probably be less maintainable and more
+subject to negative interactions between the various layers.
+
+Stack-overflow detection
+========================
+
+On the average platform, including Unix and Mach, we must distinguish
+stack overflow from other segmentation violations using some kind of
+heuristics.  At least two of the following must be true:
+
+      A) CFG_FAULT points to an include file which defines
+         SIGSEGV_FAULT_ADDRESS.
+      B) CFG_FAULT points to an include file which defines
+         SIGSEGV_FAULT_STACKPOINTER.
+      C) There is a stackvma-*.c, other than stackvma-none.c, which
+         defines sigsegv_get_vma.
+
+If we have A) and B), we use the
+
+     Heuristic AB: If the fault address is near the stack pointer, it's a
+     stack overflow.  This is implemented in heur-ab.h and takes special
+     care for the IA-64's special stack handling.
+
+If we have A) and C), we use the
+
+     Heuristic AC: If the fault address is near and beyond the bottom of
+     the stack's virtual memory area, it's a stack overflow.  This is
+     implemented in heur-ac.h.
+
+If we have B) and C), we use the
+
+     Heuristic BC: If the stack pointer is near the bottom of the stack's
+     virtual memory area, it's a stack overflow.  This is implemented in
+     heur-bc.h and comes in two flavours: on OSes which let the stack's
+     VMA grow continuously, we determine the bottom by use of getrlimit();
+     on OSes which preallocate the stack's VMA with its maximum size
+     (like BeOS), we use the stack's VMA directly.
+
+Using these heuristics is quite easy.  Just set CFG_STACKVMA to a file
+name or "detect" at the top of configure.in, and make sure that the
+appropriate #defines are made in your CFG_FAULT file.  Also make sure
+that you don't set sv_cv_have_stack_overflow_recovery: then, configure
+will do the appropriate checks automatically and define
+HAVE_STACK_OVERFLOW_RECOVERY to 1 if and only if one of the heuristics
+can be adopted.
+
+On the other hand, if you do not need any heuristics (like under Win32),
+be sure to set sv_cv_have_stack_overflow_recovery to yes.

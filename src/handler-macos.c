@@ -39,7 +39,17 @@
 #define SS_DISABLE SA_DISABLE
 #endif
 
-#include "fault.h"
+/* Platform dependent:
+   Characteristics of the exception handler.  */
+#include CFG_FAULT
+
+/* Platform dependent:
+   Determine the virtual memory area of a given address.  */
+#include "stackvma.h"
+
+/* Platform dependent:
+   Determine if a fault is caused by a stack overflow.  */
+#include CFG_HEURISTICS
 
 /* The following sources were used as a *reference* for this exception handling
    code:
@@ -114,7 +124,7 @@ static mach_port_t our_exception_port;
 static int mach_initialized = 0;
 
 /* Communication area for the exception state.  */
-static SIGSEGV_EXC_STATE_TYPE save_exc_state;
+static int is_stack_overflow;
 
 /* Check for reentrant signals.  */
 static int emergency = -1;
@@ -133,17 +143,15 @@ static sigsegv_handler_t user_handler = (sigsegv_handler_t)NULL;
 static void
 altstack_handler (int sig)
 {
-  unsigned long addr = (unsigned long) (SIGSEGV_FAULT_ADDRESS (save_exc_state));
-
   /* We arrive here when the user refused to handle a fault.  */
 
   /* Check if it is plausibly a stack overflow, and the user installed
      a stack overflow handler.  */
-  if (addr != 0 && stk_user_handler)
+  if (is_stack_overflow && stk_user_handler)
     {
       emergency++;
       /* Call user's handler.  */
-      (*stk_user_handler) (emergency, &save_exc_state);
+      (*stk_user_handler) (emergency, NULL);
     }
 
   /* Else, dump core.  */
@@ -201,25 +209,21 @@ catch_exception_raise (mach_port_t exception_port,
       return KERN_FAILURE;
     }
 
-  addr = (unsigned long) (SIGSEGV_FAULT_ADDRESS (exc_state));
-  sp = (unsigned long) (SIGSEGV_STACK_POINTER (thread_state));
-
   /* Got the thread's state. Now extract the address that caused the
-     fault and invoke the user's handler.  */
+     fault.  */
+  addr = (unsigned long) (SIGSEGV_FAULT_ADDRESS);
+  sp = (unsigned long) (SIGSEGV_FAULT_STACKPOINTER);
+  is_stack_overflow = IS_STACK_OVERFLOW;
 
-  /* If the fault address is near the stack pointer,
-     it's a stack overflow.  Otherwise, set stk_exc_state's
-     fault address to NULL to signal */
-  save_exc_state = exc_state;
-  if (addr <= sp + 4096 && sp <= addr + 4096)
+  if (is_stack_overflow)
     {
 #ifdef DEBUG_EXCEPTION_HANDLING
       fprintf (stderr, "Treating as stack overflow, sp = 0x%lx\n", (char *) sp);
 #endif
 #if STACK_DIRECTION == 1
-      SIGSEGV_STACK_POINTER (thread_state) = stk_extra_stack + 256;
+      SIGSEGV_FAULT_STACKPOINTER = stk_extra_stack + 256;
 #else
-      SIGSEGV_STACK_POINTER (thread_state) =
+      SIGSEGV_FAULT_STACKPOINTER =
         stk_extra_stack + stk_extra_stack_size - 256;
 #endif
     }
@@ -238,10 +242,10 @@ catch_exception_raise (mach_port_t exception_port,
           if (done)
             return KERN_SUCCESS;
         }
-      SIGSEGV_FAULT_ADDRESS (save_exc_state) = 0;
+      is_stack_overflow = 0;
     }
 
-  SIGSEGV_PROGRAM_COUNTER (thread_state) = (unsigned long) altstack_handler;
+  SIGSEGV_PROGRAM_COUNTER = (unsigned long) altstack_handler;
 
   /* See http://web.mit.edu/darwin/src/modules/xnu/osfmk/man/thread_set_state.html.  */
   if (thread_set_state (thread, SIGSEGV_THREAD_STATE_FLAVOR,
@@ -340,6 +344,10 @@ mach_initialize ()
   exception_mask_t mask;
   pthread_attr_t attr;
   pthread_t thread;
+
+  int dummy;
+  if (remember_stack_top (&dummy) == -1)
+    return -1;
 
   self = mach_task_self ();
 
