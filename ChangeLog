@@ -1,5 +1,10 @@
 2005-03-02  Bruno Haible  <bruno@clisp.org>
 
+	* src/fault-aix5.h: New file.
+	* src/fault-aix5-powerpc.h: New file.
+	* src/Makefile.am (noinst_HEADERS): Add them.
+	* configure.in: Choose them when the POSIX test succeeds on AIX.
+
 	* src/fault-aix3-powerpc.h: Renamed from src/fault-aix-powerpc.h.
 	* src/fault-aix3.h: Renamed from src/fault-aix.h.
 	* src/Makefile.am (noinst_HEADERS): Update.

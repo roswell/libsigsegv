@@ -343,6 +343,12 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_posix" = yes; then
           *) CFG_FAULT=fault-solaris.h ;;
         esac
         ;;
+      aix*)
+        case "$host_cpu" in
+          powerpc* | rs6000) CFG_FAULT=fault-aix5-powerpc.h ;;
+          *) CFG_FAULT=fault-aix5.h ;;
+        esac
+        ;;
       *)
         CFG_FAULT=fault-posix.h
         ;;
