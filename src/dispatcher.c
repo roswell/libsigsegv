@@ -1,5 +1,5 @@
 /* Dispatch signal to right virtual memory area.
-   Copyright (C) 1993-1999, 2002  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 1993-1999, 2002-2003  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -118,7 +118,7 @@ rebalance (node_t ***nodeplaces_ptr, unsigned int count)
 static node_t *
 insert (node_t *new_node, node_t *tree)
 {
-  unsigned int key = new_node->address;
+  unsigned long key = new_node->address;
   node_t **nodeplace = &tree;
   node_t **stack[MAXHEIGHT];
   unsigned int stack_count = 0;
