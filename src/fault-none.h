@@ -1,4 +1,5 @@
-/* Fault handler information.  Version for platforms lacking support.
+/* Fault handler information.  Version for platforms lacking support,
+   or with a self-contained handler.c.
    Copyright (C) 2002  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
