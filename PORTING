@@ -61,6 +61,7 @@ i386-unknown-openbsd3.2                    |   yes   |   yes     | 2.1
 ia64-hp-hpux11.22                          |   yes   |   no      | 2.1
 ia64-unknown-linux2.4.18-gnu-glibc2.2      |   yes   |   yes     | 2.1
 mips-sgi-irix6.5                           |   yes   |   yes     | 2.1
+nsr-tandem-nsk                             |   no    |   no      | 2.1
 rs6000-ibm-aix3.2.5                        |   yes   |   no      | 2.1
 powerpc-ibm-aix4.3.3.0                     |   yes   |   yes     | 1.95
 powerpc-apple-darwin5.5                    |   yes   |   yes     | 2.0.2
