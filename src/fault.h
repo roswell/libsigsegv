@@ -34,6 +34,4 @@
           occurred.
  */
 
-#ifdef CFG_FAULT
-# include CFG_FAULT
-#endif
+#include CFG_FAULT

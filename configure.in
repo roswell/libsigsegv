@@ -365,10 +365,11 @@ else
   sv_cv_fault_include=none
 fi
 AC_MSG_RESULT([$sv_cv_fault_include])
-if test -n "$CFG_FAULT"; then
-  AC_DEFINE_UNQUOTED(CFG_FAULT, "$CFG_FAULT",
-    [The name of the include file describing the fault handler.])
+if test -z "$CFG_FAULT"; then
+  CFG_FAULT=fault-none.h
 fi
+AC_DEFINE_UNQUOTED(CFG_FAULT, "$CFG_FAULT",
+  [The name of the include file describing the fault handler.])
 AC_SUBST(FAULT_CONTEXT)
 AC_SUBST(FAULT_CONTEXT_INCLUDE)
 

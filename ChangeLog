@@ -1,9 +1,13 @@
 2002-10-14  Bruno Haible  <bruno@clisp.org>
 
+	* src/fault-none.h: New file.
+	* src/fault.h: Include CFG_FAULT unconditionally.
 	* src/leave-none.c: New file.
 	* src/leave.c: Include CFG_LEAVE unconditionally.
 	* src/stackvma.c: Include CFG_STACKVMA unconditionally.
 	* configure.in (CFG_LEAVE, CFG_STACKVMA): Define always.
+	* src/Makefile.am (noinst_HEADERS): Add fault-none.h.
+	(EXTRA_DIST): Add leave-none.c.
 	Reported by Paolo Bonzini <bonzini@gnu.org>.
 
 2002-09-30  Bruno Haible  <bruno@clisp.org>
