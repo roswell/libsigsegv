@@ -115,6 +115,13 @@ SV_TRY_FAULT([old Linux/i386], sv_cv_fault_linux_i386_old,
   [((unsigned long *) &more) [21]])
 
 dnl FIXME: Put in some more known values into the third argument.
+SV_TRY_FAULT([Linux/m68k], sv_cv_fault_linux_m68k, [],
+  [#include <asm/sigcontext.h>
+#include "src/fault-linux-m68k.c"],
+  [int sig, int code, struct sigcontext *scp],
+  [get_fault_addr (scp)])
+
+dnl FIXME: Put in some more known values into the third argument.
 SV_TRY_FAULT([BSD], sv_cv_fault_bsd, [i?86-*-freebsd[4-9]*],
   [],
   [int sig, int code, struct sigcontext *scp, void *addr],
@@ -252,6 +259,14 @@ dnl
 dnl Next, the cases where there is a hairy CPU dependent way to get the
 dnl fault address.
 dnl
+if test -z "$CFG_FAULT" && test "$sv_cv_fault_linux_m68k" = yes; then
+  case "$host_cpu" in
+    m68*)
+      CFG_FAULT=fault-linux-m68k.h
+      FAULT_CONTEXT='struct sigcontext'
+      ;;
+  esac
+fi
 if test -z "$CFG_FAULT" && test "$sv_cv_fault_macos_ppc" = yes; then
   case "$host_cpu" in
     powerpc* | rs6000)
@@ -298,10 +313,6 @@ else
           ;;
         ia64)
           CFG_FAULT=fault-linux-ia64.h
-          FAULT_CONTEXT='struct sigcontext'
-          ;;
-        m68*)
-          CFG_FAULT=fault-linux-m68k.h
           FAULT_CONTEXT='struct sigcontext'
           ;;
         mips*)

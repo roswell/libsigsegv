@@ -1,5 +1,12 @@
 2002-09-30  Bruno Haible  <bruno@clisp.org>
 
+	Better Linux/m68k support.
+	* configure.in: Change Linux/m68k support.
+	* src/fault-linux-m68k.c: New file.
+	* src/fault-linux-m68k.h: Use it.
+
+2002-09-30  Bruno Haible  <bruno@clisp.org>
+
 	Tentative Hurd support.
 	* configure.in: Add Hurd support.
 	* src/signals-hurd.h: New file.
