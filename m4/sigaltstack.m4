@@ -1,5 +1,5 @@
-# sigaltstack.m4 serial 1 (libsigsegv-2.0)
-dnl Copyright (C) 2002 Bruno Haible <bruno@clisp.org>
+# sigaltstack.m4 serial 2
+dnl Copyright (C) 2002-2003 Bruno Haible <bruno@clisp.org>
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
 dnl Public License, this file may be distributed as part of a program
@@ -12,11 +12,28 @@ AC_DEFUN([SV_SIGALTSTACK],
   AC_REQUIRE([AC_CANONICAL_HOST])
 
   AC_CHECK_FUNCS(sigaltstack)
+
+  if test "$ac_cv_func_sigaltstack" = yes; then
+    AC_CHECK_TYPE(stack_t, ,
+      [AC_DEFINE(stack_t, [struct sigaltstack],
+         [Define to 'struct sigaltstack' if that's the type of the argument to sigaltstack])
+      ],
+      [
+#include <signal.h>
+#if HAVE_SYS_SIGNAL_H
+# include <sys/signal.h>
+#endif
+      ])
+  fi
+
   AC_CACHE_CHECK([for working sigaltstack], sv_cv_sigaltstack, [
     if test "$ac_cv_func_sigaltstack" = yes; then
       AC_TRY_RUN([
 #include <stdlib.h>
 #include <signal.h>
+#if HAVE_SYS_SIGNAL_H
+# include <sys/signal.h>
+#endif
 #if HAVE_SETRLIMIT
 # include <sys/types.h>
 # include <sys/time.h>

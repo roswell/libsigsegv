@@ -1,4 +1,4 @@
-/* Test the stack overflow handler.
+/* Test that stack overflow and SIGSEGV are correctly distinguished.
    Copyright (C) 2002-2003  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
@@ -18,7 +18,7 @@
 #include "sigsegv.h"
 #include <stdio.h>
 
-#if HAVE_STACK_OVERFLOW_RECOVERY
+#if HAVE_STACK_OVERFLOW_RECOVERY && HAVE_SIGSEGV_RECOVERY
 
 #if defined _WIN32 && !defined __CYGWIN__
   /* Windows doesn't have sigset_t.  */
@@ -30,6 +30,7 @@
 # include "config.h"
 #endif
 
+#include "mmaputil.h"
 #include <stddef.h> /* needed for NULL on SunOS4 */
 #include <stdlib.h> /* for abort, exit */
 #include <signal.h>
@@ -44,15 +45,38 @@ jmp_buf mainloop;
 sigset_t mainsigset;
 
 int pass = 0;
+unsigned long page;
 
 void
 stackoverflow_handler (int emergency, stackoverflow_context_t scp)
 {
   pass++;
-  printf ("Stack overflow %d caught.\n", pass);
+  if (pass <= 2)
+    printf ("Stack overflow %d caught.\n", pass);
+  else
+    {
+      printf ("Segmentation violation misdetected as stack overflow.\n");
+      exit (1);
+    }
   sigprocmask (SIG_SETMASK, &mainsigset, NULL);
   sigsegv_leave_handler ();
   longjmp (mainloop, emergency ? -1 : pass);
+}
+
+int
+sigsegv_handler (void *address, int emergency)
+{
+  pass++;
+  if (pass <= 2)
+    {
+      printf ("Stack overflow %d missed.\n", pass);
+      exit (1);
+    }
+  else
+    printf ("Segmentation violation correctly detected.\n");
+  sigprocmask (SIG_SETMASK, &mainsigset, NULL);
+  sigsegv_leave_handler ();
+  longjmp (mainloop, pass);
 }
 
 int
@@ -69,6 +93,7 @@ main ()
 {
   char mystack[16384];
   sigset_t emptyset;
+  void *p;
 
 #if HAVE_SETRLIMIT && defined RLIMIT_STACK
   /* Before starting the endless recursion, try to be friendly to the user's
@@ -85,6 +110,31 @@ main ()
       < 0)
     exit (2);
 
+  /* Preparations.  */
+#if !HAVE_MMAP_ANON && !HAVE_MMAP_ANONYMOUS && HAVE_MMAP_DEVZERO
+  zero_fd = open ("/dev/zero", O_RDONLY, 0644);
+#endif
+
+  /* Setup some mmaped memory.  */
+  p = mmap_zeromap ((void *) 0x12340000, 0x4000);
+  if (p == (void *)(-1))
+    {
+      fprintf (stderr, "mmap_zeromap failed.\n");
+      exit (2);
+    }
+  page = (unsigned long) p;
+
+  /* Make it read-only.  */
+  if (mprotect ((void *) page, 0x4000, PROT_READ) < 0)
+    {
+      fprintf (stderr, "mprotect failed.\n");
+      exit (2);
+    }
+
+  /* Install the SIGSEGV handler.  */
+  if (sigsegv_install_handler (&sigsegv_handler) < 0)
+    exit (2);
+
   /* Save the current signal mask.  */
   sigemptyset (&emptyset);
   sigprocmask (SIG_BLOCK, &emptyset, &mainsigset);
@@ -99,6 +149,9 @@ main ()
       recurse (0);
       printf ("no endless recursion?!\n"); exit (1);
     case 2:
+      *(int *) (page + 0x678) = 42;
+      break;
+    case 3:
       break;
     default:
       abort ();

@@ -1,7 +1,7 @@
 dnl Autoconf configuration for libsigsegv.
 dnl Process this file with autoconf to produce a configure script.
 dnl
-dnl Copyright (C) 2002  Bruno Haible <bruno@clisp.org>
+dnl Copyright (C) 2002-2003  Bruno Haible <bruno@clisp.org>
 dnl
 dnl This program is free software; you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ RSE_BOLD
 
 { echo; echo "${term_bold}Build Tools:${term_norm}"; } >& AS_MESSAGE_FD
 
-AM_INIT_AUTOMAKE(libsigsegv, 2.0.1)
+AM_INIT_AUTOMAKE(libsigsegv, 2.1)
 AM_CONFIG_HEADER(config.h)
 
 AC_PROG_CC
@@ -66,6 +66,10 @@ AM_PROG_LIBTOOL
 #cross_compiling=yes
 
 { echo; echo "${term_bold}Optional Platform Environment:${term_norm}"; } >& AS_MESSAGE_FD
+
+dnl Headers to be included with <signal.h>. On MacOS X (Darwin) one also
+dnl needs <sys/signal.h>.
+AC_CHECK_HEADERS([sys/signal.h])
 
 dnl List of signals that are sent when an invalid virtual memory address
 dnl is accessed, or when the stack overflows.
@@ -356,6 +360,12 @@ else
       esac
       FAULT_CONTEXT='struct vregs'
       ;;
+    macos* | darwin*)
+      case "$host_cpu" in
+        i?86 | x86_64) CFG_FAULT=fault-macos-i386.h ;;
+      esac
+      FAULT_CONTEXT='struct sigcontext'
+      ;;
   esac
 fi
 AC_MSG_CHECKING([for the fault handler specifics])
@@ -493,6 +503,7 @@ else
     linux*) CFG_STACKVMA=stackvma-linux.c ;;
     freebsd*) CFG_STACKVMA=stackvma-freebsd.c ;;
     beos*) CFG_STACKVMA=stackvma-beos.c ;;
+    macos* | darwin*) CFG_STACKVMA=stackvma-mach.c ;;
   esac
 fi
 if test -z "$CFG_STACKVMA"; then
@@ -541,7 +552,11 @@ dnl FIXME: Put in some more known values into the third argument.
 SV_TRY_LEAVE_HANDLER_LONGJMP([ and sigaltstack],
   sv_cv_leave_handler_longjmp_sigaltstack,
   [*-*-freebsd*],
-  [],
+  [
+#ifndef SS_ONSTACK
+#define SS_ONSTACK SA_ONSTACK
+#endif
+  ],
   [stack_t ss;
    if (sigaltstack (NULL, &ss) >= 0)
      {
@@ -554,7 +569,11 @@ dnl FIXME: Put in some more known values into the third argument.
 SV_TRY_LEAVE_HANDLER_LONGJMP([ and setcontext],
   sv_cv_leave_handler_longjmp_setcontext,
   [*-*-irix* | *-*-solaris*],
-  [#include <ucontext.h>],
+  [#include <ucontext.h>
+#ifndef SS_ONSTACK
+#define SS_ONSTACK SA_ONSTACK
+#endif
+  ],
   [static int fl;
    static ucontext_t uc;
    fl = 0;
@@ -580,7 +599,11 @@ dnl FIXME: Put in some more known values into the third argument.
 SV_TRY_LEAVE_HANDLER_SIGLONGJMP([ and sigaltstack],
   sv_cv_leave_handler_siglongjmp_sigaltstack,
   [*-*-freebsd*],
-  [],
+  [
+#ifndef SS_ONSTACK
+#define SS_ONSTACK SA_ONSTACK
+#endif
+  ],
   [stack_t ss;
    if (sigaltstack (NULL, &ss) >= 0)
      {
@@ -593,7 +616,11 @@ dnl FIXME: Put in some more known values into the third argument.
 SV_TRY_LEAVE_HANDLER_SIGLONGJMP([ and setcontext],
   sv_cv_leave_handler_siglongjmp_setcontext,
   [],
-  [#include <ucontext.h>],
+  [#include <ucontext.h>
+#ifndef SS_ONSTACK
+#define SS_ONSTACK SA_ONSTACK
+#endif
+  ],
   [static int fl;
    static ucontext_t uc;
    fl = 0;

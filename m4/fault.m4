@@ -1,5 +1,5 @@
-# fault.m4 serial 1 (libsigsegv-2.0)
-dnl Copyright (C) 2002 Bruno Haible <bruno@clisp.org>
+# fault.m4 serial 2
+dnl Copyright (C) 2002-2003 Bruno Haible <bruno@clisp.org>
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
 dnl Public License, this file may be distributed as part of a program
@@ -17,6 +17,9 @@ AC_DEFUN([SV_TRY_FAULT], [
     AC_TRY_RUN([
 #include <stdlib.h>
 #include <signal.h>
+#if HAVE_SYS_SIGNAL_H
+# include <sys/signal.h>
+#endif
 $4
 #include <sys/types.h>
 #include <sys/mman.h>
@@ -46,7 +49,7 @@ void sigsegv_handler ($5)
   void *fault_address = (void *) ($6);
   handler_called++;
   if (fault_address != (void*)(page + 0x678))
-    exit (1);
+    exit (3);
   if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
     exit (2);
 }

@@ -1,5 +1,5 @@
 /* Fault handler information.  Unix version.
-   Copyright (C) 1993-1999, 2002  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 1993-1999, 2002-2003  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -54,7 +54,15 @@
 #include <stddef.h> /* needed for NULL on SunOS4 */
 #include <stdlib.h>
 #include <signal.h>
+#if HAVE_SYS_SIGNAL_H
+# include <sys/signal.h>
+#endif
 #include <errno.h>
+
+/* For MacOSX.  */
+#ifndef SS_DISABLE
+#define SS_DISABLE SA_DISABLE
+#endif
 
 #include "fault.h"
 #include CFG_SIGNALS

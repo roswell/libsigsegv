@@ -1,5 +1,5 @@
 ## Makefile for libsigsegv/tests.
-## Copyright (C) 2002 Bruno Haible <bruno@clisp.org>
+## Copyright (C) 2002-2003 Bruno Haible <bruno@clisp.org>
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -19,11 +19,11 @@
 
 AUTOMAKE_OPTIONS = 1.5 gnits no-dependencies
 
-TESTS = sigsegv1 sigsegv2 stackoverflow1
+TESTS = sigsegv1 sigsegv2 stackoverflow1 stackoverflow2
 
 EXTRA_DIST = mmaputil.h
 
 INCLUDES = -I../src
 DEFS = @DEFS@
 LDADD = ../src/libsigsegv.la
-noinst_PROGRAMS = sigsegv1 sigsegv2 stackoverflow1
+noinst_PROGRAMS = sigsegv1 sigsegv2 stackoverflow1 stackoverflow2

@@ -1,5 +1,5 @@
 /* Fault handler information.  MacOSX/PowerPC version.
-   Copyright (C) 2002  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002-2003  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -20,4 +20,7 @@
 #define SIGSEGV_FAULT_HANDLER_ARGLIST  int sig, int code, struct sigcontext *scp
 #define SIGSEGV_FAULT_ADDRESS  (unsigned long) get_fault_addr (scp)
 #define SIGSEGV_FAULT_CONTEXT  scp
+#if 0
 #define SIGSEGV_FAULT_STACKPOINTER  (&((unsigned int *) scp->sc_regs)[2])[1]
+#endif
+#define SIGSEGV_FAULT_STACKPOINTER  (scp->sc_regs ? ((unsigned int *) scp->sc_regs)[3] : scp->sc_sp)

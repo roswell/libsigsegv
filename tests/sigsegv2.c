@@ -1,5 +1,5 @@
 /* Test the dispatcher.
-   Copyright (C) 2002  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002-2003  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -26,13 +26,15 @@
 static sigsegv_dispatcher dispatcher;
 
 static unsigned int logcount = 0;
-static unsigned long logdata[3];
+static unsigned long logdata[10];
 
 static int
 area_handler (void *fault_address, void *user_arg)
 {
   unsigned long area = *(unsigned long *)user_arg;
   logdata[logcount++] = area;
+  if (logcount >= sizeof (logdata) / sizeof (logdata[0]))
+    abort ();
   if (!((unsigned long)fault_address >= area
         && (unsigned long)fault_address - area < 0x4000))
     abort ();
@@ -124,7 +126,6 @@ main ()
 int
 main ()
 {
-  printf ("SKIP: sigsegv2\n");
   return 77;
 }
 
