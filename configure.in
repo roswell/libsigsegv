@@ -123,7 +123,7 @@ SV_TRY_FAULT([Linux/m68k], sv_cv_fault_linux_m68k, [],
 
 dnl FIXME: Put in some more known values into the third argument.
 SV_TRY_FAULT([Linux/PowerPC], sv_cv_fault_linux_powerpc, [],
-  [#include <asm/sigcontext.h>].
+  [#include <asm/sigcontext.h>],
   [int sig, struct sigcontext *scp],
   [scp->regs->dar])
 
