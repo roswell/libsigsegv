@@ -26,7 +26,6 @@
 # include <sys/signal.h>
 #endif
 
-#include <mach/vm_map.h>
 #include <mach/mach.h>
 #include <mach/mach_error.h>
 #include <mach/thread_status.h>
@@ -39,7 +38,7 @@
 #define SS_DISABLE SA_DISABLE
 #endif
 
-#include "fault.h"
+#include "machfault.h"
 
 /* The following sources were used as a *reference* for this exception handling
    code:
@@ -113,8 +112,8 @@ static mach_port_t our_exception_port;
    -1: called and failed  */
 static int mach_initialized = 0;
 
-/* Communication area for the exception state.  */
-static SIGSEGV_EXC_STATE_TYPE save_exc_state;
+/* Communication area for the exception state and thread state.  */
+static SIGSEGV_THREAD_STATE_TYPE save_thread_state;
 
 /* Check for reentrant signals.  */
 static int emergency = -1;
@@ -127,30 +126,35 @@ static unsigned long stk_extra_stack_size;
 /* User's fault handler.  */
 static sigsegv_handler_t user_handler = (sigsegv_handler_t)NULL;
 
-/* Our signal handler, which we use to get the thread state for running
-   on an alternate stack (we cannot longjmp while in the exception
-   handling thread, so we need to mimic what signals do!).  */
+/* A handler that is called in the faulting thread.  It terminates the thread.  */
 static void
-altstack_handler (int sig)
+terminating_handler ()
 {
-  unsigned long addr = (unsigned long) (SIGSEGV_FAULT_ADDRESS (save_exc_state));
-
-  /* We arrive here when the user refused to handle a fault.  */
-
-  /* Check if it is plausibly a stack overflow, and the user installed
-     a stack overflow handler.  */
-  if (addr != 0 && stk_user_handler)
-    {
-      emergency++;
-      /* Call user's handler.  */
-      (*stk_user_handler) (emergency, &save_exc_state);
-    }
-
-  /* Else, dump core.  */
+  /* Dump core.  */
   raise (SIGSEGV);
 
   /* Seriously.  */
   abort ();
+}
+
+/* A handler that is called in the faulting thread, on an alternate stack.
+   It calls the user installed stack overflow handler.  */
+static void
+altstack_handler ()
+{
+  /* We arrive here when the user refused to handle a fault.  */
+
+  /* Check if it is plausibly a stack overflow, and the user installed
+     a stack overflow handler.  */
+  if (stk_user_handler)
+    {
+      emergency++;
+      /* Call user's handler.  */
+      (*stk_user_handler) (emergency, &save_thread_state);
+    }
+
+  /* Else, terminate the thread.  */
+  terminating_handler ();
 }
 
 
@@ -164,10 +168,13 @@ catch_exception_raise (mach_port_t exception_port,
                        exception_data_t code,
                        mach_msg_type_number_t code_count)
 {
+#ifdef SIGSEGV_EXC_STATE_TYPE
   SIGSEGV_EXC_STATE_TYPE exc_state;
+#endif
   SIGSEGV_THREAD_STATE_TYPE thread_state;
   mach_msg_type_number_t state_count;
-  unsigned long addr, sp;
+  unsigned long addr;
+  unsigned long sp;
 
 #ifdef DEBUG_EXCEPTION_HANDLING
   fprintf (stderr, "Exception: 0x%x Code: 0x%x 0x%x in catch....\n",
@@ -177,6 +184,7 @@ catch_exception_raise (mach_port_t exception_port,
 #endif
 
   /* See http://web.mit.edu/darwin/src/modules/xnu/osfmk/man/thread_get_state.html.  */
+#ifdef SIGSEGV_EXC_STATE_TYPE
   state_count = SIGSEGV_EXC_STATE_COUNT;
   if (thread_get_state (thread, SIGSEGV_EXC_STATE_FLAVOR,
                         (void *) &exc_state, &state_count)
@@ -189,39 +197,44 @@ catch_exception_raise (mach_port_t exception_port,
 #endif
       return KERN_FAILURE;
     }
+#endif
 
   state_count = SIGSEGV_THREAD_STATE_COUNT;
   if (thread_get_state (thread, SIGSEGV_THREAD_STATE_FLAVOR,
                         (void *) &thread_state, &state_count)
       != KERN_SUCCESS)
     {
+      /* The thread is supposed to be suspended while the exception handler
+         is called. This shouldn't fail. */
 #ifdef DEBUG_EXCEPTION_HANDLING
       fprintf (stderr, "thread_get_state failed for thread state\n");
 #endif
       return KERN_FAILURE;
     }
 
-  addr = (unsigned long) (SIGSEGV_FAULT_ADDRESS (exc_state));
+  addr = (unsigned long) (SIGSEGV_FAULT_ADDRESS (thread_state, exc_state));
   sp = (unsigned long) (SIGSEGV_STACK_POINTER (thread_state));
 
   /* Got the thread's state. Now extract the address that caused the
      fault and invoke the user's handler.  */
+  save_thread_state = thread_state;
 
-  /* If the fault address is near the stack pointer,
-     it's a stack overflow.  Otherwise, set stk_exc_state's
-     fault address to NULL to signal */
-  save_exc_state = exc_state;
+  /* If the fault address is near the stack pointer, it's a stack overflow.
+     Otherwise, treat it like a normal SIGSEGV.  */
   if (addr <= sp + 4096 && sp <= addr + 4096)
     {
 #ifdef DEBUG_EXCEPTION_HANDLING
       fprintf (stderr, "Treating as stack overflow, sp = 0x%lx\n", (char *) sp);
 #endif
-#if STACK_DIRECTION == 1
-      SIGSEGV_STACK_POINTER (thread_state) = stk_extra_stack + 256;
-#else
       SIGSEGV_STACK_POINTER (thread_state) =
+#if STACK_DIRECTION < 0
         stk_extra_stack + stk_extra_stack_size - 256;
+#else
+        stk_extra_stack + 256;
 #endif
+      /* Continue handling this fault in the faulting thread.  (We cannot longjmp while
+         in the exception handling thread, so we need to mimic what signals do!)  */
+      SIGSEGV_PROGRAM_COUNTER (thread_state) = (unsigned long) altstack_handler;
     }
   else
     {
@@ -231,21 +244,19 @@ catch_exception_raise (mach_port_t exception_port,
 #ifdef DEBUG_EXCEPTION_HANDLING
           fprintf (stderr, "Calling user handler, addr = 0x%lx\n", (char *) addr);
 #endif
-          done = (*user_handler) ((char *) addr, 1);
+          done = (*user_handler) ((void *) addr, 1);
 #ifdef DEBUG_EXCEPTION_HANDLING
           fprintf (stderr, "Back from user handler\n");
 #endif
           if (done)
             return KERN_SUCCESS;
         }
-      SIGSEGV_FAULT_ADDRESS (save_exc_state) = 0;
+      SIGSEGV_PROGRAM_COUNTER (thread_state) = (unsigned long) terminating_handler;
     }
-
-  SIGSEGV_PROGRAM_COUNTER (thread_state) = (unsigned long) altstack_handler;
 
   /* See http://web.mit.edu/darwin/src/modules/xnu/osfmk/man/thread_set_state.html.  */
   if (thread_set_state (thread, SIGSEGV_THREAD_STATE_FLAVOR,
-			(void *) &thread_state, state_count)
+                        (void *) &thread_state, state_count)
       != KERN_SUCCESS)
     {
 #ifdef DEBUG_EXCEPTION_HANDLING
@@ -253,6 +264,7 @@ catch_exception_raise (mach_port_t exception_port,
 #endif
       return KERN_FAILURE;
     }
+  return KERN_SUCCESS;
 }
 
 

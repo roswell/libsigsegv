@@ -209,7 +209,9 @@ dnl We prefer the platform specific include files to the generic fault-posix.h
 dnl because the former often defines SIGSEGV_FAULT_STACKPOINTER.
 dnl Also we put the BSD test second-to-last, because the test may produce
 dnl false positives.
+CFG_HANDLER=
 CFG_FAULT=
+CFG_MACHFAULT=
 FAULT_CONTEXT=void
 FAULT_CONTEXT_INCLUDE=
 FAULT_CONTEXT_INCLUDE2=
@@ -338,6 +340,28 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_posix" = yes; then
     FAULT_CONTEXT_INCLUDE='#include <ucontext.h>'
   fi
 fi
+if test -z "$CFG_FAULT"; then
+  case "$host_os" in
+    macos* | darwin*)
+      case "$host_cpu" in
+        powerpc* | rs6000)
+          CFG_MACHFAULT=machfault-macos-powerpc.h
+          FAULT_CONTEXT='ppc_thread_state_t'
+          ;;
+        i?86 | x86_64)
+          CFG_MACHFAULT=machfault-macos-i386.h
+          FAULT_CONTEXT='struct i386_saved_state'
+          ;;
+      esac
+      if test -n "$CFG_MACHFAULT"; then
+        CFG_HANDLER=handler-macos.c
+        FAULT_CONTEXT_INCLUDE='#include <signal.h>'
+        FAULT_CONTEXT_INCLUDE2='#include <ucontext.h>'
+        CFG_FAULT=fault-macos.h # nonexistent, just a dummy
+      fi
+      ;;
+  esac
+fi
 dnl
 dnl Next, the cases where there is a hairy CPU dependent way to get the
 dnl fault address.
@@ -440,7 +464,11 @@ AC_MSG_CHECKING([for the fault handler specifics])
 if test -n "$CFG_FAULT"; then
   sv_cv_fault_include=$CFG_FAULT
 else
-  sv_cv_fault_include=none
+  if test -n "$CFG_MACHFAULT"; then
+    sv_cv_fault_include=$CFG_MACHFAULT
+  else
+    sv_cv_fault_include=none
+  fi
 fi
 AC_MSG_RESULT([$sv_cv_fault_include])
 if test -z "$CFG_FAULT"; then
@@ -448,6 +476,11 @@ if test -z "$CFG_FAULT"; then
 fi
 AC_DEFINE_UNQUOTED(CFG_FAULT, "$CFG_FAULT",
   [The name of the include file describing the fault handler.])
+if test -z "$CFG_MACHFAULT"; then
+  CFG_MACHFAULT=fault-none.h
+fi
+AC_DEFINE_UNQUOTED(CFG_MACHFAULT, "$CFG_MACHFAULT",
+  [The name of the include file describing the Mach fault handler.])
 AC_SUBST(FAULT_CONTEXT)
 AC_SUBST(FAULT_CONTEXT_INCLUDE)
 AC_SUBST(FAULT_CONTEXT_INCLUDE2)
@@ -595,17 +628,22 @@ SV_SIGALTSTACK
 AC_CACHE_CHECK([if the system supports catching stack overflow],
                sv_cv_have_stack_overflow_recovery,
 [
-  dnl It requires either sigaltstack() or the BeOS set_signal_stack() function,
-  dnl and on Unix it requires a fault-*.h or a stackvma-*.c with certain
-  dnl properties (see src/handler-unix.c).
-  if test "$sv_cv_sigaltstack" != no; then
-    sv_cv_have_stack_overflow_recovery=maybe
+  dnl On Mach, it requires a machfault-*.h (see src/handler-macos.c).
+  dnl On Unix, it requires either sigaltstack() or the BeOS set_signal_stack()
+  dnl function, and on Unix it requires a fault-*.h or a stackvma-*.c with
+  dnl certain properties (see src/handler-unix.c).
+  if test -n "$CFG_MACHFAULT"; then
+    sv_cv_have_stack_overflow_recovery=yes
   else
-    case "$host_os" in
-      beos*) sv_cv_have_stack_overflow_recovery=maybe ;;
-      mingw* | cygwin*) sv_cv_have_stack_overflow_recovery=yes ;;
-      *) sv_cv_have_stack_overflow_recovery=no ;;
-    esac
+    if test "$sv_cv_sigaltstack" != no; then
+      sv_cv_have_stack_overflow_recovery=maybe
+    else
+      case "$host_os" in
+        beos*) sv_cv_have_stack_overflow_recovery=maybe ;;
+        mingw* | cygwin*) sv_cv_have_stack_overflow_recovery=yes ;;
+        *) sv_cv_have_stack_overflow_recovery=no ;;
+      esac
+    fi
   fi
   if test $sv_cv_have_stack_overflow_recovery = maybe; then
     if test -n "$CFG_FAULT"; then
@@ -773,11 +811,13 @@ AC_SUBST(CFG_LEAVE)
 case "$host_os" in
   mingw* | cygwin*) CFG_HANDLER=handler-win32.c ;;
   *)
-    if test $sv_cv_have_sigsegv_recovery = no \
-       && test $sv_cv_have_stack_overflow_recovery = no; then
-      CFG_HANDLER=handler-none.c
-    else
-      CFG_HANDLER=handler-unix.c
+    if test -z "$CFG_HANDLER"; then
+      if test $sv_cv_have_sigsegv_recovery = no \
+         && test $sv_cv_have_stack_overflow_recovery = no; then
+        CFG_HANDLER=handler-none.c
+      else
+        CFG_HANDLER=handler-unix.c
+      fi
     fi
     ;;
 esac
