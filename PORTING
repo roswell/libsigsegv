@@ -1,0 +1,80 @@
+Successfully tested platforms
+=============================
+
+__PLATFORM__________________________________SIGSEGV__STACK_OVERFLOW__VERSION___
+                                           |         |           |
+alpha-dec-osf4.0d                          |   yes   |   yes     | 1.95
+alpha-dec-osf5.1                           |   yes   |   yes     | 1.95
+alphaev67-unknown-linux2.4.17-gnu-glibc2.1 |   yes   |   yes     | 1.95
+hppa2.0w-hp-hpux11.00                      |   yes   |   yes     | 1.95
+i586-pc-beos                               |   no    |   yes     | 1.96
+i686-pc-cygwin                             |   no    |   no      | 1.97
+i686-pc-linux2.2.14-gnu-glibc2.1           |   yes   |   yes     | 1.96
+i686-pc-linux2.2.19-gnu-glibc2.1           |   yes   |   yes     | 1.95
+i686-pc-linux2.4.7-gnu-glibc2.2            |   yes   |   yes     | 1.95
+i686-pc-linux2.4.18-gnu-glibc2.2           |   yes   |   yes     | 1.95
+i686-pc-linux2.4.18-gnu-glibc2.3           |   yes   |   yes     | 1.97
+i686-pc-mingw32                            |   yes   |   yes     | 1.96
+i686-pc-win32-msvc6                        |   yes   |   yes     | 1.96
+i386-unknown-freebsd4.0                    |   yes   |   yes     | 1.96
+i386-unknown-freebsd4.0-gnu-glibc2.3       |   yes   |   yes     | 1.95
+i386-unknown-freebsd4.6                    |   yes   |   yes     | 1.95
+mips-sgi-irix6.5                           |   yes   |   yes     | 1.95
+rs6000-ibm-aix3.2.5                        |   yes   |   no      | 1.95
+powerpc-ibm-aix4.3.3.0                     |   yes   |   yes     | 1.95
+powerpc-unknown-linux2.2.17-gnu-glibc2.1   |   no    |   yes     | 1.95
+sparc-sun-solaris2.7                       |   yes   |   yes     | 1.95
+sparc-sun-solaris2.8                       |   yes   |   yes     | 1.95
+sparc64-unknown-linux2.2.18-gnu-glibc2.1   |   no    |   no      | 1.95
+
+Port attempts to the following platforms have been unsuccessful so far:
+powerpc-apple-macos
+i686-pc-cygwin
+
+
+Porting to new platforms
+========================
+
+On Unix systems, where faults are notified to the program through a signal
+handler, the core routines in handler-unix.c can be used without
+modifications. But they need the following bits of information. Each of
+them is stored in a platform dependent file; the file is chosen in configure.
+
+  * List of signals that are sent when an invalid virtual memory address
+    is accessed, or when the stack overflows.
+    This is a file among signals-*.h.
+    configure chooses and sets the variable CFG_SIGNALS.
+
+  * What arguments are passed to a fault handler.
+    This is a file among fault-*.h.
+    configure chooses and sets the variable CFG_FAULT.
+
+  * How to determine the stack's virtual memory area.
+    This is a file among stackvma-*.c.
+    configure chooses and sets the variable CFG_STACKVMA.
+
+  * How to leave a signal handler that is executing on the alternate
+    signal stack.
+    This is a file among leave-*.c.
+    configure chooses and sets the variable CFG_LEAVE.
+
+For each of these, the approach should be:
+
+  - Find a way to implement the needed functionality.  This might involve
+    study of the system include files (in particular <signal.h> and
+    <ucontext.h>) and of the kernel sources.
+    For CFG_FAULT, the best starting point is to run the tests/sigsegv1
+    program with a breakpoint set at 'sigsegv_handler'.
+
+  - Add to configure.in a test whether your new code works.  This will
+    help portability to platforms similar to yours.
+    Then regenerate the configure script (run "autoconf") and verify
+    that the test says "yes" on your platform.
+
+  - Create a platform dependent file (e.g. fault-<os>-<cpu>.h) and change
+    configure.in to choose this particular file when your test says "yes".
+    Then regenerate the configure script (run "autoconf").
+
+  - Verify that "make" and "make check" pass.
+
+For non-Unix systems, a separate handler-<os>.c is likely to be needed.

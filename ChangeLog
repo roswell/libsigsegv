@@ -1,0 +1,8 @@
+2002-08-28  Bruno Haible  <bruno@clisp.org>
+
+	* Version 2.0 released.
+
+2002-07-28  Bruno Haible  <bruno@clisp.org>
+
+	Big reorganization and rewrite. Every file changed.
+

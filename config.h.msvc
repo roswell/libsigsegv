@@ -1,0 +1,64 @@
+/* config.h.in.  Generated automatically from configure.in by autoheader.  */
+
+/* The name of the include file describing the fault handler. */
+#undef CFG_FAULT
+
+/* The name of the file implementing the handler functionality. */
+#define CFG_HANDLER "handler-win32.c"
+
+/* The name of the file implementing sigsegv_reset_onstack_flag. */
+#undef CFG_LEAVE
+
+/* The name of the include file describing the fault signals. */
+#undef CFG_SIGNALS
+
+/* The name of the file determining the stack virtual memory area. */
+#undef CFG_STACKVMA
+
+/* Define if you have the <dlfcn.h> header file. */
+#undef HAVE_DLFCN_H
+
+/* Define if getpagesize() is available as a function or a macro. */
+#undef HAVE_GETPAGESIZE
+
+/* Define if you have the `getrlimit' function. */
+#undef HAVE_GETRLIMIT
+
+/* Define if <sys/mman.h> defines MAP_ANON and mmaping with MAP_ANON works. */
+#undef HAVE_MMAP_ANON
+
+/* Define if <sys/mman.h> defines MAP_ANONYMOUS and mmaping with MAP_ANONYMOUS
+   works. */
+#undef HAVE_MMAP_ANONYMOUS
+
+/* Define if mmaping of the special device /dev/zero works. */
+#undef HAVE_MMAP_DEVZERO
+
+/* Define if PAGESIZE is available as a macro. */
+#undef HAVE_PAGESIZE
+
+/* Define if you have the `setrlimit' function. */
+#undef HAVE_SETRLIMIT
+
+/* Define if you have the `sigaltstack' function. */
+#undef HAVE_SIGALTSTACK
+
+/* Define if sysconf(_SC_PAGESIZE) is available as a function or a macro. */
+#undef HAVE_SYSCONF_PAGESIZE
+
+/* Define if you have the <unistd.h> header file. */
+#undef HAVE_UNISTD_H
+
+/* Define if you have the sigaltstack() function and it works. */
+#undef HAVE_WORKING_SIGALTSTACK
+
+/* Name of package */
+#undef PACKAGE
+
+/* Define as the direction of stack growth for your system. STACK_DIRECTION >
+   0 => grows toward higher addresses STACK_DIRECTION < 0 => grows toward
+   lower addresses STACK_DIRECTION = 0 => spaghetti stack. */
+#undef STACK_DIRECTION
+
+/* Version number of package */
+#undef VERSION
