@@ -68,6 +68,7 @@ rs6000-ibm-aix3.2.5                        |   yes   |   no      | 2.1
 powerpc-ibm-aix4.3.3.0                     |   yes   |   yes     | 1.95
 powerpc-apple-darwin5.5                    |   yes   |   yes     | 2.0.2
 powerpc-apple-darwin7.7.0                  |   yes   |   yes     | 2.2
+powerpc-apple-darwin7.8.0                  |   yes   |   yes     | 2.2
 powerpc-unknown-linux2.2.17-gnu-glibc2.1   |   no    |   yes     | 1.95
 powerpc-unknown-linux2.2.17-gnu-glibc2.2   |   yes   |   yes     | 2.0.1
 powerpc-unknown-netbsd2.0                  |   yes   |   no      | 2.1

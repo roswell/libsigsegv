@@ -1,7 +1,7 @@
 dnl Autoconf configuration for libsigsegv.
 dnl Process this file with autoconf to produce a configure script.
 dnl
-dnl Copyright (C) 2002-2004  Bruno Haible <bruno@clisp.org>
+dnl Copyright (C) 2002-2005  Bruno Haible <bruno@clisp.org>
 dnl
 dnl This program is free software; you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ RSE_BOLD
 
 { echo; echo "${term_bold}Build Tools:${term_norm}"; } >& AS_MESSAGE_FD
 
-AM_INIT_AUTOMAKE(libsigsegv, 2.2)
+AM_INIT_AUTOMAKE(libsigsegv, 2.2-pre1)
 AM_CONFIG_HEADER(config.h)
 
 AC_PROG_CC
@@ -97,6 +97,13 @@ SV_GETPAGESIZE
 SV_MMAP_ANON
 
 # How to write a SIGSEGV handler with access to the fault address.
+
+# On MacOS X, we don't need these tests, because we'll end up using
+# handler-macos.c anyway. If we were to perform the tests, 5 Crash Report
+# dialog windows would pop up.
+case "$host_os" in
+  macos* | darwin*) ;;
+  *)
 
 dnl FIXME: Put in some more known values into the third argument.
 SV_TRY_FAULT([POSIX], sv_cv_fault_posix,
@@ -203,6 +210,10 @@ SV_TRY_FAULT([Hurd], sv_cv_fault_hurd, [],
   [],
   [int sig, int code, struct sigcontext *scp],
   [code])
+
+# End of MacOS X special casing.
+    ;;
+esac
 
 dnl Now determine the fault handler include file.
 dnl We prefer the platform specific include files to the generic fault-posix.h
@@ -692,6 +703,13 @@ AC_SUBST(HAVE_STACK_OVERFLOW_RECOVERY)
 # How to longjmp out of a signal handler, in such a way that the
 # alternate signal stack remains functional.
 
+# On MacOS X, we don't need these tests, because we'll end up using
+# handler-macos.c anyway. If we were to perform the tests, 2 Crash Report
+# dialog windows would pop up.
+case "$host_os" in
+  macos* | darwin*) ;;
+  *)
+
 dnl FIXME: Put in some more known values into the third argument.
 SV_TRY_LEAVE_HANDLER_LONGJMP([], sv_cv_leave_handler_longjmp,
   [*-*-osf[4-9]* | *-*-hpux11* | *-*-linux2.[2-9]*],
@@ -736,8 +754,19 @@ SV_TRY_LEAVE_HANDLER_LONGJMP([ and setcontext],
          }
   ])
 
+# End of MacOS X special casing.
+    ;;
+esac
+
 # How to siglongjmp out of a signal handler, in such a way that the
 # alternate signal stack remains functional.
+
+# On MacOS X, we don't need these tests, because we'll end up using
+# handler-macos.c anyway. If we were to perform the tests, 2 Crash Report
+# dialog windows would pop up.
+case "$host_os" in
+  macos* | darwin*) ;;
+  *)
 
 dnl FIXME: Put in some more known values into the third argument.
 SV_TRY_LEAVE_HANDLER_SIGLONGJMP([], sv_cv_leave_handler_siglongjmp,
@@ -782,6 +811,10 @@ SV_TRY_LEAVE_HANDLER_SIGLONGJMP([ and setcontext],
            setcontext(&uc);
          }
   ])
+
+# End of MacOS X special casing.
+    ;;
+esac
 
 CFG_LEAVE=
 if test "$sv_cv_leave_handler_longjmp" != no; then

@@ -1,3 +1,9 @@
+2005-02-27  Bruno Haible  <bruno@clisp.org>
+
+	* configure.in: Skip tests that are not needed on MacOS X.
+	* m4/sigaltstack.m4 (SV_SIGALTSTACK): Don't perform the test on
+	MacOS X.
+
 2005-02-18  Bruno Haible  <bruno@clisp.org>
 
 	* tests/sigsegv1.c (handler_called): Declare as volatile.

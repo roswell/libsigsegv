@@ -1,5 +1,5 @@
-# sigaltstack.m4 serial 4 (libsigsegv-2.2)
-dnl Copyright (C) 2002-2004 Bruno Haible <bruno@clisp.org>
+# sigaltstack.m4 serial 5 (libsigsegv-2.2)
+dnl Copyright (C) 2002-2005 Bruno Haible <bruno@clisp.org>
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
 dnl Public License, this file may be distributed as part of a program
@@ -28,8 +28,20 @@ AC_DEFUN([SV_SIGALTSTACK],
 
   AC_CACHE_CHECK([for working sigaltstack], sv_cv_sigaltstack, [
     if test "$ac_cv_func_sigaltstack" = yes; then
-      AC_RUN_IFELSE([
-        AC_LANG_SOURCE([[
+      case "$host_os" in
+        macos* | darwin*)
+          # On MacOS X, just assume that if it compiles, it will work.
+          # If we were to perform the real test, 1 Crash Report dialog window
+          # would pop up.
+          AC_LINK_IFELSE([
+            AC_LANG_PROGRAM([[#include <signal.h>]],
+              [[int x = SA_ONSTACK; stack_t ss; sigaltstack ((stack_t*)0, &ss);]])],
+            [sv_cv_sigaltstack="guessing yes"],
+            [sv_cv_sigaltstack=no])
+          ;;
+        *)
+          AC_RUN_IFELSE([
+            AC_LANG_SOURCE([[
 #include <stdlib.h>
 #include <signal.h>
 #if HAVE_SYS_SIGNAL_H
@@ -81,20 +93,22 @@ int main ()
   recurse (0);
   exit (2);
 }]])],
-        [sv_cv_sigaltstack=yes],
-        [sv_cv_sigaltstack=no],
-        [
-          dnl FIXME: Put in some more known values here.
-          case "$host_os" in
-            *)
-              AC_LINK_IFELSE([
-                AC_LANG_PROGRAM([[#include <signal.h>]],
-                  [[int x = SA_ONSTACK; stack_t ss; sigaltstack ((stack_t*)0, &ss);]])],
-                [sv_cv_sigaltstack="guessing yes"],
-                [sv_cv_sigaltstack=no])
-              ;;
-          esac
-        ])
+            [sv_cv_sigaltstack=yes],
+            [sv_cv_sigaltstack=no],
+            [
+              dnl FIXME: Put in some more known values here.
+              case "$host_os" in
+                *)
+                  AC_LINK_IFELSE([
+                    AC_LANG_PROGRAM([[#include <signal.h>]],
+                      [[int x = SA_ONSTACK; stack_t ss; sigaltstack ((stack_t*)0, &ss);]])],
+                    [sv_cv_sigaltstack="guessing yes"],
+                    [sv_cv_sigaltstack=no])
+                  ;;
+              esac
+            ])
+          ;;
+      esac
     else
       sv_cv_sigaltstack=no
     fi
