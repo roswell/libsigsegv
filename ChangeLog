@@ -1,3 +1,34 @@
+2003-12-05  Paolo Bonzini  <bonzini@gnu.org>
+
+	* aclocal.m4: Regenerate with Automake 1.7h.
+	* configure.in: Drop m4/Makefile from list of generated files.
+	* configure: Regenerate.
+	* Makefile.am (install-data-hook): New name of the install-am
+	target, for Automake 1.8 compatibility.  Other -am targets
+	are not affected because Automake does not have anything to
+	do to make them.
+	(AUTOMAKE_OPTIONS): Bump minimum Automake requirement to 1.7h.
+	(SUBDIRS): Remove m4.
+	($(srcdir)/config.h.msvc): New target for config.h.msvc.
+	* Makefile.in: Regenerate with Automake 1.7h.
+	* m4/Makefile.am: Delete, Automake 1.7h takes care of it.
+	* m4/Makefile.in: Delete.
+	* src/Makefile.am (installdirs): Delete, Automake 1.7h adds it.
+	* src/Makefile.in: Regenerate with Automake 1.7h.
+	* tests/Makefile.in: Regenerate with Automake 1.7h.
+
+	* autoconf/config.guess: Update from automake-1.7h.
+	* autoconf/config.sub: Likewise.
+	* autoconf/install.sh: Likewise.
+	* autoconf/missing: Likewise.
+	* autoconf/mkinstalldirs: Delete.
+	* config/fault.m4: autoupdate and manuallytweak.
+	* config/sigaltstack.m4: Likewise.
+	* config/sigaltstack-longjmp.m4: Likewise.
+	* config/sigaltstack-siglongjmp.m4: Likewise.
+	* config/mmap-anon.m4: Likewise.
+	* config/getpagesize.m4: Likewise.
+
 2003-10-29  Bruno Haible  <bruno@clisp.org>
 
 	* tests/sigsegv1.c (main): Add a check whether mprotect with

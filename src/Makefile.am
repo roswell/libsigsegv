@@ -88,6 +88,3 @@ sigsegv.h.msvc : sigsegv.h.in
 	    -e 's/@''HAVE_STACK_OVERFLOW_RECOVERY''@/1/' \
 	    < $(srcdir)/sigsegv.h.in > $@
 
-
-# One more automake bug.
-installdirs: installdirs-local

@@ -28,7 +28,7 @@ AC_DEFUN([SV_SIGALTSTACK],
 
   AC_CACHE_CHECK([for working sigaltstack], sv_cv_sigaltstack, [
     if test "$ac_cv_func_sigaltstack" = yes; then
-      AC_TRY_RUN([
+      AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <stdlib.h>
 #include <signal.h>
 #if HAVE_SYS_SIGNAL_H
@@ -79,15 +79,12 @@ int main ()
   /* Provoke a stack overflow.  */
   recurse (0);
   exit (2);
-}],
-        sv_cv_sigaltstack=yes,
-        sv_cv_sigaltstack=no,
-        [
+}]])],[sv_cv_sigaltstack=yes],[sv_cv_sigaltstack=no],[
           dnl FIXME: Put in some more known values here.
           case "$host_os" in
             *)
-              AC_TRY_LINK([#include <signal.h>],
-                [int x = SA_ONSTACK; stack_t ss; sigaltstack ((stack_t*)0, &ss);],
+              AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <signal.h>]],
+                [[int x = SA_ONSTACK; stack_t ss; sigaltstack ((stack_t*)0, &ss);]])],
                 sv_cv_sigaltstack="guessing yes", sv_cv_sigaltstack=no)
               ;;
           esac

@@ -1,4 +1,4 @@
-# fault.m4 serial 4
+# fault.m4 serial 3
 dnl Copyright (C) 2002-2003 Bruno Haible <bruno@clisp.org>
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
@@ -14,7 +14,7 @@ AC_DEFUN([SV_TRY_FAULT], [
   AC_REQUIRE([AC_CANONICAL_HOST])
 
   AC_CACHE_CHECK([whether a fault handler according to $1 works], [$2], [
-    AC_TRY_RUN([
+    AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <stdlib.h>
 #include <signal.h>
 #if HAVE_SYS_SIGNAL_H
@@ -83,7 +83,7 @@ int main ()
     exit (2);
   /* Install the SIGSEGV handler.  */
   sigemptyset(&action.sa_mask);
-]ifelse([$7], [], [
+]m4_if([$7], [], [
   action.sa_handler = (void (*) (int)) &sigsegv_handler;
   action.sa_flags = 0;
 ], [$7])[
@@ -98,21 +98,18 @@ int main ()
     exit (1);
   /* Test passed!  */
   return 0;
-}],
-      [$2=yes],
-      [$2=no],
-      [case "$host" in
-         ifelse([$3], [], [], [[$3]) $2=yes ;;])
+}]])],[$2=yes],[$2=no],[case "$host" in
+         m4_if([$3], [], [], [[$3]) $2=yes ;;])
          *)
-           AC_TRY_LINK([
+           AC_LINK_IFELSE([AC_LANG_PROGRAM([[
 #include <signal.h>
 $4
 void sigsegv_handler ($5)
 {
   void *fault_address = (void *) ($6);
 }
-], [struct sigaction action;
-$7],
+]], [[struct sigaction action;
+$7]])],
              [$2="guessing no"], [$2=no])
            ;;
        esac

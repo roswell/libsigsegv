@@ -17,10 +17,10 @@
 
 ## Process this file with automake to produce Makefile.in.
 
-AUTOMAKE_OPTIONS = 1.5 gnu no-dependencies
+AUTOMAKE_OPTIONS = 1.7h gnu no-dependencies
 ACLOCAL_AMFLAGS = -I m4
 
-SUBDIRS = src m4 tests
+SUBDIRS = src tests
 
 EXTRA_DIST = ChangeLog.1 PORTING README.woe32 Makefile.msvc config.h.msvc
 
@@ -63,12 +63,12 @@ check-next:
 	fi; \
 	echo; echo "$$when please type '"`cat termbold`"make install"`cat termnorm`"' to install the package."; echo
 
-install-am: install-next
+install-data-hook: install-next
 install-next:
 	@echo; echo "Now use the package; you can remove it later via '"`cat termbold`"make uninstall"`cat termnorm`"'."; echo
 
 
 # Rules for "make dist".
 
-config.h.msvc : config.h.in
+$(srcdir)/config.h.msvc : config.h.in
 	sed -e 's/#undef CFG_HANDLER/#define CFG_HANDLER "handler-win32.c"/' < $(srcdir)/config.h.in > $@

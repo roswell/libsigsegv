@@ -773,7 +773,6 @@ AC_RELOCATABLE_NOP
 dnl AC_OUTPUT(Makefile)
 AC_OUTPUT([Makefile
            src/Makefile src/sigsegv.h
-           m4/Makefile
            tests/Makefile])
 
 { echo; echo "Now please type '${term_bold}make${term_norm}' to compile. Good luck."; echo; } >& AS_MESSAGE_FD

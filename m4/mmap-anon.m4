@@ -15,26 +15,23 @@ AC_DEFUN([SV_MMAP_ANON],
   dnl 1) MAP_ANON
 
   AC_CACHE_CHECK([for mmap with MAP_ANON], sv_cv_func_mmap_anon, [
-    AC_TRY_RUN([
+    AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <sys/types.h>
 #include <sys/mman.h>
 int main ()
 {
   void *p = mmap (0, 0x10000, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
   return (p == (void *)(-1));
-}],
-      sv_cv_func_mmap_anon=yes,
-      sv_cv_func_mmap_anon=no,
-      [
+}]])],[sv_cv_func_mmap_anon=yes],[sv_cv_func_mmap_anon=no],[
         dnl FIXME: Put in some more known values here.
         case "$host_os" in
           freebsd* | linux* | osf*)
             sv_cv_func_mmap_anon=yes ;;
           *)
-            AC_TRY_LINK([
+            AC_LINK_IFELSE([AC_LANG_PROGRAM([[
 #include <sys/types.h>
 #include <sys/mman.h>
-], [mmap (0, 0x10000, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);],
+]], [[mmap (0, 0x10000, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);]])],
               sv_cv_func_mmap_anon="guessing yes", sv_cv_func_mmap_anon=no)
             ;;
         esac
@@ -48,26 +45,23 @@ int main ()
   dnl 2) MAP_ANONYMOUS
 
   AC_CACHE_CHECK([for mmap with MAP_ANONYMOUS], sv_cv_func_mmap_anonymous, [
-    AC_TRY_RUN([
+    AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <sys/types.h>
 #include <sys/mman.h>
 int main ()
 {
   void *p = mmap (0, 0x10000, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
   return (p == (void *)(-1));
-}],
-      sv_cv_func_mmap_anonymous=yes,
-      sv_cv_func_mmap_anonymous=no,
-      [
+}]])],[sv_cv_func_mmap_anonymous=yes],[sv_cv_func_mmap_anonymous=no],[
         dnl FIXME: Put in some more known values here.
         case "$host_os" in
           hpux* | linux* | osf*)
             sv_cv_func_mmap_anonymous=yes ;;
           *)
-            AC_TRY_LINK([
+            AC_LINK_IFELSE([AC_LANG_PROGRAM([[
 #include <sys/types.h>
 #include <sys/mman.h>
-], [mmap (0, 0x10000, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);],
+]], [[mmap (0, 0x10000, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);]])],
               sv_cv_func_mmap_anonymous="guessing yes", sv_cv_func_mmap_anonymous=no)
             ;;
         esac
@@ -82,7 +76,7 @@ int main ()
   dnl 3) MAP_FILE of /dev/zero
 
   AC_CACHE_CHECK([for mmap of /dev/zero], sv_cv_func_mmap_devzero, [
-    AC_TRY_RUN([
+    AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <sys/types.h>
 #include <sys/mman.h>
 #include <fcntl.h>
@@ -97,22 +91,19 @@ int main ()
   if (fd < 0) return 1;
   p = mmap (0, 0x10000, PROT_READ | PROT_WRITE, MAP_FILE | MAP_PRIVATE, fd, 0);
   return (p == (void *)(-1));
-}],
-      sv_cv_func_mmap_devzero=yes,
-      sv_cv_func_mmap_devzero=no,
-      [
+}]])],[sv_cv_func_mmap_devzero=yes],[sv_cv_func_mmap_devzero=no],[
         dnl FIXME: Put in some more known values here.
         case "$host_os" in
           freebsd* | irix* | linux* | osf* | solaris* | sunos4*)
             sv_cv_func_mmap_devzero=yes ;;
           *)
-            AC_TRY_LINK([
+            AC_LINK_IFELSE([AC_LANG_PROGRAM([[
 #include <sys/types.h>
 #include <sys/mman.h>
 #ifndef MAP_FILE
 #define MAP_FILE 0
 #endif
-], [mmap (0, 0x10000, PROT_READ | PROT_WRITE, MAP_FILE | MAP_PRIVATE, 7, 0);],
+]], [[mmap (0, 0x10000, PROT_READ | PROT_WRITE, MAP_FILE | MAP_PRIVATE, 7, 0);]])],
               sv_cv_func_mmap_devzero="guessing yes", sv_cv_func_mmap_devzero=no)
             ;;
         esac

@@ -16,13 +16,14 @@ AC_DEFUN([SV_GETPAGESIZE],
   dnl 1) getpagesize().
 
   AC_CACHE_CHECK([for getpagesize], sv_cv_func_getpagesize, [
-    AC_TRY_LINK([
+    AC_LINK_IFELSE([AC_LANG_PROGRAM([[
 #if HAVE_UNISTD_H
 #include <sys/types.h>
 #include <unistd.h>
 #endif
-], [int pgsz = getpagesize();],
-sv_cv_func_getpagesize=yes, sv_cv_func_getpagesize=no)])
+]], [[int pgsz = getpagesize();]])],
+    [sv_cv_func_getpagesize=yes],
+    [sv_cv_func_getpagesize=no])])
   if test $sv_cv_func_getpagesize = yes; then
     AC_DEFINE(HAVE_GETPAGESIZE, 1,
       [Define if getpagesize() is available as a function or a macro.])
@@ -31,13 +32,14 @@ sv_cv_func_getpagesize=yes, sv_cv_func_getpagesize=no)])
   dnl 2) sysconf(_SC_PAGESIZE).
 
   AC_CACHE_CHECK([for sysconf(_SC_PAGESIZE)], sv_cv_func_sysconf_pagesize, [
-    AC_TRY_LINK([
+    AC_LINK_IFELSE([AC_LANG_PROGRAM([[
 #if HAVE_UNISTD_H
 #include <sys/types.h>
 #include <unistd.h>
 #endif
-], [int pgsz = sysconf (_SC_PAGESIZE);],
-sv_cv_func_sysconf_pagesize=yes, sv_cv_func_sysconf_pagesize=no)])
+]], [[int pgsz = sysconf (_SC_PAGESIZE);]])],
+    [sv_cv_func_sysconf_pagesize=yes],
+    [sv_cv_func_sysconf_pagesize=no])])
   if test $sv_cv_func_sysconf_pagesize = yes; then
     AC_DEFINE(HAVE_SYSCONF_PAGESIZE, 1,
       [Define if sysconf(_SC_PAGESIZE) is available as a function or a macro.])
@@ -46,8 +48,10 @@ sv_cv_func_sysconf_pagesize=yes, sv_cv_func_sysconf_pagesize=no)])
   dnl 3) PAGESIZE.
 
   AC_CACHE_CHECK([for PAGESIZE in limits.h], sv_cv_macro_pagesize, [
-    AC_TRY_LINK([#include <limits.h>], [int pgsz = PAGESIZE;],
-sv_cv_macro_pagesize=yes, sv_cv_macro_pagesize=no)])
+    AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <limits.h>]],
+				    [[int pgsz = PAGESIZE;]])],
+		   [sv_cv_macro_pagesize=yes],
+		   [sv_cv_macro_pagesize=no])])
   if test $sv_cv_macro_pagesize = yes; then
     AC_DEFINE(HAVE_PAGESIZE, 1,
       [Define if PAGESIZE is available as a macro.])

@@ -16,7 +16,7 @@ AC_DEFUN([SV_TRY_LEAVE_HANDLER_LONGJMP],
   AC_REQUIRE([AC_CANONICAL_HOST])
 
   AC_CACHE_CHECK([whether a signal handler can be left through longjmp$1], [$2], [
-    AC_TRY_RUN([
+    AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <stdlib.h>
 #include <signal.h>
 #include <setjmp.h>
@@ -79,11 +79,8 @@ int main ()
       exit (2);
     }
   exit (0);
-}],
-      [$2=yes],
-      [$2=no],
-      [case "$host" in
-         ifelse([$3], [], [], [[$3]) $2=yes ;;])
+}]])],[$2=yes],[$2=no],[case "$host" in
+         m4_if([$3], [], [], [[$3]) $2=yes ;;])
          *) $2="guessing no" ;;
        esac
       ])
