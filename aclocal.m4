@@ -1,4 +1,4 @@
-# generated automatically by aclocal 1.7.3 -*- Autoconf -*-
+# generated automatically by aclocal 1.7.5 -*- Autoconf -*-
 
 # Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2002
 # Free Software Foundation, Inc.
@@ -76,7 +76,7 @@ AC_DEFUN([RSE_BOLD],
 # This macro actually does too much some checks are only needed if
 # your package does certain things.  But this isn't really a big deal.
 
-# Copyright 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003
+# Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003
 # Free Software Foundation, Inc.
 
 # This program is free software; you can redistribute it and/or modify
@@ -94,14 +94,7 @@ AC_DEFUN([RSE_BOLD],
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
 
-# serial 9
-
-# There are a few dirty hacks below to avoid letting `AC_PROG_CC' be
-# written in clear, in which case automake, when reading aclocal.m4,
-# will think it sees a *use*, and therefore will trigger all it's
-# C support machinery.  Also note that it means that autoscan, seeing
-# CC etc. in the Makefile, will ask for an AC_PROG_CC use...
-
+# serial 10
 
 AC_PREREQ([2.54])
 
@@ -230,7 +223,7 @@ AC_DEFUN([AM_AUTOMAKE_VERSION],[am__api_version="1.7"])
 # Call AM_AUTOMAKE_VERSION so it can be traced.
 # This function is AC_REQUIREd by AC_INIT_AUTOMAKE.
 AC_DEFUN([AM_SET_CURRENT_AUTOMAKE_VERSION],
-	 [AM_AUTOMAKE_VERSION([1.7.3])])
+	 [AM_AUTOMAKE_VERSION([1.7.5])])
 
 # Helper functions for option handling.                    -*- Autoconf -*-
 
@@ -780,7 +773,7 @@ AC_DEFUN([AM_OUTPUT_DEPENDENCY_COMMANDS],
 
 # Check to see how 'make' treats includes.	-*- Autoconf -*-
 
-# Copyright (C) 2001, 2002 Free Software Foundation, Inc.
+# Copyright (C) 2001, 2002, 2003 Free Software Foundation, Inc.
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -805,8 +798,9 @@ AC_DEFUN([AM_OUTPUT_DEPENDENCY_COMMANDS],
 AC_DEFUN([AM_MAKE_INCLUDE],
 [am_make=${MAKE-make}
 cat > confinc << 'END'
-doit:
+am__doit:
 	@echo done
+.PHONY: am__doit
 END
 # If we don't find an include directive, just comment out the code.
 AC_MSG_CHECKING([for style of include used by $am_make])
@@ -834,9 +828,9 @@ if test "$am__include" = "#"; then
       _am_result=BSD
    fi
 fi
-AC_SUBST(am__include)
-AC_SUBST(am__quote)
-AC_MSG_RESULT($_am_result)
+AC_SUBST([am__include])
+AC_SUBST([am__quote])
+AC_MSG_RESULT([$_am_result])
 rm -f confinc confmf
 ])
 
@@ -4752,7 +4746,7 @@ int main ()
   fi
 ])
 
-# fault.m4 serial 3
+# fault.m4 serial 4
 dnl Copyright (C) 2002-2003 Bruno Haible <bruno@clisp.org>
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
@@ -5260,7 +5254,7 @@ AC_DEFUN([AC_LIB_LIBPATH],
   shlibpath_var="$acl_cv_shlibpath_var"
 ])
 
-# lib-ld.m4 serial 2 (gettext-0.12)
+# lib-ld.m4 serial 3 (gettext-0.12.2)
 dnl Copyright (C) 1996-2003 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
@@ -5276,11 +5270,12 @@ dnl From libtool-1.4. Sets the variable with_gnu_ld to yes or no.
 AC_DEFUN([AC_LIB_PROG_LD_GNU],
 [AC_CACHE_CHECK([if the linker ($LD) is GNU ld], acl_cv_prog_gnu_ld,
 [# I'd rather use --version here, but apparently some GNU ld's only accept -v.
-if $LD -v 2>&1 </dev/null | egrep '(GNU|with BFD)' 1>&5; then
-  acl_cv_prog_gnu_ld=yes
-else
-  acl_cv_prog_gnu_ld=no
-fi])
+case `$LD -v 2>&1 </dev/null` in
+*GNU* | *'with BFD'*)
+  acl_cv_prog_gnu_ld=yes ;;
+*)
+  acl_cv_prog_gnu_ld=no ;;
+esac])
 with_gnu_ld=$acl_cv_prog_gnu_ld
 ])
 
@@ -5350,11 +5345,12 @@ AC_CACHE_VAL(acl_cv_path_LD,
       # Check to see if the program is GNU ld.  I'd rather use --version,
       # but apparently some GNU ld's only accept -v.
       # Break only if it was the GNU/non-GNU ld that we prefer.
-      if "$acl_cv_path_LD" -v 2>&1 < /dev/null | egrep '(GNU|with BFD)' > /dev/null; then
-	test "$with_gnu_ld" != no && break
-      else
-	test "$with_gnu_ld" != yes && break
-      fi
+      case `"$acl_cv_path_LD" -v 2>&1 < /dev/null` in
+      *GNU* | *'with BFD'*)
+	test "$with_gnu_ld" != no && break ;;
+      *)
+	test "$with_gnu_ld" != yes && break ;;
+      esac
     fi
   done
   IFS="$ac_save_ifs"
