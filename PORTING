@@ -4,7 +4,7 @@ Successfully tested platforms
 __PLATFORM__________________________________SIGSEGV__STACK_OVERFLOW__VERSION___
                                            |         |           |
 alpha-dec-osf4.0d                          |   yes   |   yes     | 2.1
-alpha-dec-osf4.0f                          |   yes   |   yes     | 2.0
+alpha-dec-osf4.0f                          |   yes   |   yes     | 2.1
 alpha-dec-osf4.0g                          |   yes   |   yes     | 2.1
 alpha-dec-osf5.1                           |   yes   |   yes     | 2.1
 alpha-unknown-freebsd4.8                   |   yes   |   yes     | 2.1
@@ -49,7 +49,9 @@ i486-pc-linux2.4.20-gnu-glibc2.3           |   yes   |   yes     | 2.0
 i586-pc-linux2.4.20-gnu-glibc2.3           |   yes   |   yes     | 2.0
 i686-pc-linux2.4.20-gnu-glibc2.3           |   yes   |   yes     | 2.0
 i686-pc-linux2.4.21-gnu-glibc2.3           |   yes   |   yes     | 2.0
+i586-pc-linux2.4.22-gnu-glibc2.3           |   yes   |   yes     | 2.0
 i386-pc-mingw32                            |   yes   |   yes     | 2.1
+i586-pc-mingw32                            |   yes   |   yes     | 2.1
 i686-pc-mingw32                            |   yes   |   yes     | 1.96
 i686-pc-win32-msvc6                        |   yes   |   yes     | 1.96
 i386-unknown-freebsd4.0                    |   yes   |   yes     | 2.1
@@ -60,18 +62,22 @@ i386-unknown-freebsd4.8                    |   yes   |   yes     | 2.1
 i386-unknown-freebsd4.10                   |   yes   |   yes     | 2.1
 i386-unknown-netbsdelf1.6                  |   no    |   no      | 2.1
 i386-unknown-openbsd3.2                    |   yes   |   yes     | 2.1
+i386-unknown-openbsd3.3                    |   yes   |   yes     | 2.1
 ia64-hp-hpux11.22                          |   yes   |   no      | 2.1
 ia64-unknown-linux2.4.18-gnu-glibc2.2      |   yes   |   yes     | 2.1
 mips-sgi-irix6.5                           |   yes   |   yes     | 2.1
 nsr-tandem-nsk                             |   no    |   no      | 2.1
 rs6000-ibm-aix3.2.5                        |   yes   |   no      | 2.1
 powerpc-ibm-aix4.3.3.0                     |   yes   |   yes     | 1.95
-powerpc-apple-darwin5.5                    |   yes   |   yes     | 2.0.2
+powerpc-ibm-aix5.2.0.0                     |   yes   |   no      | 2.1
+powerpc-apple-darwin5.5                    |   yes   |   yes     | 2.2
 powerpc-apple-darwin6.8                    |   yes   |   yes     | 2.2
 powerpc-apple-darwin7.7.0                  |   yes   |   yes     | 2.2
 powerpc-apple-darwin7.8.0                  |   yes   |   yes     | 2.2
 powerpc-unknown-linux2.2.17-gnu-glibc2.1   |   no    |   yes     | 1.95
 powerpc-unknown-linux2.2.17-gnu-glibc2.2   |   yes   |   yes     | 2.0.1
+powerpc-unknown-linux2.4.28-gnu-glibc2.2   |   yes   |   yes     | 2.1
+powerpc-unknown-linux2.4.26-gnu-glibc2.3   |   yes   |   yes     | 2.1
 powerpc-unknown-netbsd2.0                  |   yes   |   no      | 2.1
 sparc-sun-solaris2.6                       |   yes   |   yes     | 2.0
 sparc-sun-solaris2.7                       |   yes   |   yes     | 2.1
@@ -80,6 +86,11 @@ sparc-sun-solaris2.9                       |   yes   |   yes     | 2.1
 sparc64-unknown-linux2.2.18-gnu-glibc2.1   |   no    |   no      | 1.95
 x86_64-unknown-linux2.4.21-gnu-glibc2.2    |   yes   |   yes     | 2.1
 x86_64-unknown-linux2.4.21-gnu-glibc2.3    |   yes   |   yes     | 2.1
+x86_64-unknown-linux2.6.3-gnu-glibc2.3     |   yes   |   yes     | 2.1
+
+
+On FreeBSD 5.2, libsigsegv works best if the /proc filesystem is mounted.
+(It is not mounted by default.)
 
 
 Porting to new platforms
