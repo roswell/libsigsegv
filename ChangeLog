@@ -1,7 +1,7 @@
 2005-01-29  Bruno Haible  <bruno@clisp.org>
 
-	* src/sigsegv.h.in (_LIBSIGSEGV_VERSION): New macro.
-	(_libsigsegv_version): New declaration.
+	* src/sigsegv.h.in (LIBSIGSEGV_VERSION): New macro.
+	(libsigsegv_version): New declaration.
 	* src/version.c; New file.
 	* src/Makefile.am (libsigsegv_la_SOURCES): Add version.c.
 	* Makefile.msvc (OBJECTS): Add version.obj.

@@ -17,4 +17,4 @@
 
 #include "sigsegv.h"
 
-int _libsigsegv_version = _LIBSIGSEGV_VERSION;
+int libsigsegv_version = LIBSIGSEGV_VERSION;
