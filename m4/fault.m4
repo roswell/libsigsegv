@@ -1,4 +1,4 @@
-# fault.m4 serial 2
+# fault.m4 serial 3
 dnl Copyright (C) 2002-2003 Bruno Haible <bruno@clisp.org>
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
@@ -66,7 +66,13 @@ int main ()
   zero_fd = open ("/dev/zero", O_RDONLY, 0644);
 #endif
   /* Setup some mmaped memory.  */
+#ifdef __hpux
+  /* HP-UX 10 mmap() often fails when given a hint.  So give the OS complete
+     freedom about the address range.  */
+  p = mmap ((void *) 0,          0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
+#else
   p = mmap ((void *) 0x12340000, 0x10000, PROT_READ | PROT_WRITE, map_flags, zero_fd, 0);
+#endif
   if (p == (void *)(-1))
     exit (2);
   page = (unsigned long) p;

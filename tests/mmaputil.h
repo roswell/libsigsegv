@@ -1,5 +1,5 @@
 /* Some auxiliary stuff for using mmap & friends.
-   Copyright (C) 2002  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002-2003  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -93,7 +93,13 @@ static int zero_fd;
 static void *
 mmap_zeromap (void *map_addr_hint, unsigned long map_len)
 {
+#ifdef __hpux
+  /* HP-UX 10 mmap() often fails when given a hint.  So give the OS complete
+     freedom about the address range.  */
+  return (void *) mmap ((void *) 0,    map_len, PROT_READ_WRITE, map_flags, zero_fd, 0);
+#else
   return (void *) mmap (map_addr_hint, map_len, PROT_READ_WRITE, map_flags, zero_fd, 0);
+#endif
 }
 
 #endif
