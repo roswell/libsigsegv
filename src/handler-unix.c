@@ -85,7 +85,7 @@
    Leaving a signal handler executing on the alternate stack.  */
 #include "leave.h"
 
-#ifdef CFG_STACKVMA
+#if HAVE_STACKVMA
 
 /* Address of the last byte belonging to the stack vma.  */
 static unsigned long stack_top = 0;
@@ -100,7 +100,7 @@ remember_stack_top (void *some_variable_on_stack)
     stack_top = vma.end - 1;
 }
 
-#endif /* CFG_STACKVMA */
+#endif /* HAVE_STACKVMA */
 
 static stackoverflow_handler_t stk_user_handler = (stackoverflow_handler_t)NULL;
 static unsigned long stk_extra_stack;
@@ -126,8 +126,8 @@ sigsegv_handler (SIGSEGV_FAULT_HANDLER_ARGLIST)
   void *address = (void *) (SIGSEGV_FAULT_ADDRESS);
 
 #if HAVE_STACK_OVERFLOW_RECOVERY
-#if !(defined CFG_STACKVMA || defined SIGSEGV_FAULT_STACKPOINTER)
-#error "Insufficient heuristics for detecting a stack overflow.  Either define CFG_STACKVMA correctly, or define SIGSEGV_FAULT_STACKPOINTER correctly, or undefine HAVE_STACK_OVERFLOW_RECOVERY!"
+#if !(HAVE_STACKVMA || defined SIGSEGV_FAULT_STACKPOINTER)
+#error "Insufficient heuristics for detecting a stack overflow.  Either define CFG_STACKVMA and HAVE_STACKVMA correctly, or define SIGSEGV_FAULT_STACKPOINTER correctly, or undefine HAVE_STACK_OVERFLOW_RECOVERY!"
 #endif
 
   /* Call user's handler.  */
@@ -147,7 +147,7 @@ sigsegv_handler (SIGSEGV_FAULT_HANDLER_ARGLIST)
           unsigned long old_sp = (unsigned long) (SIGSEGV_FAULT_STACKPOINTER);
 #endif
 
-#ifdef CFG_STACKVMA
+#if HAVE_STACKVMA
           /* Were we able to determine the stack top?  */
           if (stack_top)
             {
@@ -443,7 +443,7 @@ stackoverflow_install_handler (stackoverflow_handler_t handler,
                                void *extra_stack, unsigned long extra_stack_size)
 {
 #if HAVE_STACK_OVERFLOW_RECOVERY
-#ifdef CFG_STACKVMA
+#if HAVE_STACKVMA
   if (!stack_top)
     {
       int dummy;

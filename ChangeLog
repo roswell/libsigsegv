@@ -1,5 +1,8 @@
 2003-04-29  Bruno Haible  <bruno@clisp.org>
 
+	* configure.in: Define HAVE_STACKVMA if CFG_STACKVMA is nontrivial.
+	* src/handler-unix.c: Test HAVE_STACKVMA instead of CFG_STACKVMA.
+
 	* m4/fault.m4 (SV_TRY_FAULT): On HP-UX, always pass 0 as first argument
 	of mmap().
 	* tests/mmaputil.h (mmap_zeromap): Likewise.

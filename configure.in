@@ -506,7 +506,10 @@ else
     macos* | darwin*) CFG_STACKVMA=stackvma-mach.c ;;
   esac
 fi
-if test -z "$CFG_STACKVMA"; then
+if test -n "$CFG_STACKVMA"; then
+  AC_DEFINE(HAVE_STACKVMA, 1,
+    [Define if CFG_STACKVMA is set to a nontrivial source file.])
+else
   CFG_STACKVMA=stackvma-none.c
 fi
 AC_DEFINE_UNQUOTED(CFG_STACKVMA, "$CFG_STACKVMA",
@@ -558,7 +561,7 @@ xyzzy
     else
       condB=false
     fi
-    if test -n "$CFG_STACKVMA"; then
+    if test "$CFG_STACKVMA" != "stackvma-none.c"; then
       condC=true
     else
       condC=false
