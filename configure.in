@@ -522,7 +522,8 @@ SV_SIGALTSTACK
 AC_CACHE_CHECK([if the system supports catching stack overflow],
                sv_cv_have_stack_overflow_recovery,
 [
-  dnl It requires either sigaltstack() or the BeOS set_signal_stack() function.
+  dnl It requires either sigaltstack() or the BeOS set_signal_stack() function,
+  dnl and it requires (see src/handler-unix.c) a fault-*.h or a stackvma-*.c.
   if test "$sv_cv_sigaltstack" != no; then
     sv_cv_have_stack_overflow_recovery=yes
   else
@@ -531,6 +532,42 @@ AC_CACHE_CHECK([if the system supports catching stack overflow],
       mingw*) sv_cv_have_stack_overflow_recovery=yes ;;
       *) sv_cv_have_stack_overflow_recovery=no ;;
     esac
+  fi
+  if test $sv_cv_have_stack_overflow_recovery = yes; then
+    if test -n "$CFG_FAULT"; then
+      AC_EGREP_CPP([xyzzy], [
+#include "src/$CFG_FAULT"
+#ifdef SIGSEGV_FAULT_HANDLER_ARGLIST
+#ifdef SIGSEGV_FAULT_ADDRESS
+xyzzy
+#endif
+#endif
+], [condA=true], [condA=false])
+    else
+      condA=false
+    fi
+    if test -n "$CFG_FAULT"; then
+      AC_EGREP_CPP([xyzzy], [
+#include "src/$CFG_FAULT"
+#ifdef SIGSEGV_FAULT_HANDLER_ARGLIST
+#ifdef SIGSEGV_FAULT_STACKPOINTER
+xyzzy
+#endif
+#endif
+], [condB=true], [condB=false])
+    else
+      condB=false
+    fi
+    if test -n "$CFG_STACKVMA"; then
+      condC=true
+    else
+      condC=false
+    fi
+    if { $condA && $condB; } || { $condA && $condC; } || { $condB && $condC; }; then
+      sv_cv_have_stack_overflow_recovery=yes
+    else
+      sv_cv_have_stack_overflow_recovery=no
+    fi
   fi
 ])
 if test $sv_cv_have_stack_overflow_recovery != no; then

@@ -1,6 +1,13 @@
+2003-04-26  Bruno Haible  <bruno@clisp.org>
+
+	* configure.in: Don't set sv_cv_have_stack_overflow_recovery=yes if
+	not all of the fault-*.h and stackvma-*.h premises are fulfilled.
+	Reported by Paolo Bonzini <bonzini@gnu.org> for NetBSD/Alpha.
+
 2003-04-03  Bruno Haible  <bruno@clisp.org>
 
 	* configure.in: Add --enable-relocatable option.
+	* m4/relocatable.m4: New file, from GNU gettext.
 
 	* m4/libtool.m4: Update from GNU gettext, based on libtool-1.4.3.
 	* autoconf/ltmain.sh: Likewise.
