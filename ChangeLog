@@ -1,5 +1,7 @@
 2003-04-03  Bruno Haible  <bruno@clisp.org>
 
+	* configure.in: Add --enable-relocatable option.
+
 	* m4/libtool.m4: Update from GNU gettext, based on libtool-1.4.3.
 	* autoconf/ltmain.sh: Likewise.
 

@@ -672,6 +672,21 @@ esac
 AC_DEFINE_UNQUOTED(CFG_HANDLER, "$CFG_HANDLER",
   [The name of the file implementing the handler functionality.])
 
+{ echo; echo "${term_bold}Build Parameters:${term_norm}"; } >& AS_MESSAGE_FD
+
+dnl Relocatability is a nop for this package.
+AC_MSG_CHECKING([whether to activate relocatable installation])
+AC_ARG_ENABLE(relocatable,
+  [  --enable-relocatable    install a package that can be moved in the filesystem],
+  [if test "$enableval" != no; then
+     RELOCATABLE=yes
+   else
+     RELOCATABLE=no
+   fi
+  ], RELOCATABLE=no)
+AC_SUBST(RELOCATABLE)
+AC_MSG_RESULT([$RELOCATABLE])
+
 { echo; echo "${term_bold}Output Substitution:${term_norm}"; } >& AS_MESSAGE_FD
 
 dnl AC_OUTPUT(Makefile)
