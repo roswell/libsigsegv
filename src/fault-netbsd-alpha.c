@@ -25,7 +25,15 @@ get_fault_addr (struct sigcontext *scp)
   unsigned int instr = *((unsigned int *)(scp->sc_pc));
   unsigned long faultaddr;
 
+  /* Instructions which access memory have operands of the form ARG_MEM or
+     ARG_FMEM, consisting of
+       - a base register specification (PRB) in bits 20..16,
+       - a memory displacement (MDISP) in bits 15..0,
+       - an general register specification (RA) or a floating-point register
+         specification (FA) in bits 25..21.
+     See binutils-2.13.90.0.16/opcodes/alpha-opc.c.  */
+
   faultaddr = scp->sc_regs[(instr >> 16) & 0x1f];
-  faultaddr += (unsigned long) (((int)instr << 16) >> 16);
+  faultaddr += (unsigned long) (long) (((int)instr << 16) >> 16);
   return (void *) faultaddr;
 }
