@@ -1,5 +1,5 @@
 /* Test the stack overflow handler.
-   Copyright (C) 2002-2003  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002-2005  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@
 jmp_buf mainloop;
 sigset_t mainsigset;
 
-int pass = 0;
+volatile int pass = 0;
 
 void
 stackoverflow_handler (int emergency, stackoverflow_context_t scp)

@@ -1,5 +1,5 @@
 /* Test that the handler is called, with the right fault address.
-   Copyright (C) 2002-2003  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002-2005  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
 
 unsigned long page;
 
-int handler_called = 0;
+volatile int handler_called = 0;
 
 int
 handler (void *fault_address, int serious)

@@ -1,3 +1,10 @@
+2005-02-18  Bruno Haible  <bruno@clisp.org>
+
+	* tests/sigsegv1.c (handler_called): Declare as volatile.
+	* tests/sigsegv2.c (logcount, logdata): Likewise.
+	* tests/stackoverflow1.c (pass): Likewise.
+	* tests/stackoverflow2.c (pass): Likewise.
+
 2005-01-29  Bruno Haible  <bruno@clisp.org>
 
 	* src/sigsegv.h.in (LIBSIGSEGV_VERSION): New macro.

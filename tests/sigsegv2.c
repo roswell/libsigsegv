@@ -1,5 +1,5 @@
 /* Test the dispatcher.
-   Copyright (C) 2002-2003  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002-2005  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -25,8 +25,8 @@
 
 static sigsegv_dispatcher dispatcher;
 
-static unsigned int logcount = 0;
-static unsigned long logdata[10];
+static volatile unsigned int logcount = 0;
+static volatile unsigned long logdata[10];
 
 static int
 area_handler (void *fault_address, void *user_arg)
