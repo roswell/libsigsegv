@@ -11211,23 +11211,31 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_posix" = yes; then
       esac
       FAULT_CONTEXT='struct sigcontext'
       ;;
-    *)
-      case "$host_os" in
-        solaris*)
-          case "$host_cpu" in
-            i?86 | x86_64) CFG_FAULT=fault-solaris-i386.h ;;
-            sparc*) CFG_FAULT=fault-solaris-sparc.h ;;
-            *) CFG_FAULT=fault-solaris.h ;;
-          esac
-          ;;
-        *)
-          CFG_FAULT=fault-posix.h
+    linux*)
+      case "$host_cpu" in
+        ia64)
+          CFG_FAULT=fault-linux-ia64.h
+          FAULT_CONTEXT='struct sigcontext'
           ;;
       esac
-      FAULT_CONTEXT='ucontext_t'
-      FAULT_CONTEXT_INCLUDE='#include <ucontext.h>'
       ;;
   esac
+  if test -z "$CFG_FAULT"; then
+    case "$host_os" in
+      solaris*)
+        case "$host_cpu" in
+          i?86 | x86_64) CFG_FAULT=fault-solaris-i386.h ;;
+          sparc*) CFG_FAULT=fault-solaris-sparc.h ;;
+          *) CFG_FAULT=fault-solaris.h ;;
+        esac
+        ;;
+      *)
+        CFG_FAULT=fault-posix.h
+        ;;
+    esac
+    FAULT_CONTEXT='ucontext_t'
+    FAULT_CONTEXT_INCLUDE='#include <ucontext.h>'
+  fi
 fi
 if test -z "$CFG_FAULT" && test "$sv_cv_fault_linux_m68k" = yes; then
   case "$host_cpu" in
@@ -11271,10 +11279,6 @@ else
           ;;
         cris)
           CFG_FAULT=fault-linux-cris.h
-          FAULT_CONTEXT='struct sigcontext'
-          ;;
-        ia64)
-          CFG_FAULT=fault-linux-ia64.h
           FAULT_CONTEXT='struct sigcontext'
           ;;
         mips*)
