@@ -15,7 +15,12 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 
-#define SIGSEGV_STATE_TYPE  ppc_exception_state_t
-#define SIGSEGV_STATE_FLAVOR  PPC_EXCEPTION_STATE
-#define SIGSEGV_STATE_COUNT  PPC_EXCEPTION_STATE_COUNT
-#define SIGSEGV_FAULT_ADDRESS   (exc_state).dar
+#define SIGSEGV_EXC_STATE_TYPE             ppc_exception_state_t
+#define SIGSEGV_EXC_STATE_FLAVOR           PPC_EXCEPTION_STATE
+#define SIGSEGV_EXC_STATE_COUNT            PPC_EXCEPTION_STATE_COUNT
+#define SIGSEGV_THREAD_STATE_TYPE          ppc_thread_state_t
+#define SIGSEGV_THREAD_STATE_FLAVOR        PPC_THREAD_STATE
+#define SIGSEGV_THREAD_STATE_COUNT         PPC_THREAD_STATE_COUNT
+#define SIGSEGV_FAULT_ADDRESS(exc_state)   (exc_state).dar
+#define SIGSEGV_STACK_POINTER(thr_state)   (thr_state).r1
+#define SIGSEGV_PROGRAM_COUNTER(thr_state) (thr_state).srr0
