@@ -9,6 +9,9 @@
 /* The name of the file implementing sigsegv_reset_onstack_flag. */
 #undef CFG_LEAVE
 
+/* The name of the include file describing the Mach fault handler. */
+#undef CFG_MACHFAULT
+
 /* The name of the include file describing the fault signals. */
 #undef CFG_SIGNALS
 
