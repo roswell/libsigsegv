@@ -26,15 +26,16 @@ lib_LTLIBRARIES = libsigsegv.la
 noinst_HEADERS = \
   fault.h fault-aix.h fault-aix-powerpc.h fault-beos.h fault-beos-i386.h \
   fault-bsd.h fault-freebsd-i386.h \
-  fault-hpux.h fault-hpux-hppa.h fault-irix.h fault-irix-mips.h \
+  fault-hpux.h fault-hpux-hppa.h fault-hurd.h fault-irix.h fault-irix-mips.h \
   fault-linux.h fault-linux-alpha.h fault-linux-arm.h fault-linux-cris.h \
   fault-linux-hppa.h fault-linux-i386.h fault-linux-i386-old.h \
-  fault-linux-ia64.h fault-linux-m68k.h fault-linux-mips.h \
+  fault-linux-ia64.h fault-linux-m68k.h fault-linux-m68k.c fault-linux-mips.h \
   fault-linux-powerpc.h fault-linux-s390.h fault-linux-sh.h \
   fault-linux-sparc.h fault-linux-x86_64.h \
+  fault-macos-powerpc.h fault-macos-powerpc.c \
   fault-osf.h fault-osf-alpha.h \
   fault-posix.h fault-solaris.h fault-solaris-i386.h fault-solaris-sparc.h \
-  signals.h signals-bsd.h signals-hpux.h \
+  signals.h signals-bsd.h signals-hpux.h signals-hurd.h signals-macos.h \
   leave.h \
   stackvma.h
 
