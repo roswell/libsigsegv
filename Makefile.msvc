@@ -71,7 +71,7 @@ config.h : config.h.msvc
 sigsegv.h : src/sigsegv.h.msvc
 	$(CP) $(srcdir)\src\sigsegv.h.msvc sigsegv.h
 
-handler.obj : $(srcdir)/src/handler.c sigsegv.h config.h
+handler.obj : $(srcdir)/src/handler.c $(srcdir)/src/handler-win32.c sigsegv.h config.h
 	$(CC) $(CFLAGS) $(INCLUDES) -c $(srcdir)/src/handler.c
 
 dispatcher.obj : $(srcdir)/src/dispatcher.c sigsegv.h config.h
@@ -96,16 +96,20 @@ sigsegv2.exe : $(srcdir)/tests/sigsegv2.c sigsegv.h sigsegv.lib
 stackoverflow1.exe : $(srcdir)/tests/stackoverflow1.c sigsegv.h sigsegv.lib
 	$(CC) $(CFLAGS) $(INCLUDES) $(srcdir)/tests/stackoverflow1.c sigsegv.lib /Festackoverflow1
 
-check : all sigsegv1.exe sigsegv2.exe stackoverflow1.exe
+stackoverflow2.exe : $(srcdir)/tests/stackoverflow2.c sigsegv.h sigsegv.lib
+	$(CC) $(CFLAGS) $(INCLUDES) $(srcdir)/tests/stackoverflow2.c sigsegv.lib /Festackoverflow2
+
+check : all sigsegv1.exe sigsegv2.exe stackoverflow1.exe stackoverflow2.exe
 	sigsegv1.exe
 	sigsegv2.exe
 	stackoverflow1.exe
+	stackoverflow2.exe
 
 mostlyclean : clean
 
 clean : force
 	$(RM) sigsegv.h *.obj *.lib *.exp *.dll core
-	$(RM) sigsegv1.exe sigsegv2.exe stackoverflow1.exe
+	$(RM) sigsegv1.exe sigsegv2.exe stackoverflow1.exe stackoverflow2.exe
 
 distclean : clean
 	$(RM) config.status config.log config.cache Makefile config.h

@@ -55,6 +55,12 @@ libsigsegv_la_SOURCES = handler.c stackvma.c leave.c dispatcher.c
 
 libsigsegv_la_LDFLAGS = -lc -no-undefined
 
+# Dependencies.
+handler.$(OBJEXT) : ../config.h sigsegv.h @CFG_HANDLER@ $(noinst_HEADERS) 
+stackvma.$(OBJEXT) : ../config.h @CFG_STACKVMA@ stackvma.h
+leave.$(OBJEXT) : ../config.h @CFG_LEAVE@
+dispatcher.$(OBJEXT) : sigsegv.h
+
 
 # Special rules for installing sigsegv.h.
 

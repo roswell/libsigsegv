@@ -121,7 +121,7 @@ SV_TRY_FAULT([old Linux/i386], sv_cv_fault_linux_i386_old,
 dnl FIXME: Put in some more known values into the third argument.
 SV_TRY_FAULT([Linux/m68k], sv_cv_fault_linux_m68k, [],
   [#include <asm/sigcontext.h>
-#include "src/fault-linux-m68k.c"],
+#include "$srcdir/src/fault-linux-m68k.c"],
   [int sig, int code, struct sigcontext *scp],
   [get_fault_addr (scp)])
 
@@ -177,7 +177,7 @@ SV_TRY_FAULT([AIX], sv_cv_fault_aix, [*-*-aix*],
 
 SV_TRY_FAULT([MacOSX PowerPC], sv_cv_fault_macos_ppc,
   [powerpc-*-macos* | powerpc-*-darwin*],
-  [#include "src/fault-macos-powerpc.c"],
+  [#include "$srcdir/src/fault-macos-powerpc.c"],
   [int sig, int code, struct sigcontext *scp],
   [get_fault_addr (scp)])
 
@@ -548,6 +548,7 @@ else
 fi
 AC_DEFINE_UNQUOTED(CFG_STACKVMA, "$CFG_STACKVMA",
   [The name of the file determining the stack virtual memory area.])
+AC_SUBST(CFG_STACKVMA)
 
 AC_CHECK_FUNCS([getrlimit setrlimit])
 
@@ -574,7 +575,7 @@ AC_CACHE_CHECK([if the system supports catching stack overflow],
   if test $sv_cv_have_stack_overflow_recovery = maybe; then
     if test -n "$CFG_FAULT"; then
       AC_EGREP_CPP([xyzzy], [
-#include "src/$CFG_FAULT"
+#include "$srcdir/src/$CFG_FAULT"
 #ifdef SIGSEGV_FAULT_HANDLER_ARGLIST
 #ifdef SIGSEGV_FAULT_ADDRESS
 xyzzy
@@ -586,7 +587,7 @@ xyzzy
     fi
     if test -n "$CFG_FAULT"; then
       AC_EGREP_CPP([xyzzy], [
-#include "src/$CFG_FAULT"
+#include "$srcdir/src/$CFG_FAULT"
 #ifdef SIGSEGV_FAULT_HANDLER_ARGLIST
 #ifdef SIGSEGV_FAULT_STACKPOINTER
 xyzzy
@@ -732,6 +733,7 @@ if test -z "$CFG_LEAVE"; then
 fi
 AC_DEFINE_UNQUOTED(CFG_LEAVE, "$CFG_LEAVE",
   [The name of the file implementing sigsegv_reset_onstack_flag.])
+AC_SUBST(CFG_LEAVE)
 
 case "$host_os" in
   mingw* | cygwin*) CFG_HANDLER=handler-win32.c ;;
@@ -746,6 +748,7 @@ case "$host_os" in
 esac
 AC_DEFINE_UNQUOTED(CFG_HANDLER, "$CFG_HANDLER",
   [The name of the file implementing the handler functionality.])
+AC_SUBST(CFG_HANDLER)
 
 { echo; echo "${term_bold}Build Parameters:${term_norm}"; } >& AS_MESSAGE_FD
 

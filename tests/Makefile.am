@@ -27,3 +27,7 @@ INCLUDES = -I../src
 DEFS = @DEFS@
 LDADD = ../src/libsigsegv.la
 noinst_PROGRAMS = sigsegv1 sigsegv2 stackoverflow1 stackoverflow2
+
+# The following rule is necessary to avoid a toplevel "make -n" failure.
+../src/libsigsegv.la :
+	cd ../src && $(MAKE) libsigsegv.la
