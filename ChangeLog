@@ -1,3 +1,43 @@
+2003-04-03  Bruno Haible  <bruno@clisp.org>
+
+	* m4/libtool.m4: Update from GNU gettext, based on libtool-1.4.3.
+	* autoconf/ltmain.sh: Likewise.
+
+2003-04-02  Bruno Haible  <bruno@clisp.org>
+
+	* configure.in: Bump version number to 2.1.
+
+	* tests/stackoverflow2.c: New file, based on code by Paolo Bonzini.
+	* tests/Makefile.am (TESTS, noinst_PROGRAMS): Add stackoverflow2.
+
+2003-04-02  Paolo Bonzini  <bonzini@gnu.org>
+            Bruno Haible  <bruno@clisp.org>
+
+	Complete the port to MacOS X (Darwin).
+	* m4/fault.m4: Include sys/signal.h. Have an exit status of 3 instead
+	of 1 if fault_address is misdetected.
+	* m4/sigaltstack.m4: Define stack_t to struct sigaltstack if absent.
+	Include <sys/signal.h>.
+	* configure.in: Add check for sys/signal.h.
+	Add support for catching stack overflow on MacOSX.
+	Add support for MacOSX on i386.
+	Provide a fallback for SS_ONSTACK before using it.
+	* src/fault-macos-i386.h: New file.
+	* src/stackvma-mach.c: New file.
+	* src/fault-macos-powerpc.h (SIGSEGV_FAULT_STACKPOINTER): Change.
+	* src/handler-unix.c: Include <sys/signal.h>.
+	(SS_DISABLE): Provide a fallback.
+	* src/leave-sigaltstack.c: Include sys/signal.h.
+	(SS_ONSTACK): Provide a fallback.
+	* src/Makefile.am (noinst_HEADERS): Add fault-macos-i386.h.
+	(EXTRA_DIST): Add stackvma-mach.c.
+	* tests/sigsegv1.c: Abort after 10 handler invocations.
+	(main): Drop SKIP message, now emitted by automake 1.7.x.
+	* tests/sigsegv2.c: Abort after 10 handler invocations.
+	(main): Drop SKIP message, now emitted by automake 1.7.x.
+	* tests/stackoverflow1.c (main): Drop SKIP message, now emitted by
+	automake 1.7.x.
+
 2002-10-14  Bruno Haible  <bruno@clisp.org>
 
 	* src/fault-none.h: New file.
