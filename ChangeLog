@@ -1,3 +1,7 @@
+2003-08-21  Bruno Haible  <bruno@clisp.org>
+
+	* Version 2.1 released.
+
 2003-06-24  Paolo Bonzini  <bonzini@gnu.org>
 
 	* m4/fault.m4: Exit if we detect an infinite loop.
