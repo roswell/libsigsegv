@@ -1,3 +1,8 @@
+2004-08-25  Bruno Haible  <bruno@clisp.org>
+
+	* m4/libtool.m4: Upgrade to libtool-1.5.6.
+	* autoconf/ltmain.sh: Upgrade to libtool-1.5.6.
+
 2004-08-18  Bruno Haible  <bruno@clisp.org>
 
 	* configure.in: Bump version number to 2.2.
