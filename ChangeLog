@@ -1,5 +1,10 @@
 2003-05-01  Bruno Haible  <bruno@clisp.org>
 
+	* configure.in: Don't use fault-hurd.h on NetBSD/alpha. It does not
+	work.
+
+2003-05-01  Bruno Haible  <bruno@clisp.org>
+
 	Support for Linux/HPPA.
 	* fault-linux-hppa.h: Don't include <siginfo.h>.
 	(SIGSEGV_FAULT_ADDRESS): Change.

@@ -250,8 +250,14 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_linux_hppa" = yes; then
   esac
 fi
 if test -z "$CFG_FAULT" && test "$sv_cv_fault_hurd" = yes; then
-  CFG_FAULT=fault-hurd.h
-  FAULT_CONTEXT='struct sigcontext'
+  case "$host_os" in
+    netbsd*) # A false positive.
+      ;;
+    *)
+      CFG_FAULT=fault-hurd.h
+      FAULT_CONTEXT='struct sigcontext'
+      ;;
+  esac
 fi
 if test -z "$CFG_FAULT" && test "$sv_cv_fault_bsd" = yes; then
   case "$host_os" in
