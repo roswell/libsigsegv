@@ -1,3 +1,7 @@
+2003-04-28  Bruno Haible  <bruno@clisp.org>
+
+	* src/stackvma-freebsd.c (sigsegv_get_vma): Fix logic error.
+
 2002-04-17  Paolo Bonzini  <bonzini@gnu.org>
 
 	Support for Cygwin.

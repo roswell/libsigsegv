@@ -1,5 +1,5 @@
 /* Determine the virtual memory area of a given address.  FreeBSD version.
-   Copyright (C) 2002  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002-2003  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -51,7 +51,8 @@ sigsegv_get_vma (unsigned long address, struct vma_struct *vma)
         }
       else
         {
-          if (address >= curr_start && address <= curr_end-1)
+          if (curr_start < curr_end
+              && address >= curr_start && address <= curr_end-1)
             goto found;
 #if STACK_DIRECTION < 0
           prev_end = curr_end;
