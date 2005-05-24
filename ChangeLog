@@ -1,5 +1,9 @@
 2005-05-24  Bruno Haible  <bruno@clisp.org>
 
+	* src/handler-win32.c (main_exception_filter): Swap arguments passed
+	to stack_overflow_handler.
+	Patch by Doug Currie <e@flavors.com>.
+
 	* src/handler-win32.c (main_exception_filter): Align %esp on a 16-byte
 	boundary.
 

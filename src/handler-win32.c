@@ -166,10 +166,10 @@ main_exception_filter (EXCEPTION_POINTERS *ExceptionInfo)
               unsigned long new_safe_esp = ((stk_extra_stack + stk_extra_stack_size) & -16);
               new_safe_esp -= 12; /* make room for arguments */
               ExceptionInfo->ContextRecord->Esp = new_safe_esp;
-              /* Call stack_overflow_handler(faulting_page_address).  */
+              /* Call stack_overflow_handler(faulting_page_address,ExceptionInfo->ContextRecord).  */
               ExceptionInfo->ContextRecord->Eip = (unsigned long)&stack_overflow_handler;
-              *(unsigned long *)(new_safe_esp + 8) = faulting_page_address;
-              *(unsigned long *)(new_safe_esp + 4) = (unsigned long) ExceptionInfo->ContextRecord;
+              *(unsigned long *)(new_safe_esp + 4) = faulting_page_address;
+              *(unsigned long *)(new_safe_esp + 8) = (unsigned long) ExceptionInfo->ContextRecord;
               return EXCEPTION_CONTINUE_EXECUTION;
             }
           if (user_handler != (sigsegv_handler_t) NULL
