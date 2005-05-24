@@ -163,7 +163,7 @@ main_exception_filter (EXCEPTION_POINTERS *ExceptionInfo)
               char *address = (char *) ExceptionInfo->ExceptionRecord->ExceptionInformation[1];
               /* Restart the program, giving it a sane value for %esp.  */
               unsigned long faulting_page_address = (unsigned long)address & -0x1000;
-              unsigned long new_safe_esp = ((stk_extra_stack + stk_extra_stack_size) & -8);
+              unsigned long new_safe_esp = ((stk_extra_stack + stk_extra_stack_size) & -16);
               new_safe_esp -= 12; /* make room for arguments */
               ExceptionInfo->ContextRecord->Esp = new_safe_esp;
               /* Call stack_overflow_handler(faulting_page_address).  */
