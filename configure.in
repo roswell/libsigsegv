@@ -373,7 +373,7 @@ if test -z "$CFG_FAULT"; then
       if test -n "$CFG_MACHFAULT"; then
         CFG_HANDLER=handler-macos.c
         FAULT_CONTEXT_INCLUDE='#include <signal.h>'
-        FAULT_CONTEXT_INCLUDE2='#include <ucontext.h>'
+        FAULT_CONTEXT_INCLUDE2='#include <mach/thread_status.h>'
         CFG_FAULT=fault-macos.h # nonexistent, just a dummy
       fi
       ;;

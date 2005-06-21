@@ -1,5 +1,10 @@
 2005-06-21  Paolo Bonzini  <bonzini@gnu.org>
 
+	* configure.in: For handler-macos.c, include mach/thread_status.h.
+	* configure: Regenerate.
+
+2005-06-21  Paolo Bonzini  <bonzini@gnu.org>
+
 	* tests/stackoverflow1.c (recurse): Make more resilient to compiler
 	optimization.
 	(recurse_1): New.
