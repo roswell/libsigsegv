@@ -1,3 +1,10 @@
+2005-06-21  Paolo Bonzini  <bonzini@gnu.org>
+
+	* tests/stackoverflow1.c (recurse): Make more resilient to compiler
+	optimization.
+	(recurse_1): New.
+	* tests/stackoverflow2.c: Likewise.
+
 2005-05-24  Bruno Haible  <bruno@clisp.org>
 
 	* src/handler-win32.c (main_exception_filter): Copy CONTEXT structure

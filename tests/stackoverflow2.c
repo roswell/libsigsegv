@@ -17,6 +17,7 @@
 
 #include "sigsegv.h"
 #include <stdio.h>
+#include <limits.h>
 
 #if HAVE_STACK_OVERFLOW_RECOVERY && HAVE_SIGSEGV_RECOVERY
 
@@ -83,13 +84,18 @@ sigsegv_handler (void *address, int emergency)
   longjmp (mainloop, pass);
 }
 
-int
-recurse (int n)
+volatile int *
+recurse_1 (int n, volatile int *p)
+{  
+  if (n < INT_MAX)
+    *recurse_1 (n + 1, p) += n;
+  return p;
+}
+
+volatile int
+recurse (volatile int n)
 {
-  if (n >= 0)
-    return n + recurse (n + 1);
-  else
-    return 0;
+  return *recurse_1 (n, (volatile int *) &n);
 }
 
 int
