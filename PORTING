@@ -58,6 +58,7 @@ i386-pc-mingw32                            |   yes   |   yes     | 2.2
 i586-pc-mingw32                            |   yes   |   yes     | 2.1
 i686-pc-mingw32                            |   yes   |   yes     | 1.96
 i386-pc-solaris2.9                         |   yes   |   yes     | 2.2
+i386-pc-solaris2.11                        |   yes   |   yes     | 2.2
 i686-pc-win32-msvc6                        |   yes   |   yes     | 1.96
 i386-unknown-freebsd4.0                    |   yes   |   yes     | 2.1
 i386-unknown-freebsd4.0-gnu-glibc2.3       |   yes   |   yes     | 2.1
