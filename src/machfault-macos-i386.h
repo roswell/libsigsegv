@@ -1,5 +1,5 @@
 /* Fault handler information.  MacOSX/i386 version.
-   Copyright (C) 2003-2004  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2003-2004, 2006  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -15,15 +15,12 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#if 0
-#define SIGSEGV_THREAD_STATE_TYPE                   i386_new_thread_state_t
-#define SIGSEGV_THREAD_STATE_FLAVOR                 i386_NEW_THREAD_STATE
-#define SIGSEGV_THREAD_STATE_COUNT                  i386_NEW_THREAD_STATE_COUNT
-#endif
-#define SIGSEGV_THREAD_STATE_TYPE                   struct i386_saved_state
-#define SIGSEGV_THREAD_STATE_FLAVOR                 i386_SAVED_STATE
-#define SIGSEGV_THREAD_STATE_COUNT                  i386_SAVED_STATE_COUNT
-/* See comment in /usr/include/mach/i386/thread_status.h.  */
-#define SIGSEGV_FAULT_ADDRESS(thr_state,exc_state)  (thr_state).esp
-#define SIGSEGV_STACK_POINTER(thr_state)            (thr_state).uesp
+#define SIGSEGV_THREAD_STATE_TYPE                   i386_thread_state_t
+#define SIGSEGV_THREAD_STATE_FLAVOR                 i386_THREAD_STATE
+#define SIGSEGV_THREAD_STATE_COUNT                  i386_THREAD_STATE_COUNT
+#define SIGSEGV_EXC_STATE_TYPE                      i386_exception_state_t
+#define SIGSEGV_EXC_STATE_FLAVOR                    i386_EXCEPTION_STATE
+#define SIGSEGV_EXC_STATE_COUNT                     i386_EXCEPTION_STATE_COUNT
+#define SIGSEGV_FAULT_ADDRESS(thr_state,exc_state)  (exc_state).faultvaddr
+#define SIGSEGV_STACK_POINTER(thr_state)            (thr_state).esp
 #define SIGSEGV_PROGRAM_COUNTER(thr_state)          (thr_state).eip
