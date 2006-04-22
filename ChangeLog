@@ -1,6 +1,7 @@
 2006-04-21  Bruno Haible  <bruno@clisp.org>
 
 	* src/machfault-macos-i386.h: Rewritten for Darwin 8.6.1.
+	* configure.in: Change FAULT_CONTEXT for i?86-darwin.
 
 2005-06-21  Paolo Bonzini  <bonzini@gnu.org>
 
