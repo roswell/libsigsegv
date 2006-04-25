@@ -49,7 +49,7 @@ am__aclocal_m4_deps = $(top_srcdir)/m4/bold.m4 \
 	$(top_srcdir)/m4/relocatable.m4 \
 	$(top_srcdir)/m4/sigaltstack-longjmp.m4 \
 	$(top_srcdir)/m4/sigaltstack-siglongjmp.m4 \
-	$(top_srcdir)/m4/sigaltstack.m4 $(top_srcdir)/configure.in
+	$(top_srcdir)/m4/sigaltstack.m4 $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(install_sh) -d
