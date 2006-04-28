@@ -33,6 +33,7 @@ hppa64-unknown-linux2.4.17-gnu-glibc2.2    |   yes   |   yes     | 2.1
 i586-pc-beos                               |   no    |   yes     | 2.1
 i686-pc-cygwin                             |   yes   |   yes     | 2.02
 i686-pc-cygwin                             |   yes   |   yes     | 2.2
+i686-apple-darwin8.6.1                     |   yes   |   yes     | 2.3
 i586-pc-linux2.2.14-gnu-glibc2.1           |   yes   |   yes     | 2.1
 i686-pc-linux2.2.14-gnu-glibc2.1           |   yes   |   yes     | 2.0
 i686-pc-linux2.2.19-gnu-glibc2.1           |   yes   |   yes     | 1.95
