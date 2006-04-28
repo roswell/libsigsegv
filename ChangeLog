@@ -1,3 +1,8 @@
+2006-04-28  Bruno Haible  <bruno@clisp.org>
+
+	* build-aux: Renamed from autoconf.
+	* configure.ac (AC_CONFIG_AUX_DIR): Set to build-aux.
+
 2006-04-22  Bruno Haible  <bruno@clisp.org>
 
 	* configure.ac: Renamed from configure.in.

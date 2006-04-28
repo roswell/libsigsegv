@@ -20,7 +20,7 @@ dnl Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 AC_PREREQ(2.52)
 AC_INIT
 AC_CONFIG_SRCDIR(src/sigsegv.h.in)
-AC_CONFIG_AUX_DIR(autoconf)
+AC_CONFIG_AUX_DIR([build-aux])
 
 RSE_BOLD
 
