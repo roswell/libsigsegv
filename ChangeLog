@@ -3,6 +3,9 @@
 	* build-aux/config.guess, build-aux/config.sub: Update to GNU version
 	2006-04-26.
 
+	* build-aux/install-sh: Update from automake-1.9.6.
+	* build-aux/missing: Likewise.
+
 2006-04-28  Bruno Haible  <bruno@clisp.org>
 
 	* build-aux: Renamed from autoconf.
