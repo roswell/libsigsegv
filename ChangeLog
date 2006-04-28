@@ -1,5 +1,10 @@
 2006-04-28  Bruno Haible  <bruno@clisp.org>
 
+	* build-aux/config.guess, build-aux/config.sub: Update to GNU version
+	2006-04-26.
+
+2006-04-28  Bruno Haible  <bruno@clisp.org>
+
 	* build-aux: Renamed from autoconf.
 	* configure.ac (AC_CONFIG_AUX_DIR): Set to build-aux.
 
