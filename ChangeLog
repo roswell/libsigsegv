@@ -1,5 +1,12 @@
 2006-04-28  Bruno Haible  <bruno@clisp.org>
 
+	* Version 2.3 released.
+
+2006-04-28  Bruno Haible  <bruno@clisp.org>
+
+	* configure.ac: Bump version number to 2.3.
+	* src/sigsegv.h.in (LIBSIGSEGV_VERSION): Likewise.
+
 	* build-aux/config.guess, build-aux/config.sub: Update to GNU version
 	2006-04-26.
 
@@ -95,7 +102,7 @@
 
 	* src/sigsegv.h.in (LIBSIGSEGV_VERSION): New macro.
 	(libsigsegv_version): New declaration.
-	* src/version.c; New file.
+	* src/version.c: New file.
 	* src/Makefile.am (libsigsegv_la_SOURCES): Add version.c.
 	* Makefile.msvc (OBJECTS): Add version.obj.
 	(version.obj): New rule.
