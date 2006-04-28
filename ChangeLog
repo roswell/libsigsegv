@@ -6,6 +6,9 @@
 	* build-aux/install-sh: Update from automake-1.9.6.
 	* build-aux/missing: Likewise.
 
+	* build-aux/ltmain.sh: Update from libtool-1.5.22.
+	* m4/libtool.m4: Likewise.
+
 2006-04-28  Bruno Haible  <bruno@clisp.org>
 
 	* build-aux: Renamed from autoconf.
