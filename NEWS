@@ -1,3 +1,9 @@
+New in 2.3:
+
+* Support for GCC 4 contributed by Paolo Bonzini.
+* Support for MacOS X i386 contributed by Bruno Haible.
+* Improved support for Woe32 contributed by Doug Currie.
+
 New in 2.2:
 
 * Support for new versions of MacOS X contributed by Paolo Bonzini.
