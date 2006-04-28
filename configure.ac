@@ -26,7 +26,7 @@ RSE_BOLD
 
 { echo; echo "${term_bold}Build Tools:${term_norm}"; } >& AS_MESSAGE_FD
 
-AM_INIT_AUTOMAKE(libsigsegv, 2.2)
+AM_INIT_AUTOMAKE(libsigsegv, 2.3)
 AM_CONFIG_HEADER(config.h)
 
 AC_PROG_CC
