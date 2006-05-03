@@ -9,6 +9,7 @@ alpha-dec-osf4.0g                          |   yes   |   yes     | 2.1
 alpha-dec-osf5.1                           |   yes   |   yes     | 2.1
 alphaev67-dec-osf5.1                       |   yes   |   yes     | 2.2
 alpha-unknown-freebsd4.8                   |   yes   |   yes     | 2.1
+alpha-portbld-freebsd5.5                   |   yes   |   yes     | 2.3
 alphaev67-unknown-linux2.4.17-gnu-glibc2.1 |   yes   |   yes     | 1.95
 alphaev6-unknown-linux2.2.19-gnu-glibc2.2  |   yes   |   yes     | 2.1
 alphaev67-unknown-linux2.2.20-gnu-glibc2.2 |   yes   |   yes     | 2.1
@@ -70,12 +71,14 @@ i386-unknown-freebsd4.7                    |   yes   |   yes     | 2.1
 i386-unknown-freebsd4.8                    |   yes   |   yes     | 2.1
 i386-unknown-freebsd4.9                    |   yes   |   yes     | 2.2
 i386-unknown-freebsd4.10                   |   yes   |   yes     | 2.2
+i386-portbld-freebsd6.0                    |   yes   |   yes     | 2.3
 i386-unknown-netbsdelf1.6                  |   no    |   no      | 2.1
 i386-unknown-netbsd                        |   yes   |   no      | 2.2
 i386-unknown-openbsd3.2                    |   yes   |   yes     | 2.1
 i386-unknown-openbsd3.3                    |   yes   |   yes     | 2.1
 i386-unknown-openbsd3.4                    |   yes   |   yes     | 2.2
 i386-unknown-openbsd3.6                    |   yes   |   yes     | 2.1
+ia64-portbld-freebsd7.0                    |   yes   |   no      | 2.3
 ia64-hp-hpux11.22                          |   yes   |   no      | 2.1
 ia64-hp-hpux11.23                          |   yes   |   no      | 2.2
 ia64-unknown-linux2.4.18-gnu-glibc2.2      |   yes   |   yes     | 2.1
@@ -114,7 +117,8 @@ x86_64-unknown-linux2.4.21-gnu-glibc2.3    |   yes   |   yes     | 2.1
 x86_64-unknown-linux2.6.3-gnu-glibc2.3     |   yes   |   yes     | 2.1
 x86_64-unknown-linux2.6.9-gnu-glibc2.3     |   yes   |   yes     | 2.2
 amd64-portbld-freebsd5.4                   |   yes   |   yes     | 2.2
-amd64-portbld-freebsd6.0                   |   yes   |   yes     | 2.2
+amd64-portbld-freebsd6.0                   |   yes   |   yes     | 2.3
+amd64-portbld-freebsd7.0                   |   yes   |   yes     | 2.3
 
 
 On FreeBSD 5.2, libsigsegv works best if the /proc filesystem is mounted.
