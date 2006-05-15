@@ -173,11 +173,11 @@ sigsegv_handler (SIGSEGV_FAULT_HANDLER_ARGLIST)
 #if STACK_DIRECTION < 0
                   if (addr >= vma.start
                       ? (addr <= vma.end - 1)
-                      : (vma.start - addr < (vma.start - vma.prev_end) / 2))
+                      : vma.is_near_this (addr, &vma))
 #else
                   if (addr <= vma.end - 1
                       ? (addr >= vma.start)
-                      : (addr - vma.end < (vma.next_start - vma.end) / 2))
+                      : vma.is_near_this (addr, &vma))
 #endif
 #endif
 #else
