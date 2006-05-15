@@ -1,5 +1,6 @@
 New in 2.4:
 
+* Added support for catching stack overflow on NetBSD.
 * Improved support for FreeBSD 6, Linux, Solaris: Works also when /proc is
   not mounted or lacking read permissions.
 
