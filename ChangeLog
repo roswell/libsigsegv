@@ -1,3 +1,39 @@
+2006-05-14  Bruno Haible  <bruno@clisp.org>
+
+	Exploit the mincore() system call where available.
+	* src/stackvma-mincore.c: New file.
+	* src/Makefile.am (EXTRA_DIST): Add it.
+	* src/stackvma.h: Add double-inclusion guard.
+	* src/stackvma-freebsd.c: If mincore() is available, include also
+	stackvma-mincore.c.
+	(sigsegv_get_vma): If mincore() is available, use it as fallback.
+	* src/stackvma-linux.c: If mincore() is available, include also
+	stackvma-mincore.c.
+	(sigsegv_get_vma): If mincore() is available, use it as fallback.
+	* src/stackvma-procfs.c: If mincore() is available, include also
+	stackvma-mincore.c.
+	(sigsegv_get_vma): If mincore() is available, use it as fallback.
+	* configure.ac: Test for mincore.
+	(CFG_STACKVMA): Set to stackvma-mincore.c if nothing else is available.
+
+2006-05-14  Bruno Haible  <bruno@clisp.org>
+
+	* src/stackvma-simple.c: New file, extracted from handler-unix.c.
+	* src/Makefile.am (EXTRA_DIST): Add it.
+	* src/stackvma-beos.c: Include stackvma-simple.c.
+	(sigsegv_get_vma): Fill the vma's is_near_this field.
+	* src/stackvma-freebsd.c: Include stackvma-simple.c.
+	(sigsegv_get_vma): Fill the vma's is_near_this field.
+	* src/stackvma-linux.c: Include stackvma-simple.c.
+	(sigsegv_get_vma): Fill the vma's is_near_this field.
+	* src/stackvma-mach.c: Include stackvma-simple.c.
+	(sigsegv_get_vma): Fill the vma's is_near_this field.
+	* src/stackvma-procfs.c: Include stackvma-simple.c.
+	(sigsegv_get_vma): Fill the vma's is_near_this field.
+	* src/stackvma.h (vma_struct): Add is_near_this field.
+	* src/handler-unix.c (sigsegv_handler): Use the vma's is_near_this
+	function.
+
 2006-04-28  Bruno Haible  <bruno@clisp.org>
 
 	* Version 2.3 released.

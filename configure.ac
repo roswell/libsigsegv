@@ -614,6 +614,7 @@ AC_CACHE_CHECK([for PIOCMAP in sys/procfs.h], sv_cv_procfsvma, [
     [int x = PIOCNMAP + PIOCMAP; prmap_t y;],
     sv_cv_procfsvma=yes, sv_cv_procfsvma=no)
 ])
+AC_CHECK_FUNCS([mincore])
 CFG_STACKVMA=
 if test $sv_cv_procfsvma = yes; then
   CFG_STACKVMA=stackvma-procfs.c
@@ -624,6 +625,9 @@ else
     beos*) CFG_STACKVMA=stackvma-beos.c ;;
     macos* | darwin*) CFG_STACKVMA=stackvma-mach.c ;;
   esac
+fi
+if test -z "$CFG_STACKVMA" && test $ac_cv_func_mincore = yes; then
+  CFG_STACKVMA=stackvma-mincore.c
 fi
 if test -n "$CFG_STACKVMA"; then
   AC_DEFINE(HAVE_STACKVMA, 1,
