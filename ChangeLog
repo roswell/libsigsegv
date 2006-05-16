@@ -1,3 +1,10 @@
+2006-05-16  Bruno Haible  <bruno@clisp.org>
+
+	Don't allow the compiler to reorder instructions in the tests.
+	* tests/sigsegv1.c (crashes): Use volatile in pointer access.
+	* tests/sigsegv2.c (main): Likewise.
+	* tests/stackoverflow2.c (main): Likewise.
+
 2006-05-14  Bruno Haible  <bruno@clisp.org>
 
 	Exploit the mincore() system call where available.
