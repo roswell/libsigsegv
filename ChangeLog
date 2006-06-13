@@ -1,3 +1,10 @@
+2006-06-13  Bruno Haible  <bruno@clisp.org>
+
+	Make NetBSD/i386 stack overflow detection work even without mincore.
+	* src/fault-netbsd.h: New file.
+	* src/fault-netbsd-i386.h: New file.
+	* configure.ac (CFG_FAULT): Choose them when appropriate.
+
 2006-05-16  Bruno Haible  <bruno@clisp.org>
 
 	Don't allow the compiler to reorder instructions in the tests.

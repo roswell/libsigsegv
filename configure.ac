@@ -26,7 +26,7 @@ RSE_BOLD
 
 { echo; echo "${term_bold}Build Tools:${term_norm}"; } >& AS_MESSAGE_FD
 
-AM_INIT_AUTOMAKE(libsigsegv, 2.3)
+AM_INIT_AUTOMAKE(libsigsegv, 2.4-pre1)
 AM_CONFIG_HEADER(config.h)
 
 AC_PROG_CC
@@ -347,6 +347,12 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_posix" = yes; then
         case "$host_cpu" in
           powerpc* | rs6000) CFG_FAULT=fault-aix5-powerpc.h ;;
           *) CFG_FAULT=fault-aix5.h ;;
+        esac
+        ;;
+      netbsd*)
+        case "$host_cpu" in
+          i?86) CFG_FAULT=fault-netbsd-i386.h ;;
+          *) CFG_FAULT=fault-netbsd.h ;;
         esac
         ;;
       *)
