@@ -350,10 +350,7 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_posix" = yes; then
         esac
         ;;
       netbsd*)
-        case "$host_cpu" in
-          i?86) CFG_FAULT=fault-netbsd-i386.h ;;
-          *) CFG_FAULT=fault-netbsd.h ;;
-        esac
+        CFG_FAULT=fault-netbsd.h
         ;;
       *)
         CFG_FAULT=fault-posix.h
