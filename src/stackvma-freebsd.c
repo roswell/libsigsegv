@@ -87,8 +87,11 @@ sigsegv_get_vma (unsigned long address, struct vma_struct *vma)
   fclose (fp);
  failed:
 #if HAVE_MINCORE
-  return mincore_get_vma (address, vma);
-#else
-  return -1;
+  /* FreeBSD 6.[01] doesn't allow to distinguish unmapped pages from
+     mapped but swapped-out pages.  See whether it's fixed.  */
+  if (!is_mapped (0))
+    /* OK, mincore() appears to work as expected.  */
+    return mincore_get_vma (address, vma);
 #endif
+  return -1;
 }

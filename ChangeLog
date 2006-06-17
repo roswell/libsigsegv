@@ -1,5 +1,10 @@
 2006-06-17  Bruno Haible  <bruno@clisp.org>
 
+	* src/stackvma-freebsd.c (sigsegv_get_vma): Test whether mincore()
+	works as expected before using it.
+
+2006-06-17  Bruno Haible  <bruno@clisp.org>
+
 	* sigaltstack.m4: Insert 'volatile' to defeat GCC 4 optimizations.
 	* sigaltstack-longjmp.m4: Likewise.
 	* sigaltstack-siglongjmp.m4: Likewise.
