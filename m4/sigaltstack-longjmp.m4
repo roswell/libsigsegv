@@ -1,5 +1,5 @@
-# sigaltstack-longjmp.m4 serial 2 (libsigsegv-2.2)
-dnl Copyright (C) 2002-2003 Bruno Haible <bruno@clisp.org>
+# sigaltstack-longjmp.m4 serial 3 (libsigsegv-2.4)
+dnl Copyright (C) 2002-2003, 2006 Bruno Haible <bruno@clisp.org>
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
 dnl Public License, this file may be distributed as part of a program
@@ -37,7 +37,7 @@ void stackoverflow_handler (int sig)
   { $5 }
   longjmp (mainloop, pass);
 }
-int recurse (int n)
+volatile int recurse (volatile int n)
 {
   if (n >= 0)
     return n + recurse (n + 1);

@@ -1,5 +1,5 @@
-# sigaltstack.m4 serial 5 (libsigsegv-2.2)
-dnl Copyright (C) 2002-2005 Bruno Haible <bruno@clisp.org>
+# sigaltstack.m4 serial 6 (libsigsegv-2.4)
+dnl Copyright (C) 2002-2006 Bruno Haible <bruno@clisp.org>
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
 dnl Public License, this file may be distributed as part of a program
@@ -57,7 +57,7 @@ void stackoverflow_handler (int sig)
   /* If we get here, the stack overflow was caught.  */
   exit (0);
 }
-int recurse (int n)
+volatile int recurse (volatile int n)
 {
   if (n >= 0)
     return n + recurse (n + 1);
