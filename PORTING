@@ -89,9 +89,9 @@ nsr-tandem-nsk                             |   no    |   no      | 2.1
 rs6000-ibm-aix3.2.5                        |   yes   |   no      | 2.2
 rs6000-ibm-aix4.2.0.0                      |   yes   |   yes     | 2.2
 rs6000-ibm-aix4.2.1.0                      |   yes   |   yes     | 2.1
-powerpc-ibm-aix4.3.2.0                     |   yes   |   yes     | 2.2
+powerpc-ibm-aix4.3.2.0                     |   yes   |   yes     | 2.3
 powerpc-ibm-aix4.3.3.0                     |   yes   |   yes     | 1.95
-powerpc-ibm-aix5.1.0.0                     |   yes   |   yes     | 2.2
+powerpc-ibm-aix5.1.0.0                     |   yes   |   yes     | 2.3
 powerpc-ibm-aix5.2.0.0                     |   yes   |   no      | 2.1
 powerpc-apple-darwin5.5                    |   yes   |   yes     | 2.2
 powerpc-apple-darwin6.8                    |   yes   |   yes     | 2.2
@@ -107,10 +107,11 @@ powerpc-unknown-linux2.4.28-gnu-glibc2.2   |   yes   |   yes     | 2.1
 powerpc-unknown-linux2.4.26-gnu-glibc2.3   |   yes   |   yes     | 2.1
 powerpc-unknown-linux2.6.10-gnu-glibc2.3   |   yes   |   yes     | 2.2
 powerpc-unknown-netbsd2.0                  |   yes   |   no      | 2.1
+powerpc64-unknown-linux2.6.5-gnu-glibc2.3  |   yes   |   yes     | 2.4
 sparc-sun-solaris2.5.1                     |   yes   |   yes     | 2.2
 sparc-sun-solaris2.6                       |   yes   |   yes     | 2.2
 sparc-sun-solaris2.7                       |   yes   |   yes     | 2.2
-sparc-sun-solaris2.8                       |   yes   |   yes     | 2.1
+sparc-sun-solaris2.8                       |   yes   |   yes     | 2.3
 sparc-sun-solaris2.9                       |   yes   |   yes     | 2.2
 sparc-sun-solaris2.10                      |   yes   |   yes     | 2.3
 sparc64-unknown-linux2.2.18-gnu-glibc2.1   |   no    |   no      | 1.95
