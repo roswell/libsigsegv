@@ -57,12 +57,16 @@ void stackoverflow_handler (int sig)
   /* If we get here, the stack overflow was caught.  */
   exit (0);
 }
-volatile int recurse (volatile int n)
+volatile int * recurse_1 (volatile int n, volatile int *p)
 {
   if (n >= 0)
-    return n + recurse (n + 1);
-  else
-    return 0;
+    *recurse_1 (n + 1, p) += n;
+  return p;
+}
+volatile int recurse (volatile int n)
+{
+  int sum = 0;
+  return *recurse_1 (n, &sum);
 }
 int main ()
 {
