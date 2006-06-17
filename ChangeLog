@@ -1,5 +1,10 @@
 2006-06-17  Bruno Haible  <bruno@clisp.org>
 
+	* tests/stackoverflow1.c (recurse): Remove useless cast.
+	* tests/stackoverflow2.c (recurse): Likewise.
+
+2006-06-17  Bruno Haible  <bruno@clisp.org>
+
 	* src/stackvma-freebsd.c (sigsegv_get_vma): Test whether mincore()
 	works as expected before using it.
 
