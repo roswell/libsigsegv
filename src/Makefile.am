@@ -37,7 +37,7 @@ noinst_HEADERS = \
   fault-macos-i386.h \
   fault-macosdarwin5-powerpc.h fault-macosdarwin5-powerpc.c \
   fault-macosdarwin7-powerpc.h fault-macosdarwin7-powerpc.c \
-  fault-netbsd-alpha.h fault-netbsd-alpha.c \
+  fault-netbsd.h fault-netbsd-alpha.h fault-netbsd-alpha.c \
   fault-none.h \
   fault-openbsd.h fault-openbsd-i386.h \
   fault-osf.h fault-osf-alpha.h \

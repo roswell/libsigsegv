@@ -1,5 +1,9 @@
 2006-06-17  Bruno Haible  <bruno@clisp.org>
 
+	* src/Makefile.am (noinst_HEADERS): Add fault-netbsd.h.
+
+2006-06-17  Bruno Haible  <bruno@clisp.org>
+
 	* sigaltstack.m4: Insert 'volatile' and pass a pointer, to defeat
 	GCC 4 optimizations.
 	* sigaltstack-longjmp.m4: Likewise.
