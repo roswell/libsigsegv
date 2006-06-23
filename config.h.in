@@ -33,6 +33,9 @@
 /* Define to 1 if you have the <memory.h> header file. */
 #undef HAVE_MEMORY_H
 
+/* Define to 1 if you have the `mincore' function. */
+#undef HAVE_MINCORE
+
 /* Define if <sys/mman.h> defines MAP_ANON and mmaping with MAP_ANON works. */
 #undef HAVE_MMAP_ANON
 
