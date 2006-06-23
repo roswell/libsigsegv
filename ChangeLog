@@ -1,3 +1,12 @@
+2006-06-23  Bruno Haible  <bruno@clisp.org>
+
+	* Version 2.4 released.
+
+2006-06-23  Bruno Haible  <bruno@clisp.org>
+
+	* configure.ac: Bump version number to 2.4.
+	* src/sigsegv.h.in (LIBSIGSEGV_VERSION): Likewise.
+
 2006-06-17  Bruno Haible  <bruno@clisp.org>
 
 	* src/Makefile.am (noinst_HEADERS): Add fault-netbsd.h.
