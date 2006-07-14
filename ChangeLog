@@ -7,6 +7,8 @@
 	Likewise.
 	* tests/stackoverflow1.c (main): Likewise.
 	* tests/stackoverflow2.c (main): Likewise.
+	* src/sigsegv.h.in (stackoverflow_install_handler): Update
+	recommendation for extra_stack_size.
 	Needed for ia64.
 	Reported by Peter Van Eynde <pvaneynd@users.sourceforge.net>.
 
