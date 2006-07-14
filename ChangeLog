@@ -1,3 +1,15 @@
+2006-07-14  Bruno Haible  <bruno@clisp.org>
+
+	* m4/sigaltstack.m4 (SV_SIGALTSTACK): Use SIGSTKSZ instead of
+	hardcoding 16384.
+	* m4/sigaltstack-longjmp.m4 (SV_TRY_LEAVE_HANDLER_LONGJMP): Likewise.
+	* m4/sigaltstack-siglongjmp.m4 (SV_TRY_LEAVE_HANDLER_SIGLONGJMP):
+	Likewise.
+	* tests/stackoverflow1.c (main): Likewise.
+	* tests/stackoverflow2.c (main): Likewise.
+	Needed for ia64.
+	Reported by Peter Van Eynde <pvaneynd@users.sourceforge.net>.
+
 2006-06-23  Bruno Haible  <bruno@clisp.org>
 
 	* Version 2.4 released.

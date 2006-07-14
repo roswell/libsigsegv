@@ -1,4 +1,4 @@
-# sigaltstack-siglongjmp.m4 serial 3 (libsigsegv-2.4)
+# sigaltstack-siglongjmp.m4 serial 4 (libsigsegv-2.5)
 dnl Copyright (C) 2002-2003, 2006 Bruno Haible <bruno@clisp.org>
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
@@ -27,6 +27,9 @@ $4
 # include <sys/time.h>
 # include <sys/resource.h>
 #endif
+#ifndef SIGSTKSZ
+# define SIGSTKSZ 16384
+#endif
 sigjmp_buf mainloop;
 int pass = 0;
 void stackoverflow_handler (int sig)
@@ -48,7 +51,7 @@ volatile int recurse (volatile int n)
 }
 int main ()
 {
-  char mystack[16384];
+  char mystack[SIGSTKSZ];
   stack_t altstack;
   struct sigaction action;
 #ifdef __BEOS__

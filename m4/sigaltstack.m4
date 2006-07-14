@@ -1,4 +1,4 @@
-# sigaltstack.m4 serial 6 (libsigsegv-2.4)
+# sigaltstack.m4 serial 7 (libsigsegv-2.5)
 dnl Copyright (C) 2002-2006 Bruno Haible <bruno@clisp.org>
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
@@ -52,6 +52,9 @@ AC_DEFUN([SV_SIGALTSTACK],
 # include <sys/time.h>
 # include <sys/resource.h>
 #endif
+#ifndef SIGSTKSZ
+# define SIGSTKSZ 16384
+#endif
 void stackoverflow_handler (int sig)
 {
   /* If we get here, the stack overflow was caught.  */
@@ -70,7 +73,7 @@ volatile int recurse (volatile int n)
 }
 int main ()
 {
-  char mystack[16384];
+  char mystack[SIGSTKSZ];
   stack_t altstack;
   struct sigaction action;
 #if defined HAVE_SETRLIMIT && defined RLIMIT_STACK
