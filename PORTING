@@ -61,7 +61,7 @@ i586-pc-linux2.4.20-gnu-glibc2.3           |   yes   |   yes     | 2.0
 i686-pc-linux2.4.20-gnu-glibc2.3           |   yes   |   yes     | 2.0
 i686-pc-linux2.4.21-gnu-glibc2.3           |   yes   |   yes     | 2.0
 i586-pc-linux2.4.22-gnu-glibc2.3           |   yes   |   yes     | 2.0
-i386-pc-mingw32                            |   yes   |   yes     | 2.2
+i386-pc-mingw32                            |   yes   |   yes     | 2.4
 i586-pc-mingw32                            |   yes   |   yes     | 2.1
 i686-pc-mingw32                            |   yes   |   yes     | 1.96
 i386-pc-solaris2.9                         |   yes   |   yes     | 2.2
@@ -108,6 +108,7 @@ powerpc-apple-darwin7.9.0                  |   yes   |   yes     | 2.3
 powerpc-apple-darwin8.1.0                  |   yes   |   yes     | 2.2
 powerpc-apple-darwin8.3.0                  |   yes   |   yes     | 2.2
 powerpc-apple-darwin8.4.0                  |   yes   |   yes     | 2.2
+powerpc-apple-darwin8.7.0                  |   yes   |   yes     | 2.4
 powerpc-unknown-linux2.2.17-gnu-glibc2.1   |   no    |   yes     | 1.95
 powerpc-unknown-linux2.2.17-gnu-glibc2.2   |   yes   |   yes     | 2.0.1
 powerpc-unknown-linux2.4.19-gnu-glibc2.2   |   yes   |   yes     | 2.3
