@@ -1,5 +1,5 @@
 ## Makefile for libsigsegv.
-## Copyright (C) 2002 Bruno Haible <bruno@clisp.org>
+## Copyright (C) 2002-2003, 2007 Bruno Haible <bruno@clisp.org>
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -47,7 +47,7 @@ check-next:
 	@when="Now"; \
 	if grep '^@PLATFORM@ .* @VERSION@$$' $(srcdir)/PORTING > /dev/null; then :; else \
 	  case '@PLATFORM@' in \
-	    i?86-*-linux*) ;; \
+	    i?86-*-linux* | x86_64-*-linux*) ;; \
 	    *) \
 	      echo; \
 	      echo "Please send the following summary line via email to the author"; \
