@@ -39,6 +39,8 @@ i686-pc-cygwin                             |   yes   |   yes     | 2.4
 i386-apple-darwin8.6.1                     |   yes   |   yes     | 2.3
 i686-apple-darwin8.6.1                     |   yes   |   yes     | 2.3
 i386-apple-darwin8.8.1                     |   yes   |   yes     | 2.4
+i386-apple-darwin8.8.2                     |   yes   |   yes     | 2.4
+i386-apple-darwin8.8.3                     |   yes   |   yes     | 2.4
 i586-pc-linux2.2.14-gnu-glibc2.1           |   yes   |   yes     | 2.1
 i686-pc-linux2.2.14-gnu-glibc2.1           |   yes   |   yes     | 2.0
 i686-pc-linux2.2.19-gnu-glibc2.1           |   yes   |   yes     | 1.95
@@ -106,6 +108,7 @@ powerpc-ibm-aix4.3.3.0                     |   yes   |   yes     | 1.95
 powerpc-ibm-aix5.1.0.0                     |   yes   |   yes     | 2.4
 powerpc-ibm-aix5.2.0.0                     |   yes   |   no      | 2.1
 powerpc-apple-darwin5.5                    |   yes   |   yes     | 2.2
+powerpc-apple-darwin6.0                    |   yes   |   yes     | 2.4
 powerpc-apple-darwin6.8                    |   yes   |   yes     | 2.2
 powerpc-apple-darwin7.7.0                  |   yes   |   yes     | 2.2
 powerpc-apple-darwin7.8.0                  |   yes   |   yes     | 2.2
