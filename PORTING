@@ -135,8 +135,7 @@ sparc-sun-solaris2.6                       |   yes   |   yes     | 2.2
 sparc-sun-solaris2.7                       |   yes   |   yes     | 2.4
 sparc-sun-solaris2.8                       |   yes   |   yes     | 2.4
 sparc-sun-solaris2.9                       |   yes   |   yes     | 2.4
-sparc-sun-solaris2.10                      |   yes   |   yes     | 2.3
-sparc-sun-solaris2.10                      |   no    |   no      | 2.4
+sparc-sun-solaris2.10                      |   yes   |   yes     | 2.4
 sparc-sun-solaris2.11                      |   yes   |   yes     | 2.4
 sparc64-unknown-linux2.2.18-gnu-glibc2.1   |   no    |   no      | 1.95
 sparc64-unknown-linux2.4.28-gnu-glibc2.3   |   yes   |   no      | 2.4
