@@ -147,6 +147,7 @@ x86_64-unknown-linux2.6.9-gnu-glibc2.3     |   yes   |   yes     | 2.4
 x86_64-unknown-linux2.6.13-gnu-glibc2.3    |   yes   |   yes     | 2.4
 x86_64-unknown-linux2.6.16.13-gnu-glibc2.4 |   yes   |   yes     | 2.4
 x86_64-unknown-linux2.6.16.21-gnu-glibc2.4 |   yes   |   yes     | 2.4
+x86_64-unknown-linux2.6.20.1-gnu-glibc2.5  |   yes   |   yes     | 2.4
 x86_64-unknown-netbsd3.0                   |   yes   |   yes     | 2.4
 amd64-portbld-freebsd5.4                   |   yes   |   yes     | 2.2
 amd64-portbld-freebsd6.0                   |   yes   |   yes     | 2.3
