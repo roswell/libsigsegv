@@ -129,6 +129,7 @@ powerpc-unknown-linux2.6.16-gnu-glibc2.3   |   yes   |   yes     | 2.4
 powerpc-unknown-netbsd2.0                  |   yes   |   no      | 2.1
 powerpc-unknown-netbsd3.99.23              |   yes   |   yes     | 2.4
 powerpc64-unknown-linux2.6.5-gnu-glibc2.3  |   yes   |   yes     | 2.4
+sparc-unknown-linux2.4.32-gnu-glibc2.3     |   yes   |   no      | 2.1
 sparc-unknown-openbsd3.9                   |   yes   |   no      | 2.4
 sparc-sun-solaris2.5.1                     |   yes   |   yes     | 2.2
 sparc-sun-solaris2.6                       |   yes   |   yes     | 2.2
