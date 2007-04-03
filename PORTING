@@ -33,6 +33,7 @@ hppa2.0w-hp-hpux11.00                      |   yes   |   yes     | 2.2
 hppa2.0w-hp-hpux11.11                      |   yes   |   yes     | 2.2
 hppa-unknown-linux2.4.19-gnu-glibc2.2      |   yes   |   yes     | 2.0.1
 hppa64-unknown-linux2.4.17-gnu-glibc2.2    |   yes   |   yes     | 2.1
+hppa2.0-unknown-linux2.6.20.1-gnu-glibc2.3 |   yes   |   no      | 2.4
 i586-pc-beos                               |   no    |   yes     | 2.1
 i686-pc-cygwin                             |   yes   |   yes     | 2.02
 i686-pc-cygwin                             |   yes   |   yes     | 2.4
@@ -41,6 +42,7 @@ i686-apple-darwin8.6.1                     |   yes   |   yes     | 2.3
 i386-apple-darwin8.8.1                     |   yes   |   yes     | 2.4
 i386-apple-darwin8.8.2                     |   yes   |   yes     | 2.4
 i386-apple-darwin8.8.3                     |   yes   |   yes     | 2.4
+i386-apple-darwin8.9.1                     |   yes   |   yes     | 2.4
 i586-pc-linux2.2.14-gnu-glibc2.1           |   yes   |   yes     | 2.1
 i686-pc-linux2.2.14-gnu-glibc2.1           |   yes   |   yes     | 2.0
 i686-pc-linux2.2.19-gnu-glibc2.1           |   yes   |   yes     | 1.95
