@@ -1,3 +1,15 @@
+2007-10-28  Bruno Haible  <bruno@clisp.org>
+
+	* src/machfault-macos-powerpc.h (SIGSEGV_FAULT_ADDRESS,
+	SIGSEGV_STACK_POINTER, SIGSEGV_PROGRAM_COUNTER): Add __DARWIN_UNIX03
+	conditional.
+	* src/machfault-macos-i386.h (SIGSEGV_FAULT_ADDRESS,
+	SIGSEGV_STACK_POINTER, SIGSEGV_PROGRAM_COUNTER): Likewise.
+	* src/fault-macosdarwin7-powerpc.h (SIGSEGV_FAULT_STACKPOINTER):
+	Likewise.
+	* src/fault-macosdarwin7-powerpc.c (get_fault_addr): Likewise.
+	Reported by Chris Willmore <willmc@rpi.edu>.
+
 2007-01-12  Bruno Haible  <bruno@clisp.org>
 
 	* Makefile.am (check-next): Don't ask for reports from x86_64-*-linux*
