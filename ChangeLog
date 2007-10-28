@@ -1,5 +1,11 @@
 2007-10-28  Bruno Haible  <bruno@clisp.org>
 
+	* src/sigsegv.h.in (stackoverflow_install_handler): Avoid comment
+	inside comment.
+	Reported by Chris Willmore <willmc@rpi.edu>.
+
+2007-10-28  Bruno Haible  <bruno@clisp.org>
+
 	* src/machfault-macos-powerpc.h (SIGSEGV_FAULT_ADDRESS,
 	SIGSEGV_STACK_POINTER, SIGSEGV_PROGRAM_COUNTER): Add __DARWIN_UNIX03
 	conditional.
