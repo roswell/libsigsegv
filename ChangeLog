@@ -1,5 +1,12 @@
 2007-10-28  Bruno Haible  <bruno@clisp.org>
 
+	* src/handler-macos.c (catch_exception_raise): Align the new stack
+	pointer on a 16-byte boundary.
+	* src/handler-win32.c (main_exception_filter): Correct alignment:
+	%esp must be aligned to == -4 mod 16 upon function entry.
+
+2007-10-28  Bruno Haible  <bruno@clisp.org>
+
 	* src/sigsegv.h.in (stackoverflow_install_handler): Avoid comment
 	inside comment.
 	Reported by Chris Willmore <willmc@rpi.edu>.
