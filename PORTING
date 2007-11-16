@@ -84,6 +84,7 @@ i386-unknown-freebsd4.9                    |   yes   |   yes     | 2.2
 i386-unknown-freebsd4.10                   |   yes   |   yes     | 2.2
 i386-unknown-freebsd5.0                    |   yes   |   yes     | 2.4
 i386-portbld-freebsd6.0                    |   yes   |   yes     | 2.3
+i686-unknown-kfreebsd6.2-gnu-glibc2.6      |   yes   |   yes     | 2.5+
 i386-unknown-netbsdelf1.6                  |   no    |   no      | 2.4
 i386-unknown-netbsdelf2.0.2                |   yes   |   yes     | 2.4
 i386-unknown-netbsdelf3.0                  |   yes   |   yes     | 2.4
@@ -149,6 +150,7 @@ sparc-sun-solaris2.11                      |   yes   |   yes     | 2.4
 sparc64-unknown-linux2.2.18-gnu-glibc2.1   |   no    |   no      | 1.95
 sparc64-unknown-linux2.4.28-gnu-glibc2.3   |   yes   |   no      | 2.4
 sparc64-unknown-openbsd3.6                 |   no    |   no      | 2.2
+x86_64-unknown-kfreebsd6.2-gnu-glibc2.6    |   yes   |   yes     | 2.5+
 x86_64-unknown-linux2.4.21-gnu-glibc2.2    |   yes   |   yes     | 2.1
 x86_64-unknown-linux2.4.21-gnu-glibc2.3    |   yes   |   yes     | 2.1
 x86_64-unknown-linux2.6.3-gnu-glibc2.3     |   yes   |   yes     | 2.1
