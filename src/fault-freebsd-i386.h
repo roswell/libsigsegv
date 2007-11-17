@@ -18,10 +18,10 @@
 #define SIGSEGV_FAULT_HANDLER_ARGLIST  int sig, int code, struct sigcontext *scp, void *addr
 #define SIGSEGV_FAULT_ADDRESS  addr
 #define SIGSEGV_FAULT_CONTEXT  scp
-#if defined __x86_64__ && defined __GLIBC__
-/* 64 bit registers and GNU libc */
+#if defined __x86_64__
+/* 64 bit registers */
 #define SIGSEGV_FAULT_STACKPOINTER  scp->sc_rsp
 #else
-/* 32 bit registers or BSD libc */
+/* 32 bit registers */
 #define SIGSEGV_FAULT_STACKPOINTER  scp->sc_esp
 #endif
