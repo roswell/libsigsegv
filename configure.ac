@@ -1,7 +1,7 @@
 dnl Autoconf configuration for libsigsegv.
 dnl Process this file with autoconf to produce a configure script.
 dnl
-dnl Copyright (C) 2002-2007  Bruno Haible <bruno@clisp.org>
+dnl Copyright (C) 2002-2008  Bruno Haible <bruno@clisp.org>
 dnl
 dnl This program is free software; you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
@@ -59,8 +59,7 @@ AC_SUBST(PLATFORM)
 
 AC_PROG_INSTALL
 
-AM_DISABLE_SHARED
-AM_PROG_LIBTOOL
+LT_INIT([disable-shared])
 
 # For testing cross-compilation behaviour.
 #cross_compiling=yes
