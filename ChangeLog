@@ -1,5 +1,12 @@
 2008-05-27  Bruno Haible  <bruno@clisp.org>
 
+	* configure.ac: Require at least autoconf 2.62. Merge
+	FAULT_CONTEXT_INCLUDE2 variable into FAULT_CONTEXT_INCLUDE.
+	* src/sigsegv.h.in: Remove FAULT_CONTEXT_INCLUDE2 substitution.
+	* src/Makefile.am (sigsegv.h.msvc): Update.
+
+2008-05-27  Bruno Haible  <bruno@clisp.org>
+
 	* configure.ac: Bump version number to 2.5.
 	* src/sigsegv.h.in (LIBSIGSEGV_VERSION): Likewise.
 

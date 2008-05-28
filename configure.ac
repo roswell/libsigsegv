@@ -17,7 +17,7 @@ dnl You should have received a copy of the GNU General Public License
 dnl along with this program; if not, write to the Free Software Foundation,
 dnl Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-AC_PREREQ(2.52)
+AC_PREREQ(2.62)
 AC_INIT
 AC_CONFIG_SRCDIR(src/sigsegv.h.in)
 AC_CONFIG_AUX_DIR([build-aux])
@@ -224,7 +224,6 @@ CFG_FAULT=
 CFG_MACHFAULT=
 FAULT_CONTEXT=void
 FAULT_CONTEXT_INCLUDE=
-FAULT_CONTEXT_INCLUDE2=
 dnl
 dnl First the cases where the OS provides the fault address.
 dnl
@@ -365,7 +364,8 @@ if test -z "$CFG_FAULT"; then
       case "$host_cpu" in
         powerpc* | rs6000)
           CFG_MACHFAULT=machfault-macos-powerpc.h
-          FAULT_CONTEXT_INCLUDE2='#include <mach/thread_status.h>
+          FAULT_CONTEXT_INCLUDE='#include <signal.h>
+#include <mach/thread_status.h>
 #if defined __ppc64__
 #define sigsegv_thread_state_t ppc_thread_state64_t
 #else
@@ -375,7 +375,8 @@ if test -z "$CFG_FAULT"; then
           ;;
         i?86 | x86_64)
           CFG_MACHFAULT=machfault-macos-i386.h
-          FAULT_CONTEXT_INCLUDE2='#include <mach/thread_status.h>
+          FAULT_CONTEXT_INCLUDE='#include <signal.h>
+#include <mach/thread_status.h>
 #if defined __x86_64__
 #define sigsegv_thread_state_t x86_thread_state64_t
 #else
@@ -390,7 +391,6 @@ if test -z "$CFG_FAULT"; then
       esac
       if test -n "$CFG_MACHFAULT"; then
         CFG_HANDLER=handler-macos.c
-        FAULT_CONTEXT_INCLUDE='#include <signal.h>'
         CFG_FAULT=fault-macos.h # nonexistent, just a dummy
       fi
       ;;
@@ -413,8 +413,8 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_macosdarwin7_ppc" = yes; then
     powerpc* | rs6000)
       CFG_FAULT=fault-macosdarwin7-powerpc.h
       FAULT_CONTEXT='ucontext_t'
-      FAULT_CONTEXT_INCLUDE='#include <signal.h>'
-      FAULT_CONTEXT_INCLUDE2='#include <ucontext.h>'
+      FAULT_CONTEXT_INCLUDE='#include <signal.h>
+#include <ucontext.h>'
       ;;
   esac
 fi
@@ -517,7 +517,6 @@ AC_DEFINE_UNQUOTED(CFG_MACHFAULT, "$CFG_MACHFAULT",
   [The name of the include file describing the Mach fault handler.])
 AC_SUBST(FAULT_CONTEXT)
 AC_SUBST(FAULT_CONTEXT_INCLUDE)
-AC_SUBST(FAULT_CONTEXT_INCLUDE2)
 
 AC_MSG_CHECKING([if the system supports catching SIGSEGV])
 AC_MSG_RESULT([$sv_cv_have_sigsegv_recovery])

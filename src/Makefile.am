@@ -1,5 +1,5 @@
 ## Makefile for libsigsegv/src.
-## Copyright (C) 2002-2006 Bruno Haible <bruno@clisp.org>
+## Copyright (C) 2002-2006, 2008 Bruno Haible <bruno@clisp.org>
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -88,7 +88,6 @@ DISTCLEANFILES = sigsegv.h
 
 sigsegv.h.msvc : sigsegv.h.in
 	sed -e 's/@''FAULT_CONTEXT_INCLUDE''@/#include <windows.h>/' \
-	    -e 's/@''FAULT_CONTEXT_INCLUDE2''@//' \
 	    -e 's/@''FAULT_CONTEXT''@/CONTEXT/' \
 	    -e 's/@''HAVE_SIGSEGV_RECOVERY''@/1/' \
 	    -e 's/@''HAVE_STACK_OVERFLOW_RECOVERY''@/1/' \

@@ -19,7 +19,6 @@
 #define _SIGSEGV_H
 
 @FAULT_CONTEXT_INCLUDE@
-@FAULT_CONTEXT_INCLUDE2@
 
 /* HAVE_SIGSEGV_RECOVERY
    is defined if the system supports catching SIGSEGV.  */
