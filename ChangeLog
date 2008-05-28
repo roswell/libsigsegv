@@ -1,5 +1,10 @@
 2008-05-27  Bruno Haible  <bruno@clisp.org>
 
+	* configure.ac: Bump version number to 2.5.
+	* src/sigsegv.h.in (LIBSIGSEGV_VERSION): Likewise.
+
+2008-05-27  Bruno Haible  <bruno@clisp.org>
+
 	Support for 64-bit mode on MacOS X 10.5.
 	* src/handler-macos.c (catch_exception_raise): Align the stack pointer
 	also on x86_64. Needed for MMX instructions.
