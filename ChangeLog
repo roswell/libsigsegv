@@ -1,3 +1,17 @@
+2008-05-27  Bruno Haible  <bruno@clisp.org>
+
+	Support for 64-bit mode on MacOS X 10.5.
+	* src/handler-macos.c (catch_exception_raise): Align the stack pointer
+	also on x86_64. Needed for MMX instructions.
+	* src/machfault-macos-i386.h: Choose among 64-bit and 32-bit flavours.
+	Use new names for the 32-bit flavour when possible.
+	* src/machfault-macos-powerpc.h: Choose among 64-bit and 32-bit
+	flavours.
+	* configure.ac (FAULT_CONTEXT, FAULT_CONTEXT_INCLUDE2): Choose
+	right flavour (ppc_thread_state_t/ppc_thread_state64_t or
+	i386_thread_state_t/x86_thread_state32_t/x86_thread_state64_t) at
+	compile time.
+
 2008-05-18  Bruno Haible  <bruno@clisp.org>
 
 	* m4/libtool.m4: Update from libtool-2.2.4.

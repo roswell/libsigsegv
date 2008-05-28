@@ -1,5 +1,5 @@
 /* Fault handler information.  MacOSX version.
-   Copyright (C) 1993-1999, 2002-2003, 2007  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 1993-1999, 2002-2003, 2007-2008  Bruno Haible <bruno@clisp.org>
    Copyright (C) 2003  Paolo Bonzini <bonzini@gnu.org>
 
    This program is free software; you can redistribute it and/or modify
@@ -233,9 +233,9 @@ catch_exception_raise (mach_port_t exception_port,
 #else
         stk_extra_stack + 256;
 #endif
-#ifdef __i386__
+#if defined __x86_64__ || defined __i386__
       new_safe_esp &= -16; /* align */
-      new_safe_esp -= 4; /* make room for (unused) return address slot */
+      new_safe_esp -= sizeof (void *); /* make room for (unused) return address slot */
 #endif
       SIGSEGV_STACK_POINTER (thread_state) = new_safe_esp;
       /* Continue handling this fault in the faulting thread.  (We cannot longjmp while

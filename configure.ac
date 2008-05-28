@@ -365,17 +365,32 @@ if test -z "$CFG_FAULT"; then
       case "$host_cpu" in
         powerpc* | rs6000)
           CFG_MACHFAULT=machfault-macos-powerpc.h
-          FAULT_CONTEXT='ppc_thread_state_t'
+          FAULT_CONTEXT_INCLUDE2='#include <mach/thread_status.h>
+#if defined __ppc64__
+#define sigsegv_thread_state_t ppc_thread_state64_t
+#else
+#define sigsegv_thread_state_t ppc_thread_state_t
+#endif'
+          FAULT_CONTEXT='sigsegv_thread_state_t'
           ;;
         i?86 | x86_64)
           CFG_MACHFAULT=machfault-macos-i386.h
-          FAULT_CONTEXT='i386_thread_state_t'
+          FAULT_CONTEXT_INCLUDE2='#include <mach/thread_status.h>
+#if defined __x86_64__
+#define sigsegv_thread_state_t x86_thread_state64_t
+#else
+#if defined x86_THREAD_STATE32
+#define sigsegv_thread_state_t x86_thread_state32_t
+#else
+#define sigsegv_thread_state_t i386_thread_state_t
+#endif
+#endif'
+          FAULT_CONTEXT='sigsegv_thread_state_t'
           ;;
       esac
       if test -n "$CFG_MACHFAULT"; then
         CFG_HANDLER=handler-macos.c
         FAULT_CONTEXT_INCLUDE='#include <signal.h>'
-        FAULT_CONTEXT_INCLUDE2='#include <mach/thread_status.h>'
         CFG_FAULT=fault-macos.h # nonexistent, just a dummy
       fi
       ;;

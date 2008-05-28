@@ -1,5 +1,5 @@
 /* Fault handler information.  MacOSX/PowerPC version.
-   Copyright (C) 2003-2004, 2007  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2003-2004, 2007-2008  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -15,12 +15,28 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
+#if defined __ppc64__
+/* 64 bit registers */
+
+#define SIGSEGV_EXC_STATE_TYPE                      ppc_exception_state64_t
+#define SIGSEGV_EXC_STATE_FLAVOR                    PPC_EXCEPTION_STATE64
+#define SIGSEGV_EXC_STATE_COUNT                     PPC_EXCEPTION_STATE64_COUNT
+#define SIGSEGV_THREAD_STATE_TYPE                   ppc_thread_state64_t
+#define SIGSEGV_THREAD_STATE_FLAVOR                 PPC_THREAD_STATE64
+#define SIGSEGV_THREAD_STATE_COUNT                  PPC_THREAD_STATE64_COUNT
+
+#else
+/* 32 bit registers */
+
 #define SIGSEGV_EXC_STATE_TYPE                      ppc_exception_state_t
 #define SIGSEGV_EXC_STATE_FLAVOR                    PPC_EXCEPTION_STATE
 #define SIGSEGV_EXC_STATE_COUNT                     PPC_EXCEPTION_STATE_COUNT
 #define SIGSEGV_THREAD_STATE_TYPE                   ppc_thread_state_t
 #define SIGSEGV_THREAD_STATE_FLAVOR                 PPC_THREAD_STATE
 #define SIGSEGV_THREAD_STATE_COUNT                  PPC_THREAD_STATE_COUNT
+
+#endif
+
 #if __DARWIN_UNIX03
 #define SIGSEGV_FAULT_ADDRESS(thr_state,exc_state)  (exc_state).__dar
 #define SIGSEGV_STACK_POINTER(thr_state)            (thr_state).__r1
