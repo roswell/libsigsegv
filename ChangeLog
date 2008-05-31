@@ -1,3 +1,9 @@
+2008-05-31  Bruno Haible  <bruno@clisp.org>
+
+	* m4/mmap-anon.m4 (SV_MMAP_ANON): Add known cross-compile results for
+	MacOS X.
+	Reported by Dr Tomaž Slivnik <slivnik@tomaz.name>.
+
 2008-05-27  Bruno Haible  <bruno@clisp.org>
 
 	* configure.ac: Require at least autoconf 2.62. Merge
@@ -7,7 +13,7 @@
 
 2008-05-27  Bruno Haible  <bruno@clisp.org>
 
-	* configure.ac: Bump version number to 2.5.
+	* configure.ac: Bump version number to 2.6.
 	* src/sigsegv.h.in (LIBSIGSEGV_VERSION): Likewise.
 
 2008-05-27  Bruno Haible  <bruno@clisp.org>

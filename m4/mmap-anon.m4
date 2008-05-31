@@ -1,5 +1,5 @@
-# mmap-anon.m4 serial 2 (libsigsegv-2.2)
-dnl Copyright (C) 2002-2003 Bruno Haible <bruno@clisp.org>
+# mmap-anon.m4 serial 3 (libsigsegv-2.6)
+dnl Copyright (C) 2002-2003, 2008 Bruno Haible <bruno@clisp.org>
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
 dnl Public License, this file may be distributed as part of a program
@@ -29,7 +29,7 @@ int main ()
       [
         dnl FIXME: Put in some more known values here.
         case "$host_os" in
-          freebsd* | linux* | osf*)
+          freebsd* | linux* | osf* | darwin*)
             sv_cv_func_mmap_anon=yes ;;
           *)
             AC_LINK_IFELSE([
@@ -68,6 +68,8 @@ int main ()
         case "$host_os" in
           hpux* | linux* | osf*)
             sv_cv_func_mmap_anonymous=yes ;;
+          darwin*)
+            sv_cv_func_mmap_anonymous=no ;;
           *)
             AC_LINK_IFELSE([
               AC_LANG_PROGRAM([[
@@ -114,6 +116,8 @@ int main ()
         case "$host_os" in
           freebsd* | irix* | linux* | osf* | solaris* | sunos4*)
             sv_cv_func_mmap_devzero=yes ;;
+          darwin*)
+            sv_cv_func_mmap_devzero=no ;;
           *)
             AC_LINK_IFELSE([
               AC_LANG_PROGRAM([[
