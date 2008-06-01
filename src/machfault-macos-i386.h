@@ -24,7 +24,7 @@
 #define SIGSEGV_EXC_STATE_TYPE                      x86_exception_state64_t
 #define SIGSEGV_EXC_STATE_FLAVOR                    x86_EXCEPTION_STATE64
 #define SIGSEGV_EXC_STATE_COUNT                     x86_EXCEPTION_STATE64_COUNT
-#if __DARWIN_UNIX03
+#if MacOS_X_10_5_HEADERS && __DARWIN_UNIX03
 #define SIGSEGV_FAULT_ADDRESS(thr_state,exc_state)  (exc_state).__faultvaddr
 #define SIGSEGV_STACK_POINTER(thr_state)            (thr_state).__rsp
 #define SIGSEGV_PROGRAM_COUNTER(thr_state)          (thr_state).__rip
@@ -53,7 +53,7 @@
 #define SIGSEGV_EXC_STATE_FLAVOR                    i386_EXCEPTION_STATE
 #define SIGSEGV_EXC_STATE_COUNT                     i386_EXCEPTION_STATE_COUNT
 #endif
-#if __DARWIN_UNIX03
+#if MacOS_X_10_5_HEADERS && __DARWIN_UNIX03
 #define SIGSEGV_FAULT_ADDRESS(thr_state,exc_state)  (exc_state).__faultvaddr
 #define SIGSEGV_STACK_POINTER(thr_state)            (thr_state).__esp
 #define SIGSEGV_PROGRAM_COUNTER(thr_state)          (thr_state).__eip

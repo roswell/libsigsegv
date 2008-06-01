@@ -37,7 +37,7 @@
 
 #endif
 
-#if __DARWIN_UNIX03
+#if MacOS_X_10_5_HEADERS && __DARWIN_UNIX03
 #define SIGSEGV_FAULT_ADDRESS(thr_state,exc_state)  (exc_state).__dar
 #define SIGSEGV_STACK_POINTER(thr_state)            (thr_state).__r1
 #define SIGSEGV_PROGRAM_COUNTER(thr_state)          (thr_state).__srr0

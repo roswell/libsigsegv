@@ -38,6 +38,29 @@
 #define SS_DISABLE SA_DISABLE
 #endif
 
+/* In the header files of MacOS X >= 10.5, when compiling with flags that lead
+   to __DARWIN_UNIX03=1 (see <sys/cdefs.h>), the register names are prefixed
+   with '__'.  To test for MacOS X >= 10.5 versus < 10.5, we cannot use a
+   predefined macro such as __ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__
+   because that does not change when a cross-compile via -isysroot is
+   activated.  Instead use some macro defined inside the header files and which
+   changed in 10.5, such as
+     File                           Macro                            10.4  10.5
+     <mach/machine/exception.h>     EXC_TYPES_COUNT                  10    11
+     <mach/exception_types.h>       EXC_CRASH                        --    10
+     <mach/mach_vm.h>               mach_vm_MSG_COUNT                18    19
+     <mach/machine.h>               CPU_TYPE_ARM                     --    ...
+     <mach/memory_object_control.h> memory_object_control_MSG_COUNT  11    12
+     <mach/memory_object_types.h>   UPL_ABORT_REFERENCE              --    0x80
+     <mach/message.h>               MACH_RCV_TRAILER_AV              --    8
+     <mach/port.h>                  MACH_PORT_RIGHT_LABELH           --    ...
+     <mach/thread_policy.h>         THREAD_AFFINITY_POLICY           --    4
+     <mach/vm_region.h>             VM_REGION_SUBMAP_SHORT_INFO_COUNT_64   ...
+ */
+#if EXC_TYPES_COUNT >= 11
+# define MacOS_X_10_5_HEADERS 1
+#endif
+
 #include "machfault.h"
 
 /* The following sources were used as a *reference* for this exception handling

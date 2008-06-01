@@ -1,5 +1,13 @@
 2008-05-31  Bruno Haible  <bruno@clisp.org>
 
+	Make cross-compile from MacOS X 10.5 to MacOS X 10.4 work.
+	* src/handler-macos.c (MacOS_X_10_5_HEADERS): New macro.
+	* src/machfault-macos-i386.h: Use it.
+	* src/machfault-macos-powerpc.h: Likewise.
+	Reported by Dr Tomaž Slivnik <slivnik@tomaz.name>.
+
+2008-05-31  Bruno Haible  <bruno@clisp.org>
+
 	* m4/mmap-anon.m4 (SV_MMAP_ANON): Add known cross-compile results for
 	MacOS X.
 	Reported by Dr Tomaž Slivnik <slivnik@tomaz.name>.
