@@ -16,7 +16,7 @@
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
 /* This file contains the proximity test function for the simple cases, where
-   the OS has an API for enumerating the mapped ranges of virual memory.  */
+   the OS has an API for enumerating the mapped ranges of virtual memory.  */
 
 #if STACK_DIRECTION < 0
 
