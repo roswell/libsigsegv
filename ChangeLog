@@ -1,3 +1,8 @@
+2008-06-23  Bruno Haible  <bruno@clisp.org>
+
+	* build-aux/config.guess: Update to GNU version 2008-06-16.
+	* build-aux/config.sub: Likewise.
+
 2008-05-31  Bruno Haible  <bruno@clisp.org>
 
 	Make cross-compile from MacOS X 10.5 to MacOS X 10.4 work.
