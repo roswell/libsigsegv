@@ -28,6 +28,7 @@ armv4l-unknown-linux2.4.3-gnu-glibc2.2     |   yes   |   yes     | 2.1
 armv4l-unknown-linux2.4.9-gnu-glibc2.2     |   no    |   yes     | 2.0.1
 armv5tel-unknown-linux2.4.20-gnu-glibc2.2  |   yes   |   yes     | 2.2
 armv6l-unknown-linux2.6.18-gnu-glibc2.3    |   yes   |   yes     | 2.4
+arm-angstrom-linux2.6.23-gnueabi-glibc2.4  |   yes   |   yes     | 2.5
 hppa1.1-hp-hpux11.00                       |   yes   |   yes     | 2.1
 hppa2.0-hp-hpux10.20                       |   yes   |   yes     | 2.2
 hppa2.0w-hp-hpux11.00                      |   yes   |   yes     | 2.2
@@ -46,6 +47,8 @@ i386-apple-darwin8.8.3                     |   yes   |   yes     | 2.4
 i386-apple-darwin8.9.1                     |   yes   |   yes     | 2.4
 i386-apple-darwin8.10.1                    |   yes   |   yes     | 2.4
 i386-apple-darwin9.0.0                     |   yes   |   yes     | 2.5
+i386-apple-darwin9.1.0                     |   yes   |   yes     | 2.5
+i386-apple-darwin9.2.2                     |   yes   |   yes     | 2.5
 i586-pc-linux2.2.14-gnu-glibc2.1           |   yes   |   yes     | 2.1
 i686-pc-linux2.2.14-gnu-glibc2.1           |   yes   |   yes     | 2.0
 i686-pc-linux2.2.19-gnu-glibc2.1           |   yes   |   yes     | 1.95
@@ -71,7 +74,7 @@ i686-pc-linux2.4.21-gnu-glibc2.3           |   yes   |   yes     | 2.0
 i586-pc-linux2.4.22-gnu-glibc2.3           |   yes   |   yes     | 2.0
 i386-pc-mingw32                            |   yes   |   yes     | 2.4
 i586-pc-mingw32                            |   yes   |   yes     | 2.1
-i686-pc-mingw32                            |   yes   |   yes     | 1.96
+i686-pc-mingw32                            |   yes   |   yes     | 2.5
 i386-pc-solaris2.9                         |   yes   |   yes     | 2.2
 i386-pc-solaris2.10                        |   yes   |   yes     | 2.4
 i386-pc-solaris2.11                        |   yes   |   yes     | 2.2
@@ -96,7 +99,7 @@ i386-unknown-openbsd3.4                    |   yes   |   yes     | 2.2
 i386-unknown-openbsd3.6                    |   yes   |   yes     | 2.1
 i386-unknown-openbsd3.8                    |   yes   |   yes     | 2.4
 i386-unknown-openbsd3.9                    |   yes   |   yes     | 2.4
-i386-unknown-openbsd4.0                    |   yes   |   yes     | 2.4
+i386-unknown-openbsd4.0                    |   yes   |   yes     | 2.5
 ia64-portbld-freebsd7.0                    |   yes   |   no      | 2.3
 ia64-hp-hpux11.22                          |   yes   |   no      | 2.1
 ia64-hp-hpux11.23                          |   yes   |   no      | 2.2
@@ -111,9 +114,9 @@ rs6000-ibm-aix4.2.0.0                      |   yes   |   yes     | 2.2
 rs6000-ibm-aix4.2.1.0                      |   yes   |   yes     | 2.1
 powerpc-ibm-aix4.3.2.0                     |   yes   |   yes     | 2.4
 powerpc-ibm-aix4.3.3.0                     |   yes   |   yes     | 1.95
-powerpc-ibm-aix5.1.0.0                     |   yes   |   yes     | 2.4
-powerpc-ibm-aix5.2.0.0                     |   yes   |   no      | 2.1
-powerpc-ibm-aix5.3.0.0                     |   yes   |   yes     | 2.4
+powerpc-ibm-aix5.1.0.0                     |   yes   |   yes     | 2.5
+powerpc-ibm-aix5.2.0.0                     |   yes   |   yes     | 2.5
+powerpc-ibm-aix5.3.0.0                     |   yes   |   yes     | 2.5
 powerpc-apple-darwin5.5                    |   yes   |   yes     | 2.2
 powerpc-apple-darwin6.0                    |   yes   |   yes     | 2.4
 powerpc-apple-darwin6.8                    |   yes   |   yes     | 2.2
@@ -127,6 +130,7 @@ powerpc-apple-darwin8.7.0                  |   yes   |   yes     | 2.4
 powerpc-apple-darwin8.8.0                  |   yes   |   yes     | 2.4
 powerpc-apple-darwin8.9.0                  |   yes   |   yes     | 2.4
 powerpc-apple-darwin8.10.0                 |   yes   |   yes     | 2.4
+powerpc-apple-darwin8.11.0                 |   yes   |   yes     | 2.5
 powerpc-unknown-linux2.2.17-gnu-glibc2.1   |   no    |   yes     | 1.95
 powerpc-unknown-linux2.2.17-gnu-glibc2.2   |   yes   |   yes     | 2.0.1
 powerpc-unknown-linux2.4.19-gnu-glibc2.2   |   yes   |   yes     | 2.4
@@ -139,6 +143,7 @@ powerpc-unknown-netbsd3.99.23              |   yes   |   yes     | 2.4
 powerpc-unknown-openbsd4.0                 |   yes   |   yes     | 2.4
 powerpc-unknown-openbsd4.1                 |   yes   |   yes     | 2.4
 powerpc64-unknown-linux2.6.5-gnu-glibc2.3  |   yes   |   yes     | 2.4
+s390x-ibm-linux2.6.16.46-gnu-glibc2.4      |   no    |   yes     | 2.5
 sparc-unknown-linux2.4.32-gnu-glibc2.3     |   yes   |   no      | 2.1
 sparc-unknown-openbsd3.9                   |   yes   |   no      | 2.4
 sparc-sun-solaris2.5.1                     |   yes   |   yes     | 2.2
