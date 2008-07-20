@@ -92,10 +92,19 @@ Installation instructions on Woe32:
 
         See README.woe32.
 
+
+Using libsigsegv in your package:
+  - For the APIs, see the comments in the <sigsegv.h> file (generated from
+    src/sigsegv.h.in).
+  - An autoconf macro for determining where libsigsegv is installed and how to
+    link with it is part of GNU gnulib, see
+    <http://www.gnu.org/software/gnulib/MODULES.html#module=libsigsegv>
+
+
 Copyright notice:
 
-Copyright 1998-1999, 2002-2007  Bruno Haible <bruno@clisp.org>
-Copyright 2002-2007  Paolo Bonzini <bonzini@gnu.org>
+Copyright 1998-1999, 2002-2008  Bruno Haible <bruno@clisp.org>
+Copyright 2002-2005  Paolo Bonzini <bonzini@gnu.org>
 
 This is free software distributed under the GNU General Public Licence
 described in the file COPYING. There is ABSOLUTELY NO WARRANTY, explicit or
@@ -104,8 +113,8 @@ implied, on this software.
 
 Download:
 
-ftp://ftp.gnu.org/pub/gnu/libsigsegv/libsigsegv-2.7.tar.gz
-http://ftp.gnu.org/gnu/libsigsegv/libsigsegv-2.7.tar.gz
+ftp://ftp.gnu.org/pub/gnu/libsigsegv/libsigsegv-2.6.tar.gz
+http://ftp.gnu.org/gnu/libsigsegv/libsigsegv-2.6.tar.gz
 
 Homepage:
 
