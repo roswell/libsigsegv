@@ -1,5 +1,5 @@
 /* Fault handler information.  Unix version.
-   Copyright (C) 1993-1999, 2002-2003  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 1993-1999, 2002-2003, 2006, 2008  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -155,9 +155,14 @@ sigsegv_handler (SIGSEGV_FAULT_HANDLER_ARGLIST)
           if (stack_top)
             {
               /* Determine stack bounds.  */
+              int saved_errno;
               struct vma_struct vma;
+              int ret;
 
-              if (sigsegv_get_vma (stack_top, &vma) >= 0)
+              saved_errno = errno;
+              ret = sigsegv_get_vma (stack_top, &vma);
+              errno = saved_errno;
+              if (ret >= 0)
                 {
                   /* Heuristic AC: If the fault_address is nearer to the stack
                      segment's [start,end] than to the previous segment, we
@@ -253,8 +258,10 @@ sigsegv_handler (int sig)
       if (stack_top)
         {
           /* Determine stack bounds.  */
+          int saved_errno;
           struct vma_struct vma;
 
+          saved_errno = errno;
           if (sigsegv_get_vma (stack_top, &vma) >= 0)
             {
 #if HAVE_GETRLIMIT && defined RLIMIT_STACK
@@ -303,6 +310,7 @@ sigsegv_handler (int sig)
                     }
                 }
             }
+          errno = saved_errno;
         }
     }
 
