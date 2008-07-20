@@ -1,3 +1,12 @@
+2008-07-20  Eric Blake  <ebb9@byu.net>
+
+	* src/stackvma-mincore.c (mincore_is_near_this): Fix logic.
+
+2008-07-20  Bruno Haible  <bruno@clisp.org>
+
+	* tests/stackoverflow2.c (main): Test also a NULL pointer access.
+	Reported by Eric Blake <ebb9@byu.net>.
+
 2008-06-23  Bruno Haible  <bruno@clisp.org>
 
 	* build-aux/config.guess: Update to GNU version 2008-06-16.

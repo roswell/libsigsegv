@@ -1,5 +1,5 @@
 /* Determine the virtual memory area of a given address.
-   Copyright (C) 2006  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2006, 2008  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -227,7 +227,8 @@ mincore_is_near_this (unsigned long addr, struct vma_struct *vma)
   unsigned long testaddr = addr - (vma->start - addr);
   if (testaddr > addr) /* overflow? */
     testaddr = 0;
-  return is_unmapped (testaddr, addr);
+  /* Here testaddr <= addr < vma->start.  */
+  return is_unmapped (testaddr, vma->start - 1);
 }
 
 #endif
@@ -246,7 +247,8 @@ mincore_is_near_this (unsigned long addr, struct vma_struct *vma)
   unsigned long testaddr = addr + (addr - vma->end);
   if (testaddr < addr) /* overflow? */
     testaddr = ~0UL;
-  return is_unmapped (addr, testaddr);
+  /* Here vma->end - 1 < addr <= testaddr.  */
+  return is_unmapped (vma->end, testaddr);
 }
 
 #endif
