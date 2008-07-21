@@ -112,7 +112,6 @@ EGREP = @EGREP@
 EXEEXT = @EXEEXT@
 FAULT_CONTEXT = @FAULT_CONTEXT@
 FAULT_CONTEXT_INCLUDE = @FAULT_CONTEXT_INCLUDE@
-FAULT_CONTEXT_INCLUDE2 = @FAULT_CONTEXT_INCLUDE2@
 FGREP = @FGREP@
 GREP = @GREP@
 HAVE_SIGSEGV_RECOVERY = @HAVE_SIGSEGV_RECOVERY@
@@ -234,6 +233,7 @@ EXTRA_DIST = \
   handler-none.c handler-unix.c handler-macos.c handler-win32.c \
   stackvma-none.c stackvma-simple.c stackvma-linux.c stackvma-freebsd.c \
   stackvma-procfs.c stackvma-beos.c stackvma-mach.c stackvma-mincore.c \
+  stackvma-rofile.c \
   leave-none.c leave-nop.c leave-sigaltstack.c leave-setcontext.c \
   sigsegv.h.msvc
 
@@ -529,7 +529,6 @@ uninstall-local:
 
 sigsegv.h.msvc : sigsegv.h.in
 	sed -e 's/@''FAULT_CONTEXT_INCLUDE''@/#include <windows.h>/' \
-	    -e 's/@''FAULT_CONTEXT_INCLUDE2''@//' \
 	    -e 's/@''FAULT_CONTEXT''@/CONTEXT/' \
 	    -e 's/@''HAVE_SIGSEGV_RECOVERY''@/1/' \
 	    -e 's/@''HAVE_STACK_OVERFLOW_RECOVERY''@/1/' \

@@ -890,7 +890,6 @@ OTOOL
 OTOOL64
 FAULT_CONTEXT
 FAULT_CONTEXT_INCLUDE
-FAULT_CONTEXT_INCLUDE2
 HAVE_SIGSEGV_RECOVERY
 CFG_STACKVMA
 HAVE_STACK_OVERFLOW_RECOVERY
@@ -2410,7 +2409,7 @@ fi
 
 # Define the identity of the package.
  PACKAGE=libsigsegv
- VERSION=2.5
+ VERSION=2.6
 
 
 cat >>confdefs.h <<_ACEOF
@@ -4719,13 +4718,13 @@ if test "${lt_cv_nm_interface+set}" = set; then
 else
   lt_cv_nm_interface="BSD nm"
   echo "int some_variable = 0;" > conftest.$ac_ext
-  (eval echo "\"\$as_me:4722: $ac_compile\"" >&5)
+  (eval echo "\"\$as_me:4721: $ac_compile\"" >&5)
   (eval "$ac_compile" 2>conftest.err)
   cat conftest.err >&5
-  (eval echo "\"\$as_me:4725: $NM \\\"conftest.$ac_objext\\\"\"" >&5)
+  (eval echo "\"\$as_me:4724: $NM \\\"conftest.$ac_objext\\\"\"" >&5)
   (eval "$NM \"conftest.$ac_objext\"" 2>conftest.err > conftest.out)
   cat conftest.err >&5
-  (eval echo "\"\$as_me:4728: output\"" >&5)
+  (eval echo "\"\$as_me:4727: output\"" >&5)
   cat conftest.out >&5
   if $GREP 'External.*some_variable' conftest.out > /dev/null; then
     lt_cv_nm_interface="MS dumpbin"
@@ -5836,7 +5835,7 @@ ia64-*-hpux*)
   ;;
 *-*-irix6*)
   # Find out which ABI we are using.
-  echo '#line 5839 "configure"' > conftest.$ac_ext
+  echo '#line 5838 "configure"' > conftest.$ac_ext
   if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -7474,11 +7473,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:7477: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7476: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:7481: \$? = $ac_status" >&5
+   echo "$as_me:7480: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -7798,11 +7797,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:7801: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7800: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:7805: \$? = $ac_status" >&5
+   echo "$as_me:7804: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -7903,11 +7902,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:7906: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7905: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:7910: \$? = $ac_status" >&5
+   echo "$as_me:7909: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -7958,11 +7957,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:7961: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7960: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:7965: \$? = $ac_status" >&5
+   echo "$as_me:7964: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -10750,7 +10749,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<_LT_EOF
-#line 10753 "configure"
+#line 10752 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -10850,7 +10849,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<_LT_EOF
-#line 10853 "configure"
+#line 10852 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -11628,7 +11627,7 @@ else
     if test "$cross_compiling" = yes; then
 
                 case "$host_os" in
-          freebsd* | linux* | osf*)
+          freebsd* | linux* | osf* | darwin*)
             sv_cv_func_mmap_anon=yes ;;
           *)
             cat >conftest.$ac_ext <<_ACEOF
@@ -11762,6 +11761,8 @@ else
                 case "$host_os" in
           hpux* | linux* | osf*)
             sv_cv_func_mmap_anonymous=yes ;;
+          darwin*)
+            sv_cv_func_mmap_anonymous=no ;;
           *)
             cat >conftest.$ac_ext <<_ACEOF
 
@@ -11894,6 +11895,8 @@ else
                 case "$host_os" in
           freebsd* | irix* | linux* | osf* | solaris* | sunos4*)
             sv_cv_func_mmap_devzero=yes ;;
+          darwin*)
+            sv_cv_func_mmap_devzero=no ;;
           *)
             cat >conftest.$ac_ext <<_ACEOF
 
@@ -15190,7 +15193,6 @@ CFG_FAULT=
 CFG_MACHFAULT=
 FAULT_CONTEXT=void
 FAULT_CONTEXT_INCLUDE=
-FAULT_CONTEXT_INCLUDE2=
 if test -z "$CFG_FAULT" && test "$sv_cv_fault_aix" = yes; then
   case "$host_cpu" in
     powerpc* | rs6000) CFG_FAULT=fault-aix3-powerpc.h ;;
@@ -15328,7 +15330,8 @@ if test -z "$CFG_FAULT"; then
       case "$host_cpu" in
         powerpc* | rs6000)
           CFG_MACHFAULT=machfault-macos-powerpc.h
-          FAULT_CONTEXT_INCLUDE2='#include <mach/thread_status.h>
+          FAULT_CONTEXT_INCLUDE='#include <signal.h>
+#include <mach/thread_status.h>
 #if defined __ppc64__
 #define sigsegv_thread_state_t ppc_thread_state64_t
 #else
@@ -15338,7 +15341,8 @@ if test -z "$CFG_FAULT"; then
           ;;
         i?86 | x86_64)
           CFG_MACHFAULT=machfault-macos-i386.h
-          FAULT_CONTEXT_INCLUDE2='#include <mach/thread_status.h>
+          FAULT_CONTEXT_INCLUDE='#include <signal.h>
+#include <mach/thread_status.h>
 #if defined __x86_64__
 #define sigsegv_thread_state_t x86_thread_state64_t
 #else
@@ -15353,7 +15357,6 @@ if test -z "$CFG_FAULT"; then
       esac
       if test -n "$CFG_MACHFAULT"; then
         CFG_HANDLER=handler-macos.c
-        FAULT_CONTEXT_INCLUDE='#include <signal.h>'
         CFG_FAULT=fault-macos.h # nonexistent, just a dummy
       fi
       ;;
@@ -15372,8 +15375,8 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_macosdarwin7_ppc" = yes; then
     powerpc* | rs6000)
       CFG_FAULT=fault-macosdarwin7-powerpc.h
       FAULT_CONTEXT='ucontext_t'
-      FAULT_CONTEXT_INCLUDE='#include <signal.h>'
-      FAULT_CONTEXT_INCLUDE2='#include <ucontext.h>'
+      FAULT_CONTEXT_INCLUDE='#include <signal.h>
+#include <ucontext.h>'
       ;;
   esac
 fi
@@ -15478,7 +15481,6 @@ fi
 cat >>confdefs.h <<_ACEOF
 #define CFG_MACHFAULT "$CFG_MACHFAULT"
 _ACEOF
-
 
 
 
