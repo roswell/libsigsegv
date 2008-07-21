@@ -1,5 +1,5 @@
 /* Test that stack overflow and SIGSEGV are correctly distinguished.
-   Copyright (C) 2002-2006  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002-2006, 2008  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -167,6 +167,9 @@ main ()
       *(volatile int *) (page + 0x678) = 42;
       break;
     case 3:
+      *(volatile int *) 0 = 42;
+      break;
+    case 4:
       break;
     default:
       abort ();
