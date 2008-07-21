@@ -1,5 +1,21 @@
 2008-07-20  Bruno Haible  <bruno@clisp.org>
 
+	Make sigsegv_get_vma async-safe.
+	* src/sigsegv.h.in (sigsegv_handler_t, stackoverflow_handler_t):
+	Mention async-safety constraints.
+	+ src/stackvma-rofile.c: New file.
+	* src/stackvma-freebsd.c: Include stackvma-rofile.c.
+	(sigsegv_get_vma): Use struct rofile instead of FILE.
+	* src/stackvma-linux.c: Include stackvma-rofile.c.
+	(sigsegv_get_vma): Use struct rofile instead of FILE.
+	* src/stackvma-procfs.c: Include <sys/mman.h> instead of <stdlib.h> and
+	<stdio.h>.
+	(sigsegv_get_vma): Avoid using sprintf. Ensure pagesize is initialized.
+	Use mmap/munmap instead of malloc/free.
+	Reported by Eric Blake <ebb9@byu.net>.
+
+2008-07-20  Bruno Haible  <bruno@clisp.org>
+
 	* src/handler-unix.c (sigsegv_handler): Preserve errno.
 
 2008-07-20  Eric Blake  <ebb9@byu.net>

@@ -1,5 +1,5 @@
 /* Determine the virtual memory area of a given address.  FreeBSD version.
-   Copyright (C) 2002-2003, 2006  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002-2003, 2006, 2008  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 #include <stdio.h>
 
 #include "stackvma-simple.c"
+#include "stackvma-rofile.c"
 
 #if HAVE_MINCORE
 # define sigsegv_get_vma mincore_get_vma
@@ -30,7 +31,7 @@
 int
 sigsegv_get_vma (unsigned long address, struct vma_struct *vma)
 {
-  FILE *fp;
+  struct rofile rof;
   int c;
   /* The stack appears as multiple adjacents segments, therefore we
      merge adjacent segments.  */
@@ -40,8 +41,7 @@ sigsegv_get_vma (unsigned long address, struct vma_struct *vma)
 #endif
 
   /* Open the current process' maps file.  It describes one VMA per line.  */
-  fp = fopen ("/proc/curproc/map", "r");
-  if (!fp)
+  if (rof_open (&rof, "/proc/curproc/map") < 0)
     goto failed;
 
 #if STACK_DIRECTION < 0
@@ -49,9 +49,17 @@ sigsegv_get_vma (unsigned long address, struct vma_struct *vma)
 #endif
   for (curr_start = curr_end = 0; ;)
     {
-      if (fscanf (fp, "0x%lx 0x%lx", &next_start, &next_end) != 2)
+      if (!(rof_getchar (&rof) == '0'
+            && rof_getchar (&rof) == 'x'
+            && rof_scanf_lx (&rof, &next_start) >= 0))
         break;
-      while (c = getc (fp), c != EOF && c != '\n')
+      while (c = rof_peekchar (&rof), c == ' ' || c == '\t')
+        rof_getchar (&rof);
+      if (!(rof_getchar (&rof) == '0'
+            && rof_getchar (&rof) == 'x'
+            && rof_scanf_lx (&rof, &next_end) >= 0))
+        break;
+      while (c = rof_getchar (&rof), c != -1 && c != '\n')
         continue;
       if (next_start == curr_end)
         {
@@ -77,14 +85,27 @@ sigsegv_get_vma (unsigned long address, struct vma_struct *vma)
 #if STACK_DIRECTION < 0
       vma->prev_end = prev_end;
 #else
-      if (fscanf (fp, "0x%lx 0x%lx", &vma->next_start, &next_end) != 2)
+      if (rof_getchar (&rof) == '0'
+          && rof_getchar (&rof) == 'x'
+          && rof_scanf_lx (&rof, &vma->next_start) >= 0)
+        {
+          while (c = rof_peekchar (&rof), c == ' ' || c == '\t')
+            rof_getchar (&rof);
+          if (rof_getchar (&rof) == '0'
+              && rof_getchar (&rof) == 'x'
+              && rof_scanf_lx (&rof, &next_end) >= 0)
+            ;
+          else
+            vma->next_start = 0;
+        }
+      else
         vma->next_start = 0;
 #endif
-      fclose (fp);
+      rof_close (&rof);
       vma->is_near_this = simple_is_near_this;
       return 0;
     }
-  fclose (fp);
+  rof_close (&rof);
  failed:
 #if HAVE_MINCORE
   /* FreeBSD 6.[01] doesn't allow to distinguish unmapped pages from
