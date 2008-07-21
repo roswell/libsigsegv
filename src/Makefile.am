@@ -51,6 +51,7 @@ EXTRA_DIST = \
   handler-none.c handler-unix.c handler-macos.c handler-win32.c \
   stackvma-none.c stackvma-simple.c stackvma-linux.c stackvma-freebsd.c \
   stackvma-procfs.c stackvma-beos.c stackvma-mach.c stackvma-mincore.c \
+  stackvma-rofile.c \
   leave-none.c leave-nop.c leave-sigaltstack.c leave-setcontext.c \
   sigsegv.h.msvc
 
