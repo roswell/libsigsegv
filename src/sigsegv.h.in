@@ -52,6 +52,12 @@ extern int libsigsegv_version;       /* Likewise */
  * The return value should be nonzero if the handler has done its job
  * and no other handler should be called, or 0 if the handler declines
  * responsibility for the given address.
+ *
+ * The handler is run at a moment when nothing about the global state of the
+ * program is known. Therefore it cannot use facilities that manipulate global
+ * variables or locks. In particular, it cannot use malloc(); use mmap()
+ * instead. It cannot use fopen(); use open() instead. Etc. All global
+ * variables that are accessed by the handler should be marked 'volatile'.
  */
 typedef int (*sigsegv_handler_t) (void* fault_address, int serious);
 
@@ -88,6 +94,12 @@ typedef @FAULT_CONTEXT@ *stackoverflow_context_t;
  * of stack needed. It must not return.
  * The emergency argument is 0 when the stack could be repared, or 1 if the
  * application should better save its state and exit now.
+ *
+ * The handler is run at a moment when nothing about the global state of the
+ * program is known. Therefore it cannot use facilities that manipulate global
+ * variables or locks. In particular, it cannot use malloc(); use mmap()
+ * instead. It cannot use fopen(); use open() instead. Etc. All global
+ * variables that are accessed by the handler should be marked 'volatile'.
  */
 typedef void (*stackoverflow_handler_t) (int emergency, stackoverflow_context_t scp);
 
