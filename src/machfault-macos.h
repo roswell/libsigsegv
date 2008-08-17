@@ -1,4 +1,4 @@
-/* Fault handler information.  MacOSX/i386 version.
+/* Fault handler information.  MacOSX version (both PowerPC and i386).
    Copyright (C) 2003-2004, 2006-2008  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
@@ -14,6 +14,44 @@
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
+
+#if defined __ppc__ || defined __ppc64__
+
+#if defined __ppc64__
+/* 64 bit registers */
+
+#define SIGSEGV_EXC_STATE_TYPE                      ppc_exception_state64_t
+#define SIGSEGV_EXC_STATE_FLAVOR                    PPC_EXCEPTION_STATE64
+#define SIGSEGV_EXC_STATE_COUNT                     PPC_EXCEPTION_STATE64_COUNT
+#define SIGSEGV_THREAD_STATE_TYPE                   ppc_thread_state64_t
+#define SIGSEGV_THREAD_STATE_FLAVOR                 PPC_THREAD_STATE64
+#define SIGSEGV_THREAD_STATE_COUNT                  PPC_THREAD_STATE64_COUNT
+
+#else
+/* 32 bit registers */
+
+#define SIGSEGV_EXC_STATE_TYPE                      ppc_exception_state_t
+#define SIGSEGV_EXC_STATE_FLAVOR                    PPC_EXCEPTION_STATE
+#define SIGSEGV_EXC_STATE_COUNT                     PPC_EXCEPTION_STATE_COUNT
+#define SIGSEGV_THREAD_STATE_TYPE                   ppc_thread_state_t
+#define SIGSEGV_THREAD_STATE_FLAVOR                 PPC_THREAD_STATE
+#define SIGSEGV_THREAD_STATE_COUNT                  PPC_THREAD_STATE_COUNT
+
+#endif
+
+#if MacOS_X_10_5_HEADERS && __DARWIN_UNIX03
+#define SIGSEGV_FAULT_ADDRESS(thr_state,exc_state)  (exc_state).__dar
+#define SIGSEGV_STACK_POINTER(thr_state)            (thr_state).__r1
+#define SIGSEGV_PROGRAM_COUNTER(thr_state)          (thr_state).__srr0
+#else
+#define SIGSEGV_FAULT_ADDRESS(thr_state,exc_state)  (exc_state).dar
+#define SIGSEGV_STACK_POINTER(thr_state)            (thr_state).r1
+#define SIGSEGV_PROGRAM_COUNTER(thr_state)          (thr_state).srr0
+#endif
+
+#endif
+
+#if defined __i386__ || defined __x86_64__
 
 #if defined __x86_64__
 /* 64 bit registers */
@@ -61,6 +99,8 @@
 #define SIGSEGV_FAULT_ADDRESS(thr_state,exc_state)  (exc_state).faultvaddr
 #define SIGSEGV_STACK_POINTER(thr_state)            (thr_state).esp
 #define SIGSEGV_PROGRAM_COUNTER(thr_state)          (thr_state).eip
+#endif
+
 #endif
 
 #endif
