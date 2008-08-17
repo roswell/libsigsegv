@@ -88,6 +88,10 @@
 /* Define if you have the sigaltstack() function and it works. */
 #undef HAVE_WORKING_SIGALTSTACK
 
+/* Define to the sub-directory in which libtool stores uninstalled libraries.
+   */
+#undef LT_OBJDIR
+
 /* Name of package */
 #undef PACKAGE
 
