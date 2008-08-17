@@ -1,3 +1,14 @@
+2008-08-17  Bruno Haible  <bruno@clisp.org>
+
+	Allow building universal binaries on MacOS X.
+	* src/machfault-macos.h: New file, combining
+	src/machfault-macos-powerpc.h and src/machfault-macos-i386.h.
+	* src/machfault-macos-powerpc.h: Remove file.
+	* src/machfault-macos-i386.h: Remove file.
+	* configure.ac (CFG_MACHFAULT): Set to machfault-macos.h.
+	(FAULT_CONTEXT_INCLUDE) [MacOSX]: Set to #ifdefs for all four possible
+	architectures.
+
 2008-07-20  Bruno Haible  <bruno@clisp.org>
 
 	Make sigsegv_get_vma async-safe.

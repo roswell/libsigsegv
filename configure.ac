@@ -362,24 +362,18 @@ if test -z "$CFG_FAULT"; then
   case "$host_os" in
     macos* | darwin[[6-9]]* | darwin[[1-9]][[0-9]]*)
       case "$host_cpu" in
-        powerpc* | rs6000)
-          CFG_MACHFAULT=machfault-macos-powerpc.h
+        powerpc* | rs6000 | i?86 | x86_64)
+          CFG_MACHFAULT=machfault-macos.h
           FAULT_CONTEXT_INCLUDE='#include <signal.h>
 #include <mach/thread_status.h>
 #if defined __ppc64__
 #define sigsegv_thread_state_t ppc_thread_state64_t
-#else
+#elif defined __ppc__
 #define sigsegv_thread_state_t ppc_thread_state_t
-#endif'
-          FAULT_CONTEXT='sigsegv_thread_state_t'
-          ;;
-        i?86 | x86_64)
-          CFG_MACHFAULT=machfault-macos-i386.h
-          FAULT_CONTEXT_INCLUDE='#include <signal.h>
-#include <mach/thread_status.h>
+#endif
 #if defined __x86_64__
 #define sigsegv_thread_state_t x86_thread_state64_t
-#else
+#elif defined __i386__
 #if defined x86_THREAD_STATE32
 #define sigsegv_thread_state_t x86_thread_state32_t
 #else

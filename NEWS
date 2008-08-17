@@ -1,6 +1,7 @@
 New in 2.6:
 
 * Support for 64-bit ABI on MacOS X 10.5.
+* Support for building universal binaries on MacOS X.
 * Improved distinction between stack overflow and other fault on NetBSD,
   OpenBSD, FreeBSD, Linux, Solaris. Contributed by Eric Blake.
 * GNU gnulib now has an autoconf macro for locating libsigsegv:
