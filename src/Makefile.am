@@ -42,7 +42,7 @@ noinst_HEADERS = \
   fault-openbsd.h fault-openbsd-i386.h \
   fault-osf.h fault-osf-alpha.h \
   fault-posix.h fault-solaris.h fault-solaris-i386.h fault-solaris-sparc.h \
-  machfault.h machfault-macos-i386.h machfault-macos-powerpc.h \
+  machfault.h machfault-macos.h \
   signals.h signals-bsd.h signals-hpux.h signals-hurd.h signals-macos.h \
   leave.h \
   stackvma.h

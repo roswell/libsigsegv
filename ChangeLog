@@ -1,3 +1,8 @@
+2008-08-23  Eric Blake  <ebb9@byu.net>
+
+	* src/Makefile.am (noinst_HEADERS): Remove machfault-macos-powerpc.h
+	and machfault-macos-i386.h. Add machfault-macos.h.
+
 2008-08-17  Bruno Haible  <bruno@clisp.org>
 
 	Allow building universal binaries on MacOS X.
