@@ -15,6 +15,10 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
+#ifndef _MSC_VER
+# include <config.h>
+#endif
+
 #include "sigsegv.h"
 #include <stdio.h>
 #include <limits.h>
@@ -26,9 +30,6 @@
   typedef int sigset_t;
 # define sigemptyset(set)
 # define sigprocmask(how,set,oldset)
-#else
-  /* Unix */
-# include "config.h"
 #endif
 
 #include <stddef.h> /* needed for NULL on SunOS4 */

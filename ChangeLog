@@ -1,5 +1,13 @@
 2008-08-24  Bruno Haible  <bruno@clisp.org>
 
+	* tests/sigsegv1.c: Include <config.h>.
+	* tests/sigsegv2.c: Likewise.
+	* tests/sigsegv3.c: Include <config.h> before all other headers.
+	* tests/stackoverflow1.c: Likewise.
+	* tests/stackoverflow2.c: Likewise.
+
+2008-08-24  Bruno Haible  <bruno@clisp.org>
+
 	Fix the sigsegv3 test on MacOS X.
 	* src/sigsegv.h.in (sigsegv_leave_handler): Take 4 arguments.
 	* NEWS: Mention the change.
