@@ -1,5 +1,10 @@
 2008-08-24  Bruno Haible  <bruno@clisp.org>
 
+	* src/stackvma-mincore.c (mincore_is_near_this): Improve logic. Needed
+	for reliable NULL pointer access classification as SIGSEGV on AIX 4.3.
+
+2008-08-24  Bruno Haible  <bruno@clisp.org>
+
 	* m4/sigaltstack.m4: Change 'volatile int' return type to 'int'. Needed
 	for AIX 4.3 xlc.
 	* m4/sigaltstack-longjmp.m4: Likewise.

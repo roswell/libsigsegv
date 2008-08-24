@@ -223,10 +223,13 @@ mincore_is_near_this (unsigned long addr, struct vma_struct *vma)
      is mathematically equivalent to
        vma->prev_end <= 2 * addr - vma->start
      <==> is_unmapped (2 * addr - vma->start, vma->start - 1).
-     But be careful about overflow.  */
+     But be careful about overflow: if 2 * addr - vma->start is negative,
+     we consider a tiny "guard page" mapping [0, 0] to be present around
+     NULL; it intersects the range (2 * addr - vma->start, vma->start - 1),
+     therefore return false.  */
   unsigned long testaddr = addr - (vma->start - addr);
   if (testaddr > addr) /* overflow? */
-    testaddr = 0;
+    return 0;
   /* Here testaddr <= addr < vma->start.  */
   return is_unmapped (testaddr, vma->start - 1);
 }
@@ -243,10 +246,13 @@ mincore_is_near_this (unsigned long addr, struct vma_struct *vma)
      is mathematically equivalent to
        vma->next_start > 2 * addr - vma->end
      <==> is_unmapped (vma->end, 2 * addr - vma->end).
-     But be careful about overflow.  */
+     But be careful about overflow: if 2 * addr - vma->end is > ~0UL,
+     we consider a tiny "guard page" mapping [0, 0] to be present around
+     NULL; it intersects the range (vma->end, 2 * addr - vma->end),
+     therefore return false.  */
   unsigned long testaddr = addr + (addr - vma->end);
   if (testaddr < addr) /* overflow? */
-    testaddr = ~0UL;
+    return 0;
   /* Here vma->end - 1 < addr <= testaddr.  */
   return is_unmapped (vma->end, testaddr);
 }
