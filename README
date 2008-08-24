@@ -71,7 +71,8 @@ other applications, the stack overflow handler longjmps back to a central
 point in the application.  This library supports both uses.  In the second
 case, the handler must ensure to restore the normal signal mask (because
 many signals are blocked while the handler is executed), and must also
-call sigsegv_leave_handler(); then only it can longjmp away.
+call sigsegv_leave_handler() to transfer control; then only it can longjmp
+away.
 
 
 About shared libraries.
