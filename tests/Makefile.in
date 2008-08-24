@@ -32,10 +32,11 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-TESTS = sigsegv1$(EXEEXT) sigsegv2$(EXEEXT) stackoverflow1$(EXEEXT) \
-	stackoverflow2$(EXEEXT)
-noinst_PROGRAMS = sigsegv1$(EXEEXT) sigsegv2$(EXEEXT) \
+TESTS = sigsegv1$(EXEEXT) sigsegv2$(EXEEXT) sigsegv3$(EXEEXT) \
 	stackoverflow1$(EXEEXT) stackoverflow2$(EXEEXT)
+noinst_PROGRAMS = sigsegv1$(EXEEXT) sigsegv2$(EXEEXT) \
+	sigsegv3$(EXEEXT) stackoverflow1$(EXEEXT) \
+	stackoverflow2$(EXEEXT)
 subdir = tests
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -62,6 +63,10 @@ sigsegv2_SOURCES = sigsegv2.c
 sigsegv2_OBJECTS = sigsegv2.$(OBJEXT)
 sigsegv2_LDADD = $(LDADD)
 sigsegv2_DEPENDENCIES = ../src/libsigsegv.la
+sigsegv3_SOURCES = sigsegv3.c
+sigsegv3_OBJECTS = sigsegv3.$(OBJEXT)
+sigsegv3_LDADD = $(LDADD)
+sigsegv3_DEPENDENCIES = ../src/libsigsegv.la
 stackoverflow1_SOURCES = stackoverflow1.c
 stackoverflow1_OBJECTS = stackoverflow1.$(OBJEXT)
 stackoverflow1_LDADD = $(LDADD)
@@ -82,8 +87,10 @@ CCLD = $(CC)
 LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
-SOURCES = sigsegv1.c sigsegv2.c stackoverflow1.c stackoverflow2.c
-DIST_SOURCES = sigsegv1.c sigsegv2.c stackoverflow1.c stackoverflow2.c
+SOURCES = sigsegv1.c sigsegv2.c sigsegv3.c stackoverflow1.c \
+	stackoverflow2.c
+DIST_SOURCES = sigsegv1.c sigsegv2.c sigsegv3.c stackoverflow1.c \
+	stackoverflow2.c
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -255,6 +262,9 @@ sigsegv1$(EXEEXT): $(sigsegv1_OBJECTS) $(sigsegv1_DEPENDENCIES)
 sigsegv2$(EXEEXT): $(sigsegv2_OBJECTS) $(sigsegv2_DEPENDENCIES) 
 	@rm -f sigsegv2$(EXEEXT)
 	$(LINK) $(sigsegv2_OBJECTS) $(sigsegv2_LDADD) $(LIBS)
+sigsegv3$(EXEEXT): $(sigsegv3_OBJECTS) $(sigsegv3_DEPENDENCIES) 
+	@rm -f sigsegv3$(EXEEXT)
+	$(LINK) $(sigsegv3_OBJECTS) $(sigsegv3_LDADD) $(LIBS)
 stackoverflow1$(EXEEXT): $(stackoverflow1_OBJECTS) $(stackoverflow1_DEPENDENCIES) 
 	@rm -f stackoverflow1$(EXEEXT)
 	$(LINK) $(stackoverflow1_OBJECTS) $(stackoverflow1_LDADD) $(LIBS)
