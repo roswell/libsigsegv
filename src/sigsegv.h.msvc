@@ -75,10 +75,25 @@ extern int sigsegv_install_handler (sigsegv_handler_t handler);
  */
 extern void sigsegv_deinstall_handler (void);
 
+#if LIBSIGSEGV_VERSION >= 0x0206
 /*
  * Prepares leaving a SIGSEGV handler (through longjmp or similar means).
+ * Control is transferred by calling CONTINUATION with CONT_ARG1, CONT_ARG2,
+ * CONT_ARG3 as arguments.
+ * CONTINUATION must not return.
+ * The sigsegv_leave_handler function may return if called from a SIGSEGV
+ * handler; its return value should be used as the handler's return value.
+ * The sigsegv_leave_handler function does not return if called from a
+ * stack overflow handler.
+ */
+extern int sigsegv_leave_handler (void (*continuation) (void*, void*, void*), void* cont_arg1, void* cont_arg2, void* cont_arg3);
+#else /* older versions of libsigsegv */
+/*
+ * Prepares leaving a SIGSEGV handler (through longjmp or similar means).
+ * Limitation: This function could only be called once on MacOS X.
  */
 extern void sigsegv_leave_handler (void);
+#endif
 
 /*
  * The type of a context passed to a stack overflow handler.
