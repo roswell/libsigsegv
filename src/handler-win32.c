@@ -296,7 +296,7 @@ sigsegv_leave_handler (void (*continuation) (void*, void*, void*),
                        void* cont_arg1, void* cont_arg2, void* cont_arg3)
 {
   (*continuation) (cont_arg1, cont_arg2, cont_arg3);
-  reurn 1;
+  return 1;
 }
 
 int
