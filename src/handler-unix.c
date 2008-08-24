@@ -447,8 +447,9 @@ sigsegv_deinstall_handler (void)
 #endif
 }
 
-void
-sigsegv_leave_handler (void)
+int
+sigsegv_leave_handler (void (*continuation) (void*, void*, void*),
+                       void* cont_arg1, void* cont_arg2, void* cont_arg3)
 {
 #if HAVE_STACK_OVERFLOW_RECOVERY
   /*
@@ -458,6 +459,8 @@ sigsegv_leave_handler (void)
    */
   sigsegv_reset_onstack_flag ();
 #endif
+  (*continuation) (cont_arg1, cont_arg2, cont_arg3);
+  return 1;
 }
 
 int

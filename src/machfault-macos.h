@@ -43,10 +43,16 @@
 #define SIGSEGV_FAULT_ADDRESS(thr_state,exc_state)  (exc_state).__dar
 #define SIGSEGV_STACK_POINTER(thr_state)            (thr_state).__r1
 #define SIGSEGV_PROGRAM_COUNTER(thr_state)          (thr_state).__srr0
+#define SIGSEGV_INTEGER_ARGUMENT_1(thr_state)       (thr_state).__r3
+#define SIGSEGV_INTEGER_ARGUMENT_2(thr_state)       (thr_state).__r4
+#define SIGSEGV_INTEGER_ARGUMENT_3(thr_state)       (thr_state).__r5
 #else
 #define SIGSEGV_FAULT_ADDRESS(thr_state,exc_state)  (exc_state).dar
 #define SIGSEGV_STACK_POINTER(thr_state)            (thr_state).r1
 #define SIGSEGV_PROGRAM_COUNTER(thr_state)          (thr_state).srr0
+#define SIGSEGV_INTEGER_ARGUMENT_1(thr_state)       (thr_state).r3
+#define SIGSEGV_INTEGER_ARGUMENT_2(thr_state)       (thr_state).r4
+#define SIGSEGV_INTEGER_ARGUMENT_3(thr_state)       (thr_state).r5
 #endif
 
 #endif

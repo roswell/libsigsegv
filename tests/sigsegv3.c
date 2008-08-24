@@ -33,6 +33,12 @@ unsigned long page;
 
 volatile int handler_called = 0;
 
+static void
+handler_continuation (void *arg1, void *arg2, void *arg3)
+{
+  longjmp (mainloop, pass);
+}
+
 int
 handler (void *fault_address, int serious)
 {
@@ -44,8 +50,7 @@ handler (void *fault_address, int serious)
   pass++;
   printf ("Stack overflow %d caught.\n", pass);
   sigprocmask (SIG_SETMASK, &mainsigset, NULL);
-  sigsegv_leave_handler ();
-  longjmp (mainloop, pass);
+  return sigsegv_leave_handler (handler_continuation, NULL, NULL, NULL);
 }
 
 void

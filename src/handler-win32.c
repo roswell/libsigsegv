@@ -1,5 +1,5 @@
 /* Fault handler information.  Woe32 version.
-   Copyright (C) 1993-1999, 2002-2003, 2007  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 1993-1999, 2002-2003, 2007-2008  Bruno Haible <bruno@clisp.org>
    Copyright (C) 2003  Paolo Bonzini <bonzini@gnu.org>
 
    This program is free software; you can redistribute it and/or modify
@@ -291,9 +291,12 @@ sigsegv_deinstall_handler (void)
   user_handler = (sigsegv_handler_t) NULL;
 }
 
-void
-sigsegv_leave_handler (void)
+int
+sigsegv_leave_handler (void (*continuation) (void*, void*, void*),
+                       void* cont_arg1, void* cont_arg2, void* cont_arg3)
 {
+  (*continuation) (cont_arg1, cont_arg2, cont_arg3);
+  reurn 1;
 }
 
 int

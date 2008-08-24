@@ -125,6 +125,9 @@ catch_exception_raise_state_identity (mach_port_t exception_port,
                                       mach_msg_type_number_t *out_state_count);
 
 
+/* Our exception thread.  */
+static mach_port_t our_exception_thread;
+
 /* The exception port on which our thread listens.  */
 static mach_port_t our_exception_port;
 
@@ -148,6 +151,10 @@ static unsigned long stk_extra_stack_size;
 
 /* User's fault handler.  */
 static sigsegv_handler_t user_handler = (sigsegv_handler_t)NULL;
+
+/* Thread that signalled the exception.  Only set while user_handler is being
+   invoked.  */
+static mach_port_t signalled_thread = (mach_port_t) 0;
 
 /* A handler that is called in the faulting thread.  It terminates the thread.  */
 static void
@@ -273,7 +280,9 @@ catch_exception_raise (mach_port_t exception_port,
 #ifdef DEBUG_EXCEPTION_HANDLING
           fprintf (stderr, "Calling user handler, addr = 0x%lx\n", (char *) addr);
 #endif
+          signalled_thread = thread;
           done = (*user_handler) ((void *) addr, 1);
+          signalled_thread = (mach_port_t) 0;
 #ifdef DEBUG_EXCEPTION_HANDLING
           fprintf (stderr, "Back from user handler\n");
 #endif
@@ -301,6 +310,9 @@ catch_exception_raise (mach_port_t exception_port,
 static void *
 mach_exception_thread (void *arg)
 {
+  /* See http://web.mit.edu/darwin/src/modules/xnu/osfmk/man/mach_thread_self.html.  */
+  our_exception_thread = mach_thread_self ();
+
   for (;;)
     {
       /* These two structures contain some private kernel data. We don't need
@@ -442,10 +454,82 @@ sigsegv_deinstall_handler (void)
   user_handler = (sigsegv_handler_t)NULL;
 }
 
-void
-sigsegv_leave_handler (void)
+int
+sigsegv_leave_handler (void (*continuation) (void*, void*, void*),
+                       void* cont_arg1, void* cont_arg2, void* cont_arg3)
 {
   emergency--;
+  if (mach_thread_self () == our_exception_thread)
+    {
+      /* Inside user_handler invocation.  */
+      mach_port_t thread;
+      SIGSEGV_THREAD_STATE_TYPE thread_state;
+      mach_msg_type_number_t state_count;
+
+      thread = signalled_thread;
+      if (thread == (mach_port_t) 0)
+        {
+          /* The variable signalled_thread was supposed to be set!  */
+#ifdef DEBUG_EXCEPTION_HANDLING
+          fprintf (stderr, "sigsegv_leave_handler: signalled_thread not set\n");
+#endif
+          return 0;
+        }
+
+      /* See http://web.mit.edu/darwin/src/modules/xnu/osfmk/man/thread_get_state.html.  */
+      state_count = SIGSEGV_THREAD_STATE_COUNT;
+      if (thread_get_state (thread, SIGSEGV_THREAD_STATE_FLAVOR,
+                            (void *) &thread_state, &state_count)
+          != KERN_SUCCESS)
+        {
+          /* The thread was supposed to be suspended!  */
+#ifdef DEBUG_EXCEPTION_HANDLING
+          fprintf (stderr, "sigsegv_leave_handler: thread_get_state failed for thread state\n");
+#endif
+          return 0;
+        }
+
+#if defined __ppc64__ || defined __ppc__
+      /* Store arguments in registers.  */
+      SIGSEGV_INTEGER_ARGUMENT_1 (thread_state) = (unsigned long) cont_arg1;
+      SIGSEGV_INTEGER_ARGUMENT_2 (thread_state) = (unsigned long) cont_arg2;
+      SIGSEGV_INTEGER_ARGUMENT_3 (thread_state) = (unsigned long) cont_arg3;
+#endif
+#if defined __x86_64__ || defined __i386__
+      /* Push arguments onto the stack.  */
+      {
+        unsigned long new_esp = SIGSEGV_STACK_POINTER (thread_state);
+        new_esp &= -16; /* align */
+        new_esp -= sizeof (void *); /* unused room, alignment */
+        new_esp -= sizeof (void *); *(void **)new_esp = cont_arg3;
+        new_esp -= sizeof (void *); *(void **)new_esp = cont_arg2;
+        new_esp -= sizeof (void *); *(void **)new_esp = cont_arg1;
+        new_esp -= sizeof (void *); /* make room for (unused) return address slot */
+        SIGSEGV_STACK_POINTER (thread_state) = new_esp;
+      }
+#endif
+      /* Point program counter to continuation to be executed.  */
+      SIGSEGV_PROGRAM_COUNTER (thread_state) = (unsigned long) continuation;
+
+      /* See http://web.mit.edu/darwin/src/modules/xnu/osfmk/man/thread_set_state.html.  */
+      if (thread_set_state (thread, SIGSEGV_THREAD_STATE_FLAVOR,
+                            (void *) &thread_state, state_count)
+          != KERN_SUCCESS)
+        {
+#ifdef DEBUG_EXCEPTION_HANDLING
+          fprintf (stderr, "sigsegv_leave_handler: thread_set_state failed\n");
+#endif
+          return 0;
+        }
+
+      return 1;
+    }
+  else
+    {
+      /* Inside stk_user_handler invocation.  Stay in the same thread.  */
+      (*continuation) (cont_arg1, cont_arg2, cont_arg3);
+      return 1;
+    }
 }
 
 int

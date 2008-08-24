@@ -1,5 +1,35 @@
 New in 2.6:
 
+* sigsegv_leave_handler is changed. Previously it was a normal function with
+  no arguments. Now it is a function that take a non-returning continuation
+  function and three arguments for it as arguments.
+  Where you had code like
+     int my_handler(void* fault_address, int serious)
+     {
+       ...code_before()...;
+       sigsegv_leave_handler();
+       ...code_after()...;
+       longjmp(...);
+     }
+  you now have to write
+     void my_handler_tail(void* arg1, void* arg2, void* arg3)
+     {
+       ...code_after()...;
+       longjmp(...);
+     }
+     int my_handler(void* fault_address, int serious)
+     {
+       ...code_before()...;
+       #if LIBSIGSEGV_VERSION >= 0x0206
+       return sigsegv_leave_handler(my_handler_tail, arg, NULL, NULL);
+       #else
+       sigsegv_leave_handler();
+       my_handler_tail(arg, NULL, NULL);
+       /* NOTREACHED */
+       abort();
+       #endif
+     }
+* sigsegv_leave_handler now works correctly on MacOS X.
 * Support for 64-bit ABI on MacOS X 10.5.
 * Support for building universal binaries on MacOS X.
 * Improved distinction between stack overflow and other fault on NetBSD,

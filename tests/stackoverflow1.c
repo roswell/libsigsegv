@@ -1,5 +1,5 @@
 /* Test the stack overflow handler.
-   Copyright (C) 2002-2006  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002-2006, 2008  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -49,14 +49,21 @@ sigset_t mainsigset;
 
 volatile int pass = 0;
 
+static void
+stackoverflow_handler_continuation (void *arg1, void *arg2, void *arg3)
+{
+  int arg = (int) (long) arg1;
+  longjmp (mainloop, arg);
+}
+
 void
 stackoverflow_handler (int emergency, stackoverflow_context_t scp)
 {
   pass++;
   printf ("Stack overflow %d caught.\n", pass);
   sigprocmask (SIG_SETMASK, &mainsigset, NULL);
-  sigsegv_leave_handler ();
-  longjmp (mainloop, emergency ? -1 : pass);
+  sigsegv_leave_handler (stackoverflow_handler_continuation,
+                         (void *) (long) (emergency ? -1 : pass), NULL, NULL);
 }
 
 volatile int *

@@ -51,6 +51,13 @@ sigset_t mainsigset;
 volatile int pass = 0;
 unsigned long page;
 
+static void
+stackoverflow_handler_continuation (void *arg1, void *arg2, void *arg3)
+{
+  int arg = (int) (long) arg1;
+  longjmp (mainloop, arg);
+}
+
 void
 stackoverflow_handler (int emergency, stackoverflow_context_t scp)
 {
@@ -63,8 +70,8 @@ stackoverflow_handler (int emergency, stackoverflow_context_t scp)
       exit (1);
     }
   sigprocmask (SIG_SETMASK, &mainsigset, NULL);
-  sigsegv_leave_handler ();
-  longjmp (mainloop, emergency ? -1 : pass);
+  sigsegv_leave_handler (stackoverflow_handler_continuation,
+                         (void *) (long) (emergency ? -1 : pass), NULL, NULL);
 }
 
 int
@@ -83,8 +90,8 @@ sigsegv_handler (void *address, int emergency)
   else
     printf ("Segmentation violation correctly detected.\n");
   sigprocmask (SIG_SETMASK, &mainsigset, NULL);
-  sigsegv_leave_handler ();
-  longjmp (mainloop, pass);
+  return sigsegv_leave_handler (stackoverflow_handler_continuation,
+                                (void *) (long) pass, NULL, NULL);
 }
 
 volatile int *
