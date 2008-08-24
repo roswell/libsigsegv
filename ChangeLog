@@ -1,5 +1,14 @@
 2008-08-24  Bruno Haible  <bruno@clisp.org>
 
+	* m4/sigaltstack.m4: Change 'volatile int' return type to 'int'. Needed
+	for AIX 4.3 xlc.
+	* m4/sigaltstack-longjmp.m4: Likewise.
+	* m4/sigaltstack-siglongjmp.m4: Likewise.
+	* tests/stackoverflow1.c (recurse): Likewise.
+	* tests/stackoverflow2.c (recurse): Likewise.
+
+2008-08-24  Bruno Haible  <bruno@clisp.org>
+
 	* tests/sigsegv1.c: Include <config.h>.
 	* tests/sigsegv2.c: Likewise.
 	* tests/sigsegv3.c: Include <config.h> before all other headers.
@@ -229,10 +238,10 @@
 
 2006-06-17  Bruno Haible  <bruno@clisp.org>
 
-	* sigaltstack.m4: Insert 'volatile' and pass a pointer, to defeat
+	* m4/sigaltstack.m4: Insert 'volatile' and pass a pointer, to defeat
 	GCC 4 optimizations.
-	* sigaltstack-longjmp.m4: Likewise.
-	* sigaltstack-siglongjmp.m4: Likewise.
+	* m4/sigaltstack-longjmp.m4: Likewise.
+	* m4/sigaltstack-siglongjmp.m4: Likewise.
 
 2006-06-17  Bruno Haible  <bruno@clisp.org>
 

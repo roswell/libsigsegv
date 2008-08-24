@@ -1,5 +1,5 @@
-# sigaltstack-longjmp.m4 serial 4 (libsigsegv-2.5)
-dnl Copyright (C) 2002-2003, 2006 Bruno Haible <bruno@clisp.org>
+# sigaltstack-longjmp.m4 serial 5 (libsigsegv-2.6)
+dnl Copyright (C) 2002-2003, 2006, 2008 Bruno Haible <bruno@clisp.org>
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
 dnl Public License, this file may be distributed as part of a program
@@ -46,7 +46,7 @@ volatile int * recurse_1 (volatile int n, volatile int *p)
     *recurse_1 (n + 1, p) += n;
   return p;
 }
-volatile int recurse (volatile int n)
+int recurse (volatile int n)
 {
   int sum = 0;
   return *recurse_1 (n, &sum);
