@@ -31,7 +31,8 @@
 	* src/handler-win32.c (sigsegv_leave_handler): Likewise.
 	* src/handler-none.c (sigsegv_leave_handler): Likewise.
 	* src/machfault-macos.h (SIGSEGV_INTEGER_ARGUMENT_1,
-	SIGSEGV_INTEGER_ARGUMENT_2, SIGSEGV_INTEGER_ARGUMENT_3): New macros.
+	SIGSEGV_INTEGER_ARGUMENT_2, SIGSEGV_INTEGER_ARGUMENT_3,
+	SIGSEGV_FRAME_POINTER): New macros.
 	* tests/sigsegv3.c (handler_continuation): New function.
 	(handler): Update to new API.
 	* tests/stackoverflow1.c (stackoverflow_handler_continuation): New

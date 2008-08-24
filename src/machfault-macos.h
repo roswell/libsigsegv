@@ -72,10 +72,18 @@
 #define SIGSEGV_FAULT_ADDRESS(thr_state,exc_state)  (exc_state).__faultvaddr
 #define SIGSEGV_STACK_POINTER(thr_state)            (thr_state).__rsp
 #define SIGSEGV_PROGRAM_COUNTER(thr_state)          (thr_state).__rip
+#define SIGSEGV_FRAME_POINTER(thr_state)            (thr_state).__rbp
+#define SIGSEGV_INTEGER_ARGUMENT_1(thr_state)       (thr_state).__rdi
+#define SIGSEGV_INTEGER_ARGUMENT_2(thr_state)       (thr_state).__rsi
+#define SIGSEGV_INTEGER_ARGUMENT_3(thr_state)       (thr_state).__rdx
 #else
 #define SIGSEGV_FAULT_ADDRESS(thr_state,exc_state)  (exc_state).faultvaddr
 #define SIGSEGV_STACK_POINTER(thr_state)            (thr_state).rsp
 #define SIGSEGV_PROGRAM_COUNTER(thr_state)          (thr_state).rip
+#define SIGSEGV_FRAME_POINTER(thr_state)            (thr_state).rbp
+#define SIGSEGV_INTEGER_ARGUMENT_1(thr_state)       (thr_state).rdi
+#define SIGSEGV_INTEGER_ARGUMENT_2(thr_state)       (thr_state).rsi
+#define SIGSEGV_INTEGER_ARGUMENT_3(thr_state)       (thr_state).rdx
 #endif
 
 #else

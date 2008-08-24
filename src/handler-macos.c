@@ -489,13 +489,22 @@ sigsegv_leave_handler (void (*continuation) (void*, void*, void*),
           return 0;
         }
 
-#if defined __ppc64__ || defined __ppc__
+#if defined __ppc64__ || defined __ppc__ || defined __x86_64__
       /* Store arguments in registers.  */
       SIGSEGV_INTEGER_ARGUMENT_1 (thread_state) = (unsigned long) cont_arg1;
       SIGSEGV_INTEGER_ARGUMENT_2 (thread_state) = (unsigned long) cont_arg2;
       SIGSEGV_INTEGER_ARGUMENT_3 (thread_state) = (unsigned long) cont_arg3;
 #endif
-#if defined __x86_64__ || defined __i386__
+#if defined __x86_64__
+      /* Align stack.  */
+      {
+        unsigned long new_esp = SIGSEGV_STACK_POINTER (thread_state);
+        new_esp &= -16; /* align */
+        new_esp -= sizeof (void *); *(void **)new_esp = SIGSEGV_FRAME_POINTER (thread_state); /* push %rbp */
+        SIGSEGV_STACK_POINTER (thread_state) = new_esp;
+        SIGSEGV_FRAME_POINTER (thread_state) = new_esp; /* mov %rsp,%rbp */
+      }
+#elif defined __i386__
       /* Push arguments onto the stack.  */
       {
         unsigned long new_esp = SIGSEGV_STACK_POINTER (thread_state);
