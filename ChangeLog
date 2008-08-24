@@ -1,5 +1,10 @@
 2008-08-24  Bruno Haible  <bruno@clisp.org>
 
+	* configure.ac: Treat Dragonfly BSD platforms like FreeBSD.
+	Reported by Thomas Klausner <tk@giga.or.at>.
+
+2008-08-24  Bruno Haible  <bruno@clisp.org>
+
 	* src/stackvma-mincore.c (mincore_is_near_this): Improve logic. Needed
 	for reliable NULL pointer access classification as SIGSEGV on AIX 4.3.
 
