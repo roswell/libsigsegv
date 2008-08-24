@@ -20,6 +20,16 @@
 
 #if HAVE_SIGSEGV_RECOVERY
 
+#if defined _WIN32 && !defined __CYGWIN__
+  /* Windows doesn't have sigset_t.  */
+  typedef int sigset_t;
+# define sigemptyset(set)
+# define sigprocmask(how,set,oldset)
+#else
+  /* Unix */
+# include "config.h"
+#endif
+
 #include "mmaputil.h"
 #include <stdlib.h> /* for abort, exit */
 #include <signal.h>
