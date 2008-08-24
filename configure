@@ -16260,7 +16260,7 @@ volatile int * recurse_1 (volatile int n, volatile int *p)
     *recurse_1 (n + 1, p) += n;
   return p;
 }
-volatile int recurse (volatile int n)
+int recurse (volatile int n)
 {
   int sum = 0;
   return *recurse_1 (n, &sum);
@@ -16508,7 +16508,7 @@ volatile int * recurse_1 (volatile int n, volatile int *p)
     *recurse_1 (n + 1, p) += n;
   return p;
 }
-volatile int recurse (volatile int n)
+int recurse (volatile int n)
 {
   int sum = 0;
   return *recurse_1 (n, &sum);
@@ -16656,7 +16656,7 @@ volatile int * recurse_1 (volatile int n, volatile int *p)
     *recurse_1 (n + 1, p) += n;
   return p;
 }
-volatile int recurse (volatile int n)
+int recurse (volatile int n)
 {
   int sum = 0;
   return *recurse_1 (n, &sum);
@@ -16809,7 +16809,7 @@ volatile int * recurse_1 (volatile int n, volatile int *p)
     *recurse_1 (n + 1, p) += n;
   return p;
 }
-volatile int recurse (volatile int n)
+int recurse (volatile int n)
 {
   int sum = 0;
   return *recurse_1 (n, &sum);
@@ -16959,7 +16959,7 @@ volatile int * recurse_1 (volatile int n, volatile int *p)
     *recurse_1 (n + 1, p) += n;
   return p;
 }
-volatile int recurse (volatile int n)
+int recurse (volatile int n)
 {
   int sum = 0;
   return *recurse_1 (n, &sum);
@@ -17105,7 +17105,7 @@ volatile int * recurse_1 (volatile int n, volatile int *p)
     *recurse_1 (n + 1, p) += n;
   return p;
 }
-volatile int recurse (volatile int n)
+int recurse (volatile int n)
 {
   int sum = 0;
   return *recurse_1 (n, &sum);
@@ -17256,7 +17256,7 @@ volatile int * recurse_1 (volatile int n, volatile int *p)
     *recurse_1 (n + 1, p) += n;
   return p;
 }
-volatile int recurse (volatile int n)
+int recurse (volatile int n)
 {
   int sum = 0;
   return *recurse_1 (n, &sum);
