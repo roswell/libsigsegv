@@ -176,6 +176,7 @@ x86_64-unknown-linux2.6.20-gnu-glibc2.5    |   yes   |   yes     | 2.4
 x86_64-unknown-linux2.6.20.1-gnu-glibc2.5  |   yes   |   yes     | 2.4
 x86_64-unknown-linux2.6.21-gnu-glibc2.6    |   yes   |   yes     | 2.4
 x86_64-unknown-netbsd3.0                   |   yes   |   yes     | 2.4
+x86_64-unknown-netbsd4.99.72               |   yes   |   yes     | 2.5
 amd64-portbld-freebsd5.4                   |   yes   |   yes     | 2.2
 amd64-portbld-freebsd6.0                   |   yes   |   yes     | 2.3
 amd64-portbld-freebsd7.0                   |   yes   |   yes     | 2.3
