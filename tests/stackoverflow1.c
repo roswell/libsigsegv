@@ -50,6 +50,9 @@ sigset_t mainsigset;
 
 volatile int pass = 0;
 
+volatile char *stack_lower_bound;
+volatile char *stack_upper_bound;
+
 static void
 stackoverflow_handler_continuation (void *arg1, void *arg2, void *arg3)
 {
@@ -60,6 +63,10 @@ stackoverflow_handler_continuation (void *arg1, void *arg2, void *arg3)
 void
 stackoverflow_handler (int emergency, stackoverflow_context_t scp)
 {
+  char dummy;
+  volatile char *addr = &dummy;
+  if (!(addr >= stack_lower_bound && addr <= stack_upper_bound))
+    abort ();
   pass++;
   printf ("Stack overflow %d caught.\n", pass);
   sigprocmask (SIG_SETMASK, &mainsigset, NULL);
@@ -103,6 +110,8 @@ main ()
                                      mystack, sizeof (mystack))
       < 0)
     exit (2);
+  stack_lower_bound = mystack;
+  stack_upper_bound = mystack + sizeof (mystack) - 1;
 
   /* Save the current signal mask.  */
   sigemptyset (&emptyset);

@@ -1,3 +1,7 @@
+New in 2.7:
+
+* Support for IRIX 5.3. Contributed by Eric Blake.
+
 New in 2.6:
 
 * sigsegv_leave_handler is changed. Previously it was a normal function with

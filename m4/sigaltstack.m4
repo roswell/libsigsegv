@@ -1,5 +1,6 @@
-# sigaltstack.m4 serial 8 (libsigsegv-2.6)
+# sigaltstack.m4 serial 9 (libsigsegv-2.7)
 dnl Copyright (C) 2002-2006, 2008 Bruno Haible <bruno@clisp.org>
+dnl Copyright (C) 2008 Eric Blake <ebb9@byu.net>
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
 dnl Public License, this file may be distributed as part of a program
@@ -123,5 +124,74 @@ int main ()
   if test "$sv_cv_sigaltstack" != no; then
     AC_DEFINE(HAVE_WORKING_SIGALTSTACK, 1,
       [Define if you have the sigaltstack() function and it works.])
+
+    dnl The ss_sp field of a stack_t is, according to POSIX, the lowest address
+    dnl of the memory block designated as an alternate stack. But IRIX 5.3
+    dnl interprets it as the highest address!
+    AC_CACHE_CHECK([for correct stack_t interpretation],
+      [sv_cv_sigaltstack_low_base], [
+      AC_RUN_IFELSE([
+        AC_LANG_SOURCE([[
+#include <stdlib.h>
+#include <signal.h>
+#if HAVE_SYS_SIGNAL_H
+# include <sys/signal.h>
+#endif
+#ifndef SIGSTKSZ
+# define SIGSTKSZ 16384
+#endif
+volatile char *stack_lower_bound;
+volatile char *stack_upper_bound;
+static void check_stack_location (volatile char *addr)
+{
+  if (addr >= stack_lower_bound && addr <= stack_upper_bound)
+    exit (0);
+  else
+    exit (1);
+}
+static void stackoverflow_handler (int sig)
+{
+  char dummy;
+  check_stack_location (&dummy);
+}
+int main ()
+{
+  char mystack[2 * SIGSTKSZ];
+  stack_t altstack;
+  struct sigaction action;
+  /* Install the alternate stack.  */
+  altstack.ss_sp = mystack + SIGSTKSZ;
+  altstack.ss_size = SIGSTKSZ;
+  stack_lower_bound = (char *) altstack.ss_sp;
+  stack_upper_bound = (char *) altstack.ss_sp + altstack.ss_size - 1;
+  altstack.ss_flags = 0; /* no SS_DISABLE */
+  if (sigaltstack (&altstack, NULL) < 0)
+    exit (2);
+  /* Install the SIGSEGV handler.  */
+  sigemptyset (&action.sa_mask);
+  action.sa_handler = &stackoverflow_handler;
+  action.sa_flags = SA_ONSTACK;
+  if (sigaction (SIGSEGV, &action, (struct sigaction *) NULL) < 0)
+    exit(3);
+  /* Provoke a SIGSEGV.  */
+  raise (SIGSEGV);
+  exit (3);
+}]])],
+      [sv_cv_sigaltstack_low_base=yes],
+      [sv_cv_sigaltstack_low_base=no],
+      [
+        dnl FIXME: Put in some more known values here.
+        case "$host_os" in
+          irix5*) sv_cv_sigaltstack_low_base="no" ;;
+          *)      sv_cv_sigaltstack_low_base="guessing yes" ;;
+        esac
+      ])
+    ])
+    if test "$sv_cv_sigaltstack_low_base" = no; then
+      AC_DEFINE([SIGALTSTACK_SS_REVERSED], [1],
+        [Define if sigaltstack() interprets the stack_t.ss_sp field incorrectly,
+         as the highest address of the alternate stack range rather than as the
+         lowest address.])
+    fi
   fi
 ])

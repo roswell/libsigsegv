@@ -1,3 +1,16 @@
+2008-09-21  Eric Blake  <ebb9@byu.net>
+            Bruno Haible  <bruno@clisp.org>
+
+	Detect and work around bug in Irix 5.3 sigaltstack.
+	* m4/sigaltstack.m4 (SV_SIGALTSTACK): Test for broken stack_t direction
+	in sigaltstack.
+	* src/handler-unix.c (stackoverflow_install_handler): Adjust stack
+	accordingly.
+	* tests/stackoverflow1.c (stack_lower_bound, stack_upper_bound): New
+	variables.
+	(stackoverflow_handler): Use them to expose IRIX bug.
+	(main): Initialize them.
+
 2008-09-07  Bruno Haible  <bruno@clisp.org>
 
 	* m4/libtool.m4: Update from libtool-2.2.6.
