@@ -487,7 +487,7 @@ stackoverflow_install_handler (stackoverflow_handler_t handler,
   {
     stack_t ss;
 #if SIGALTSTACK_SS_REVERSED
-    ss.ss_sp = extra_stack + extra_stack_size - sizeof (void *);
+    ss.ss_sp = (char *) extra_stack + extra_stack_size - sizeof (void *);
     ss.ss_size = extra_stack_size - sizeof (void *);
 #else
     ss.ss_sp = extra_stack;
