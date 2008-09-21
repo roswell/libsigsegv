@@ -60,7 +60,14 @@ DEFS = @DEFS@
 
 libsigsegv_la_SOURCES = handler.c stackvma.c leave.c dispatcher.c version.c
 
-libsigsegv_la_LDFLAGS = -lc -no-undefined
+libsigsegv_la_LDFLAGS = \
+  -rpath $(libdir) \
+  -version-info $(LIBSIGSEGV_VERSION_INFO) \
+  -lc -no-undefined
+
+# Before making a release, change this according to the libtool documentation,
+# section "Library interface versions".
+LIBSIGSEGV_VERSION_INFO = 1:0:0
 
 # Dependencies.
 handler.$(OBJEXT) : ../config.h sigsegv.h @CFG_HANDLER@ $(noinst_HEADERS) 
