@@ -1,4 +1,4 @@
-# sigaltstack.m4 serial 9 (libsigsegv-2.7)
+# sigaltstack.m4 serial 10 (libsigsegv-2.7)
 dnl Copyright (C) 2002-2006, 2008 Bruno Haible <bruno@clisp.org>
 dnl Copyright (C) 2008 Eric Blake <ebb9@byu.net>
 dnl This file is free software, distributed under the terms of the GNU
@@ -74,7 +74,7 @@ int recurse (volatile int n)
 }
 int main ()
 {
-  char mystack[SIGSTKSZ];
+  char mystack[2 * SIGSTKSZ];
   stack_t altstack;
   struct sigaction action;
 #if defined HAVE_SETRLIMIT && defined RLIMIT_STACK
@@ -85,9 +85,10 @@ int main ()
   rl.rlim_cur = rl.rlim_max = 0x100000; /* 1 MB */
   setrlimit (RLIMIT_STACK, &rl);
 #endif
-  /* Install the alternate stack.  */
-  altstack.ss_sp = mystack;
-  altstack.ss_size = sizeof (mystack);
+  /* Install the alternate stack.  Use the midpoint of mystack, to guard
+     against a buggy interpretation of ss_sp on IRIX.  */
+  altstack.ss_sp = mystack + SIGSTKSZ;
+  altstack.ss_size = SIGSTKSZ;
   altstack.ss_flags = 0; /* no SS_DISABLE */
   if (sigaltstack (&altstack, NULL) < 0)
     exit (1);

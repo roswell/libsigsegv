@@ -1,3 +1,11 @@
+2008-09-23  Eric Blake  <ebb9@byu.net>
+
+	Use 2 * SIGSTKSZ consistently in configuration checks.
+	* m4/sigaltstack.m4 (SV_SIGALTSTACK): Work around IRIX sigaltstack bug.
+	* m4/sigaltstack-longjmp.m4 (SV_TRY_LEAVE_HANDLER_LONGJMP): Likewise.
+	* m4/sigaltstack-siglongjmp.m4 (SV_TRY_LEAVE_HANDLER_SIGLONGJMP):
+	Likewise.
+
 2008-09-21  Bruno Haible  <bruno@clisp.org>
 
 	* src/Makefile.am (LIBSIGSEGV_VERSION_INFO): New variable.

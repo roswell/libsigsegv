@@ -1,4 +1,4 @@
-# sigaltstack-longjmp.m4 serial 5 (libsigsegv-2.6)
+# sigaltstack-longjmp.m4 serial 6 (libsigsegv-2.7)
 dnl Copyright (C) 2002-2003, 2006, 2008 Bruno Haible <bruno@clisp.org>
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
@@ -53,7 +53,7 @@ int recurse (volatile int n)
 }
 int main ()
 {
-  char mystack[SIGSTKSZ];
+  char mystack[2 * SIGSTKSZ];
   stack_t altstack;
   struct sigaction action;
   sigset_t emptyset;
@@ -65,9 +65,10 @@ int main ()
   rl.rlim_cur = rl.rlim_max = 0x100000; /* 1 MB */
   setrlimit (RLIMIT_STACK, &rl);
 #endif
-  /* Install the alternate stack.  */
-  altstack.ss_sp = mystack;
-  altstack.ss_size = sizeof (mystack);
+  /* Install the alternate stack.  Use the midpoint of mystack, to guard
+     against a buggy interpretation of ss_sp on IRIX.  */
+  altstack.ss_sp = mystack + SIGSTKSZ;
+  altstack.ss_size = SIGSTKSZ;
   altstack.ss_flags = 0; /* no SS_DISABLE */
   if (sigaltstack (&altstack, NULL) < 0)
     exit (1);
