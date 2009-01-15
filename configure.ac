@@ -1,7 +1,7 @@
 dnl Autoconf configuration for libsigsegv.
 dnl Process this file with autoconf to produce a configure script.
 dnl
-dnl Copyright (C) 2002-2008  Bruno Haible <bruno@clisp.org>
+dnl Copyright (C) 2002-2009  Bruno Haible <bruno@clisp.org>
 dnl
 dnl This program is free software; you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
@@ -17,9 +17,9 @@ dnl You should have received a copy of the GNU General Public License
 dnl along with this program; if not, write to the Free Software Foundation,
 dnl Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-AC_PREREQ(2.62)
+AC_PREREQ([2.62])
 AC_INIT
-AC_CONFIG_SRCDIR(src/sigsegv.h.in)
+AC_CONFIG_SRCDIR([src/sigsegv.h.in])
 AC_CONFIG_AUX_DIR([build-aux])
 
 RSE_BOLD
@@ -55,7 +55,7 @@ if test -n "$glibcversion"; then
 fi
 AC_MSG_RESULT([$sv_cv_host])
 PLATFORM="$sv_cv_host"
-AC_SUBST(PLATFORM)
+AC_SUBST([PLATFORM])
 
 AC_PROG_INSTALL
 
@@ -84,7 +84,7 @@ case "$host_os" in
   *)
     CFG_SIGNALS=signals.h ;;
 esac
-AC_DEFINE_UNQUOTED(CFG_SIGNALS, "$CFG_SIGNALS",
+AC_DEFINE_UNQUOTED([CFG_SIGNALS], ["$CFG_SIGNALS"],
   [The name of the include file describing the fault signals.])
 
 # How to determine the memory page size.
@@ -502,15 +502,15 @@ AC_MSG_RESULT([$sv_cv_fault_include])
 if test -z "$CFG_FAULT"; then
   CFG_FAULT=fault-none.h
 fi
-AC_DEFINE_UNQUOTED(CFG_FAULT, "$CFG_FAULT",
+AC_DEFINE_UNQUOTED([CFG_FAULT], ["$CFG_FAULT"],
   [The name of the include file describing the fault handler.])
 if test -z "$CFG_MACHFAULT"; then
   CFG_MACHFAULT=fault-none.h
 fi
-AC_DEFINE_UNQUOTED(CFG_MACHFAULT, "$CFG_MACHFAULT",
+AC_DEFINE_UNQUOTED([CFG_MACHFAULT], ["$CFG_MACHFAULT"],
   [The name of the include file describing the Mach fault handler.])
-AC_SUBST(FAULT_CONTEXT)
-AC_SUBST(FAULT_CONTEXT_INCLUDE)
+AC_SUBST([FAULT_CONTEXT])
+AC_SUBST([FAULT_CONTEXT_INCLUDE])
 
 AC_MSG_CHECKING([if the system supports catching SIGSEGV])
 AC_MSG_RESULT([$sv_cv_have_sigsegv_recovery])
@@ -519,7 +519,7 @@ if test $sv_cv_have_sigsegv_recovery != no; then
 else
   HAVE_SIGSEGV_RECOVERY=0
 fi
-AC_SUBST(HAVE_SIGSEGV_RECOVERY)
+AC_SUBST([HAVE_SIGSEGV_RECOVERY])
 
 dnl The stackoverflow_context_t type depends on the CFG_FAULT include file.
 
@@ -599,7 +599,7 @@ main ()
   return 0;
 }
 EOF
-        AC_TRY_EVAL(ac_link)
+        AC_TRY_EVAL([ac_link])
         sv_cv_stack_direction=`./conftest`
       else
         sv_cv_stack_direction=0
@@ -612,17 +612,17 @@ EOF
     *)  sv_cv_stack_direction_msg="unknown";;
   esac
 ])
-AC_DEFINE_UNQUOTED(STACK_DIRECTION, [$sv_cv_stack_direction],
+AC_DEFINE_UNQUOTED([STACK_DIRECTION], [$sv_cv_stack_direction],
   [Define as the direction of stack growth for your system.
    STACK_DIRECTION > 0 => grows toward higher addresses
    STACK_DIRECTION < 0 => grows toward lower addresses
    STACK_DIRECTION = 0 => spaghetti stack.])
 
 dnl Determination of the stack's virtual memory area.
-AC_CACHE_CHECK([for PIOCMAP in sys/procfs.h], sv_cv_procfsvma, [
+AC_CACHE_CHECK([for PIOCMAP in sys/procfs.h], [sv_cv_procfsvma], [
   AC_TRY_LINK([#include <sys/procfs.h>],
     [int x = PIOCNMAP + PIOCMAP; prmap_t y;],
-    sv_cv_procfsvma=yes, sv_cv_procfsvma=no)
+    [sv_cv_procfsvma=yes], [sv_cv_procfsvma=no])
 ])
 AC_CHECK_FUNCS([mincore])
 CFG_STACKVMA=
@@ -640,14 +640,14 @@ if test -z "$CFG_STACKVMA" && test $ac_cv_func_mincore = yes; then
   CFG_STACKVMA=stackvma-mincore.c
 fi
 if test -n "$CFG_STACKVMA"; then
-  AC_DEFINE(HAVE_STACKVMA, 1,
+  AC_DEFINE([HAVE_STACKVMA], [1],
     [Define if CFG_STACKVMA is set to a nontrivial source file.])
 else
   CFG_STACKVMA=stackvma-none.c
 fi
-AC_DEFINE_UNQUOTED(CFG_STACKVMA, "$CFG_STACKVMA",
+AC_DEFINE_UNQUOTED([CFG_STACKVMA], ["$CFG_STACKVMA"],
   [The name of the file determining the stack virtual memory area.])
-AC_SUBST(CFG_STACKVMA)
+AC_SUBST([CFG_STACKVMA])
 
 AC_CHECK_FUNCS([getrlimit setrlimit])
 
@@ -657,7 +657,7 @@ dnl we don't know where exactly to place the guard page.
 SV_SIGALTSTACK
 
 AC_CACHE_CHECK([if the system supports catching stack overflow],
-               sv_cv_have_stack_overflow_recovery,
+               [sv_cv_have_stack_overflow_recovery],
 [
   dnl On Mach, it requires a machfault-*.h (see src/handler-macos.c).
   dnl On Unix, it requires either sigaltstack() or the BeOS set_signal_stack()
@@ -718,7 +718,7 @@ if test $sv_cv_have_stack_overflow_recovery != no; then
 else
   HAVE_STACK_OVERFLOW_RECOVERY=0
 fi
-AC_SUBST(HAVE_STACK_OVERFLOW_RECOVERY)
+AC_SUBST([HAVE_STACK_OVERFLOW_RECOVERY])
 
 # How to longjmp out of a signal handler, in such a way that the
 # alternate signal stack remains functional.
@@ -857,9 +857,9 @@ esac
 if test -z "$CFG_LEAVE"; then
   CFG_LEAVE=leave-none.c
 fi
-AC_DEFINE_UNQUOTED(CFG_LEAVE, "$CFG_LEAVE",
+AC_DEFINE_UNQUOTED([CFG_LEAVE], ["$CFG_LEAVE"],
   [The name of the file implementing sigsegv_reset_onstack_flag.])
-AC_SUBST(CFG_LEAVE)
+AC_SUBST([CFG_LEAVE])
 
 case "$host_os" in
   mingw* | cygwin*) CFG_HANDLER=handler-win32.c ;;
@@ -874,9 +874,9 @@ case "$host_os" in
     fi
     ;;
 esac
-AC_DEFINE_UNQUOTED(CFG_HANDLER, "$CFG_HANDLER",
+AC_DEFINE_UNQUOTED([CFG_HANDLER], ["$CFG_HANDLER"],
   [The name of the file implementing the handler functionality.])
-AC_SUBST(CFG_HANDLER)
+AC_SUBST([CFG_HANDLER])
 
 { echo; echo "${term_bold}Build Parameters:${term_norm}"; } >& AS_MESSAGE_FD
 
@@ -885,7 +885,7 @@ AC_RELOCATABLE_NOP
 
 { echo; echo "${term_bold}Output Substitution:${term_norm}"; } >& AS_MESSAGE_FD
 
-dnl AC_OUTPUT(Makefile)
+dnl AC_OUTPUT([Makefile])
 AC_OUTPUT([Makefile
            src/Makefile src/sigsegv.h
            tests/Makefile])
