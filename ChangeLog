@@ -1,5 +1,10 @@
 2009-05-21  Bruno Haible  <bruno@clisp.org>
 
+	* configure.ac (FAULT_CONTEXT_INCLUDE): Don't substitute into
+	Makefiles.
+
+2009-05-21  Bruno Haible  <bruno@clisp.org>
+
 	* tests/Makefile.am (AUTOMAKE_OPTIONS): Assume automake >= 1.11.
 	Use color-tests option.
 

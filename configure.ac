@@ -510,7 +510,8 @@ fi
 AC_DEFINE_UNQUOTED([CFG_MACHFAULT], ["$CFG_MACHFAULT"],
   [The name of the include file describing the Mach fault handler.])
 AC_SUBST([FAULT_CONTEXT])
-AC_SUBST([FAULT_CONTEXT_INCLUDE])
+dnl AM_SUBST_NOTMAKE, because FAULT_CONTEXT_INCLUDE may have a multiline value.
+AM_SUBST_NOTMAKE([FAULT_CONTEXT_INCLUDE])
 
 AC_MSG_CHECKING([if the system supports catching SIGSEGV])
 AC_MSG_RESULT([$sv_cv_have_sigsegv_recovery])
