@@ -56,6 +56,7 @@ i386-apple-darwin9.1.0                     |   yes   |   yes     | 2.5
 i386-apple-darwin9.2.2                     |   yes   |   yes     | 2.5
 i386-apple-darwin9.3.0                     |   yes   |   yes     | 2.6
 i386-apple-darwin9.4.0                     |   yes   |   yes     | 2.5
+i386-apple-darwin9.5.0                     |   yes   |   yes     | 2.5
 i586-pc-linux2.2.14-gnu-glibc2.1           |   yes   |   yes     | 2.1
 i686-pc-linux2.2.14-gnu-glibc2.1           |   yes   |   yes     | 2.0
 i686-pc-linux2.2.19-gnu-glibc2.1           |   yes   |   yes     | 1.95
@@ -118,7 +119,8 @@ ia64-unknown-linux2.4.21-gnu-glibc2.3      |   yes   |   yes     | 2.6
 ia64-unknown-linux2.6.9-gnu-glibc2.3       |   yes   |   yes     | 2.6
 ia64-unknown-linux2.6.16.27-gnu-glibc2.4   |   yes   |   yes     | 2.6
 mips-sgi-irix5.3                           |   yes   |   yes     | 2.6+
-mips-sgi-irix6.5                           |   yes   |   yes     | 2.6
+mips-sgi-irix6.2                           |   yes   |   yes     | 2.6+
+mips-sgi-irix6.5                           |   yes   |   yes     | 2.6+
 mips-unknown-linux2.4.27-gnu-glibc2.3      |   yes   |   yes     | 2.6
 nsr-tandem-nsk                             |   no    |   no      | 2.1
 rs6000-ibm-aix3.2.5                        |   yes   |   no      | 2.2
