@@ -1,5 +1,5 @@
 ## Makefile for libsigsegv/tests.
-## Copyright (C) 2002-2003, 2008 Bruno Haible <bruno@clisp.org>
+## Copyright (C) 2002-2003, 2008-2009 Bruno Haible <bruno@clisp.org>
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 
 ## Process this file with automake to produce Makefile.in.
 
-AUTOMAKE_OPTIONS = 1.5 gnits no-dependencies
+AUTOMAKE_OPTIONS = 1.11 gnits no-dependencies color-tests
 
 TESTS = sigsegv1 sigsegv2 sigsegv3 stackoverflow1 stackoverflow2
 
