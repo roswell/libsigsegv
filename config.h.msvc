@@ -82,6 +82,9 @@
 /* Define to 1 if you have the <sys/types.h> header file. */
 #undef HAVE_SYS_TYPES_H
 
+/* Define to 1 if you have the <ucontext.h> header file. */
+#undef HAVE_UCONTEXT_H
+
 /* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
 
@@ -109,6 +112,11 @@
 
 /* Define to the version of this package. */
 #undef PACKAGE_VERSION
+
+/* Define if sigaltstack() interprets the stack_t.ss_sp field incorrectly, as
+   the highest address of the alternate stack range rather than as the lowest
+   address. */
+#undef SIGALTSTACK_SS_REVERSED
 
 /* Define as the direction of stack growth for your system. STACK_DIRECTION >
    0 => grows toward higher addresses STACK_DIRECTION < 0 => grows toward
