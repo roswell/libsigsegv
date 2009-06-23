@@ -1,5 +1,5 @@
 ## Makefile for libsigsegv/src.
-## Copyright (C) 2002-2006, 2008 Bruno Haible <bruno@clisp.org>
+## Copyright (C) 2002-2006, 2008-2009 Bruno Haible <bruno@clisp.org>
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -41,7 +41,8 @@ noinst_HEADERS = \
   fault-none.h \
   fault-openbsd.h fault-openbsd-i386.h \
   fault-osf.h fault-osf-alpha.h \
-  fault-posix.h fault-solaris.h fault-solaris-i386.h fault-solaris-sparc.h \
+  fault-posix.h fault-posix-ucontext.h \
+  fault-solaris.h fault-solaris-i386.h fault-solaris-sparc.h \
   machfault.h machfault-macos.h \
   signals.h signals-bsd.h signals-hpux.h signals-hurd.h signals-macos.h \
   leave.h \

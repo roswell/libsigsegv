@@ -1,5 +1,5 @@
-/* Fault handler information.  POSIX:2001 (= SUSV3 = XPG 6) version.
-   Copyright (C) 2002  Bruno Haible <bruno@clisp.org>
+/* Fault handler information.  POSIX:2008 (XPG 7) version.
+   Copyright (C) 2002, 2009  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -15,9 +15,7 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#include <ucontext.h>
-
-#define SIGSEGV_FAULT_HANDLER_ARGLIST  int sig, siginfo_t *sip, void *ucp
+#define SIGSEGV_FAULT_HANDLER_ARGLIST  int sig, siginfo_t *sip, void *context
 #define SIGSEGV_FAULT_ADDRESS  sip->si_addr
-#define SIGSEGV_FAULT_CONTEXT  ((ucontext_t *) ucp)
+#define SIGSEGV_FAULT_CONTEXT  context
 #define SIGSEGV_FAULT_ADDRESS_FROM_SIGINFO

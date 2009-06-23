@@ -1,5 +1,19 @@
 2009-06-23  Bruno Haible  <bruno@clisp.org>
 
+	Add support for platforms that follow POSIX:2008, not POSIX:2001.
+	* configure.ac (POSIX): Add MirBSD to known list.
+	(CFG_FAULT, FAULT_CONTEXT, FAULT_CONTEXT_INCLUDE): Define appropriately
+	when <ucontext.h> does not exist.
+	* src/fault-posix-ucontext.h: Renamed from src/fault-posix.h.
+	* src/fault-posix.h: New file.
+	* src/fault-aix5.h: Update.
+	* src/fault-hpux-hppa.h: Update.
+	* src/fault-netbsd.h: Update.
+	* src/fault-solaris.h: Update.
+	* src/Makefile.am (noinst_HEADERS): Add fault-posix-ucontext.h.
+
+2009-06-23  Bruno Haible  <bruno@clisp.org>
+
 	* configure.ac (FAULT_CONTEXT_INCLUDE): Reinstall the AC_SUBST
 	invocation.
 

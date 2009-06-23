@@ -1,6 +1,6 @@
 /* Fault handler information.  HP-UX HPPA version.
    Copyright (C) 2002  Paolo Bonzini <bonzini@gnu.org>
-   Copyright (C) 2002-2003  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002-2003, 2009  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@
 
 #else
 
-#include "fault-posix.h"
+#include "fault-posix-ucontext.h"
 
 #define SIGSEGV_FAULT_STACKPOINTER  GET_SP (((ucontext_t *) ucp)->uc_mcontext)
 

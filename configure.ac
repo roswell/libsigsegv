@@ -106,7 +106,7 @@ case "$host_os" in
 
 dnl FIXME: Put in some more known values into the third argument.
 SV_TRY_FAULT([POSIX], sv_cv_fault_posix,
-  [*-*-solaris2.[7-9] | i?86-*-linux2.[4-9]* | i?86-*-freebsd[4-9]* | alpha*-dec-osf[4-9]* | *-*-hpux11* | mips-sgi-irix6*],
+  [*-*-solaris2.[7-9] | i?86-*-linux2.[4-9]* | i?86-*-freebsd[4-9]* | i?86-*-mirbsd1[0-9] | alpha*-dec-osf[4-9]* | *-*-hpux11* | mips-sgi-irix6*],
   [],
   [int sig, siginfo_t *sip, void *ucp],
   [sip->si_addr],
@@ -333,29 +333,37 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_posix" = yes; then
       ;;
   esac
   if test -z "$CFG_FAULT"; then
-    case "$host_os" in
-      solaris*)
-        case "$host_cpu" in
-          i?86 | x86_64) CFG_FAULT=fault-solaris-i386.h ;;
-          sparc*) CFG_FAULT=fault-solaris-sparc.h ;;
-          *) CFG_FAULT=fault-solaris.h ;;
-        esac
-        ;;
-      aix*)
-        case "$host_cpu" in
-          powerpc* | rs6000) CFG_FAULT=fault-aix5-powerpc.h ;;
-          *) CFG_FAULT=fault-aix5.h ;;
-        esac
-        ;;
-      netbsd*)
-        CFG_FAULT=fault-netbsd.h
-        ;;
-      *)
-        CFG_FAULT=fault-posix.h
-        ;;
-    esac
-    FAULT_CONTEXT='ucontext_t'
-    FAULT_CONTEXT_INCLUDE='#include <ucontext.h>'
+    dnl <ucontext.h> was required by POSIX:2001, and many systems have it. But
+    dnl POSIX:2008 does not require it any more, and MirBSD does not have it.
+    AC_CHECK_HEADERS([ucontext.h])
+    if test $ac_cv_header_ucontext_h = yes; then
+      case "$host_os" in
+        solaris*)
+          case "$host_cpu" in
+            i?86 | x86_64) CFG_FAULT=fault-solaris-i386.h ;;
+            sparc*) CFG_FAULT=fault-solaris-sparc.h ;;
+            *) CFG_FAULT=fault-solaris.h ;;
+          esac
+          ;;
+        aix*)
+          case "$host_cpu" in
+            powerpc* | rs6000) CFG_FAULT=fault-aix5-powerpc.h ;;
+            *) CFG_FAULT=fault-aix5.h ;;
+          esac
+          ;;
+        netbsd*)
+          CFG_FAULT=fault-netbsd.h
+          ;;
+        *)
+          CFG_FAULT=fault-posix-ucontext.h
+          ;;
+      esac
+      FAULT_CONTEXT='ucontext_t'
+      FAULT_CONTEXT_INCLUDE='#include <ucontext.h>'
+    else
+      CFG_FAULT=fault-posix.h
+      FAULT_CONTEXT='void'
+    fi
   fi
 fi
 if test -z "$CFG_FAULT"; then
