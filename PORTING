@@ -83,6 +83,7 @@ i586-pc-linux2.4.22-gnu-glibc2.3           |   yes   |   yes     | 2.0
 i386-pc-mingw32                            |   yes   |   yes     | 2.4
 i586-pc-mingw32                            |   yes   |   yes     | 2.1
 i686-pc-mingw32                            |   yes   |   yes     | 2.6
+i386-unknown-mirbsd10                      |   yes   |   yes     | 2.7
 i386-pc-os2-emx                            |   no    |   no      | 2.5
 i386-pc-solaris2.9                         |   yes   |   yes     | 2.2
 i386-pc-solaris2.10                        |   yes   |   yes     | 2.6
