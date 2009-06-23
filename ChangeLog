@@ -1,5 +1,9 @@
 2009-06-23  Bruno Haible  <bruno@clisp.org>
 
+	* Makefile.am (check-next): No longer ask for copies of config.log.
+
+2009-06-23  Bruno Haible  <bruno@clisp.org>
+
 	Improve support for MirBSD 10.
 	* configure.ac (CFG_FAULT, FAULT_CONTEXT): Treat MirBSD/i386 like
 	OpenBSD/i386.
