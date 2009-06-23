@@ -1,3 +1,8 @@
+2009-06-23  Bruno Haible  <bruno@clisp.org>
+
+	* configure.ac (FAULT_CONTEXT_INCLUDE): Reinstall the AC_SUBST
+	invocation.
+
 2009-05-21  Bruno Haible  <bruno@clisp.org>
 
 	* configure.ac (FAULT_CONTEXT_INCLUDE): Don't substitute into
