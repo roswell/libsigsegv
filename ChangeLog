@@ -1,5 +1,11 @@
 2009-06-23  Bruno Haible  <bruno@clisp.org>
 
+	Improve support for MirBSD 10.
+	* configure.ac (CFG_FAULT, FAULT_CONTEXT): Treat MirBSD/i386 like
+	OpenBSD/i386.
+
+2009-06-23  Bruno Haible  <bruno@clisp.org>
+
 	Add support for platforms that follow POSIX:2008, not POSIX:2001.
 	* configure.ac (POSIX): Add MirBSD to known list.
 	(CFG_FAULT, FAULT_CONTEXT, FAULT_CONTEXT_INCLUDE): Define appropriately

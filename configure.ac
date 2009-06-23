@@ -323,6 +323,14 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_posix" = yes; then
       esac
       FAULT_CONTEXT='struct sigcontext'
       ;;
+    mirbsd*)
+      case "$host_cpu" in
+        i?86 | x86_64)
+          CFG_FAULT=fault-openbsd-i386.h
+          FAULT_CONTEXT='struct sigcontext'
+          ;;
+      esac
+      ;;
     linux*)
       case "$host_cpu" in
         ia64)

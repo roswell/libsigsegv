@@ -1,6 +1,7 @@
 New in 2.7:
 
 * Support for platforms that follow POSIX:2008, not POSIX:2001.
+* Support for MirBSD 10.
 * Support for IRIX 5.3. Contributed by Eric Blake.
 
 New in 2.6:
