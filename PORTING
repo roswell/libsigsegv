@@ -100,6 +100,7 @@ i386-unknown-freebsd4.10                   |   yes   |   yes     | 2.2
 i386-unknown-freebsd5.0                    |   yes   |   yes     | 2.6
 i386-portbld-freebsd6.0                    |   yes   |   yes     | 2.3
 i386-unknown-freebsd6.2                    |   yes   |   yes     | 2.6
+i386-unknown-freebsd6.4                    |   yes   |   yes     | 2.6
 i686-unknown-kfreebsd6.2-gnu-glibc2.6      |   yes   |   yes     | 2.5+
 i386-unknown-netbsdelf1.6                  |   no    |   no      | 2.6
 i386-unknown-netbsdelf2.0.2                |   yes   |   yes     | 2.4
