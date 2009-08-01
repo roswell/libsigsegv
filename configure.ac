@@ -261,29 +261,6 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_netbsd_alpha" = yes; then
   esac
   FAULT_CONTEXT='struct sigcontext'
 fi
-if test -z "$CFG_FAULT" && test "$sv_cv_fault_linux_i386" = yes; then
-  case "$host_cpu" in
-    i?86 | x86_64) CFG_FAULT=fault-linux-i386-old.h ;;
-  esac
-  FAULT_CONTEXT='struct sigcontext'
-fi
-if test -z "$CFG_FAULT" && test "$sv_cv_fault_linux_i386_old" = yes; then
-  case "$host_cpu" in
-    i?86 | x86_64) CFG_FAULT=fault-linux-i386-oldold.h ;;
-  esac
-  FAULT_CONTEXT='struct sigcontext'
-fi
-if test -z "$CFG_FAULT" && test "$sv_cv_fault_linux_powerpc" = yes; then
-  case "$host_cpu" in
-    powerpc* | rs6000) CFG_FAULT=fault-linux-powerpc-old.h ;;
-  esac
-  FAULT_CONTEXT='struct sigcontext'
-fi
-if test -z "$CFG_FAULT" && test "$sv_cv_fault_linux_hppa" = yes; then
-  case "$host_cpu" in
-    hppa* | parisc*) CFG_FAULT=fault-linux-hppa-old.h ;;
-  esac
-fi
 if test -z "$CFG_FAULT" && test "$sv_cv_fault_hurd" = yes; then
   case "$host_os" in
     netbsd*) # A false positive.
@@ -416,6 +393,29 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_posix" = yes; then
       FAULT_CONTEXT='void'
     fi
   fi
+fi
+if test -z "$CFG_FAULT" && test "$sv_cv_fault_linux_i386" = yes; then
+  case "$host_cpu" in
+    i?86 | x86_64) CFG_FAULT=fault-linux-i386-old.h ;;
+  esac
+  FAULT_CONTEXT='struct sigcontext'
+fi
+if test -z "$CFG_FAULT" && test "$sv_cv_fault_linux_i386_old" = yes; then
+  case "$host_cpu" in
+    i?86 | x86_64) CFG_FAULT=fault-linux-i386-oldold.h ;;
+  esac
+  FAULT_CONTEXT='struct sigcontext'
+fi
+if test -z "$CFG_FAULT" && test "$sv_cv_fault_linux_powerpc" = yes; then
+  case "$host_cpu" in
+    powerpc* | rs6000) CFG_FAULT=fault-linux-powerpc-old.h ;;
+  esac
+  FAULT_CONTEXT='struct sigcontext'
+fi
+if test -z "$CFG_FAULT" && test "$sv_cv_fault_linux_hppa" = yes; then
+  case "$host_cpu" in
+    hppa* | parisc*) CFG_FAULT=fault-linux-hppa-old.h ;;
+  esac
 fi
 if test -z "$CFG_FAULT"; then
   case "$host_os" in

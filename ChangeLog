@@ -1,5 +1,12 @@
 2009-08-01  Bruno Haible  <bruno@clisp.org>
 
+	Prefer the POSIX way over the traditional one, on Linux.
+	* configure.ac: Use the traditional Linux way only if the POSIX way
+	does not work.
+	* NEWS: Mention the change.
+
+2009-08-01  Bruno Haible  <bruno@clisp.org>
+
 	Add knowledge where to find the stack pointer on Linux platforms.
 	* src/fault-linux-alpha.h: New file.
 	* src/fault-linux-arm.h: New file.

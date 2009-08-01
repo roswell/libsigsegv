@@ -3,6 +3,11 @@ New in 2.7:
 * Support for platforms that follow POSIX:2008, not POSIX:2001.
 * Support for MirBSD 10.
 * Support for IRIX 5.3. Contributed by Eric Blake.
+* On Linux platforms, libsigsegv now prefers the POSIX way of defining the
+  signal handler over than the traditional one, when both are supported.
+  As a consequence, on Linux/i386 and other Linux platforms, the type
+  'stackoverflow_context_t' is now typedefed to 'ucontext_t *' rather than
+  'struct sigcontext *'.
 
 New in 2.6:
 
