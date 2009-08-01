@@ -31,7 +31,7 @@ noinst_HEADERS = \
   fault-hpux.h fault-hpux-hppa.h fault-hurd.h fault-irix.h fault-irix-mips.h \
   fault-linux.h fault-linux-alpha-old.h fault-linux-arm-old.h \
   fault-linux-cris-old.h fault-linux-hppa-old.h \
-  fault-linux-i386.h fault-linux-i386-oldold.h \
+  fault-linux-i386-old.h fault-linux-i386-oldold.h \
   fault-linux-ia64-old.h fault-linux-m68k-old.h fault-linux-m68k-old.c \
   fault-linux-mips-old.h fault-linux-powerpc-old.h fault-linux-s390-old.h \
   fault-linux-sh-old.h fault-linux-sparc-old.h fault-linux-x86_64-old.h \

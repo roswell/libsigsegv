@@ -263,7 +263,7 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_netbsd_alpha" = yes; then
 fi
 if test -z "$CFG_FAULT" && test "$sv_cv_fault_linux_i386" = yes; then
   case "$host_cpu" in
-    i?86 | x86_64) CFG_FAULT=fault-linux-i386.h ;;
+    i?86 | x86_64) CFG_FAULT=fault-linux-i386-old.h ;;
   esac
   FAULT_CONTEXT='struct sigcontext'
 fi
