@@ -158,6 +158,7 @@ PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
 PACKAGE_NAME = @PACKAGE_NAME@
 PACKAGE_STRING = @PACKAGE_STRING@
 PACKAGE_TARNAME = @PACKAGE_TARNAME@
+PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PLATFORM = @PLATFORM@
@@ -228,11 +229,19 @@ noinst_HEADERS = \
   fault-beos.h fault-beos-i386.h \
   fault-bsd.h fault-freebsd-i386.h \
   fault-hpux.h fault-hpux-hppa.h fault-hurd.h fault-irix.h fault-irix-mips.h \
-  fault-linux.h fault-linux-alpha.h fault-linux-arm.h fault-linux-cris.h \
-  fault-linux-hppa.h fault-linux-i386.h fault-linux-i386-old.h \
-  fault-linux-ia64.h fault-linux-m68k.h fault-linux-m68k.c fault-linux-mips.h \
-  fault-linux-powerpc.h fault-linux-s390.h fault-linux-sh.h \
-  fault-linux-sparc.h fault-linux-x86_64.h \
+  fault-linux.h fault-linux-alpha.h fault-linux-alpha-old.h \
+  fault-linux-arm.h fault-linux-arm-old.h \
+  fault-linux-cris.h fault-linux-cris-old.h \
+  fault-linux-hppa.h fault-linux-hppa-old.h \
+  fault-linux-i386.h fault-linux-i386-old.h fault-linux-i386-oldold.h \
+  fault-linux-ia64.h fault-linux-ia64-old.h \
+  fault-linux-m68k.h fault-linux-m68k-old.h fault-linux-m68k-old.c \
+  fault-linux-mips.h fault-linux-mips-old.h \
+  fault-linux-powerpc.h fault-linux-powerpc-old.h \
+  fault-linux-s390.h fault-linux-s390-old.h \
+  fault-linux-sh.h fault-linux-sh-old.h \
+  fault-linux-sparc.h fault-linux-sparc-old.h \
+  fault-linux-x86_64-old.h \
   fault-macos-i386.h \
   fault-macosdarwin5-powerpc.h fault-macosdarwin5-powerpc.c \
   fault-macosdarwin7-powerpc.h fault-macosdarwin7-powerpc.c \
