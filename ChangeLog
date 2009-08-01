@@ -1,5 +1,10 @@
 2009-08-01  Bruno Haible  <bruno@clisp.org>
 
+	* src/fault-linux-i386-oldold.h: Renamed from
+	src/fault-linux-i386-old.h.
+	* src/Makefile.am (noinst_HEADERS): Update.
+	* configure.ac: Update.
+
 	* src/fault-linux-alpha-old.h: Renamed from src/fault-linux-alpha.h.
 	* src/fault-linux-arm-old.h: Renamed from src/fault-linux-arm.h.
 	* src/fault-linux-cris-old.h: Renamed from src/fault-linux-cris.h.
