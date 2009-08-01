@@ -1,3 +1,22 @@
+2009-08-01  Bruno Haible  <bruno@clisp.org>
+
+	* src/fault-linux-alpha-old.h: Renamed from src/fault-linux-alpha.h.
+	* src/fault-linux-arm-old.h: Renamed from src/fault-linux-arm.h.
+	* src/fault-linux-cris-old.h: Renamed from src/fault-linux-cris.h.
+	* src/fault-linux-hppa-old.h: Renamed from src/fault-linux-hppa.h.
+	* src/fault-linux-ia64-old.h: Renamed from src/fault-linux-ia64.h.
+	* src/fault-linux-m68k-old.c: Renamed from src/fault-linux-m68k.c.
+	* src/fault-linux-m68k-old.h: Renamed from src/fault-linux-m68k.h.
+	Update.
+	* src/fault-linux-mips-old.h: Renamed from src/fault-linux-mips.h.
+	* src/fault-linux-powerpc-old.h: Renamed from src/fault-linux-powerpc.h.
+	* src/fault-linux-s390-old.h: Renamed from src/fault-linux-s390.h.
+	* src/fault-linux-sh-old.h: Renamed from src/fault-linux-sh.h.
+	* src/fault-linux-sparc-old.h: Renamed from src/fault-linux-sparc.h.
+	* src/fault-linux-x86_64-old.h: Renamed from src/fault-linux-x86_64.h.
+	* src/Makefile.am (noinst_HEADERS): Update.
+	* configure.ac: Update.
+
 2009-06-23  Bruno Haible  <bruno@clisp.org>
 
 	* Makefile.am (check-next): No longer ask for copies of config.log.

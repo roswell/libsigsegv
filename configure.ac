@@ -127,7 +127,7 @@ SV_TRY_FAULT([old Linux/i386], sv_cv_fault_linux_i386_old,
 dnl FIXME: Put in some more known values into the third argument.
 SV_TRY_FAULT([Linux/m68k], sv_cv_fault_linux_m68k, [],
   [#include <asm/sigcontext.h>
-#include "$srcdir/src/fault-linux-m68k.c"],
+#include "$srcdir/src/fault-linux-m68k-old.c"],
   [int sig, int code, struct sigcontext *scp],
   [get_fault_addr (scp)])
 
@@ -275,13 +275,13 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_linux_i386_old" = yes; then
 fi
 if test -z "$CFG_FAULT" && test "$sv_cv_fault_linux_powerpc" = yes; then
   case "$host_cpu" in
-    powerpc* | rs6000) CFG_FAULT=fault-linux-powerpc.h ;;
+    powerpc* | rs6000) CFG_FAULT=fault-linux-powerpc-old.h ;;
   esac
   FAULT_CONTEXT='struct sigcontext'
 fi
 if test -z "$CFG_FAULT" && test "$sv_cv_fault_linux_hppa" = yes; then
   case "$host_cpu" in
-    hppa* | parisc*) CFG_FAULT=fault-linux-hppa.h ;;
+    hppa* | parisc*) CFG_FAULT=fault-linux-hppa-old.h ;;
   esac
 fi
 if test -z "$CFG_FAULT" && test "$sv_cv_fault_hurd" = yes; then
@@ -334,7 +334,7 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_posix" = yes; then
     linux*)
       case "$host_cpu" in
         ia64)
-          CFG_FAULT=fault-linux-ia64.h
+          CFG_FAULT=fault-linux-ia64-old.h
           FAULT_CONTEXT='struct sigcontext'
           ;;
       esac
@@ -413,7 +413,7 @@ dnl
 if test -z "$CFG_FAULT" && test "$sv_cv_fault_linux_m68k" = yes; then
   case "$host_cpu" in
     m68*)
-      CFG_FAULT=fault-linux-m68k.h
+      CFG_FAULT=fault-linux-m68k-old.h
       FAULT_CONTEXT='struct sigcontext'
       ;;
   esac
@@ -456,35 +456,35 @@ else
     linux*)
       case "$host_cpu" in
         alpha*)
-          CFG_FAULT=fault-linux-alpha.h
+          CFG_FAULT=fault-linux-alpha-old.h
           FAULT_CONTEXT='struct sigcontext'
           ;;
         arm* | strongarm* | xscale*)
-          CFG_FAULT=fault-linux-arm.h
+          CFG_FAULT=fault-linux-arm-old.h
           FAULT_CONTEXT='struct sigcontext'
           ;;
         cris)
-          CFG_FAULT=fault-linux-cris.h
+          CFG_FAULT=fault-linux-cris-old.h
           FAULT_CONTEXT='struct sigcontext'
           ;;
         mips*)
-          CFG_FAULT=fault-linux-mips.h
+          CFG_FAULT=fault-linux-mips-old.h
           FAULT_CONTEXT='struct sigcontext'
           ;;
         s390*)
-          CFG_FAULT=fault-linux-s390.h
+          CFG_FAULT=fault-linux-s390-old.h
           FAULT_CONTEXT='struct sigcontext'
           ;;
         sh*)
-          CFG_FAULT=fault-linux-sh.h
+          CFG_FAULT=fault-linux-sh-old.h
           FAULT_CONTEXT='struct sigcontext'
           ;;
         sparc*)
-          CFG_FAULT=fault-linux-sparc.h
+          CFG_FAULT=fault-linux-sparc-old.h
           FAULT_CONTEXT='struct sigcontext'
           ;;
         x86_64)
-          CFG_FAULT=fault-linux-x86_64.h
+          CFG_FAULT=fault-linux-x86_64-old.h
           FAULT_CONTEXT='struct sigcontext'
           ;;
       esac

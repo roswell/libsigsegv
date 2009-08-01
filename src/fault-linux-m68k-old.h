@@ -1,5 +1,5 @@
 /* Fault handler information.  Linux/m68k version.
-   Copyright (C) 2002  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002, 2009  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
 #include <asm/sigcontext.h>
-#include "fault-linux-m68k.c"
+#include "fault-linux-m68k-old.c"
 
 #define SIGSEGV_FAULT_HANDLER_ARGLIST  int sig, int code, struct sigcontext *scp
 #define SIGSEGV_FAULT_ADDRESS  (unsigned long) get_fault_addr (scp)
