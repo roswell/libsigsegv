@@ -362,6 +362,49 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_posix" = yes; then
         netbsd*)
           CFG_FAULT=fault-netbsd.h
           ;;
+        linux*)
+          case "$host_cpu" in
+            alpha*)
+              CFG_FAULT=fault-linux-alpha.h
+              ;;
+            arm* | strongarm* | xscale*)
+              CFG_FAULT=fault-linux-arm.h
+              ;;
+            cris)
+              CFG_FAULT=fault-linux-cris.h
+              ;;
+            hppa* | parisc*)
+              CFG_FAULT=fault-linux-hppa.h
+              ;;
+            i?86 | x86_64)
+              CFG_FAULT=fault-linux-i386.h
+              ;;
+            ia64)
+              CFG_FAULT=fault-linux-ia64.h
+              ;;
+            m68*)
+              CFG_FAULT=fault-linux-m68k.h
+              ;;
+            mips*)
+              CFG_FAULT=fault-linux-mips.h
+              ;;
+            powerpc* | rs6000)
+              CFG_FAULT=fault-linux-powerpc.h
+              ;;
+            s390*)
+              CFG_FAULT=fault-linux-s390.h
+              ;;
+            sh*)
+              CFG_FAULT=fault-linux-sh.h
+              ;;
+            sparc*)
+              CFG_FAULT=fault-linux-sparc.h
+              ;;
+            *)
+              CFG_FAULT=fault-posix-ucontext.h
+              ;;
+          esac
+          ;;
         *)
           CFG_FAULT=fault-posix-ucontext.h
           ;;

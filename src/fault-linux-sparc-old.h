@@ -1,5 +1,5 @@
 /* Fault handler information.  Linux/SPARC version.
-   Copyright (C) 2002  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002, 2009  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -20,4 +20,12 @@
 #define SIGSEGV_FAULT_HANDLER_ARGLIST  int sig, int code, struct sigcontext *scp, void *addr /* FIXME */
 #define SIGSEGV_FAULT_ADDRESS  addr  /* in case of SunOS4 signal frames */
 #define SIGSEGV_FAULT_CONTEXT  scp
-#define SIGSEGV_FAULT_STACKPOINTER  scp->sigc_sp /* FIXME: not scp->si_regs.u_regs[14] ? */
+#if 1 /* Old? FIXME */
+# define SIGSEGV_FAULT_STACKPOINTER  scp->sigc_sp
+#else
+# if __WORDSIZE == 64
+#  define SIGSEGV_FAULT_STACKPOINTER  scp->sigc_regs.u_regs[14]
+# else
+#  define SIGSEGV_FAULT_STACKPOINTER  scp->si_regs.u_regs[14]
+# endif
+#endif

@@ -1,5 +1,5 @@
-/* Fault handler information.  Linux/HPPA version.
-   Copyright (C) 2002-2003, 2009  Bruno Haible <bruno@clisp.org>
+/* Fault handler information.  Linux/ARM version when it supports POSIX.
+   Copyright (C) 2002, 2009  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -15,17 +15,14 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#include <ucontext.h>
+#include "fault-posix-ucontext.h"
 
-#define SIGSEGV_FAULT_HANDLER_ARGLIST  int sig, siginfo_t *sip, void *ucp
-#define SIGSEGV_FAULT_ADDRESS  sip->si_ptr
-#define SIGSEGV_FAULT_ADDRESS_FROM_SIGINFO
+/* See glibc-ports/sysdeps/unix/sysv/linux/arm/sys/ucontext.h
+   and the definition of GET_STACK in
+   glibc-ports/sysdeps/unix/sysv/linux/arm/sigcontextinfo.h.
+   Note that the 'mcontext_t' defined in
+   glibc-ports/sysdeps/unix/sysv/linux/arm/sys/ucontext.h
+   and the 'struct sigcontext' defined in <asm/sigcontext.h>
+   are actually the same.  */
 
-#if 0
-#define SIGSEGV_FAULT_CONTEXT  ((ucontext_t *) ucp)
-#define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext.gregs.g_regs[30]
-#endif
-#if 0
-#define SIGSEGV_FAULT_CONTEXT  ((ucontext_t *) ucp)
-#define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext.sc_gr[30]
-#endif
+#define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext.arm_sp
