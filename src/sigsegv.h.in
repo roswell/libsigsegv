@@ -1,5 +1,5 @@
 /* Page fault handling library.
-   Copyright (C) 1998-1999, 2002, 2004-2008  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 1998-1999, 2002, 2004-2009  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@
 extern "C" {
 #endif
 
-#define LIBSIGSEGV_VERSION 0x0206    /* version number: (major<<8) + minor */
+#define LIBSIGSEGV_VERSION 0x0207    /* version number: (major<<8) + minor */
 extern int libsigsegv_version;       /* Likewise */
 
 /* -------------------------------------------------------------------------- */
