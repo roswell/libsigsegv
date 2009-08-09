@@ -165,6 +165,7 @@ powerpc-unknown-linux2.4.19-gnu-glibc2.2      |   yes   |   yes   | 2.4
 powerpc-unknown-linux2.4.28-gnu-glibc2.2      |   yes   |   yes   | 2.1
 powerpc-unknown-linux2.4.26-gnu-glibc2.3      |   yes   |   yes   | 2.1
 powerpc-unknown-linux2.6.10-gnu-glibc2.3      |   yes   |   yes   | 2.2
+powerpc-unknown-linux2.6.12-gnu-glibc2.3      |   yes   |   yes   | 2.7
 powerpc-unknown-linux2.6.16-gnu-glibc2.3      |   yes   |   yes   | 2.4
 powerpc-unknown-linux2.6.16-gnu-glibc2.4      |   yes   |   yes   | 2.6
 powerpc-unknown-netbsd2.0                     |   yes   |   no    | 2.1
