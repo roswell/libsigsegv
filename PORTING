@@ -2,7 +2,7 @@ Successfully tested platforms
 =============================
 
                                                           STACK
-__PLATFORM_____________________________________SIGSEGV___OVERFLOW__VERSION___
+__PLATFORM_____________________________________SIGSEGV___OVERFLOW__VERSION__
                                               |         |         |
 alpha-dec-osf4.0d                             |   yes   |   yes   | 2.1
 alpha-dec-osf4.0f                             |   yes   |   yes   | 2.1
@@ -12,6 +12,7 @@ alpha-dec-osf4.0g                             |   yes   |   yes   | 2.1
 alpha-dec-osf5.1                              |   yes   |   yes   | 2.1
 alphaev67-dec-osf5.1                          |   yes   |   yes   | 2.2
 alphaev67-dec-osf5.1a                         |   yes   |   yes   | 2.6
+alphaev56-dec-osf5.1b                         |   yes   |   yes   | 2.6
 alphaev6-dec-osf5.1b                          |   yes   |   yes   | 2.6
 alpha-unknown-freebsd4.8                      |   yes   |   yes   | 2.1
 alpha-portbld-freebsd5.5                      |   yes   |   yes   | 2.3
@@ -26,6 +27,7 @@ alphaev67-unknown-linux2.4.18-gnu-glibc2.2    |   yes   |   yes   | 2.1
 alpha-unknown-linux2.4.19-gnu-glibc2.3        |   yes   |   yes   | 2.6
 alphaev68-unknown-linux2.6.11-gnu-glibc2.3    |   yes   |   yes   | 2.2
 alpha-unknown-openbsd3.7                      |   yes   |   yes   | 2.2
+alpha-unknown-openbsd4.5                      |   yes   |   yes   | 2.6
 alpha-unknown-netbsd1.6                       |   yes   |   yes   | 2.1
 armv4l-unknown-linux2.4.0-gnu-glibc2.2        |   no    |   yes   | 2.1
 armv4l-unknown-linux2.4.3-gnu-glibc2.2        |   yes   |   yes   | 2.1
@@ -60,6 +62,7 @@ i386-apple-darwin9.3.0                        |   yes   |   yes   | 2.6
 i386-apple-darwin9.4.0                        |   yes   |   yes   | 2.5
 i386-apple-darwin9.5.0                        |   yes   |   yes   | 2.6
 i386-apple-darwin9.6.0                        |   yes   |   yes   | 2.6
+i386-apple-darwin9.7.0                        |   yes   |   yes   | 2.6
 i586-pc-linux2.2.14-gnu-glibc2.1              |   yes   |   yes   | 2.1
 i686-pc-linux2.2.14-gnu-glibc2.1              |   yes   |   yes   | 2.0
 i686-pc-linux2.2.19-gnu-glibc2.1              |   yes   |   yes   | 1.95
@@ -88,6 +91,7 @@ i586-pc-mingw32                               |   yes   |   yes   | 2.1
 i686-pc-mingw32                               |   yes   |   yes   | 2.6
 i386-unknown-mirbsd10                         |   yes   |   yes   | 2.7
 i386-pc-os2-emx                               |   no    |   no    | 2.5
+i386-pc-nto-qnx6.3.2                          |   yes   |   no    | 2.6
 i386-pc-solaris2.9                            |   yes   |   yes   | 2.2
 i386-pc-solaris2.10                           |   yes   |   yes   | 2.6
 i386-pc-solaris2.11                           |   yes   |   yes   | 2.2
@@ -123,6 +127,7 @@ ia64-unknown-linux2.4.18-gnu-glibc2.2         |   yes   |   yes   | 2.4
 ia64-unknown-linux2.4.21-gnu-glibc2.3         |   yes   |   yes   | 2.6
 ia64-unknown-linux2.6.9-gnu-glibc2.3          |   yes   |   yes   | 2.6
 ia64-unknown-linux2.6.16.27-gnu-glibc2.4      |   yes   |   yes   | 2.6
+ia64-unknown-linux2.6.18-gnu-glibc2.3         |   yes   |   yes   | 2.6
 mips-sgi-irix5.3                              |   yes   |   yes   | 2.6+
 mips-sgi-irix6.2                              |   yes   |   yes   | 2.6+
 mips-sgi-irix6.5                              |   yes   |   yes   | 2.6+
@@ -155,6 +160,7 @@ powerpc-apple-darwin9.2.0                     |   yes   |   yes   | 2.5
 powerpc-apple-darwin9.6.0                     |   yes   |   yes   | 2.5
 powerpc-unknown-linux2.2.17-gnu-glibc2.1      |   no    |   yes   | 1.95
 powerpc-unknown-linux2.2.17-gnu-glibc2.2      |   yes   |   yes   | 2.0.1
+powerpc-unknown-linux2.4.12-gnu-glibc2.2      |   yes   |   yes   | 2.6
 powerpc-unknown-linux2.4.19-gnu-glibc2.2      |   yes   |   yes   | 2.4
 powerpc-unknown-linux2.4.28-gnu-glibc2.2      |   yes   |   yes   | 2.1
 powerpc-unknown-linux2.4.26-gnu-glibc2.3      |   yes   |   yes   | 2.1
@@ -198,6 +204,7 @@ x86_64-unknown-linux2.6.20.1-gnu-glibc2.5     |   yes   |   yes   | 2.4
 x86_64-unknown-linux2.6.21-gnu-glibc2.6       |   yes   |   yes   | 2.4
 x86_64-unknown-netbsd3.0                      |   yes   |   yes   | 2.4
 x86_64-unknown-netbsd4.99.72                  |   yes   |   yes   | 2.5
+x86_64-pc-solaris2.11                         |   yes   |   yes   | 2.5
 amd64-portbld-freebsd5.4                      |   yes   |   yes   | 2.2
 amd64-portbld-freebsd6.0                      |   yes   |   yes   | 2.3
 amd64-portbld-freebsd7.0                      |   yes   |   yes   | 2.3
