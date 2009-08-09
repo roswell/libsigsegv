@@ -1,5 +1,5 @@
 /* Determine the virtual memory area of a given address.
-   Copyright (C) 2006, 2008  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2006, 2008-2009  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -37,6 +37,14 @@
 #include <sys/types.h>
 #include <sys/mman.h>
 
+/* The glibc declaration of mincore() uses 'unsigned char *', whereas the BSD
+   declaration uses 'char *'.  */
+#if __GLIBC__ >= 2
+typedef unsigned char pageinfo_t;
+#else
+typedef char pageinfo_t;
+#endif
+
 /* Cache for getpagesize().  */
 static unsigned long pagesize;
 
@@ -58,7 +66,7 @@ init_pagesize (void)
 static int
 is_mapped (unsigned long addr)
 {
-  char vec[1];
+  pageinfo_t vec[1];
   return mincore ((void *) addr, pagesize, vec) >= 0;
 }
 
@@ -70,7 +78,7 @@ mapped_range_start (unsigned long addr)
 {
   /* Use a moderately sized VEC here, small enough that it fits on the stack
      (without requiring malloc).  */
-  char vec[2048];
+  pageinfo_t vec[2048];
   unsigned long stepsize = sizeof (vec);
 
   for (;;)
@@ -122,7 +130,7 @@ mapped_range_end (unsigned long addr)
 {
   /* Use a moderately sized VEC here, small enough that it fits on the stack
      (without requiring malloc).  */
-  char vec[2048];
+  pageinfo_t vec[2048];
   unsigned long stepsize = sizeof (vec);
 
   addr += pagesize;
