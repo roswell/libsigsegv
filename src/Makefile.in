@@ -274,7 +274,7 @@ libsigsegv_la_LDFLAGS = \
 
 # Before making a release, change this according to the libtool documentation,
 # section "Library interface versions".
-LIBSIGSEGV_VERSION_INFO = 1:0:0
+LIBSIGSEGV_VERSION_INFO = 2:0:0
 DISTCLEANFILES = sigsegv.h
 all: all-am
 
