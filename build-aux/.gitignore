@@ -2,3 +2,7 @@
 /install-sh
 /missing
 
+# Other files brought in by autogen.sh:
+/config.guess
+/config.sub
+
