@@ -29,6 +29,9 @@ RSE_BOLD
 AM_INIT_AUTOMAKE(libsigsegv, 2.7)
 AM_CONFIG_HEADER(config.h)
 
+dnl Override automake's tar command used for creating distributions.
+am__tar='${AMTAR} chf - --owner=root --group=root "$$tardir"'
+
 AC_PROG_CC
 AC_PROG_CPP
 

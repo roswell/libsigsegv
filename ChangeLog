@@ -1,3 +1,8 @@
+2009-08-14  Bruno Haible  <bruno@clisp.org>
+
+	Override automake's tar command used for creating distributions.
+	* configure.ac (am__tar): New variable.
+
 2009-08-09  Bruno Haible  <bruno@clisp.org>
 
 	* configure.ac: Bump version number to 2.7.
