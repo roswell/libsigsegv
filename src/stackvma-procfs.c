@@ -1,5 +1,5 @@
 /* Determine the virtual memory area of a given address.
-   Copyright (C) 2002, 2006, 2008  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002, 2006, 2008-2009  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 #include "stackvma.h"
 #include <unistd.h> /* open, close */
 #include <fcntl.h> /* open */
+#include <string.h> /* memcpy */
 #include <sys/types.h>
 #include <sys/mman.h> /* mmap, munmap */
 #include <sys/procfs.h> /* PIOC*, prmap_t */
