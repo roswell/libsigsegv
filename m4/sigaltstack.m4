@@ -72,9 +72,9 @@ int recurse (volatile int n)
   int sum = 0;
   return *recurse_1 (n, &sum);
 }
+char mystack[2 * SIGSTKSZ];
 int main ()
 {
-  char mystack[2 * SIGSTKSZ];
   stack_t altstack;
   struct sigaction action;
 #if defined HAVE_SETRLIMIT && defined RLIMIT_STACK
