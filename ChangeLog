@@ -1,3 +1,11 @@
+2009-09-22  Paolo Bonzini  <bonzini@gnu.org>
+
+	Fix crash of stackoverflow2 on x86_64-linux.
+	* tests/stackoverflow1.c: Make mystack global.
+	* tests/stackoverflow2.c: Likewise.
+	* src/sigsegv.h.in: Warn against placing the alternate stack
+	on the main stack.
+
 2009-08-16  Bruno Haible  <bruno@clisp.org>
 
 	Avoid a gcc warning on Solaris.
