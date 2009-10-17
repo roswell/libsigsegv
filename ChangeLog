@@ -1,3 +1,8 @@
+2009-10-17  Bruno Haible  <bruno@clisp.org>
+
+	* README: Mention danger of longjmping back to a central point.
+	Reported by Angelo Borsotti <angelo.borsotti@gmail.com>.
+
 2009-09-22  Paolo Bonzini  <bonzini@gnu.org>
 
 	Move more declarations of alternate stacks to global scope.

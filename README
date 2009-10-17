@@ -74,6 +74,30 @@ many signals are blocked while the handler is executed), and must also
 call sigsegv_leave_handler() to transfer control; then only it can longjmp
 away.
 
+Note that longjmping back to a central point in the application can leave
+the application in an inconsistent state, because
+  1) no cleanup is executed for call frames that are being unwound,
+  2) the code being executed while the stack overflow occurred might leave
+     data structures in an intermediate, inconsistent state.
+If you want to avoid the first problem, you need to restructure your
+application into three or more threads:
+  - a main thread, which creates the other threads,
+  - worker threads, which may cause stack overflows, and in which all
+    cleanups are registered through the pthread_cleanup_push function,
+  - a handler thread, which contains the handler for stack overflow and
+    other kinds of SIGSEGV. The handler will call pthread_cancel on the
+    worker thread whose stack overflowed.
+You will need to use the function pthread_sigmask on all threads except
+the handler thread, in order to ensure that the SIGSEGV signal gets handled
+in the designated handler thread.
+If you want to avoid the second problem together with the first problem,
+you need to enclose code that manipulates data structures in a way that is
+not safe to be interrupted within calls to pthread_setcancelstate() or
+pthread_setcanceltype().
+If you want to avoid just the second problem, you need to manipulate all data
+structures in a way that is safe to be interrupted at any moment and also
+compile your program with the gcc flag -fnon-call-exceptions.
+
 
 About shared libraries.
 
