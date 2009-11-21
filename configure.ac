@@ -36,6 +36,14 @@ AC_PROG_CC
 AC_PROG_CPP
 
 AC_CANONICAL_HOST
+
+
+dnl ========================== Determine PLATFORM ==========================
+dnl Requires AC_CANONICAL_HOST.
+dnl PLATFORM is a modified config.guess triple that is supposed to contain
+dnl the bits of information which influence the configuration or functioning
+dnl of catching faults.
+
 AC_MSG_CHECKING([host platform])
 sv_cv_host="$host"
 changequote(,)dnl Autoconf 2.52 brokenness
@@ -60,6 +68,9 @@ AC_MSG_RESULT([$sv_cv_host])
 PLATFORM="$sv_cv_host"
 AC_SUBST([PLATFORM])
 
+dnl ========================== Done with PLATFORM ==========================
+
+
 AC_PROG_INSTALL
 
 LT_INIT([disable-shared])
@@ -72,6 +83,10 @@ LT_INIT([disable-shared])
 dnl Headers to be included with <signal.h>. On MacOS X (Darwin) one also
 dnl needs <sys/signal.h>.
 AC_CHECK_HEADERS([sys/signal.h])
+
+
+dnl ========================== Determine CFG_SIGNALS ==========================
+dnl Requires AC_CANONICAL_HOST.
 
 dnl List of signals that are sent when an invalid virtual memory address
 dnl is accessed, or when the stack overflows.
@@ -90,6 +105,9 @@ esac
 AC_DEFINE_UNQUOTED([CFG_SIGNALS], ["$CFG_SIGNALS"],
   [The name of the include file describing the fault signals.])
 
+dnl ========================== Done with CFG_SIGNALS ==========================
+
+
 # How to determine the memory page size.
 SV_GETPAGESIZE
 
@@ -97,6 +115,12 @@ SV_GETPAGESIZE
 # (We need mmap, because mprotect() doesn't work on malloc()ed memory on
 # some systems.)
 SV_MMAP_ANON
+
+
+dnl ================== Determine CFG_HANDLER partially,     ==================
+dnl ================== CFG_FAULT, CFG_MACHFAULT,            ==================
+dnl ================== FAULT_CONTEXT, FAULT_CONTEXT_INCLUDE ==================
+dnl Requires AC_CANONICAL_HOST, SV_MMAP_ANON.
 
 # How to write a SIGSEGV handler with access to the fault address.
 
@@ -576,6 +600,14 @@ AC_SUBST([FAULT_CONTEXT_INCLUDE])
 dnl AM_SUBST_NOTMAKE, because FAULT_CONTEXT_INCLUDE may have a multiline value.
 AM_SUBST_NOTMAKE([FAULT_CONTEXT_INCLUDE])
 
+dnl ================== Done with CFG_HANDLER partially,     ==================
+dnl ================== CFG_FAULT, CFG_MACHFAULT,            ==================
+dnl ================== FAULT_CONTEXT, FAULT_CONTEXT_INCLUDE ==================
+
+
+dnl ===================== Determine HAVE_SIGSEGV_RECOVERY =====================
+dnl Requires CFG_HANDLER / CFG_FAULT / etc.
+
 AC_MSG_CHECKING([if the system supports catching SIGSEGV])
 AC_MSG_RESULT([$sv_cv_have_sigsegv_recovery])
 if test $sv_cv_have_sigsegv_recovery != no; then
@@ -585,10 +617,17 @@ else
 fi
 AC_SUBST([HAVE_SIGSEGV_RECOVERY])
 
+dnl ===================== Done with HAVE_SIGSEGV_RECOVERY =====================
+
+
 dnl The stackoverflow_context_t type depends on the CFG_FAULT include file.
 
 dnl Stack direction.
 SV_STACK_DIRECTION
+
+
+dnl ========================= Determine CFG_STACKVMA =========================
+dnl Requires AC_CANONICAL_HOST.
 
 dnl Determination of the stack's virtual memory area.
 AC_CACHE_CHECK([for PIOCMAP in sys/procfs.h], [sv_cv_procfsvma], [
@@ -621,12 +660,19 @@ AC_DEFINE_UNQUOTED([CFG_STACKVMA], ["$CFG_STACKVMA"],
   [The name of the file determining the stack virtual memory area.])
 AC_SUBST([CFG_STACKVMA])
 
+dnl ========================= Done with CFG_STACKVMA =========================
+
+
 AC_CHECK_FUNCS([getrlimit setrlimit])
 
 dnl Catching stack overflow requires an alternate signal stack.
 dnl The old "install a guard page" trick would be unreliable, because
 dnl we don't know where exactly to place the guard page.
 SV_SIGALTSTACK
+
+
+dnl =========================== Determine CFG_LEAVE ===========================
+dnl Requires AC_CANONICAL_HOST.
 
 # How to longjmp out of a signal handler, in such a way that the
 # alternate signal stack remains functional.
@@ -769,6 +815,13 @@ AC_DEFINE_UNQUOTED([CFG_LEAVE], ["$CFG_LEAVE"],
   [The name of the file implementing sigsegv_reset_onstack_flag.])
 AC_SUBST([CFG_LEAVE])
 
+dnl =========================== Done with CFG_LEAVE ===========================
+
+
+dnl ================= Determine HAVE_STACK_OVERFLOW_RECOVERY =================
+dnl Requires AC_CANONICAL_HOST, CFG_HANDLER / CFG_FAULT / etc., CFG_STACKVMA,
+dnl CFG_LEAVE.
+
 AC_CACHE_CHECK([if the system supports catching stack overflow],
                [sv_cv_have_stack_overflow_recovery],
 [
@@ -842,6 +895,13 @@ else
 fi
 AC_SUBST([HAVE_STACK_OVERFLOW_RECOVERY])
 
+dnl ================= Done with HAVE_STACK_OVERFLOW_RECOVERY =================
+
+
+dnl ======================= Determine CFG_HANDLER fully =======================
+dnl Requires AC_CANONICAL_HOST, CFG_HANDLER / CFG_FAULT / etc.,
+dnl HAVE_SIGSEGV_RECOVERY, HAVE_STACK_OVERFLOW_RECOVERY.
+
 case "$host_os" in
   mingw* | cygwin*) CFG_HANDLER=handler-win32.c ;;
   *)
@@ -858,6 +918,9 @@ esac
 AC_DEFINE_UNQUOTED([CFG_HANDLER], ["$CFG_HANDLER"],
   [The name of the file implementing the handler functionality.])
 AC_SUBST([CFG_HANDLER])
+
+dnl ======================= Done with CFG_HANDLER fully =======================
+
 
 { echo; echo "${term_bold}Build Parameters:${term_norm}"; } >& AS_MESSAGE_FD
 

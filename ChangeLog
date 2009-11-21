@@ -1,5 +1,9 @@
 2009-11-21  Bruno Haible  <bruno@clisp.org>
 
+	* configure.ac: Add comments and structure.
+
+2009-11-21  Bruno Haible  <bruno@clisp.org>
+
 	Reduce size of configure.ac.
 	* m4/stack-direction.m4: New file, extracted from configure.ac.
 	* configure.ac: Simply invoke SV_STACK_DIRECTION.
