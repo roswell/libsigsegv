@@ -1,6 +1,7 @@
 /* Fault handler information.  Woe32 version.
-   Copyright (C) 1993-1999, 2002-2003, 2007-2008  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 1993-1999, 2002-2003, 2007-2009  Bruno Haible <bruno@clisp.org>
    Copyright (C) 2003  Paolo Bonzini <bonzini@gnu.org>
+   Copyright (C) 2009  Eric Blake <ebb9@byu.net>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -223,7 +224,11 @@ __asm__ (".equ __except_list,0");
 extern exception_list *_except_list __asm__ ("%fs:__except_list");
 
 /* For debugging.  _except_list is not otherwise accessible from gdb.  */
-static exception_list *
+static
+#if __GNUC__ >= 3
+__attribute__ ((__unused__)) /* avoid GCC warning */
+#endif
+exception_list *
 debug_get_except_list ()
 {
   return _except_list;
