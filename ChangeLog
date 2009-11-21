@@ -1,5 +1,12 @@
 2009-11-21  Bruno Haible  <bruno@clisp.org>
 
+	Support for Cygwin 1.7.
+	* configure.ac: For Cygwin and mingw, choose FAULT_CONTEXT in a way
+	that is consistent with CFD_HANDLER.
+	Reported by Eric Blake <ebb9@byu.net>
+
+2009-11-21  Bruno Haible  <bruno@clisp.org>
+
 	* configure.ac: Add comments and structure.
 
 2009-11-21  Bruno Haible  <bruno@clisp.org>

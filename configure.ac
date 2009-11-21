@@ -506,15 +506,13 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_macosdarwin5_ppc" = yes; then
       ;;
   esac
 fi
-if test -z "$CFG_FAULT"; then
-  case "$host_os" in
-    mingw* | cygwin*)
-      FAULT_CONTEXT='CONTEXT'
-      FAULT_CONTEXT_INCLUDE='#include <windows.h>'
-      CFG_FAULT=fault-win32.h # nonexistent, just a dummy
-      ;;
-  esac
-fi
+case "$host_os" in
+  mingw* | cygwin*)
+    FAULT_CONTEXT='CONTEXT'
+    FAULT_CONTEXT_INCLUDE='#include <windows.h>'
+    CFG_FAULT=fault-win32.h # nonexistent, just a dummy
+    ;;
+esac
 if test -n "$CFG_FAULT"; then
   sv_cv_have_sigsegv_recovery=yes
 else
