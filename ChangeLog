@@ -1,5 +1,11 @@
 2009-11-21  Bruno Haible  <bruno@clisp.org>
 
+	Fix compilation error on newer versions of HP-UX 11.31 on ia64.
+	* configure.ac: Set sv_cv_have_stack_overflow_recovery to 'no' if it is
+	not possible to longjmp out of the signal handler. On HP-UX 11.31 on
+	ia64 it is only possible with siglongjmp (as far as we know).
+	Reported by Bill Glessner <bill.glessner@cwu.edu>.
+
 	* configure.ac: Move determination of CFG_LEAVE before the
 	determination of sv_cv_have_stack_overflow_recovery.
 

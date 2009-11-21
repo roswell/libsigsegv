@@ -866,20 +866,29 @@ AC_CACHE_CHECK([if the system supports catching stack overflow],
 [
   dnl On Mach, it requires a machfault-*.h (see src/handler-macos.c).
   dnl On Unix, it requires either sigaltstack() or the BeOS set_signal_stack()
-  dnl function, and on Unix it requires a fault-*.h or a stackvma-*.c with
-  dnl certain properties (see src/handler-unix.c).
+  dnl function, and the ability to longjmp out of the signal handler, and on
+  dnl Unix it also requires a fault-*.h or a stackvma-*.c with certain
+  dnl properties (see src/handler-unix.c).
   if test "$CFG_MACHFAULT" != fault-none.h; then
     sv_cv_have_stack_overflow_recovery=yes
   else
-    if test "$sv_cv_sigaltstack" != no; then
-      sv_cv_have_stack_overflow_recovery=maybe
-    else
-      case "$host_os" in
-        beos*) sv_cv_have_stack_overflow_recovery=maybe ;;
-        mingw* | cygwin*) sv_cv_have_stack_overflow_recovery=yes ;;
-        *) sv_cv_have_stack_overflow_recovery=no ;;
-      esac
-    fi
+    case "$host_os" in
+      mingw* | cygwin*) sv_cv_have_stack_overflow_recovery=yes ;;
+      *)
+        if test "$CFG_LEAVE" != 'leave-none.c'; then
+          if test "$sv_cv_sigaltstack" != no; then
+            sv_cv_have_stack_overflow_recovery=maybe
+          else
+            case "$host_os" in
+              beos*) sv_cv_have_stack_overflow_recovery=maybe ;;
+              *) sv_cv_have_stack_overflow_recovery=no ;;
+            esac
+          fi
+        else
+          sv_cv_have_stack_overflow_recovery=no
+        fi
+        ;;
+    esac
   fi
   if test $sv_cv_have_stack_overflow_recovery = maybe; then
     if test -n "$CFG_FAULT"; then
