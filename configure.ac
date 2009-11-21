@@ -720,70 +720,6 @@ dnl The old "install a guard page" trick would be unreliable, because
 dnl we don't know where exactly to place the guard page.
 SV_SIGALTSTACK
 
-AC_CACHE_CHECK([if the system supports catching stack overflow],
-               [sv_cv_have_stack_overflow_recovery],
-[
-  dnl On Mach, it requires a machfault-*.h (see src/handler-macos.c).
-  dnl On Unix, it requires either sigaltstack() or the BeOS set_signal_stack()
-  dnl function, and on Unix it requires a fault-*.h or a stackvma-*.c with
-  dnl certain properties (see src/handler-unix.c).
-  if test "$CFG_MACHFAULT" != fault-none.h; then
-    sv_cv_have_stack_overflow_recovery=yes
-  else
-    if test "$sv_cv_sigaltstack" != no; then
-      sv_cv_have_stack_overflow_recovery=maybe
-    else
-      case "$host_os" in
-        beos*) sv_cv_have_stack_overflow_recovery=maybe ;;
-        mingw* | cygwin*) sv_cv_have_stack_overflow_recovery=yes ;;
-        *) sv_cv_have_stack_overflow_recovery=no ;;
-      esac
-    fi
-  fi
-  if test $sv_cv_have_stack_overflow_recovery = maybe; then
-    if test -n "$CFG_FAULT"; then
-      AC_EGREP_CPP([xyzzy], [
-#include "$srcdir/src/$CFG_FAULT"
-#ifdef SIGSEGV_FAULT_HANDLER_ARGLIST
-#ifdef SIGSEGV_FAULT_ADDRESS
-xyzzy
-#endif
-#endif
-], [condA=true], [condA=false])
-    else
-      condA=false
-    fi
-    if test -n "$CFG_FAULT"; then
-      AC_EGREP_CPP([xyzzy], [
-#include "$srcdir/src/$CFG_FAULT"
-#ifdef SIGSEGV_FAULT_HANDLER_ARGLIST
-#ifdef SIGSEGV_FAULT_STACKPOINTER
-xyzzy
-#endif
-#endif
-], [condB=true], [condB=false])
-    else
-      condB=false
-    fi
-    if test "$CFG_STACKVMA" != "stackvma-none.c"; then
-      condC=true
-    else
-      condC=false
-    fi
-    if { $condA && $condB; } || { $condA && $condC; } || { $condB && $condC; }; then
-      sv_cv_have_stack_overflow_recovery=yes
-    else
-      sv_cv_have_stack_overflow_recovery=no
-    fi
-  fi
-])
-if test $sv_cv_have_stack_overflow_recovery != no; then
-  HAVE_STACK_OVERFLOW_RECOVERY=1
-else
-  HAVE_STACK_OVERFLOW_RECOVERY=0
-fi
-AC_SUBST([HAVE_STACK_OVERFLOW_RECOVERY])
-
 # How to longjmp out of a signal handler, in such a way that the
 # alternate signal stack remains functional.
 
@@ -924,6 +860,70 @@ fi
 AC_DEFINE_UNQUOTED([CFG_LEAVE], ["$CFG_LEAVE"],
   [The name of the file implementing sigsegv_reset_onstack_flag.])
 AC_SUBST([CFG_LEAVE])
+
+AC_CACHE_CHECK([if the system supports catching stack overflow],
+               [sv_cv_have_stack_overflow_recovery],
+[
+  dnl On Mach, it requires a machfault-*.h (see src/handler-macos.c).
+  dnl On Unix, it requires either sigaltstack() or the BeOS set_signal_stack()
+  dnl function, and on Unix it requires a fault-*.h or a stackvma-*.c with
+  dnl certain properties (see src/handler-unix.c).
+  if test "$CFG_MACHFAULT" != fault-none.h; then
+    sv_cv_have_stack_overflow_recovery=yes
+  else
+    if test "$sv_cv_sigaltstack" != no; then
+      sv_cv_have_stack_overflow_recovery=maybe
+    else
+      case "$host_os" in
+        beos*) sv_cv_have_stack_overflow_recovery=maybe ;;
+        mingw* | cygwin*) sv_cv_have_stack_overflow_recovery=yes ;;
+        *) sv_cv_have_stack_overflow_recovery=no ;;
+      esac
+    fi
+  fi
+  if test $sv_cv_have_stack_overflow_recovery = maybe; then
+    if test -n "$CFG_FAULT"; then
+      AC_EGREP_CPP([xyzzy], [
+#include "$srcdir/src/$CFG_FAULT"
+#ifdef SIGSEGV_FAULT_HANDLER_ARGLIST
+#ifdef SIGSEGV_FAULT_ADDRESS
+xyzzy
+#endif
+#endif
+], [condA=true], [condA=false])
+    else
+      condA=false
+    fi
+    if test -n "$CFG_FAULT"; then
+      AC_EGREP_CPP([xyzzy], [
+#include "$srcdir/src/$CFG_FAULT"
+#ifdef SIGSEGV_FAULT_HANDLER_ARGLIST
+#ifdef SIGSEGV_FAULT_STACKPOINTER
+xyzzy
+#endif
+#endif
+], [condB=true], [condB=false])
+    else
+      condB=false
+    fi
+    if test "$CFG_STACKVMA" != "stackvma-none.c"; then
+      condC=true
+    else
+      condC=false
+    fi
+    if { $condA && $condB; } || { $condA && $condC; } || { $condB && $condC; }; then
+      sv_cv_have_stack_overflow_recovery=yes
+    else
+      sv_cv_have_stack_overflow_recovery=no
+    fi
+  fi
+])
+if test $sv_cv_have_stack_overflow_recovery != no; then
+  HAVE_STACK_OVERFLOW_RECOVERY=1
+else
+  HAVE_STACK_OVERFLOW_RECOVERY=0
+fi
+AC_SUBST([HAVE_STACK_OVERFLOW_RECOVERY])
 
 case "$host_os" in
   mingw* | cygwin*) CFG_HANDLER=handler-win32.c ;;
