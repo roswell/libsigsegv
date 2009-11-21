@@ -467,6 +467,8 @@ sigsegv_leave_handler (void (*continuation) (void*, void*, void*),
   return 1;
 }
 
+#if !MIXING_UNIX_SIGSEGV_AND_WIN32_STACKOVERFLOW_HANDLING
+
 int
 stackoverflow_install_handler (stackoverflow_handler_t handler,
                                void *extra_stack, unsigned long extra_stack_size)
@@ -544,3 +546,5 @@ stackoverflow_deinstall_handler (void)
 
 #endif
 }
+
+#endif /* !MIXING_UNIX_SIGSEGV_AND_WIN32_STACKOVERFLOW_HANDLING */

@@ -27,6 +27,7 @@ lib_LTLIBRARIES = libsigsegv.la
 noinst_HEADERS = \
   fault.h fault-aix3.h fault-aix3-powerpc.h fault-aix5.h fault-aix5-powerpc.h \
   fault-beos.h fault-beos-i386.h \
+  fault-cygwin-old.h \
   fault-bsd.h fault-freebsd-i386.h \
   fault-hpux.h fault-hpux-hppa.h fault-hurd.h fault-irix.h fault-irix-mips.h \
   fault-linux.h fault-linux-alpha.h fault-linux-alpha-old.h \

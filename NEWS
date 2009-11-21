@@ -1,5 +1,11 @@
 New in 2.8:
 
+* There is a new configuration option --enable-FAULT. If it is given,
+  libsigsegv will try to arrange that passing invalid memory adresses to
+  system calls (such as read(), write(), etc.) makes the system call fail
+  with errno = EFAULT, rather than invoking the signal handler.  Currently,
+  this option has an effect only on Cygwin.
+  Contributed by Eric Blake.
 * Support for Cygwin 1.7.
 
 New in 2.7:

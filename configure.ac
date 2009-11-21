@@ -507,10 +507,20 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_macosdarwin5_ppc" = yes; then
   esac
 fi
 case "$host_os" in
-  mingw* | cygwin*)
+  mingw*)
     FAULT_CONTEXT='CONTEXT'
     FAULT_CONTEXT_INCLUDE='#include <windows.h>'
     CFG_FAULT=fault-win32.h # nonexistent, just a dummy
+    ;;
+  cygwin*)
+    FAULT_CONTEXT='CONTEXT'
+    FAULT_CONTEXT_INCLUDE='#include <windows.h>'
+    # Cygwin 1.7 uses fault-posix.h. Cygwin 1.5.x needs a hacky workaround.
+    if test -z "$CFG_FAULT"; then
+      CFG_FAULT=fault-cygwin-old.h
+      AC_DEFINE([OLD_CYGWIN_WORKAROUND], [1],
+        [Define to 1 on Cygwin versions older than 1.7.])
+    fi
     ;;
 esac
 if test -n "$CFG_FAULT"; then
@@ -924,6 +934,29 @@ dnl ======================= Done with CFG_HANDLER fully =======================
 
 dnl Relocatability is a nop for this package.
 AC_RELOCATABLE_NOP
+
+AC_MSG_CHECKING([whether to make system calls fail with error EFAULT])
+AC_ARG_ENABLE([EFAULT],
+  [  --enable-EFAULT         whether passing invalid memory accesses to system
+                          calls should make the system call fail with error
+                          EFAULT, rather than invoking the signal handler],
+  [if test "$enableval" != no; then
+     enable_EFAULT=yes
+   else
+     enable_EFAULT=no
+   fi
+  ],
+  [enable_EFAULT=no])
+AC_MSG_RESULT([$enable_EFAULT])
+if test $enable_EFAULT = yes; then
+  AC_DEFINE([ENABLE_EFAULT], [1],
+    [Define to 1 if attempting to make system calls fail with error EFAULT])
+fi
+AM_CONDITIONAL([ENABLE_EFAULT], [test $enable_EFAULT = yes])
+
+if test $enable_EFAULT = yes; then
+  SV_SYSCALLS_EFAULT
+fi
 
 { echo; echo "${term_bold}Output Substitution:${term_norm}"; } >& AS_MESSAGE_FD
 

@@ -29,6 +29,11 @@ DEFS = @DEFS@
 LDADD = ../src/libsigsegv.la
 noinst_PROGRAMS = sigsegv1 sigsegv2 sigsegv3 stackoverflow1 stackoverflow2
 
+if ENABLE_EFAULT
+TESTS += efault1 efault2 efault3
+noinst_PROGRAMS += efault1 efault2 efault3
+endif
+
 # The following rule is necessary to avoid a toplevel "make -n" failure.
 ../src/libsigsegv.la :
 	cd ../src && $(MAKE) libsigsegv.la

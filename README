@@ -108,7 +108,7 @@ it as a shared library by specifying the configure option '--enable-shared'.
 
 Installation instructions on Unix:
 
-        ./configure
+        ./configure [OPTIONS]
         make
         make check
         make install
@@ -116,6 +116,18 @@ Installation instructions on Unix:
 Installation instructions on Woe32:
 
         See README.woe32.
+
+Configuration options:
+
+  - If the option --enable-EFAULT is given, libsigsegv will try to arrange
+    that passing invalid memory adresses to system calls (such as read(),
+    write(), etc.) makes the system call fail with errno = EFAULT, rather than
+    invoking the signal handler. POSIX does not specify the behaviour of
+    system calls in this case (see
+    <http://www.opengroup.org/onlinepubs/9699919799/functions/V2_chap02.html>,
+    under "[EFAULT]" and under "Memory Protection"). Therefore correct
+    programs must be prepared to either behaviour. The traditional behaviour,
+    though, is to make the system call fail with errno = EFAULT.
 
 
 Using libsigsegv in your package:

@@ -29,8 +29,39 @@
  * extern DWORD GetLastError (void);
  */
 
+/* On Cygwin, the "system calls" are actually library calls.  If the user
+   asks for them to return with errno = EFAULT, we do this by combining
+   the Win32 and the Unix approaches:
+     1. Install a Win32 exception filter and use it to peek at the fault
+        context, but without actually handling the fault context.
+     2. Install a Unix signal handler.
+   If a fault occurs inside a "system call", our exception filter will
+   take a note and defer, Cygwin's exception filter will handle it, and
+   our signal handler will not be called.
+   For stack overflow, we use the purely Win32 approach, since Cygwin
+   does not have sigaltstack().  */
+#if defined __CYGWIN__ && ENABLE_EFAULT
+
+# define MIXING_UNIX_SIGSEGV_AND_WIN32_STACKOVERFLOW_HANDLING 1
+
+# ifdef OLD_CYGWIN_WORKAROUND
+/* Last seen fault address.  */
+static void *last_seen_fault_address;
+# endif
+
+/* Import the relevant part of the Unix approach.  */
+# undef HAVE_STACK_OVERFLOW_RECOVERY
+# define HAVE_STACK_OVERFLOW_RECOVERY 0
+# define sigsegv_install_handler sigsegv_install_handler_unix
+# include "handler-unix.c"
+# undef sigsegv_install_handler
+
+#else
+
 /* User's SIGSEGV handler.  */
 static sigsegv_handler_t user_handler = (sigsegv_handler_t) NULL;
+
+#endif
 
 /* Stack overflow handling is tricky:
    First, we must catch a STATUS_STACK_OVERFLOW exception. This is signalled
@@ -124,10 +155,15 @@ main_exception_filter (EXCEPTION_POINTERS *ExceptionInfo)
   if ((stk_user_handler
        && ExceptionInfo->ExceptionRecord->ExceptionCode == STATUS_STACK_OVERFLOW
       )
+#if !MIXING_UNIX_SIGSEGV_AND_WIN32_STACKOVERFLOW_HANDLING || OLD_CYGWIN_WORKAROUND
       ||
-      (user_handler != (sigsegv_handler_t)NULL
-       && ExceptionInfo->ExceptionRecord->ExceptionCode == EXCEPTION_ACCESS_VIOLATION
-     ))
+      (ExceptionInfo->ExceptionRecord->ExceptionCode == EXCEPTION_ACCESS_VIOLATION
+#if !MIXING_UNIX_SIGSEGV_AND_WIN32_STACKOVERFLOW_HANDLING
+       && user_handler != (sigsegv_handler_t)NULL
+#endif
+      )
+#endif
+     )
     {
 #if 0 /* for debugging only */
       printf ("Exception!\n");
@@ -183,16 +219,30 @@ main_exception_filter (EXCEPTION_POINTERS *ExceptionInfo)
               *(unsigned long *)(new_safe_esp + 8) = (unsigned long) safe_context;
               return EXCEPTION_CONTINUE_EXECUTION;
             }
-          if (user_handler != (sigsegv_handler_t) NULL
-              && ExceptionInfo->ExceptionRecord->ExceptionCode == EXCEPTION_ACCESS_VIOLATION)
+#if !MIXING_UNIX_SIGSEGV_AND_WIN32_STACKOVERFLOW_HANDLING || OLD_CYGWIN_WORKAROUND
+          if (ExceptionInfo->ExceptionRecord->ExceptionCode == EXCEPTION_ACCESS_VIOLATION)
             {
-              /* ExceptionInfo->ExceptionRecord->ExceptionInformation[0] is 1
-                 if it's a write access, 0 if it's a read access. But we don't
-                 need this info because we don't have it on Unix either.  */
-              void *address = (void *) ExceptionInfo->ExceptionRecord->ExceptionInformation[1];
-              if ((*user_handler) (address, 1))
-                return EXCEPTION_CONTINUE_EXECUTION;
+#if MIXING_UNIX_SIGSEGV_AND_WIN32_STACKOVERFLOW_HANDLING
+              /* Store the fault address.  Then pass control to Cygwin's
+                 exception filter, which will decide whether to recognize
+                 a fault inside a "system call" (and return errno = EFAULT)
+                 or to pass it on to the program (by invoking the Unix signal
+                 handler).  */
+              last_seen_fault_address = (void *) ExceptionInfo->ExceptionRecord->ExceptionInformation[1];
+#else
+              if (user_handler != (sigsegv_handler_t) NULL)
+                {
+                  /* ExceptionInfo->ExceptionRecord->ExceptionInformation[0] is
+                     1 if it's a write access, 0 if it's a read access. But we
+                     don't need this info because we don't have it on Unix
+                     either.  */
+                  void *address = (void *) ExceptionInfo->ExceptionRecord->ExceptionInformation[1];
+                  if ((*user_handler) (address, 1))
+                    return EXCEPTION_CONTINUE_EXECUTION;
+                }
+#endif
             }
+#endif
         }
     }
   return EXCEPTION_CONTINUE_SEARCH;
@@ -282,6 +332,17 @@ install_main_exception_filter ()
     }
 }
 
+#if MIXING_UNIX_SIGSEGV_AND_WIN32_STACKOVERFLOW_HANDLING
+
+int
+sigsegv_install_handler (sigsegv_handler_t handler)
+{
+  install_main_exception_filter ();
+  return sigsegv_install_handler_unix (handler);
+}
+
+#else
+
 int
 sigsegv_install_handler (sigsegv_handler_t handler)
 {
@@ -303,6 +364,8 @@ sigsegv_leave_handler (void (*continuation) (void*, void*, void*),
   (*continuation) (cont_arg1, cont_arg2, cont_arg3);
   return 1;
 }
+
+#endif /* !MIXING_UNIX_SIGSEGV_AND_WIN32_STACKOVERFLOW_HANDLING */
 
 int
 stackoverflow_install_handler (stackoverflow_handler_t handler,
