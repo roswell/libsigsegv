@@ -1,3 +1,9 @@
+2009-11-21  Bruno Haible  <bruno@clisp.org>
+
+	Reduce size of configure.ac.
+	* m4/stack-direction.m4: New file, extracted from configure.ac.
+	* configure.ac: Simply invoke SV_STACK_DIRECTION.
+
 2009-11-21  Eric Blake  <ebb9@byu.net>
             Bruno Haible  <bruno@clisp.org>
 
