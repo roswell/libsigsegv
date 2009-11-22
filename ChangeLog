@@ -1,3 +1,33 @@
+2009-11-21  Eric Blake  <ebb9@byu.net>
+            Bruno Haible  <bruno@clisp.org>
+
+	New configuration option --enable-EFAULT.
+	* configure.ac: Accept option --enable-EFAULT. Set and define
+	ENABLE_EFAULT. Invoke SV_SYSCALLS_EFAULT.
+	For Cygwin, use the CFG_FAULT that was already determined, or
+	fault-cygwin-old.h if none. In the latter case, define
+	OLD_CYGWIN_WORKAROUND.
+	* m4/efault.m4: New file.
+	* src/handler-win32.c [CYGWIN && ENABLE_EFAULT]: Include
+	handler-unix.c.
+	(MIXING_UNIX_SIGSEGV_AND_WIN32_STACKOVERFLOW_HANDLING): New macro.
+	(last_seen_fault_address): New variable.
+	(main_exception_filter): Store the fault address for the Unix signal
+	handler.
+	(sigsegv_install_handler): Redefine.
+	(sigsegv_deinstall_handler, sigsegv_leave_handler): Don't define.
+	* src/handler-unix.c (stackoverflow_install_handler,
+	stackoverflow_deinstall_handler): Don't define if
+	MIXING_UNIX_SIGSEGV_AND_WIN32_STACKOVERFLOW_HANDLING is set.
+	* src/fault-cygwin-old.h: New file.
+	* src/Makefile.am (noinst_HEADERS): Add it.
+	* tests/efault1.c: New file.
+	* tests/efault2.c: New file.
+	* tests/efault3.c: New file.
+	* tests/Makefile.am (TESTS, noinst_PROGRAMS): Add efault1, efault2,
+	efault3.
+	* README, NEWS: Mention the new option.
+
 2009-11-21  Bruno Haible  <bruno@clisp.org>
 
 	Support for Cygwin 1.7.
