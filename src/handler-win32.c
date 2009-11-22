@@ -33,18 +33,21 @@
    asks for them to return with errno = EFAULT, we do this by combining
    the Win32 and the Unix approaches:
      1. Install a Win32 exception filter and use it to peek at the fault
-        context, but without actually handling the fault context.
+        context, but without actually handling the fault.
      2. Install a Unix signal handler.
+   If a fault occurs outside a "system call", our exception filter will
+   take a note and defer, Cygwin's exception filter will invoke our Unix
+   signal handler.
    If a fault occurs inside a "system call", our exception filter will
    take a note and defer, Cygwin's exception filter will handle it, and
    our signal handler will not be called.
-   For stack overflow, we use the purely Win32 approach, since Cygwin
-   does not have sigaltstack().  */
+   For stack overflow, we use the pure Win32 approach, since Cygwin does
+   not have sigaltstack().  */
 #if defined __CYGWIN__ && ENABLE_EFAULT
 
 # define MIXING_UNIX_SIGSEGV_AND_WIN32_STACKOVERFLOW_HANDLING 1
 
-# ifdef OLD_CYGWIN_WORKAROUND
+# if OLD_CYGWIN_WORKAROUND
 /* Last seen fault address.  */
 static void *last_seen_fault_address;
 # endif
