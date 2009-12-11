@@ -77,7 +77,7 @@ libsigsegv_la_LDFLAGS = \
 
 # Before making a release, change this according to the libtool documentation,
 # section "Library interface versions".
-LIBSIGSEGV_VERSION_INFO = 2:0:0
+LIBSIGSEGV_VERSION_INFO = 2:1:0
 
 # Dependencies.
 handler.$(OBJEXT) : ../config.h sigsegv.h @CFG_HANDLER@ $(noinst_HEADERS) 

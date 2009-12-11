@@ -37,7 +37,7 @@
 extern "C" {
 #endif
 
-#define LIBSIGSEGV_VERSION 0x0207    /* version number: (major<<8) + minor */
+#define LIBSIGSEGV_VERSION 0x0208    /* version number: (major<<8) + minor */
 extern int libsigsegv_version;       /* Likewise */
 
 /* -------------------------------------------------------------------------- */
