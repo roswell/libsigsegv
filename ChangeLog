@@ -1,5 +1,9 @@
 2009-12-11  Bruno Haible  <bruno@clisp.org>
 
+	* Version 2.8 released.
+
+2009-12-11  Bruno Haible  <bruno@clisp.org>
+
 	* configure.ac: Bump version number to 2.8.
 	* src/sigsegv.h.in (LIBSIGSEGV_VERSION): Likewise.
 	* README: Likewise.
@@ -134,6 +138,10 @@
 
 	Override automake's tar command used for creating distributions.
 	* configure.ac (am__tar): New variable.
+
+2009-08-09  Bruno Haible  <bruno@clisp.org>
+
+	* Version 2.7 released.
 
 2009-08-09  Bruno Haible  <bruno@clisp.org>
 
