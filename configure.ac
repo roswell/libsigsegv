@@ -930,11 +930,6 @@ AC_SUBST([CFG_HANDLER])
 dnl ======================= Done with CFG_HANDLER fully =======================
 
 
-{ echo; echo "${term_bold}Build Parameters:${term_norm}"; } >& AS_MESSAGE_FD
-
-dnl Relocatability is a nop for this package.
-AC_RELOCATABLE_NOP
-
 dnl Test whether to enable Cygwin specific tests.
 AM_CONDITIONAL([CYGWIN],
   [case "$host_os" in
@@ -942,19 +937,15 @@ AM_CONDITIONAL([CYGWIN],
      *)       false;;
    esac])
 
-AC_MSG_CHECKING([whether to make system calls fail with error EFAULT])
-AC_ARG_ENABLE([EFAULT],
-  [  --enable-EFAULT         whether passing invalid memory accesses to system
-                          calls should make the system call fail with error
-                          EFAULT, rather than invoking the signal handler],
-  [if test "$enableval" != no; then
-     enable_EFAULT=yes
-   else
-     enable_EFAULT=no
-   fi
-  ],
-  [enable_EFAULT=no])
-AC_MSG_RESULT([$enable_EFAULT])
+dnl Test whether to make system calls fail with error EFAULT.
+dnl More precisely: whether passing invalid memory accesses to system calls
+dnl should make the system call fail with error EFAULT, rather than invoking
+dnl the signal handler.
+dnl It is necessary on Cygwin: otherwise the cygwin1 test fails.
+case "$host_os" in
+  cygwin*) enable_EFAULT=yes ;;
+  *)       enable_EFAULT=no ;;
+esac
 if test $enable_EFAULT = yes; then
   AC_DEFINE([ENABLE_EFAULT], [1],
     [Define to 1 if attempting to make system calls fail with error EFAULT])
@@ -964,6 +955,12 @@ AM_CONDITIONAL([ENABLE_EFAULT], [test $enable_EFAULT = yes])
 if test $enable_EFAULT = yes; then
   SV_SYSCALLS_EFAULT
 fi
+
+
+{ echo; echo "${term_bold}Build Parameters:${term_norm}"; } >& AS_MESSAGE_FD
+
+dnl Relocatability is a nop for this package.
+AC_RELOCATABLE_NOP
 
 { echo; echo "${term_bold}Output Substitution:${term_norm}"; } >& AS_MESSAGE_FD
 

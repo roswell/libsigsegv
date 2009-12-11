@@ -1,5 +1,12 @@
 2009-12-11  Bruno Haible  <bruno@clisp.org>
 
+	Remove configuration option --enable-EFAULT.
+	* configure.ac (enable_EFAULT): Set to yes on Cygwin, to no otherwise.
+	* README, NEWS: Don't mention --enable-EFAULT.
+	Reported by Eric Blake.
+
+2009-12-11  Bruno Haible  <bruno@clisp.org>
+
 	New test for Cygwin.
 	* tests/cygwin1.c: New file, based on code by Eric Blake.
 	* tests/Makefile.am (TESTS, noinst_PROGRAMS): Add it.
