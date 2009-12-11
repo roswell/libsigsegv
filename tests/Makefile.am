@@ -29,6 +29,11 @@ DEFS = @DEFS@
 LDADD = ../src/libsigsegv.la
 noinst_PROGRAMS = sigsegv1 sigsegv2 sigsegv3 stackoverflow1 stackoverflow2
 
+if CYGWIN
+TESTS += cygwin1
+noinst_PROGRAMS += cygwin1
+endif
+
 if ENABLE_EFAULT
 TESTS += efault1 efault2 efault3
 noinst_PROGRAMS += efault1 efault2 efault3

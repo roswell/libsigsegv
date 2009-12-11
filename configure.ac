@@ -935,6 +935,13 @@ dnl ======================= Done with CFG_HANDLER fully =======================
 dnl Relocatability is a nop for this package.
 AC_RELOCATABLE_NOP
 
+dnl Test whether to enable Cygwin specific tests.
+AM_CONDITIONAL([CYGWIN],
+  [case "$host_os" in
+     cygwin*) true;;
+     *)       false;;
+   esac])
+
 AC_MSG_CHECKING([whether to make system calls fail with error EFAULT])
 AC_ARG_ENABLE([EFAULT],
   [  --enable-EFAULT         whether passing invalid memory accesses to system

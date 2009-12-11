@@ -1,3 +1,10 @@
+2009-12-11  Bruno Haible  <bruno@clisp.org>
+
+	New test for Cygwin.
+	* tests/cygwin1.c: New file, based on code by Eric Blake.
+	* tests/Makefile.am (TESTS, noinst_PROGRAMS): Add it.
+	* configure.ac (CYGWIN): New conditional.
+
 2009-11-21  Eric Blake  <ebb9@byu.net>
             Bruno Haible  <bruno@clisp.org>
 
