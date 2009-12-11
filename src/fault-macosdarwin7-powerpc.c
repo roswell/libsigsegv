@@ -64,62 +64,62 @@ get_fault_addr (siginfo_t *sip, ucontext_t *ucp)
     case 37:   /* stwu */
       tmp = EXTRACT_REGA (instr);
       if (tmp > 0)
-	baseA = regs[tmp];
+        baseA = regs[tmp];
       disp = EXTRACT_DISP (instr);
       break;
     case 31:
       switch (EXTRACT_OP2 (instr))
-	{
-	case 86:    /* dcbf */
-	case 54:    /* dcbst */
-	case 1014:  /* dcbz */
-	case 247:   /* stbux */
-	case 215:   /* stbx */
-	case 759:   /* stfdux */
-	case 727:   /* stfdx */
-	case 983:   /* stfiwx */
-	case 695:   /* stfsux */
-	case 663:   /* stfsx */
-	case 918:   /* sthbrx */
-	case 439:   /* sthux */
-	case 407:   /* sthx */
-	case 661:   /* stswx */
-	case 662:   /* stwbrx */
-	case 150:   /* stwcx. */
-	case 183:   /* stwux */
-	case 151:   /* stwx */
-	case 135:   /* stvebx */
-	case 167:   /* stvehx */
-	case 199:   /* stvewx */
-	case 231:   /* stvx */
-	case 487:   /* stvxl */
-	  tmp = EXTRACT_REGA (instr);
-	  if (tmp > 0)
-	    baseA = regs[tmp];
-	  baseB = regs[EXTRACT_REGC (instr)];
-	  /* Determine Altivec alignment mask.  */
-	  switch (EXTRACT_OP2 (instr))
-	    {
-	    case 167:   /* stvehx */
-	      alignmask = 0xFFFFFFFE;
-	      break;
-	    case 199:   /* stvewx */
-	      alignmask = 0xFFFFFFFC;
-	      break;
-	    case 231:   /* stvx */
-	    case 487:   /* stvxl */
-	      alignmask = 0xFFFFFFF0;
-	      break;
-	    }
-	  break;
-	case 725:   /* stswi */
-	  tmp = EXTRACT_REGA (instr);
-	  if (tmp > 0)
-	    baseA = regs[tmp];
-	  break;
-	default:   /* ignore instruction */
-	  return (void *) 0;
-	}
+        {
+        case 86:    /* dcbf */
+        case 54:    /* dcbst */
+        case 1014:  /* dcbz */
+        case 247:   /* stbux */
+        case 215:   /* stbx */
+        case 759:   /* stfdux */
+        case 727:   /* stfdx */
+        case 983:   /* stfiwx */
+        case 695:   /* stfsux */
+        case 663:   /* stfsx */
+        case 918:   /* sthbrx */
+        case 439:   /* sthux */
+        case 407:   /* sthx */
+        case 661:   /* stswx */
+        case 662:   /* stwbrx */
+        case 150:   /* stwcx. */
+        case 183:   /* stwux */
+        case 151:   /* stwx */
+        case 135:   /* stvebx */
+        case 167:   /* stvehx */
+        case 199:   /* stvewx */
+        case 231:   /* stvx */
+        case 487:   /* stvxl */
+          tmp = EXTRACT_REGA (instr);
+          if (tmp > 0)
+            baseA = regs[tmp];
+          baseB = regs[EXTRACT_REGC (instr)];
+          /* Determine Altivec alignment mask.  */
+          switch (EXTRACT_OP2 (instr))
+            {
+            case 167:   /* stvehx */
+              alignmask = 0xFFFFFFFE;
+              break;
+            case 199:   /* stvewx */
+              alignmask = 0xFFFFFFFC;
+              break;
+            case 231:   /* stvx */
+            case 487:   /* stvxl */
+              alignmask = 0xFFFFFFF0;
+              break;
+            }
+          break;
+        case 725:   /* stswi */
+          tmp = EXTRACT_REGA (instr);
+          if (tmp > 0)
+            baseA = regs[tmp];
+          break;
+        default:   /* ignore instruction */
+          return (void *) 0;
+        }
       break;
     default:   /* ignore instruction */
       return (void *) 0;

@@ -19,13 +19,13 @@
 #ifdef __ia64
 #define IS_STACK_OVERFLOW \
   (is_stk_overflow ((unsigned long) SIGSEGV_FAULT_ADDRESS,  \
-		    (unsigned long) SIGSEGV_FAULT_STACKPOINTER) \
+                    (unsigned long) SIGSEGV_FAULT_STACKPOINTER) \
    || is_stk_overflow ((unsigned long) SIGSEGV_FAULT_ADDRESS,  \
-		       (unsigned long) SIGSEGV_FAULT_BSP_POINTER))
+                       (unsigned long) SIGSEGV_FAULT_BSP_POINTER))
 #else
 #define IS_STACK_OVERFLOW \
   is_stk_overflow ((unsigned long) SIGSEGV_FAULT_ADDRESS, \
-  		   (unsigned long) SIGSEGV_FAULT_STACKPOINTER)
+                   (unsigned long) SIGSEGV_FAULT_STACKPOINTER)
 #endif
 
 static int is_stk_overflow (unsigned long addr, unsigned long sp)
