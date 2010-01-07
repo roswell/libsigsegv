@@ -1,7 +1,7 @@
 dnl Autoconf configuration for libsigsegv.
 dnl Process this file with autoconf to produce a configure script.
 dnl
-dnl Copyright (C) 2002-2009  Bruno Haible <bruno@clisp.org>
+dnl Copyright (C) 2002-2010  Bruno Haible <bruno@clisp.org>
 dnl
 dnl This program is free software; you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
@@ -322,7 +322,17 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_posix" = yes; then
   case "$host_os" in
     openbsd*)
       case "$host_cpu" in
+        alpha*) CFG_FAULT=fault-openbsd-alpha.h ;;
+        arm* | strongarm* | xscale*) CFG_FAULT=fault-openbsd-arm.h ;;
+        hppa* | parisc*) CFG_FAULT=fault-openbsd-hppa.h ;;
         i?86 | x86_64) CFG_FAULT=fault-openbsd-i386.h ;;
+        m68*) CFG_FAULT=fault-openbsd-m68k.h ;;
+        m88k*) CFG_FAULT=fault-openbsd-m88k.h ;;
+        mips*) CFG_FAULT=fault-openbsd-mips.h ;;
+        powerpc* | rs6000) CFG_FAULT=fault-openbsd-powerpc.h ;;
+        sh*) CFG_FAULT=fault-openbsd-sh.h ;;
+        sparc*) CFG_FAULT=fault-openbsd-sparc.h ;;
+        vax*) CFG_FAULT=fault-openbsd-vax.h ;;
         *) CFG_FAULT=fault-openbsd.h ;;
       esac
       FAULT_CONTEXT='struct sigcontext'

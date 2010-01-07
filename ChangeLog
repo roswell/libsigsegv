@@ -1,3 +1,22 @@
+2010-01-07  Bruno Haible  <bruno@clisp.org>
+
+	Improve support for OpenBSD.
+	* src/fault-openbsd-i386.h (SIGSEGV_FAULT_STACKPOINTER): Define
+	differently in 64-bit mode.
+	* src/fault-openbsd-alpha.h: New file.
+	* src/fault-openbsd-arm.h: New file.
+	* src/fault-openbsd-hppa.h: New file.
+	* src/fault-openbsd-m68k.h: New file.
+	* src/fault-openbsd-m88k.h: New file.
+	* src/fault-openbsd-mips.h: New file.
+	* src/fault-openbsd-powerpc.h: New file.
+	* src/fault-openbsd-sh.h: New file.
+	* src/fault-openbsd-sparc.h: New file.
+	* src/fault-openbsd-vax.h: New file.
+	* src/Makefile.am (noinst_HEADERS): Add the new files.
+	* configure.ac (CFG_FAULT): Use these files on OpenBSD.
+	Reported by Paul Irofti <bulibuta@sdf.lonestar.org>.
+
 2009-12-11  Bruno Haible  <bruno@clisp.org>
 
 	* Version 2.8 released.
