@@ -1,3 +1,7 @@
+2010-01-31  Bruno Haible  <bruno@clisp.org>
+
+	* README: Add more homepage links. Add bug report address.
+
 2010-01-07  Bruno Haible  <bruno@clisp.org>
 
 	Improve support for OpenBSD.

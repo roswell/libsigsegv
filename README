@@ -106,6 +106,9 @@ because of the small size of the library (4 KB).  Of course, you can build
 it as a shared library by specifying the configure option '--enable-shared'.
 
 
+Installation
+------------
+
 Installation instructions on Unix:
 
         ./configure [OPTIONS]
@@ -126,7 +129,8 @@ Using libsigsegv in your package:
     <http://www.gnu.org/software/gnulib/MODULES.html#module=libsigsegv>
 
 
-Copyright notice:
+Copyright notice
+----------------
 
 Copyright 1998-1999, 2002-2010  Bruno Haible <bruno@clisp.org>
 Copyright 2002-2005  Paolo Bonzini <bonzini@gnu.org>
@@ -137,11 +141,20 @@ described in the file COPYING. There is ABSOLUTELY NO WARRANTY, explicit or
 implied, on this software.
 
 
-Download:
+Download
+--------
 
-ftp://ftp.gnu.org/pub/gnu/libsigsegv/libsigsegv-2.8.tar.gz
-http://ftp.gnu.org/gnu/libsigsegv/libsigsegv-2.8.tar.gz
+    ftp://ftp.gnu.org/pub/gnu/libsigsegv/libsigsegv-2.8.tar.gz
+    http://ftp.gnu.org/gnu/libsigsegv/libsigsegv-2.8.tar.gz
 
-Homepage:
+Homepage
+--------
 
-http://libsigsegv.sourceforge.net/
+    http://www.gnu.org/software/libsigsegv/
+    http://libsigsegv.sourceforge.net/ (old)
+    http://savannah.gnu.org/projects/libsigsegv
+
+Bug reports to
+--------------
+
+    <bug-libsigsegv@gnu.org>
