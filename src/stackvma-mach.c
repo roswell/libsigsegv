@@ -1,5 +1,6 @@
 /* Determine the virtual memory area of a given address.  Mach version.
    Copyright (C) 2003, 2006  Paolo Bonzini <bonzini@gnu.org>
+   Copyright (C) 2010  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -37,11 +38,9 @@ sigsegv_get_vma (unsigned long req_address, struct vma_struct *vma)
   int more = 1;
   vm_address_t address;
   vm_size_t size;
-  mach_port_t object_name;
 #ifdef VM_REGION_BASIC_INFO
+  /* MacOS X API */
   task_t task = mach_task_self ();
-  struct vm_region_basic_info info;
-  mach_msg_type_number_t info_count = VM_REGION_BASIC_INFO_COUNT;
 #else
   task_t task = task_self ();
   vm_prot_t protection, max_protection;
@@ -52,10 +51,44 @@ sigsegv_get_vma (unsigned long req_address, struct vma_struct *vma)
 
   for (address = VM_MIN_ADDRESS; more; address += size)
     {
+      mach_port_t object_name;
 #ifdef VM_REGION_BASIC_INFO
+      /* MacOS X API */
+      /* In MacOS X 10.5, the types vm_address_t, vm_offset_t, vm_size_t have
+         32 bits in 32-bit processes and 64 bits in 64-bit processes. Whereas
+         mach_vm_address_t and mach_vm_size_t are always 64 bits large.
+         MacOS X 10.5 has three vm_region like methods:
+           - vm_region. It has arguments that depend on whether the current
+             process is 32-bit or 64-bit. When linking dynamically, this
+             function exists only in 32-bit processes. Therefore we use it only
+             in 32-bit processes.
+           - vm_region_64. It has arguments that depend on whether the current
+             process is 32-bit or 64-bit. It interprets a flavor
+             VM_REGION_BASIC_INFO as VM_REGION_BASIC_INFO_64, which is
+             dangerous since 'struct vm_region_basic_info_64' is larger than
+             'struct vm_region_basic_info'; therefore let's write
+             VM_REGION_BASIC_INFO_64 explicitly.
+           - mach_vm_region. It has arguments that are 64-bit always. This
+             function is useful when you want to access the VM of a process
+             other than the current process.
+         In 64-bit processes, we could use vm_region_64 or mach_vm_region.
+         I choose vm_region_64 because it uses the same types as vm_region,
+         resulting in less conditional code.  */
+# if defined __ppc64__ || defined __x86_64__
+      struct vm_region_basic_info_64 info;
+      mach_msg_type_number_t info_count = VM_REGION_BASIC_INFO_COUNT_64;
+
+      more = (vm_region_64 (task, &address, &size, VM_REGION_BASIC_INFO_64,
+                            (vm_region_info_t)&info, &info_count, &object_name)
+              == KERN_SUCCESS);
+# else
+      struct vm_region_basic_info info;
+      mach_msg_type_number_t info_count = VM_REGION_BASIC_INFO_COUNT;
+
       more = (vm_region (task, &address, &size, VM_REGION_BASIC_INFO,
                          (vm_region_info_t)&info, &info_count, &object_name)
               == KERN_SUCCESS);
+# endif
 #else
       more = (vm_region (task, &address, &size, &protection, &max_protection,
                          &inheritance, &shared, &object_name, &offset)
@@ -80,7 +113,6 @@ sigsegv_get_vma (unsigned long req_address, struct vma_struct *vma)
 #ifdef VM_REGION_BASIC_INFO
       if (object_name != MACH_PORT_NULL)
         mach_port_deallocate (mach_task_self (), object_name);
-      info_count = VM_REGION_BASIC_INFO_COUNT;
 #endif
 
 #if STACK_DIRECTION < 0

@@ -1,3 +1,11 @@
+2010-02-18  Bruno Haible  <bruno@clisp.org>
+
+	Fix 64-bit builds with --enable-shared on MacOS X.
+	* src/stackvma-mach.c (sigsegv_get_vma): On 64-bit MacOS X, use
+	vm_region_64 instead of vm_region.
+	* NEWS: Mention the fix.
+	Reported by Rudá Moura <ruda@rudix.org>.
+
 2010-01-31  Bruno Haible  <bruno@clisp.org>
 
 	* README: Add more homepage links. Add bug report address.
