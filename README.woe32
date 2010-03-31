@@ -1,4 +1,10 @@
-Installation on Woe32 (WinNT/2000/XP/Vista, Win95/98/ME):
+Installation on Woe32 (WinNT/2000/XP/Vista/7, Win95/98/ME):
+
+There are three ways to create binaries of this package for Woe32:
+1) Native binaries, built using the mingw tool chain.
+2) Native binaries, built using the MS Visual C/C++ tool chain.
+3) Binaries for the Cygwin environment. For these, please see the normal 
+   INSTALL file.
 
 ===============================================================================
 Installation instructions on Woe32 with Cygwin, compiling for mingw32:
@@ -11,7 +17,7 @@ Installation instructions on Woe32 with Cygwin, compiling for mingw32:
 
   Run bash.
 
-        CC="gcc -mno-cygwin" ./configure --host=i386-pc-mingw32
+        ./configure --host=i386-pc-mingw32 CC="gcc-3 -mno-cygwin"
         make
         make check
         make install

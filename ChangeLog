@@ -1,3 +1,7 @@
+2010-03-30  Bruno Haible  <bruno@clisp.org>
+
+	* README.woe32: Update for Cygwin 1.7.x.
+
 2010-02-18  Bruno Haible  <bruno@clisp.org>
 
 	Fix 64-bit builds with --enable-shared on MacOS X.
