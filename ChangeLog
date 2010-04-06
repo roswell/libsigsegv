@@ -1,3 +1,10 @@
+2011-05-03  Eric Blake  <eblake@redhat.com>
+
+	Avoid polluting cygwin namespace.
+	* configure.ac (FAULT_CONTEXT_INCLUDE): Avoid including
+	<windows.h> on cygwin.
+	Reported by Corinna Vinschen, via Aharon Robbins.
+
 2011-04-03  Bruno Haible  <bruno@clisp.org>
 
 	* Version 2.10 released.

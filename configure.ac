@@ -523,8 +523,11 @@ case "$host_os" in
     CFG_FAULT=fault-win32.h # nonexistent, just a dummy
     ;;
   cygwin*)
-    FAULT_CONTEXT='CONTEXT'
-    FAULT_CONTEXT_INCLUDE='#include <windows.h>'
+    FAULT_CONTEXT='struct _CONTEXT'
+    # CONTEXT is defined in <windows.h>, but cygwin programs should not
+    # normally inspect the contents of CONTEXT, and the outright inclusion
+    # of <windows.h> pollutes the namespace.
+    FAULT_CONTEXT_INCLUDE='struct _CONTEXT;'
     # Cygwin 1.7 uses fault-posix.h. Cygwin 1.5.x needs a hacky workaround.
     if test -z "$CFG_FAULT"; then
       CFG_FAULT=fault-cygwin-old.h
