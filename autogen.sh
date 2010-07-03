@@ -4,13 +4,13 @@
 # also regenerates all aclocal.m4, config.h.in, Makefile.in, configure files
 # with new versions of autoconf or automake.
 #
-# This script requires autoconf-2.63 and automake-1.11 in the PATH.
+# This script requires autoconf-2.63..2.66 and automake-1.11 in the PATH.
 # It also requires either
 #   - the GNULIB_TOOL environment variable pointing to the gnulib-tool script
 #     in a gnulib checkout, or
 #   - an internet connection.
 
-# Copyright (C) 2009 Free Software Foundation, Inc.
+# Copyright (C) 2009-2010 Free Software Foundation, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
