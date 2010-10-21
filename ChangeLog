@@ -1,3 +1,12 @@
+2010-10-25  Eric Blake  <eblake@redhat.com>
+
+	Fix powerpc64-unknown-linux-gnu implementation.
+	* src/stackvma-rofile.c (struct rofile): Reduce size, to avoid
+	overflowing alternate stack when compiled under -O2.
+	* src/stackvma-mincore.c (mapped_range_start, mapped_range_end):
+	Likewise.
+	* NEWS: Document the fix.
+
 2010-10-24  Eric Blake  <eblake@redhat.com>
             Bruno Haible  <bruno@clisp.org>
 

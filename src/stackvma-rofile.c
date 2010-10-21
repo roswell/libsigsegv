@@ -22,7 +22,9 @@
 
 /* Buffered read-only streams.
    We cannot use <stdio.h> here, because fopen() calls malloc(), and a malloc()
-   call may have been interrupted.  */
+   call may have been interrupted.
+   The buffer cannot be too large, because this can be called when we are
+   in the context of an alternate stack of just SIGSTKSZ bytes.  */
 
 struct rofile
   {
@@ -30,7 +32,7 @@ struct rofile
     size_t position;
     size_t filled;
     int eof_seen;
-    char buffer[4096];
+    char buffer[1024];
   };
 
 /* Open a read-only file stream.  */

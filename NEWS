@@ -1,6 +1,8 @@
 New in 2.9:
 
 * Correct support for 64-bit ABI on MacOS X 10.5 and newer.
+* Fix alternate stack overflow on at least Linux for PowerPC64;
+  regression introduced in 2.6.
 
 New in 2.8:
 

@@ -1,5 +1,5 @@
 /* Determine the virtual memory area of a given address.
-   Copyright (C) 2006, 2008-2009  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2006, 2008-2010  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -78,7 +78,7 @@ mapped_range_start (unsigned long addr)
 {
   /* Use a moderately sized VEC here, small enough that it fits on the stack
      (without requiring malloc).  */
-  pageinfo_t vec[2048];
+  pageinfo_t vec[1024];
   unsigned long stepsize = sizeof (vec);
 
   for (;;)
@@ -130,7 +130,7 @@ mapped_range_end (unsigned long addr)
 {
   /* Use a moderately sized VEC here, small enough that it fits on the stack
      (without requiring malloc).  */
-  pageinfo_t vec[2048];
+  pageinfo_t vec[1024];
   unsigned long stepsize = sizeof (vec);
 
   addr += pagesize;
