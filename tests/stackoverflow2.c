@@ -1,5 +1,6 @@
 /* Test that stack overflow and SIGSEGV are correctly distinguished.
    Copyright (C) 2002-2006, 2008  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2010 Eric Blake <eblake@redhat.com>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -42,9 +43,7 @@
 # include <sys/time.h>
 # include <sys/resource.h>
 #endif
-#ifndef SIGSTKSZ
-# define SIGSTKSZ 16384
-#endif
+#include "altstack.h"
 
 jmp_buf mainloop;
 sigset_t mainsigset;
@@ -109,10 +108,6 @@ recurse (volatile int n)
   return *recurse_1 (n, &n);
 }
 
-/* glibc says: Users should use SIGSTKSZ as the size of user-supplied
-   buffers.  */
-char mystack[SIGSTKSZ];
-
 int
 main ()
 {
@@ -128,9 +123,12 @@ main ()
   setrlimit (RLIMIT_STACK, &rl);
 #endif
 
+  /* Prepare the storage for the alternate stack.  */
+  prepare_alternate_stack ();
+
   /* Install the stack overflow handler.  */
   if (stackoverflow_install_handler (&stackoverflow_handler,
-                                     mystack, sizeof (mystack))
+                                     mystack, SIGSTKSZ)
       < 0)
     exit (2);
 
@@ -183,6 +181,9 @@ main ()
     default:
       abort ();
     }
+
+  /* Validate that the alternate stack did not overflow.  */
+  check_alternate_stack_no_overflow ();
 
   printf ("Test passed.\n");
   exit (0);

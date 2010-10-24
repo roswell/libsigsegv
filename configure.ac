@@ -939,7 +939,6 @@ AC_SUBST([CFG_HANDLER])
 
 dnl ======================= Done with CFG_HANDLER fully =======================
 
-
 dnl Test whether to enable Cygwin specific tests.
 AM_CONDITIONAL([CYGWIN],
   [case "$host_os" in
@@ -965,6 +964,10 @@ AM_CONDITIONAL([ENABLE_EFAULT], [test $enable_EFAULT = yes])
 if test $enable_EFAULT = yes; then
   SV_SYSCALLS_EFAULT
 fi
+
+
+dnl Test for features used in tests.
+AC_TYPE_UINTPTR_T
 
 
 { echo; echo "${term_bold}Build Parameters:${term_norm}"; } >& AS_MESSAGE_FD

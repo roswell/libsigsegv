@@ -1,3 +1,19 @@
+2010-10-24  Eric Blake  <eblake@redhat.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	Enhance the tests to detect overflow of the alternate stack.
+	* tests/altstack.h: New file.
+	* tests/Makefile.am (EXTRA_DIST): Add altstack.h.
+	* configure.ac: Invoke AC_TYPE_UINTPTR_T.
+	* tests/stackoverflow1.c: Include altstack.h.
+	(SIGSTKSZ): Remove definition.
+	(mystack): Remove definition.
+	(main): Invoke prepare_alternate_stack and
+	check_alternate_stack_no_overflow.
+	* tests/stackoverflow2.c: Likewise.
+	* tests/efault2.c: Likewise.
+	* tests/efault3.c: Likewise.
+
 2010-10-21  Eric Blake  <eblake@redhat.com>
 
 	* .gitignore: Ignore more files.
