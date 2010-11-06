@@ -1,5 +1,13 @@
 2010-11-06  Bruno Haible  <bruno@clisp.org>
 
+	Bump version number.
+	* configure.ac: Bump version number to 2.9.
+	* src/sigsegv.h.in (LIBSIGSEGV_VERSION): Likewise.
+	* README: Likewise.
+	* src/Makefile.am (LIBSIGSEGV_VERSION_INFO): Bump to 2:2:0.
+
+2010-11-06  Bruno Haible  <bruno@clisp.org>
+
 	Start to use gnulib.
 	* autogen.sh: New option --skip-gnulib. Fetch gnulib if GNULIB_TOOL is
 	not set. Import m4/relocatable-lib.m4.

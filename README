@@ -133,8 +133,8 @@ Copyright notice
 ----------------
 
 Copyright 1998-1999, 2002-2010  Bruno Haible <bruno@clisp.org>
-Copyright 2002-2005  Paolo Bonzini <bonzini@gnu.org>
-Copyright 2008-2009  Eric Blake <ebb9@byu.net>
+Copyright 2002-2005, 2009  Paolo Bonzini <bonzini@gnu.org>
+Copyright 2008-2010  Eric Blake <ebb9@byu.net>
 
 This is free software distributed under the GNU General Public Licence v2
 described in the file COPYING or (at your option) any later version.
@@ -144,8 +144,8 @@ There is ABSOLUTELY NO WARRANTY, explicit or implied, on this software.
 Download
 --------
 
-    ftp://ftp.gnu.org/pub/gnu/libsigsegv/libsigsegv-2.8.tar.gz
-    http://ftp.gnu.org/gnu/libsigsegv/libsigsegv-2.8.tar.gz
+    ftp://ftp.gnu.org/pub/gnu/libsigsegv/libsigsegv-2.9.tar.gz
+    http://ftp.gnu.org/gnu/libsigsegv/libsigsegv-2.9.tar.gz
 
 Homepage
 --------
