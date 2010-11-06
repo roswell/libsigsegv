@@ -1,3 +1,11 @@
+2010-11-06  Bruno Haible  <bruno@clisp.org>
+
+	Don't list files in .gitignore that are absent after "make distclean".
+	* .gitignore: Complete the list of files that are created by "make" and
+	removed by "make distclean". But comment them out, since they belong in
+	.git/info/exclude. Also remove /autom4te.cache because "make distclean"
+	does not remove it.
+
 2010-10-25  Eric Blake  <eblake@redhat.com>
 
 	Fix powerpc64-unknown-linux-gnu implementation.
