@@ -1,5 +1,9 @@
 2010-11-06  Bruno Haible  <bruno@clisp.org>
 
+	* Version 2.9 released.
+
+2010-11-06  Bruno Haible  <bruno@clisp.org>
+
 	Bump version number.
 	* configure.ac: Bump version number to 2.9.
 	* src/sigsegv.h.in (LIBSIGSEGV_VERSION): Likewise.
