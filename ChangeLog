@@ -1,5 +1,14 @@
 2010-11-06  Bruno Haible  <bruno@clisp.org>
 
+	Start to use gnulib.
+	* autogen.sh: New option --skip-gnulib. Fetch gnulib if GNULIB_TOOL is
+	not set. Import m4/relocatable-lib.m4.
+	* configure.ac: Invoke gl_RELOCATABLE_NOP instead of
+	AC_RELOCATABLE_NOP.
+	* m4/relocatable.m4: Remove file.
+
+2010-11-06  Bruno Haible  <bruno@clisp.org>
+
 	Modernize autoconf macro style.
 	* configure.ac: Surround all macro arguments in brackets.
 	* m4/getpagesize.m4: Likewise.

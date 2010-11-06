@@ -973,7 +973,7 @@ AC_TYPE_UINTPTR_T
 { echo; echo "${term_bold}Build Parameters:${term_norm}"; } >& AS_MESSAGE_FD
 
 dnl Relocatability is a nop for this package.
-AC_RELOCATABLE_NOP
+gl_RELOCATABLE_NOP
 
 { echo; echo "${term_bold}Output Substitution:${term_norm}"; } >& AS_MESSAGE_FD
 

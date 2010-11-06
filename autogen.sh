@@ -25,19 +25,45 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Usage: ./autogen.sh
+# Usage: ./autogen.sh [--skip-gnulib]
+#
+# Usage from a CVS checkout:                 ./autogen.sh
+# This uses an up-to-date gnulib checkout.
+#
+# Usage from a released tarball:             ./autogen.sh --skip-gnulib
+# This does not use a gnulib checkout.
 
-# Fetch config.guess, config.sub.
-if test -n "$GNULIB_TOOL"; then
-  for file in config.guess config.sub; do
-    $GNULIB_TOOL --copy-file build-aux/$file; chmod a+x build-aux/$file
-  done
-else
-  for file in config.guess config.sub; do
-    wget -q --timeout=5 -O build-aux/$file.tmp "http://git.savannah.gnu.org/gitweb/?p=gnulib.git;a=blob_plain;f=build-aux/${file};hb=HEAD" \
-      && mv build-aux/$file.tmp build-aux/$file \
-      && chmod a+x build-aux/$file
-  done
+skip_gnulib=false
+while :; do
+  case "$1" in
+    --skip-gnulib) skip_gnulib=true; shift;;
+    *) break ;;
+  esac
+done
+
+if test $skip_gnulib = false; then
+  if test -z "$GNULIB_TOOL"; then
+    # Check out gnulib in a subdirectory 'gnulib'.
+    if test -d gnulib; then
+      (cd gnulib && git pull)
+    else
+      git clone git://git.savannah.gnu.org/gnulib.git
+    fi
+    # Now it should contain a gnulib-tool.
+    if test -f gnulib/gnulib-tool; then
+      GNULIB_TOOL=`pwd`/gnulib/gnulib-tool
+    else
+      echo "** warning: gnulib-tool not found" 1>&2
+    fi
+  fi
+  # Skip the gnulib-tool step if gnulib-tool was not found.
+  if test -n "$GNULIB_TOOL"; then
+    $GNULIB_TOOL --copy-file m4/relocatable-lib.m4
+    # Fetch config.guess, config.sub.
+    for file in config.guess config.sub; do
+      $GNULIB_TOOL --copy-file build-aux/$file; chmod a+x build-aux/$file
+    done
+  fi
 fi
 
 # Generate aclocal.m4.
