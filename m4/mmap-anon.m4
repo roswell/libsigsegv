@@ -1,5 +1,5 @@
-# mmap-anon.m4 serial 3 (libsigsegv-2.6)
-dnl Copyright (C) 2002-2003, 2008 Bruno Haible <bruno@clisp.org>
+# mmap-anon.m4 serial 4 (libsigsegv-2.9)
+dnl Copyright (C) 2002-2003, 2008, 2010 Bruno Haible <bruno@clisp.org>
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
 dnl Public License, this file may be distributed as part of a program
@@ -14,7 +14,7 @@ AC_DEFUN([SV_MMAP_ANON],
 
   dnl 1) MAP_ANON
 
-  AC_CACHE_CHECK([for mmap with MAP_ANON], sv_cv_func_mmap_anon, [
+  AC_CACHE_CHECK([for mmap with MAP_ANON], [sv_cv_func_mmap_anon], [
     AC_RUN_IFELSE([
       AC_LANG_SOURCE([[
 #include <sys/types.h>
@@ -45,13 +45,13 @@ int main ()
       ])
   ])
   if test "$sv_cv_func_mmap_anon" != no; then
-    AC_DEFINE(HAVE_MMAP_ANON, 1,
+    AC_DEFINE([HAVE_MMAP_ANON], [1],
       [Define if <sys/mman.h> defines MAP_ANON and mmaping with MAP_ANON works.])
   fi
 
   dnl 2) MAP_ANONYMOUS
 
-  AC_CACHE_CHECK([for mmap with MAP_ANONYMOUS], sv_cv_func_mmap_anonymous, [
+  AC_CACHE_CHECK([for mmap with MAP_ANONYMOUS], [sv_cv_func_mmap_anonymous], [
     AC_RUN_IFELSE([
       AC_LANG_SOURCE([[
 #include <sys/types.h>
@@ -84,14 +84,14 @@ int main ()
       ])
   ])
   if test "$sv_cv_func_mmap_anonymous" != no; then
-    AC_DEFINE(HAVE_MMAP_ANONYMOUS, 1,
+    AC_DEFINE([HAVE_MMAP_ANONYMOUS], [1],
       [Define if <sys/mman.h> defines MAP_ANONYMOUS and mmaping with MAP_ANONYMOUS
    works.])
   fi
 
   dnl 3) MAP_FILE of /dev/zero
 
-  AC_CACHE_CHECK([for mmap of /dev/zero], sv_cv_func_mmap_devzero, [
+  AC_CACHE_CHECK([for mmap of /dev/zero], [sv_cv_func_mmap_devzero], [
     AC_RUN_IFELSE([
       AC_LANG_SOURCE([[
 #include <sys/types.h>
@@ -134,7 +134,7 @@ int main ()
       ])
   ])
   if test "$sv_cv_func_mmap_devzero" != no; then
-    AC_DEFINE(HAVE_MMAP_DEVZERO, 1,
+    AC_DEFINE([HAVE_MMAP_DEVZERO], [1],
       [Define if mmaping of the special device /dev/zero works.])
   fi
 ])

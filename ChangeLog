@@ -1,5 +1,13 @@
 2010-11-06  Bruno Haible  <bruno@clisp.org>
 
+	Modernize autoconf macro style.
+	* configure.ac: Surround all macro arguments in brackets.
+	* m4/getpagesize.m4: Likewise.
+	* m4/mmap-anon.m4: Likewise.
+	* m4/sigaltstack.m4: Likewise.
+
+2010-11-06  Bruno Haible  <bruno@clisp.org>
+
 	Don't list files in .gitignore that are absent after "make distclean".
 	* .gitignore: Complete the list of files that are created by "make" and
 	removed by "make distclean". But comment them out, since they belong in

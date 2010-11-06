@@ -1,5 +1,5 @@
-# sigaltstack.m4 serial 10 (libsigsegv-2.7)
-dnl Copyright (C) 2002-2006, 2008 Bruno Haible <bruno@clisp.org>
+# sigaltstack.m4 serial 11 (libsigsegv-2.9)
+dnl Copyright (C) 2002-2006, 2008-2010 Bruno Haible <bruno@clisp.org>
 dnl Copyright (C) 2008 Eric Blake <ebb9@byu.net>
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
@@ -12,10 +12,10 @@ AC_DEFUN([SV_SIGALTSTACK],
   AC_REQUIRE([AC_PROG_CC])
   AC_REQUIRE([AC_CANONICAL_HOST])
 
-  AC_CHECK_FUNCS(sigaltstack)
+  AC_CHECK_FUNCS([sigaltstack])
 
   if test "$ac_cv_func_sigaltstack" = yes; then
-    AC_CHECK_TYPE(stack_t, ,
+    AC_CHECK_TYPE([stack_t], ,
       [AC_DEFINE(stack_t, [struct sigaltstack],
          [Define to 'struct sigaltstack' if that's the type of the argument to sigaltstack])
       ],
@@ -27,7 +27,7 @@ AC_DEFUN([SV_SIGALTSTACK],
       ])
   fi
 
-  AC_CACHE_CHECK([for working sigaltstack], sv_cv_sigaltstack, [
+  AC_CACHE_CHECK([for working sigaltstack], [sv_cv_sigaltstack], [
     if test "$ac_cv_func_sigaltstack" = yes; then
       case "$host_os" in
         macos* | darwin[[6-9]]* | darwin[[1-9]][[0-9]]*)
@@ -123,7 +123,7 @@ int main ()
     fi
   ])
   if test "$sv_cv_sigaltstack" != no; then
-    AC_DEFINE(HAVE_WORKING_SIGALTSTACK, 1,
+    AC_DEFINE([HAVE_WORKING_SIGALTSTACK], [1],
       [Define if you have the sigaltstack() function and it works.])
 
     dnl The ss_sp field of a stack_t is, according to POSIX, the lowest address
