@@ -5,7 +5,7 @@
 # with new versions of autoconf or automake.
 #
 # This script requires autoconf-2.63..2.68 and automake-1.11 in the PATH.
-# It also requires either
+# If the option --skip-gnulib is not given, it also requires either
 #   - the GNULIB_TOOL environment variable pointing to the gnulib-tool script
 #     in a gnulib checkout, or
 #   - an internet connection.
