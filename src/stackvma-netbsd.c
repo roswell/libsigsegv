@@ -1,4 +1,4 @@
-/* Determine the virtual memory area of a given address.  FreeBSD version.
+/* Determine the virtual memory area of a given address.  NetBSD version.
    Copyright (C) 2002-2003, 2006, 2008, 2011  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
@@ -41,7 +41,10 @@ sigsegv_get_vma (unsigned long address, struct vma_struct *vma)
 #endif
 
   /* Open the current process' maps file.  It describes one VMA per line.
-     Cf. <http://www.freebsd.org/cgi/cvsweb.cgi/src/sys/fs/procfs/procfs_map.c?annotate=HEAD> */
+     There are two such files:
+       - /proc/curproc/map in FreeBSD syntax,
+       - /proc/curproc/maps in Linux syntax.
+     Cf. <http://cvsweb.netbsd.org/bsdweb.cgi/src/sys/miscfs/procfs/procfs_map.c?rev=HEAD> */
   if (rof_open (&rof, "/proc/curproc/map") < 0)
     goto failed;
 
@@ -109,11 +112,7 @@ sigsegv_get_vma (unsigned long address, struct vma_struct *vma)
   rof_close (&rof);
  failed:
 #if HAVE_MINCORE
-  /* FreeBSD 6.[01] doesn't allow to distinguish unmapped pages from
-     mapped but swapped-out pages.  See whether it's fixed.  */
-  if (!is_mapped (0))
-    /* OK, mincore() appears to work as expected.  */
-    return mincore_get_vma (address, vma);
+  return mincore_get_vma (address, vma);
 #endif
   return -1;
 }

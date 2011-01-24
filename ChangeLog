@@ -1,3 +1,11 @@
+2011-01-23  Bruno Haible  <bruno@clisp.org>
+
+	Improve NetBSD support: Allow VMA determination with fewer system calls.
+	* src/stackvma-netbsd.c: New file, based on src/stackvma-freebsd.c.
+	* src/stackvma-freebsd.c: Add comment.
+	* src/Makefile.am (EXTRA_DIST): Add stackvma-netbsd.c.
+	* configure.ac (CFG_STACKVMA): Set to stackvma-netbsd.c on NetBSD.
+
 2010-11-06  Bruno Haible  <bruno@clisp.org>
 
 	* Version 2.9 released.

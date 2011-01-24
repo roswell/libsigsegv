@@ -1,5 +1,5 @@
 ## Makefile for libsigsegv/src.
-## Copyright (C) 2002-2006, 2008-2010 Bruno Haible <bruno@clisp.org>
+## Copyright (C) 2002-2006, 2008-2011 Bruno Haible <bruno@clisp.org>
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -63,8 +63,8 @@ noinst_HEADERS = \
 EXTRA_DIST = \
   handler-none.c handler-unix.c handler-macos.c handler-win32.c \
   stackvma-none.c stackvma-simple.c stackvma-linux.c stackvma-freebsd.c \
-  stackvma-procfs.c stackvma-beos.c stackvma-mach.c stackvma-mincore.c \
-  stackvma-rofile.c \
+  stackvma-netbsd.c stackvma-procfs.c stackvma-beos.c stackvma-mach.c \
+  stackvma-mincore.c stackvma-rofile.c \
   leave-none.c leave-nop.c leave-sigaltstack.c leave-setcontext.c \
   sigsegv.h.msvc
 

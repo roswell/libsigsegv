@@ -1,7 +1,7 @@
 dnl Autoconf configuration for libsigsegv.
 dnl Process this file with autoconf to produce a configure script.
 dnl
-dnl Copyright (C) 2002-2010  Bruno Haible <bruno@clisp.org>
+dnl Copyright (C) 2002-2011  Bruno Haible <bruno@clisp.org>
 dnl
 dnl This program is free software; you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
@@ -661,6 +661,7 @@ else
   case "$host_os" in
     linux*)                CFG_STACKVMA=stackvma-linux.c ;;
     freebsd* | dragonfly*) CFG_STACKVMA=stackvma-freebsd.c ;;
+    netbsd*)               CFG_STACKVMA=stackvma-netbsd.c ;;
     beos*)                 CFG_STACKVMA=stackvma-beos.c ;;
     macos* | darwin*)      CFG_STACKVMA=stackvma-mach.c ;;
   esac
