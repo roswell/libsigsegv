@@ -1,3 +1,12 @@
+2011-01-29  Bruno Haible  <bruno@clisp.org>
+
+	Improve OpenBSD support: Allow faster VMA determination.
+	* configure.ac: Check also for mquery.
+	(CFG_STACKVMA): Set to stackvma-mquery.c if mquery() exists.
+	* src/stackvma-mquery.c: New file.
+	* src/Makefile.am (EXTRA_DIST): Add it.
+	* NEWS: Document the improvement.
+
 2011-01-23  Bruno Haible  <bruno@clisp.org>
 
 	Improve NetBSD support: Allow VMA determination with fewer system calls.

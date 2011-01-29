@@ -653,7 +653,7 @@ AC_CACHE_CHECK([for PIOCMAP in sys/procfs.h], [sv_cv_procfsvma], [
     [int x = PIOCNMAP + PIOCMAP; prmap_t y;],
     [sv_cv_procfsvma=yes], [sv_cv_procfsvma=no])
 ])
-AC_CHECK_FUNCS([mincore])
+AC_CHECK_FUNCS([mquery mincore])
 CFG_STACKVMA=
 if test $sv_cv_procfsvma = yes; then
   CFG_STACKVMA=stackvma-procfs.c
@@ -665,6 +665,11 @@ else
     beos*)                 CFG_STACKVMA=stackvma-beos.c ;;
     macos* | darwin*)      CFG_STACKVMA=stackvma-mach.c ;;
   esac
+fi
+dnl We prefer the mquery based approach over the mincore based approach,
+dnl because stackvma-mincore.c:is_unmapped() has a bad worst-case runtime.
+if test -z "$CFG_STACKVMA" && test $ac_cv_func_mquery = yes; then
+  CFG_STACKVMA=stackvma-mquery.c
 fi
 if test -z "$CFG_STACKVMA" && test $ac_cv_func_mincore = yes; then
   CFG_STACKVMA=stackvma-mincore.c
