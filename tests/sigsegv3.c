@@ -1,5 +1,5 @@
 /* Test that the handler can be exited multiple times.
-   Copyright (C) 2002-2006, 2008  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002-2006, 2008, 2011  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -56,7 +56,8 @@ handler (void *fault_address, int serious)
   handler_called++;
   if (handler_called > 10)
     abort ();
-  if (fault_address != (void *)(page + 0x678 + 8 * pass))
+  if (fault_address != (void *)((page + 0x678 + 8 * pass)
+                                & ~(SIGSEGV_FAULT_ADDRESS_ALIGNMENT - 1)))
     abort ();
   pass++;
   printf ("Stack overflow %d caught.\n", pass);

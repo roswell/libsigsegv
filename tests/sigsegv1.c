@@ -1,5 +1,5 @@
 /* Test that the handler is called, with the right fault address.
-   Copyright (C) 2002-2006, 2008  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002-2006, 2008, 2011  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -37,7 +37,8 @@ handler (void *fault_address, int serious)
   handler_called++;
   if (handler_called > 10)
     abort ();
-  if (fault_address != (void *)(page + 0x678))
+  if (fault_address
+      != (void *)((page + 0x678) & ~(SIGSEGV_FAULT_ADDRESS_ALIGNMENT - 1)))
     abort ();
   if (mprotect ((void *) page, 0x4000, PROT_READ_WRITE) == 0)
     return 1;

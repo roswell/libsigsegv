@@ -1,5 +1,12 @@
 New in 2.10:
 
+* Support for Linux/S390.
+  <sigsegv.h> now defines a macro SIGSEGV_FAULT_ADDRESS_ALIGNMENT.
+  It is either 1 or pagesize. Its meaning is that
+    - The fault address passed to a SIGSEGV handler has been rounded down
+      to a multiple of SIGSEGV_FAULT_ADDRESS_ALIGNMENT.
+    - The address and length arguments of sigsegv_register function calls
+      must be multiples of SIGSEGV_FAULT_ADDRESS_ALIGNMENT.
 * Faster distinction between stack overflow and other fault on OpenBSD.
 
 New in 2.9:

@@ -1,5 +1,5 @@
 /* Page fault handling library.
-   Copyright (C) 1998-1999, 2002, 2004-2010  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 1998-1999, 2002, 2004-2011  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -43,8 +43,22 @@ extern int libsigsegv_version;       /* Likewise */
 /* -------------------------------------------------------------------------- */
 
 /*
+ * The mask of bits that are set to zero in a fault address that gets passed
+ * to a global SIGSEGV handler.
+ * On some platforms, the precise fault address is not known, only the memory
+ * page into which the fault address falls. On these platforms,
+ * SIGSEGV_FAULT_ADDRESS_ALIGNMENT is greater than 1.
+ */
+#if defined __linux__ && (defined __s390__ || defined __s390x__)
+# define SIGSEGV_FAULT_ADDRESS_ALIGNMENT 0x1000UL
+#else
+# define SIGSEGV_FAULT_ADDRESS_ALIGNMENT 1UL
+#endif
+
+/*
  * The type of a global SIGSEGV handler.
- * The fault address is passed as argument.
+ * The fault address, with the bits (SIGSEGV_FAULT_ADDRESS_ALIGNMENT - 1)
+ * cleared, is passed as argument.
  * The access type (read access or write access) is not passed; your handler
  * has to know itself how to distinguish these two cases.
  * The second argument is 0, meaning it could also be a stack overflow, or 1,
@@ -176,6 +190,8 @@ extern void sigsegv_init (sigsegv_dispatcher* dispatcher);
 /*
  * Adds a local SIGSEGV handler to a sigsegv_dispatcher structure.
  * It will cover the interval [address..address+len-1].
+ * The address and len arguments must be multiples of
+ * SIGSEGV_FAULT_ADDRESS_ALIGNMENT.
  * Returns a "ticket" that can be used to remove the handler later.
  */
 extern void* sigsegv_register (sigsegv_dispatcher* dispatcher,

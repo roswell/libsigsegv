@@ -1,3 +1,18 @@
+2011-03-13  Bruno Haible  <bruno@clisp.org>
+
+	Support for Linux/S390.
+	* m4/fault.m4 (SV_TRY_FAULT): Define
+	SIGSEGV_FAULT_ADDRESS_ROUNDOFF_BITS. On Linux/S390 systems, expect a
+	page-aligned fault address.
+	* src/sigsegv.h.in (SIGSEGV_FAULT_ADDRESS_ROUNDOFF_BITS): New macro.
+	(sigsegv_register): Mention constraint about address and len arguments.
+	* tests/sigsegv1.c (handler): On Linux/S390 systems, expect a
+	page-aligned fault address.
+	* tests/sigsegv3.c (handler): Likewise.
+	* tests/sigsegv2.c: Add comment.
+	* NEWS: Document the change.
+	Reported by Christoph Egger <christoph@debian.org>.
+
 2011-01-29  Bruno Haible  <bruno@clisp.org>
 
 	Improve OpenBSD support: Allow faster VMA determination.

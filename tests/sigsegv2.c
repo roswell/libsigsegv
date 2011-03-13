@@ -1,5 +1,5 @@
 /* Test the dispatcher.
-   Copyright (C) 2002-2006, 2008  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002-2006, 2008, 2011  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -31,6 +31,10 @@ static sigsegv_dispatcher dispatcher;
 
 static volatile unsigned int logcount = 0;
 static volatile unsigned long logdata[10];
+
+/* Note about SIGSEGV_FAULT_ADDRESS_ALIGNMENT: It does not matter whether
+   fault_address is rounded off here because all intervals that we pass to
+   sigsegv_register are page-aligned.  */
 
 static int
 area_handler (void *fault_address, void *user_arg)
