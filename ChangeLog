@@ -1,5 +1,9 @@
 2011-04-03  Bruno Haible  <bruno@clisp.org>
 
+	* Version 2.10 released.
+
+2011-04-03  Bruno Haible  <bruno@clisp.org>
+
 	Don't ask for success reports on MacOS X any more.
 	* Makefile.am (check-next): No longer ask for success reports on
 	MacOS X.
