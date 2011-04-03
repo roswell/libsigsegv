@@ -26,7 +26,7 @@ RSE_BOLD
 
 { echo; echo "${term_bold}Build Tools:${term_norm}"; } >& AS_MESSAGE_FD
 
-AM_INIT_AUTOMAKE([libsigsegv], [2.9])
+AM_INIT_AUTOMAKE([libsigsegv], [2.10])
 AM_CONFIG_HEADER([config.h])
 
 dnl Override automake's tar command used for creating distributions.

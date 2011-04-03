@@ -1,3 +1,11 @@
+2011-04-03  Bruno Haible  <bruno@clisp.org>
+
+	Bump version number.
+	* configure.ac: Bump version number to 2.10.
+	* src/sigsegv.h.in (LIBSIGSEGV_VERSION): Likewise.
+	* README: Likewise. Recommend ftpmirror.gnu.org in the first place.
+	* src/Makefile.am (LIBSIGSEGV_VERSION_INFO): Bump to 2:3:0.
+
 2011-03-13  Bruno Haible  <bruno@clisp.org>
 
 	Support for Linux/S390.
