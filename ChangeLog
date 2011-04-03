@@ -1,5 +1,11 @@
 2011-04-03  Bruno Haible  <bruno@clisp.org>
 
+	Don't ask for success reports on MacOS X any more.
+	* Makefile.am (check-next): No longer ask for success reports on
+	MacOS X.
+
+2011-04-03  Bruno Haible  <bruno@clisp.org>
+
 	Bump version number.
 	* configure.ac: Bump version number to 2.10.
 	* src/sigsegv.h.in (LIBSIGSEGV_VERSION): Likewise.
