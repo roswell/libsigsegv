@@ -1,3 +1,9 @@
+2011-09-10  Bruno Haible  <bruno@clisp.org>
+
+	Adhere to Win32 API.
+	* src/handler-win32.c (main_exception_filter): Use
+	EXCEPTION_STACK_OVERFLOW, not STATUS_STACK_OVERFLOW.
+
 2011-05-03  Eric Blake  <eblake@redhat.com>
 
 	Avoid polluting cygwin namespace.

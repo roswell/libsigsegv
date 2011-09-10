@@ -1,5 +1,5 @@
 /* Fault handler information.  Woe32 version.
-   Copyright (C) 1993-1999, 2002-2003, 2007-2009  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 1993-1999, 2002-2003, 2007-2009, 2011  Bruno Haible <bruno@clisp.org>
    Copyright (C) 2003  Paolo Bonzini <bonzini@gnu.org>
    Copyright (C) 2009  Eric Blake <ebb9@byu.net>
 
@@ -67,7 +67,7 @@ static sigsegv_handler_t user_handler = (sigsegv_handler_t) NULL;
 #endif
 
 /* Stack overflow handling is tricky:
-   First, we must catch a STATUS_STACK_OVERFLOW exception. This is signalled
+   First, we must catch a EXCEPTION_STACK_OVERFLOW exception. This is signalled
    when the guard page at the end of the stack has been touched. The operating
    system remaps the page with protection PAGE_READWRITE and only then calls
    our exception handler. Actually, it's even more complicated: The stack has
@@ -156,7 +156,7 @@ static LONG WINAPI
 main_exception_filter (EXCEPTION_POINTERS *ExceptionInfo)
 {
   if ((stk_user_handler
-       && ExceptionInfo->ExceptionRecord->ExceptionCode == STATUS_STACK_OVERFLOW
+       && ExceptionInfo->ExceptionRecord->ExceptionCode == EXCEPTION_STACK_OVERFLOW
       )
 #if !MIXING_UNIX_SIGSEGV_AND_WIN32_STACKOVERFLOW_HANDLING || OLD_CYGWIN_WORKAROUND
       ||
@@ -198,7 +198,7 @@ main_exception_filter (EXCEPTION_POINTERS *ExceptionInfo)
       if (ExceptionInfo->ExceptionRecord->NumberParameters == 2)
         {
           if (stk_user_handler
-              && ExceptionInfo->ExceptionRecord->ExceptionCode == STATUS_STACK_OVERFLOW)
+              && ExceptionInfo->ExceptionRecord->ExceptionCode == EXCEPTION_STACK_OVERFLOW)
             {
               char *address = (char *) ExceptionInfo->ExceptionRecord->ExceptionInformation[1];
               /* Restart the program, giving it a sane value for %esp.
