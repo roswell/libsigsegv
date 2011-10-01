@@ -111,8 +111,9 @@ recurse (volatile int n)
 int
 main ()
 {
-  sigset_t emptyset;
+  int prot_unwritable;
   void *p;
+  sigset_t emptyset;
 
 #if HAVE_SETRLIMIT && defined RLIMIT_STACK
   /* Before starting the endless recursion, try to be friendly to the user's
@@ -137,6 +138,14 @@ main ()
   zero_fd = open ("/dev/zero", O_RDONLY, 0644);
 #endif
 
+#if defined __linux__ && defined __sparc__
+  /* On Linux 2.6.26/SPARC64, PROT_READ has the same effect as
+     PROT_READ | PROT_WRITE.  */
+  prot_unwritable = PROT_NONE;
+#else
+  prot_unwritable = PROT_READ;
+#endif
+
   /* Setup some mmaped memory.  */
   p = mmap_zeromap ((void *) 0x12340000, 0x4000);
   if (p == (void *)(-1))
@@ -147,7 +156,7 @@ main ()
   page = (unsigned long) p;
 
   /* Make it read-only.  */
-  if (mprotect ((void *) page, 0x4000, PROT_READ) < 0)
+  if (mprotect ((void *) page, 0x4000, prot_unwritable) < 0)
     {
       fprintf (stderr, "mprotect failed.\n");
       exit (2);

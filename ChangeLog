@@ -1,3 +1,13 @@
+2011-09-30  Bruno Haible  <bruno@clisp.org>
+
+	Work around an mprotect(...,PROT_READ) bug on Linux 2.6.26/SPARC64.
+	* m4/fault.m4 (SV_TRY_FAULT): On Linux/SPARC, use PROT_NONE instead of
+	PROT_READ.
+	* tests/sigsegv1.c (main): Likewise.
+	* tests/sigsegv2.c (main): Likewise.
+	* tests/sigsegv3.c (main): Likewise.
+	* tests/stackoverflow2.c (main): Likewise.
+
 2011-09-10  Bruno Haible  <bruno@clisp.org>
 
 	Adhere to Win32 API.

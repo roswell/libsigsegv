@@ -65,6 +65,7 @@ barrier ()
 int
 main ()
 {
+  int prot_unwritable;
   void *p;
   unsigned long area1;
   unsigned long area2;
@@ -76,6 +77,14 @@ main ()
 #endif
   sigsegv_init (&dispatcher);
   sigsegv_install_handler (&handler);
+
+#if defined __linux__ && defined __sparc__
+  /* On Linux 2.6.26/SPARC64, PROT_READ has the same effect as
+     PROT_READ | PROT_WRITE.  */
+  prot_unwritable = PROT_NONE;
+#else
+  prot_unwritable = PROT_READ;
+#endif
 
   /* Setup some mmaped memory.  */
 
@@ -101,13 +110,13 @@ main ()
     }
   area2 = (unsigned long) p;
   sigsegv_register (&dispatcher, (void *) area2, 0x4000, &area_handler, &area2);
-  if (mprotect ((void *) area2, 0x4000, PROT_READ) < 0)
+  if (mprotect ((void *) area2, 0x4000, prot_unwritable) < 0)
     {
       fprintf (stderr, "mprotect failed.\n");
       exit (2);
     }
   if (mprotect ((void *) area2, 0x4000, PROT_READ_WRITE) < 0
-      || mprotect ((void *) area2, 0x4000, PROT_READ) < 0)
+      || mprotect ((void *) area2, 0x4000, prot_unwritable) < 0)
     {
       fprintf (stderr, "mprotect failed.\n");
       exit (2);
@@ -121,7 +130,7 @@ main ()
     }
   area3 = (unsigned long) p;
   sigsegv_register (&dispatcher, (void *) area3, 0x4000, &area_handler, &area3);
-  mprotect ((void *) area3, 0x4000, PROT_READ);
+  mprotect ((void *) area3, 0x4000, prot_unwritable);
 
   /* This access should call the handler.  */
   ((volatile int *)area2)[230] = 22;

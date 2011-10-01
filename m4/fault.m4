@@ -1,4 +1,4 @@
-# fault.m4 serial 6 (libsigsegv-2.10)
+# fault.m4 serial 7 (libsigsegv-2.11)
 dnl Copyright (C) 2002-2003, 2011 Bruno Haible <bruno@clisp.org>
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
@@ -86,7 +86,13 @@ int main ()
     exit (2);
   page = (unsigned long) p;
   /* Make it read-only.  */
+#if defined __linux__ && defined __sparc__
+  /* On Linux 2.6.26/SPARC64, PROT_READ has the same effect as
+     PROT_READ | PROT_WRITE.  */
+  if (mprotect ((void *) page, 0x10000, PROT_NONE) < 0)
+#else
   if (mprotect ((void *) page, 0x10000, PROT_READ) < 0)
+#endif
     exit (2);
   /* Install the SIGSEGV handler.  */
   sigemptyset(&action.sa_mask);
