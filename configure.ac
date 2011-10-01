@@ -133,7 +133,7 @@ case "$host_os" in
 
 dnl FIXME: Put in some more known values into the third argument.
 SV_TRY_FAULT([POSIX], sv_cv_fault_posix,
-  [*-*-solaris2.[7-9] | i?86-*-linux2.[4-9]* | i?86-*-freebsd[4-9]* | i?86-*-mirbsd1[0-9] | alpha*-dec-osf[4-9]* | *-*-hpux11* | mips-sgi-irix6*],
+  [*-*-solaris2.[7-9] | i?86-*-linux2.[4-9]* | sparc*-*-linux2.6.* | i?86-*-freebsd[4-9]* | i?86-*-mirbsd1[0-9] | alpha*-dec-osf[4-9]* | *-*-hpux11* | mips-sgi-irix6*],
   [],
   [int sig, siginfo_t *sip, void *ucp],
   [sip->si_addr],

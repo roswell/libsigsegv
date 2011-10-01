@@ -1,5 +1,10 @@
 2011-09-30  Bruno Haible  <bruno@clisp.org>
 
+	Update known platforms list.
+	* configure.ac (POSIX): Add Linux/SPARC to the known platforms.
+
+2011-09-30  Bruno Haible  <bruno@clisp.org>
+
 	Work around an mprotect(...,PROT_READ) bug on Linux 2.6.26/SPARC64.
 	* m4/fault.m4 (SV_TRY_FAULT): On Linux/SPARC, use PROT_NONE instead of
 	PROT_READ.
