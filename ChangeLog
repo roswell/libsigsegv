@@ -1,3 +1,8 @@
+2012-04-28  Bruno Haible  <bruno@clisp.org>
+
+	Allow use of autoconf-2.69 and automake-1.12.
+	* autogen.sh: Update comments.
+
 2011-10-18  Bruno Haible  <bruno@clisp.org>
 
 	* m4/libtool.m4: Update from libtool-2.4.2.
