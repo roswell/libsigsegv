@@ -17,9 +17,15 @@
 
 #include "fault-openbsd.h"
 
+#include <sys/param.h> /* defines macro OpenBSD */
+
 /* See the definition of 'struct sigcontext' in
    openbsd-src/sys/arch/m88k/include/signal.h
    and the definition of 'struct reg' in
    openbsd-src/sys/arch/m88k/include/reg.h.  */
 
-#define SIGSEGV_FAULT_STACKPOINTER  scp->sc_regs.r[31]
+#if OpenBSD >= 201211 /* OpenBSD version >= 5.2 */
+# define SIGSEGV_FAULT_STACKPOINTER  scp->sc_regs[31]
+#else
+# define SIGSEGV_FAULT_STACKPOINTER  scp->sc_regs.r[31]
+#endif
