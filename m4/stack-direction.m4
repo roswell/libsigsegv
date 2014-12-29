@@ -13,6 +13,7 @@ AC_DEFUN([SV_STACK_DIRECTION],
     case "$host_cpu" in
       dnl See the #define STACK_GROWS_DOWNWARD in gcc-3.1/gcc/config/*/*.h.
       a29k | \
+      aarch64* | \
       alpha* | \
       arc | \
       arm* | strongarm* | xscale* | \
