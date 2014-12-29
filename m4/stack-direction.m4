@@ -32,6 +32,7 @@ AC_DEFUN([SV_STACK_DIRECTION],
       m68* | \
       m88k | \
       mcore | \
+      microblaze | \
       mips* | \
       mmix | \
       mn10200 | \
