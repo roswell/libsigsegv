@@ -1,5 +1,5 @@
-# stack-direction.m4 serial 1 (libsigsegv-2.8)
-dnl Copyright (C) 2002-2009 Bruno Haible <bruno@clisp.org>
+# stack-direction.m4 serial 2 (libsigsegv-2.11)
+dnl Copyright (C) 2002-2009, 2013-2014 Bruno Haible <bruno@clisp.org>
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
 dnl Public License, this file may be distributed as part of a program

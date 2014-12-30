@@ -1,3 +1,11 @@
+2014-12-30  Simon Dawson  <spdawson@gmail.com>  (tiny change)
+            Will Newton  <will.newton@linaro.org>  (tiny change)
+            Spenser Gilliland  <spenser@gillilanding.com>  (tiny change)
+            Thomas Petazzoni  <thomas.petazzoni@free-electrons.com>  (tiny change)
+
+	* m4/stack-direction.m4: Add stack direction info for various
+	processors.
+
 2012-09-09  Bruno Haible  <bruno@clisp.org>
 
 	Support for OpenBSD 5.2 on m88k and sh processors.
