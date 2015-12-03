@@ -27,4 +27,8 @@
    (see also <asm/sigcontext.h>)
    are quite different types.  */
 
+#if __WORDSIZE == 64
+#define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext.mc_gregs[REG_O6]
+#else
 #define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext.gregs[REG_O6]
+#endif
