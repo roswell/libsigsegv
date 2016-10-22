@@ -1,5 +1,5 @@
 ## Makefile for libsigsegv/tests.
-## Copyright (C) 2002-2003, 2008-2010 Bruno Haible <bruno@clisp.org>
+## Copyright (C) 2002-2003, 2008-2010, 2016 Bruno Haible <bruno@clisp.org>
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ TESTS = sigsegv1 sigsegv2 sigsegv3 stackoverflow1 stackoverflow2
 
 EXTRA_DIST = mmaputil.h altstack.h
 
-INCLUDES = -I../src
+AM_CPPFLAGS = -I../src
 DEFS = @DEFS@
 LDADD = ../src/libsigsegv.la
 noinst_PROGRAMS = sigsegv1 sigsegv2 sigsegv3 stackoverflow1 stackoverflow2

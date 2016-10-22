@@ -1,3 +1,11 @@
+2016-10-22  Bruno Haible  <bruno@clisp.org>
+
+	Switch to automake 1.15.
+	* autogen.sh: Update comment.
+	* src/Makefile.am (AM_CPPFLAGS): Renamed from INCLUDES.
+	* tests/Makefile.am (AM_CPPFLAGS): Renamed from INCLUDES.
+	* build-aux/.gitignore: Ignore more files.
+
 2015-12-03  Waldemar Brodkorb  <wbx@uclibc-ng.org>
 
 	* src/fault-linux-sparc.h (SIGSEGV_FAULT_ADDRESS_ROUNDOFF_BITS)

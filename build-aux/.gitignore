@@ -1,6 +1,8 @@
 # Files brought in by "automake --add-missing --copy":
+/compile
 /install-sh
 /missing
+/test-driver
 
 # Other files brought in by autogen.sh:
 /config.guess

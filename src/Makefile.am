@@ -1,5 +1,5 @@
 ## Makefile for libsigsegv/src.
-## Copyright (C) 2002-2006, 2008-2011 Bruno Haible <bruno@clisp.org>
+## Copyright (C) 2002-2006, 2008-2011, 2016 Bruno Haible <bruno@clisp.org>
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -68,7 +68,7 @@ EXTRA_DIST = \
   leave-none.c leave-nop.c leave-sigaltstack.c leave-setcontext.c \
   sigsegv.h.msvc
 
-INCLUDES = -I. -I$(srcdir)
+AM_CPPFLAGS = -I. -I$(srcdir)
 DEFS = @DEFS@
 
 libsigsegv_la_SOURCES = handler.c stackvma.c leave.c dispatcher.c version.c
