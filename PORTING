@@ -67,6 +67,7 @@ i386-apple-darwin9.7.0                        |   yes   |   yes   | 2.8
 i386-apple-darwin9.8.0                        |   yes   |   yes   | 2.9
 i386-apple-darwin10.2.0                       |   yes   |   yes   | 2.6
 i386-apple-darwin10.3.0                       |   yes   |   yes   | 2.6
+i686-unknown-gnu0.3-glibc2.13                 |   yes   |   no    | 2.10
 i586-pc-linux2.2.14-gnu-glibc2.1              |   yes   |   yes   | 2.1
 i686-pc-linux2.2.14-gnu-glibc2.1              |   yes   |   yes   | 2.0
 i686-pc-linux2.2.19-gnu-glibc2.1              |   yes   |   yes   | 1.95
@@ -92,7 +93,7 @@ i686-pc-linux2.4.21-gnu-glibc2.3              |   yes   |   yes   | 2.6
 i586-pc-linux2.4.22-gnu-glibc2.3              |   yes   |   yes   | 2.0
 i386-pc-mingw32                               |   yes   |   yes   | 2.6
 i586-pc-mingw32                               |   yes   |   yes   | 2.9
-i686-pc-mingw32                               |   yes   |   yes   | 2.6
+i686-pc-mingw32                               |   yes   |   yes   | 2.10
 i686-w64-mingw32                              |   yes   |   yes   | 2.10
 i686-pc-minix3.1.8                            |   no    |   no    | 2.10
 i386-unknown-mirbsd10                         |   yes   |   yes   | 2.9
@@ -100,7 +101,7 @@ i386-pc-os2-emx                               |   no    |   no    | 2.5
 i386-pc-nto-qnx6.3.2                          |   yes   |   no    | 2.6
 i386-pc-solaris2.8                            |   yes   |   yes   | 2.7
 i386-pc-solaris2.9                            |   yes   |   yes   | 2.2
-i386-pc-solaris2.10                           |   yes   |   yes   | 2.9
+i386-pc-solaris2.10                           |   yes   |   yes   | 2.10
 i386-pc-solaris2.11                           |   yes   |   yes   | 2.10
 i686-pc-win32-msvc6                           |   yes   |   yes   | 1.96
 i686-pc-win32-msvc9                           |   yes   |   yes   | 2.9
@@ -203,7 +204,7 @@ sparc-sun-solaris2.6                          |   yes   |   yes   | 2.8
 sparc-sun-solaris2.7                          |   yes   |   yes   | 2.8
 sparc-sun-solaris2.8                          |   yes   |   yes   | 2.9
 sparc-sun-solaris2.9                          |   yes   |   yes   | 2.6
-sparc-sun-solaris2.10                         |   yes   |   yes   | 2.9
+sparc-sun-solaris2.10                         |   yes   |   yes   | 2.10
 sparc-sun-solaris2.11                         |   yes   |   yes   | 2.4
 sparc64-unknown-linux2.2.18-gnu-glibc2.1      |   no    |   no    | 1.95
 sparc64-unknown-linux2.4.28-gnu-glibc2.3      |   yes   |   no    | 2.8
