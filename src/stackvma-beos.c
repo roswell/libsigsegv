@@ -1,5 +1,5 @@
 /* Determine the virtual memory area of a given address.  BeOS version.
-   Copyright (C) 2002, 2006  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002, 2006, 2016  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -21,13 +21,13 @@
 #include "stackvma-simple.c"
 
 int
-sigsegv_get_vma (unsigned long address, struct vma_struct *vma)
+sigsegv_get_vma (uintptr_t address, struct vma_struct *vma)
 {
   area_info info;
   int32 cookie;
-  unsigned long start, end;
+  uintptr_t start, end;
 #if STACK_DIRECTION < 0
-  unsigned long prev;
+  uintptr_t prev;
 #endif
 
 #if STACK_DIRECTION < 0
@@ -36,7 +36,7 @@ sigsegv_get_vma (unsigned long address, struct vma_struct *vma)
   cookie = 0;
   while (get_next_area_info (0, &cookie, &info) == B_OK)
     {
-      start = (unsigned long) info.address;
+      start = (uintptr_t) info.address;
       end = start + info.size;
       if (address >= start && address <= end - 1)
         {
@@ -46,7 +46,7 @@ sigsegv_get_vma (unsigned long address, struct vma_struct *vma)
           vma->prev_end = prev;
 #else
           if (get_next_area_info (0, &cookie, &info) == B_OK)
-            vma->next_start = (unsigned long) info.address;
+            vma->next_start = (uintptr_t) info.address;
           else
             vma->next_start = 0;
 #endif

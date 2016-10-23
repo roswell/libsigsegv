@@ -1,5 +1,5 @@
 /* Buffered read-only streams.
-   Copyright (C) 2008  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2008, 2016  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -91,9 +91,9 @@ rof_getchar (struct rofile *rof)
 
 /* Parse an unsigned hexadecimal number from a read-only file stream.  */
 static int
-rof_scanf_lx (struct rofile *rof, unsigned long *valuep)
+rof_scanf_lx (struct rofile *rof, uintptr_t *valuep)
 {
-  unsigned long value = 0;
+  uintptr_t value = 0;
   unsigned int numdigits = 0;
   for (;;)
     {

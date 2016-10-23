@@ -1,5 +1,5 @@
 /* Fault handler information.  Unix version.
-   Copyright (C) 1993-1999, 2002-2003, 2006, 2008-2009  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 1993-1999, 2002-2003, 2006, 2008-2009, 2016  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -55,7 +55,7 @@
      (like BeOS), we use the stack's VMA directly.
  */
 
-#include <stddef.h> /* needed for NULL on SunOS4 */
+#include <stdint.h>
 #include <stdlib.h>
 #include <signal.h>
 #if HAVE_SYS_SIGNAL_H
@@ -92,7 +92,7 @@
 #if HAVE_STACKVMA
 
 /* Address of the last byte belonging to the stack vma.  */
-static unsigned long stack_top = 0;
+static uintptr_t stack_top = 0;
 
 /* Needs to be called once only.  */
 static void
@@ -100,15 +100,15 @@ remember_stack_top (void *some_variable_on_stack)
 {
   struct vma_struct vma;
 
-  if (sigsegv_get_vma ((unsigned long) some_variable_on_stack, &vma) >= 0)
+  if (sigsegv_get_vma ((uintptr_t) some_variable_on_stack, &vma) >= 0)
     stack_top = vma.end - 1;
 }
 
 #endif /* HAVE_STACKVMA */
 
 static stackoverflow_handler_t stk_user_handler = (stackoverflow_handler_t)NULL;
-static unsigned long stk_extra_stack;
-static unsigned long stk_extra_stack_size;
+static uintptr_t stk_extra_stack;
+static size_t stk_extra_stack_size;
 
 #endif /* HAVE_STACK_OVERFLOW_RECOVERY */
 
@@ -148,9 +148,9 @@ sigsegv_handler (SIGSEGV_FAULT_HANDLER_ARGLIST)
         {
           /* See whether it was a stack overflow. If so, longjump away.  */
 #ifdef SIGSEGV_FAULT_STACKPOINTER
-          unsigned long old_sp = (unsigned long) (SIGSEGV_FAULT_STACKPOINTER);
+          uintptr_t old_sp = (uintptr_t) (SIGSEGV_FAULT_STACKPOINTER);
 #ifdef __ia64
-          unsigned long old_bsp = (unsigned long) (SIGSEGV_FAULT_BSP_POINTER);
+          uintptr_t old_bsp = (uintptr_t) (SIGSEGV_FAULT_BSP_POINTER);
 #endif
 #endif
 
@@ -174,7 +174,7 @@ sigsegv_handler (SIGSEGV_FAULT_HANDLER_ARGLIST)
                      In the case of IA-64, we know that the previous segment
                      is the up-growing bsp segment, and either of the two
                      stacks can overflow.  */
-                  unsigned long addr = (unsigned long) address;
+                  uintptr_t addr = (uintptr_t) address;
 
 #ifdef __ia64
                   if (addr >= vma.prev_end && addr <= vma.end - 1)
@@ -192,7 +192,7 @@ sigsegv_handler (SIGSEGV_FAULT_HANDLER_ARGLIST)
 #else
           /* Heuristic AB: If the fault address is near the stack pointer,
              it's a stack overflow.  */
-          unsigned long addr = (unsigned long) address;
+          uintptr_t addr = (uintptr_t) address;
 
           if ((addr <= old_sp + 4096 && old_sp <= addr + 4096)
 #ifdef __ia64
@@ -255,7 +255,7 @@ sigsegv_handler (int sig)
     {
       /* See whether it was a stack overflow.  If so, longjump away.  */
 #ifdef SIGSEGV_FAULT_STACKPOINTER
-      unsigned long old_sp = (unsigned long) (SIGSEGV_FAULT_STACKPOINTER);
+      uintptr_t old_sp = (uintptr_t) (SIGSEGV_FAULT_STACKPOINTER);
 #endif
 
       /* Were we able to determine the stack top?  */
@@ -276,8 +276,8 @@ sigsegv_handler (int sig)
 
               if (getrlimit (RLIMIT_STACK, &rl) >= 0)
                 {
-                  unsigned long current_stack_size = vma.end - vma.start;
-                  unsigned long max_stack_size = rl.rlim_cur;
+                  uintptr_t current_stack_size = vma.end - vma.start;
+                  uintptr_t max_stack_size = rl.rlim_cur;
                   if (current_stack_size <= max_stack_size + 4096
                       && max_stack_size <= current_stack_size + 4096
 #else
@@ -471,7 +471,7 @@ sigsegv_leave_handler (void (*continuation) (void*, void*, void*),
 
 int
 stackoverflow_install_handler (stackoverflow_handler_t handler,
-                               void *extra_stack, unsigned long extra_stack_size)
+                               void *extra_stack, size_t extra_stack_size)
 {
 #if HAVE_STACK_OVERFLOW_RECOVERY
 #if HAVE_STACKVMA
@@ -485,7 +485,7 @@ stackoverflow_install_handler (stackoverflow_handler_t handler,
 #endif
 
   stk_user_handler = handler;
-  stk_extra_stack = (unsigned long) extra_stack;
+  stk_extra_stack = (uintptr_t) extra_stack;
   stk_extra_stack_size = extra_stack_size;
 #ifdef __BEOS__
   set_signal_stack (extra_stack, extra_stack_size);

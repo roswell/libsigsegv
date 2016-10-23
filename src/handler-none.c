@@ -1,5 +1,5 @@
 /* Fault handler information.
-   Copyright (C) 1993-1999, 2002, 2008  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 1993-1999, 2002, 2008, 2016  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ sigsegv_leave_handler (void (*continuation) (void*, void*, void*),
 
 int
 stackoverflow_install_handler (stackoverflow_handler_t handler,
-                               void *extra_stack, unsigned long extra_stack_size)
+                               void *extra_stack, size_t extra_stack_size)
 {
   return -1;
 }

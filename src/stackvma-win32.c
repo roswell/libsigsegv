@@ -1,5 +1,5 @@
 /* Determine the virtual memory area of a given address.  Win32 version.
-   Copyright (C) 2002  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002, 2016  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 static void DumpProcessMemoryMap()
 {
   MEMORY_BASIC_INFORMATION info;
-  unsigned long address = 0;
+  uintptr_t address = 0;
   printf("Memory dump:\n");
   while (VirtualQuery((void*)address,&info,sizeof(info)) == sizeof(info))
     {
@@ -35,11 +35,11 @@ static void DumpProcessMemoryMap()
         default: printf("?"); break;
         }
       printf(" 0x%lx - 0x%lx",
-             (unsigned long)info.BaseAddress,
-             (unsigned long)info.BaseAddress+info.RegionSize-1);
+             (uintptr_t)info.BaseAddress,
+             (uintptr_t)info.BaseAddress+info.RegionSize-1);
       if (info.State != MEM_FREE)
         {
-          printf(" (0x%lx) ",(unsigned long)info.AllocationBase);
+          printf(" (0x%lx) ",(uintptr_t)info.AllocationBase);
           /* info.AllocationProtect is apparently irrelevant.  */
           switch (info.Protect & ~(PAGE_GUARD|PAGE_NOCACHE))
             {
@@ -67,13 +67,13 @@ static void DumpProcessMemoryMap()
             }
         }
       printf("\n");
-      address = (unsigned long)info.BaseAddress + info.RegionSize;
+      address = (uintptr_t)info.BaseAddress + info.RegionSize;
     }
   printf("End of memory dump.\n");
 }
 
 int
-sigsegv_get_vma (unsigned long address, struct vma_struct *vma)
+sigsegv_get_vma (uintptr_t address, struct vma_struct *vma)
 {
   DumpProcessMemoryMap();
   return -1;

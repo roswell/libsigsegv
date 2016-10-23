@@ -1,5 +1,5 @@
 /* Test that the handler is called, with the right fault address.
-   Copyright (C) 2002-2006, 2008, 2011  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002-2006, 2008, 2011, 2016  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 #endif
 
 #include "sigsegv.h"
+#include <stdint.h>
 #include <stdio.h>
 
 #if HAVE_SIGSEGV_RECOVERY
@@ -27,7 +28,7 @@
 #include "mmaputil.h"
 #include <stdlib.h>
 
-unsigned long page;
+uintptr_t page;
 
 volatile int handler_called = 0;
 
@@ -46,7 +47,7 @@ handler (void *fault_address, int serious)
 }
 
 void
-crasher (unsigned long p)
+crasher (uintptr_t p)
 {
   *(volatile int *) (p + 0x678) = 42;
 }
@@ -77,7 +78,7 @@ main ()
       fprintf (stderr, "mmap_zeromap failed.\n");
       exit (2);
     }
-  page = (unsigned long) p;
+  page = (uintptr_t) p;
 
   /* Make it read-only.  */
   if (mprotect ((void *) page, 0x4000, prot_unwritable) < 0)

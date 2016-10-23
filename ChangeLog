@@ -1,5 +1,24 @@
 2016-10-22  Bruno Haible  <bruno@clisp.org>
 
+	Support for platforms with 32-bit 'long' and 64-bit pointers.
+	* src/sigsegv.h.in: Use 'size_t' instead of 'unsigned long'.
+	* src/stackvma.h: Include <stdint.h>. Use 'uintptr_t' instead of
+	'unsigned long'.
+	* src/stackvma-*.c: Use 'uintptr_t' instead of 'unsigned long'.
+	* src/dispatcher.c: Include <stdint.h>. Use 'uintptr_t' or 'size_t'
+	instead of 'unsigned long'.
+	* src/handler-*.c: Likewise.
+	* tests/mmaputil.h: Use 'uintptr_t' or 'size_t' instead of
+	'unsigned long'.
+	* tests/sigsegv1.c: Include <stdint.h>. Use 'uintptr_t' instead of
+	'unsigned long'.
+	* tests/sigsegv2.c: Likewise.
+	* tests/sigsegv3.c: Likewise.
+	* tests/stackoverflow2.c: Likewise.
+	Reported by Nate Sigrist in <https://savannah.gnu.org/bugs/?37604>.
+
+2016-10-22  Bruno Haible  <bruno@clisp.org>
+
 	Switch to libtool 2.4.6.
 	* m4/libtool.m4: Update from libtool-2.4.6.
 	* m4/ltoptions.m4: Likewise.

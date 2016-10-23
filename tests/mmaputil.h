@@ -1,5 +1,5 @@
 /* Some auxiliary stuff for using mmap & friends.
-   Copyright (C) 2002-2003  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002-2003, 2016  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -33,11 +33,11 @@
 #define PROT_READ_WRITE PAGE_READWRITE
 
 static void *
-mmap_zeromap (void *map_addr_hint, unsigned long map_len)
+mmap_zeromap (void *map_addr_hint, size_t map_len)
 {
-  if (VirtualAlloc ((void *)((unsigned long) map_addr_hint & -0x10000),
-                    (((unsigned long) map_addr_hint + map_len - 1) | 0xffff) + 1
-                    - ((unsigned long) map_addr_hint & -0x10000),
+  if (VirtualAlloc ((void *)((uintptr_t) map_addr_hint & -0x10000),
+                    (((uintptr_t) map_addr_hint + map_len - 1) | 0xffff) + 1
+                    - ((uintptr_t) map_addr_hint & -0x10000),
                     MEM_RESERVE, PAGE_NOACCESS)
       && VirtualAlloc (map_addr_hint, map_len, MEM_COMMIT, PAGE_READWRITE))
     return map_addr_hint;
@@ -45,7 +45,7 @@ mmap_zeromap (void *map_addr_hint, unsigned long map_len)
     return (void *)(-1);
 }
 
-int munmap (void *addr, unsigned long len)
+int munmap (void *addr, size_t len)
 {
   if (VirtualFree (addr, len, MEM_DECOMMIT))
     return 0;
@@ -53,7 +53,7 @@ int munmap (void *addr, unsigned long len)
     return -1;
 }
 
-int mprotect (void *addr, unsigned long len, int prot)
+int mprotect (void *addr, size_t len, int prot)
 {
   DWORD oldprot;
 
@@ -91,7 +91,7 @@ static int zero_fd;
 #endif
 
 static void *
-mmap_zeromap (void *map_addr_hint, unsigned long map_len)
+mmap_zeromap (void *map_addr_hint, size_t map_len)
 {
 #ifdef __hpux
   /* HP-UX 10 mmap() often fails when given a hint.  So give the OS complete

@@ -1,5 +1,5 @@
 /* Determine the virtual memory area of a given address.
-   Copyright (C) 2002, 2006  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002, 2006, 2016  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -18,31 +18,33 @@
 #ifndef _STACKVMA_H
 #define _STACKVMA_H
 
+#include <stdint.h>
+
 /* Describes a virtual memory area, with some info about the gap between
    it and the next or previous virtual memory area.  */
 struct vma_struct
 {
-  unsigned long start;
-  unsigned long end;
+  uintptr_t start;
+  uintptr_t end;
 #if STACK_DIRECTION < 0
   /* Info about the gap between this VMA and the previous one.
      addr must be < vma->start.  */
-  int (*is_near_this) (unsigned long addr, struct vma_struct *vma);
+  int (*is_near_this) (uintptr_t addr, struct vma_struct *vma);
   /* Private field, not provided by all sigsegv_get_vma implementations.  */
-  unsigned long prev_end;
+  uintptr_t prev_end;
 #endif
 #if STACK_DIRECTION > 0
   /* Info about the gap between this VMA and the next one.
      addr must be > vma->end - 1.  */
-  int (*is_near_this) (unsigned long addr, struct vma_struct *vma);
+  int (*is_near_this) (uintptr_t addr, struct vma_struct *vma);
   /* Private field, not provided by all sigsegv_get_vma implementations.  */
-  unsigned long next_start;
+  uintptr_t next_start;
 #endif
 };
 
 /* Determines the virtual memory area to which a given address belongs,
    and returns 0.  Returns -1 if it cannot be determined.
    This function is used to determine the stack extent when a fault occurs.  */
-extern int sigsegv_get_vma (unsigned long address, struct vma_struct *vma);
+extern int sigsegv_get_vma (uintptr_t address, struct vma_struct *vma);
 
 #endif /* _STACKVMA_H */

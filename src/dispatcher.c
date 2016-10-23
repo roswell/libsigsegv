@@ -1,5 +1,5 @@
 /* Dispatch signal to right virtual memory area.
-   Copyright (C) 1993-1999, 2002-2003  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 1993-1999, 2002-2003, 2016  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 
 #include "sigsegv.h"
 
-#include <stddef.h> /* needed for NULL on SunOS4 */
+#include <stdint.h>
 #include <stdlib.h>
 #ifdef _WIN32
 #include <malloc.h>
@@ -35,8 +35,8 @@ struct node_t
   struct node_t *right;
   unsigned int height;
   /* Representation of interval.  */
-  unsigned long address;
-  unsigned long len;
+  uintptr_t address;
+  size_t len;
   /* User handler.  */
   sigsegv_area_handler_t handler;
   void *handler_arg;
@@ -118,7 +118,7 @@ rebalance (node_t ***nodeplaces_ptr, unsigned int count)
 static node_t *
 insert (node_t *new_node, node_t *tree)
 {
-  unsigned long key = new_node->address;
+  uintptr_t key = new_node->address;
   node_t **nodeplace = &tree;
   node_t **stack[MAXHEIGHT];
   unsigned int stack_count = 0;
@@ -145,7 +145,7 @@ insert (node_t *new_node, node_t *tree)
 static node_t *
 delete (node_t *node_to_delete, node_t *tree)
 {
-  unsigned long key = node_to_delete->address;
+  uintptr_t key = node_to_delete->address;
   node_t **nodeplace = &tree;
   node_t **stack[MAXHEIGHT];
   unsigned int stack_count = 0;
@@ -207,7 +207,7 @@ sigsegv_init (sigsegv_dispatcher *dispatcher)
 
 void *
 sigsegv_register (sigsegv_dispatcher *dispatcher,
-                  void *address, unsigned long len,
+                  void *address, size_t len,
                   sigsegv_area_handler_t handler, void *handler_arg)
 {
   if (len == 0)
@@ -215,7 +215,7 @@ sigsegv_register (sigsegv_dispatcher *dispatcher,
   else
     {
       node_t *new_node = (node_t *) malloc (sizeof (node_t));
-      new_node->address = (unsigned long) address;
+      new_node->address = (uintptr_t) address;
       new_node->len = len;
       new_node->handler = handler;
       new_node->handler_arg = handler_arg;
@@ -238,7 +238,7 @@ sigsegv_unregister (sigsegv_dispatcher *dispatcher, void *ticket)
 int
 sigsegv_dispatch (sigsegv_dispatcher *dispatcher, void *fault_address)
 {
-  unsigned long key = (unsigned long) fault_address;
+  uintptr_t key = (uintptr_t) fault_address;
   node_t *tree = (node_t *) dispatcher->tree;
   for (;;)
     {

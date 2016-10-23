@@ -1,5 +1,5 @@
 /* Determine the virtual memory area of a given address.
-   Copyright (C) 2006  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2006, 2016  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 /* Info about the gap between this VMA and the previous one.
    addr must be < vma->start.  */
 static int
-simple_is_near_this (unsigned long addr, struct vma_struct *vma)
+simple_is_near_this (uintptr_t addr, struct vma_struct *vma)
 {
   return (vma->start - addr <= (vma->start - vma->prev_end) / 2);
 }
@@ -34,7 +34,7 @@ simple_is_near_this (unsigned long addr, struct vma_struct *vma)
 /* Info about the gap between this VMA and the next one.
    addr must be > vma->end - 1.  */
 static int
-simple_is_near_this (unsigned long addr, struct vma_struct *vma)
+simple_is_near_this (uintptr_t addr, struct vma_struct *vma)
 {
   return (addr - vma->end < (vma->next_start - vma->end) / 2);
 }

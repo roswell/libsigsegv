@@ -1,5 +1,5 @@
 /* Fault handler information.  Woe32 version.
-   Copyright (C) 1993-1999, 2002-2003, 2007-2009, 2011  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 1993-1999, 2002-2003, 2007-2009, 2011, 2016  Bruno Haible <bruno@clisp.org>
    Copyright (C) 2003  Paolo Bonzini <bonzini@gnu.org>
    Copyright (C) 2009  Eric Blake <ebb9@byu.net>
 
@@ -99,22 +99,22 @@ static sigsegv_handler_t user_handler = (sigsegv_handler_t) NULL;
 
 static stackoverflow_handler_t stk_user_handler =
   (stackoverflow_handler_t) NULL;
-static unsigned long stk_extra_stack;
-static unsigned long stk_extra_stack_size;
+static uintptr_t stk_extra_stack;
+static size_t stk_extra_stack_size;
 
 static void
-stack_overflow_handler (unsigned long faulting_page_address, stackoverflow_context_t context)
+stack_overflow_handler (uintptr_t faulting_page_address, stackoverflow_context_t context)
 {
   MEMORY_BASIC_INFORMATION info;
   DWORD oldprot;
-  unsigned long base;
-  unsigned long address;
+  uintptr_t base;
+  uintptr_t address;
 
   /* First get stack's base address.  */
   if (VirtualQuery ((void*) faulting_page_address, &info, sizeof (info))
       != sizeof (info))
     goto failed;
-  base = (unsigned long) info.AllocationBase;
+  base = (uintptr_t) info.AllocationBase;
 
   /* Now search for the first existing page.  */
   address = base;
@@ -122,16 +122,16 @@ stack_overflow_handler (unsigned long faulting_page_address, stackoverflow_conte
     {
       if (VirtualQuery ((void*) address, &info, sizeof (info)) != sizeof (info))
         goto failed;
-      if (address != (unsigned long) info.BaseAddress)
+      if (address != (uintptr_t) info.BaseAddress)
        goto failed;
       if (info.State != MEM_FREE)
         {
-          if ((unsigned long) info.AllocationBase != base)
+          if ((uintptr_t) info.AllocationBase != base)
             goto failed;
           if (info.State == MEM_COMMIT)
             break;
         }
-      address = (unsigned long) info.BaseAddress + info.RegionSize;
+      address = (uintptr_t) info.BaseAddress + info.RegionSize;
     }
 
   /* Now add the PAGE_GUARD bit to the first existing page.  */
@@ -207,8 +207,8 @@ main_exception_filter (EXCEPTION_POINTERS *ExceptionInfo)
                  to be allocated in the guard page, where it will be
                  inaccessible as soon as we restore the PAGE_GUARD bit!) to
                  this new stack.  */
-              unsigned long faulting_page_address = (unsigned long)address & -0x1000;
-              unsigned long new_safe_esp = ((stk_extra_stack + stk_extra_stack_size) & -16);
+              uintptr_t faulting_page_address = (uintptr_t)address & -0x1000;
+              uintptr_t new_safe_esp = ((stk_extra_stack + stk_extra_stack_size) & -16);
               CONTEXT *orig_context = ExceptionInfo->ContextRecord;
               CONTEXT *safe_context = (CONTEXT *) (new_safe_esp -= sizeof (CONTEXT)); /* make room */
               memcpy (safe_context, orig_context, sizeof (CONTEXT));
@@ -217,9 +217,9 @@ main_exception_filter (EXCEPTION_POINTERS *ExceptionInfo)
               new_safe_esp -= 4; /* make room for (unused) return address slot */
               ExceptionInfo->ContextRecord->Esp = new_safe_esp;
               /* Call stack_overflow_handler(faulting_page_address,safe_context).  */
-              ExceptionInfo->ContextRecord->Eip = (unsigned long)&stack_overflow_handler;
-              *(unsigned long *)(new_safe_esp + 4) = faulting_page_address;
-              *(unsigned long *)(new_safe_esp + 8) = (unsigned long) safe_context;
+              ExceptionInfo->ContextRecord->Eip = (uintptr_t)&stack_overflow_handler;
+              *(uintptr_t *)(new_safe_esp + 4) = faulting_page_address;
+              *(uintptr_t *)(new_safe_esp + 8) = (uintptr_t) safe_context;
               return EXCEPTION_CONTINUE_EXECUTION;
             }
 #if !MIXING_UNIX_SIGSEGV_AND_WIN32_STACKOVERFLOW_HANDLING || OLD_CYGWIN_WORKAROUND
@@ -372,10 +372,10 @@ sigsegv_leave_handler (void (*continuation) (void*, void*, void*),
 
 int
 stackoverflow_install_handler (stackoverflow_handler_t handler,
-                               void *extra_stack, unsigned long extra_stack_size)
+                               void *extra_stack, size_t extra_stack_size)
 {
   stk_user_handler = handler;
-  stk_extra_stack = (unsigned long) extra_stack;
+  stk_extra_stack = (uintptr_t) extra_stack;
   stk_extra_stack_size = extra_stack_size;
   install_main_exception_filter ();
   return 0;

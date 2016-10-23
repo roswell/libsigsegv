@@ -1,6 +1,6 @@
 /* Determine the virtual memory area of a given address.  Mach version.
    Copyright (C) 2003, 2006  Paolo Bonzini <bonzini@gnu.org>
-   Copyright (C) 2010  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2010, 2016  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -31,10 +31,10 @@
 #include "stackvma-simple.c"
 
 int
-sigsegv_get_vma (unsigned long req_address, struct vma_struct *vma)
+sigsegv_get_vma (uintptr_t req_address, struct vma_struct *vma)
 {
-  unsigned long prev_address = 0, prev_size = 0;
-  unsigned long join_address = 0, join_size = 0;
+  uintptr_t prev_address = 0, prev_size = 0;
+  uintptr_t join_address = 0, join_size = 0;
   int more = 1;
   vm_address_t address;
   vm_size_t size;
@@ -100,13 +100,13 @@ sigsegv_get_vma (unsigned long req_address, struct vma_struct *vma)
           size = 0;
         }
 
-      if ((unsigned long) address == join_address + join_size)
+      if ((uintptr_t) address == join_address + join_size)
         join_size += size;
       else
         {
           prev_address = join_address;
           prev_size = join_size;
-          join_address = (unsigned long) address;
+          join_address = (uintptr_t) address;
           join_size = size;
         }
 

@@ -1,5 +1,5 @@
 /* Determine the virtual memory area of a given address.
-   Copyright (C) 2002, 2006, 2008-2009  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002, 2006, 2008-2009, 2016  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@
 # undef sigsegv_get_vma
 #else
 /* Cache for getpagesize().  */
-static unsigned long pagesize;
+static uintptr_t pagesize;
 /* Initialize pagesize.  */
 static void
 init_pagesize (void)
@@ -42,7 +42,7 @@ init_pagesize (void)
 #endif
 
 int
-sigsegv_get_vma (unsigned long address, struct vma_struct *vma)
+sigsegv_get_vma (uintptr_t address, struct vma_struct *vma)
 {
   char fnamebuf[6+10+1];
   char *fname;
@@ -60,13 +60,13 @@ sigsegv_get_vma (unsigned long address, struct vma_struct *vma)
 # define map_flags 0
 #endif
   void *auxmap;
-  unsigned long auxmap_start;
-  unsigned long auxmap_end;
+  uintptr_t auxmap_start;
+  uintptr_t auxmap_end;
   prmap_t* maps;
   prmap_t* mp;
-  unsigned long start, end;
+  uintptr_t start, end;
 #if STACK_DIRECTION < 0
-  unsigned long prev;
+  uintptr_t prev;
 #endif
 
   if (pagesize == 0)
@@ -109,7 +109,7 @@ sigsegv_get_vma (unsigned long address, struct vma_struct *vma)
 #endif
   if (auxmap == (void *) -1)
     goto fail2;
-  auxmap_start = (unsigned long) auxmap;
+  auxmap_start = (uintptr_t) auxmap;
   auxmap_end = auxmap_start + memneed;
   maps = (prmap_t *) auxmap;
 
@@ -121,7 +121,7 @@ sigsegv_get_vma (unsigned long address, struct vma_struct *vma)
 #endif
   for (mp = maps;;)
     {
-      start = (unsigned long) mp->pr_vaddr;
+      start = (uintptr_t) mp->pr_vaddr;
       end = start + mp->pr_size;
       if (start == 0 && end == 0)
         break;
@@ -180,7 +180,7 @@ sigsegv_get_vma (unsigned long address, struct vma_struct *vma)
 #if STACK_DIRECTION < 0
   vma->prev_end = prev;
 #else
-  vma->next_start = (unsigned long) mp->pr_vaddr;
+  vma->next_start = (uintptr_t) mp->pr_vaddr;
 #endif
   munmap (auxmap, memneed);
   close (fd);

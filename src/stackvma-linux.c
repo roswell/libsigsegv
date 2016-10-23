@@ -1,5 +1,5 @@
 /* Determine the virtual memory area of a given address.  Linux version.
-   Copyright (C) 2002, 2006, 2008  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002, 2006, 2008, 2016  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -29,13 +29,13 @@
 #endif
 
 int
-sigsegv_get_vma (unsigned long address, struct vma_struct *vma)
+sigsegv_get_vma (uintptr_t address, struct vma_struct *vma)
 {
   struct rofile rof;
   int c;
-  unsigned long start, end;
+  uintptr_t start, end;
 #if STACK_DIRECTION < 0
-  unsigned long prev;
+  uintptr_t prev;
 #endif
 
   /* Open the current process' maps file.  It describes one VMA per line.  */

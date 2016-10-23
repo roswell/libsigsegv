@@ -1,5 +1,5 @@
 /* Determine the virtual memory area of a given address.
-   Copyright (C) 2006, 2008-2010  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2006, 2008-2010, 2016  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ typedef char pageinfo_t;
 #endif
 
 /* Cache for getpagesize().  */
-static unsigned long pagesize;
+static uintptr_t pagesize;
 
 /* Initialize pagesize.  */
 static void
@@ -64,7 +64,7 @@ init_pagesize (void)
 /* Test whether the page starting at ADDR is among the address range.
    ADDR must be a multiple of pagesize.  */
 static int
-is_mapped (unsigned long addr)
+is_mapped (uintptr_t addr)
 {
   pageinfo_t vec[1];
   return mincore ((void *) addr, pagesize, vec) >= 0;
@@ -73,17 +73,17 @@ is_mapped (unsigned long addr)
 /* Assuming that the page starting at ADDR is among the address range,
    return the start of its virtual memory range.
    ADDR must be a multiple of pagesize.  */
-static unsigned long
-mapped_range_start (unsigned long addr)
+static uintptr_t
+mapped_range_start (uintptr_t addr)
 {
   /* Use a moderately sized VEC here, small enough that it fits on the stack
      (without requiring malloc).  */
   pageinfo_t vec[1024];
-  unsigned long stepsize = sizeof (vec);
+  uintptr_t stepsize = sizeof (vec);
 
   for (;;)
     {
-      unsigned long max_remaining;
+      uintptr_t max_remaining;
 
       if (addr == 0)
         return addr;
@@ -100,8 +100,8 @@ mapped_range_start (unsigned long addr)
     }
   for (;;)
     {
-      unsigned long halfstepsize1;
-      unsigned long halfstepsize2;
+      uintptr_t halfstepsize1;
+      uintptr_t halfstepsize2;
 
       if (stepsize == 1)
         return addr;
@@ -125,18 +125,18 @@ mapped_range_start (unsigned long addr)
 /* Assuming that the page starting at ADDR is among the address range,
    return the end of its virtual memory range + 1.
    ADDR must be a multiple of pagesize.  */
-static unsigned long
-mapped_range_end (unsigned long addr)
+static uintptr_t
+mapped_range_end (uintptr_t addr)
 {
   /* Use a moderately sized VEC here, small enough that it fits on the stack
      (without requiring malloc).  */
   pageinfo_t vec[1024];
-  unsigned long stepsize = sizeof (vec);
+  uintptr_t stepsize = sizeof (vec);
 
   addr += pagesize;
   for (;;)
     {
-      unsigned long max_remaining;
+      uintptr_t max_remaining;
 
       if (addr == 0) /* wrapped around? */
         return addr;
@@ -152,8 +152,8 @@ mapped_range_end (unsigned long addr)
     }
   for (;;)
     {
-      unsigned long halfstepsize1;
-      unsigned long halfstepsize2;
+      uintptr_t halfstepsize1;
+      uintptr_t halfstepsize2;
 
       if (stepsize == 1)
         return addr;
@@ -176,10 +176,10 @@ mapped_range_end (unsigned long addr)
 /* Determine whether an address range [ADDR1..ADDR2] is completely unmapped.
    ADDR1 must be <= ADDR2.  */
 static int
-is_unmapped (unsigned long addr1, unsigned long addr2)
+is_unmapped (uintptr_t addr1, uintptr_t addr2)
 {
-  unsigned long count;
-  unsigned long stepsize;
+  uintptr_t count;
+  uintptr_t stepsize;
 
   /* Round addr1 down.  */
   addr1 = (addr1 / pagesize) * pagesize;
@@ -202,9 +202,9 @@ is_unmapped (unsigned long addr1, unsigned long addr2)
     stepsize = 2 * stepsize;
   for (;;)
     {
-      unsigned long addr_stepsize;
-      unsigned long i;
-      unsigned long addr;
+      uintptr_t addr_stepsize;
+      uintptr_t i;
+      uintptr_t addr;
 
       stepsize = stepsize / 2;
       if (stepsize == 0)
@@ -225,7 +225,7 @@ is_unmapped (unsigned long addr1, unsigned long addr2)
 /* Info about the gap between this VMA and the previous one.
    addr must be < vma->start.  */
 static int
-mincore_is_near_this (unsigned long addr, struct vma_struct *vma)
+mincore_is_near_this (uintptr_t addr, struct vma_struct *vma)
 {
   /*   vma->start - addr <= (vma->start - vma->prev_end) / 2
      is mathematically equivalent to
@@ -235,7 +235,7 @@ mincore_is_near_this (unsigned long addr, struct vma_struct *vma)
      we consider a tiny "guard page" mapping [0, 0] to be present around
      NULL; it intersects the range (2 * addr - vma->start, vma->start - 1),
      therefore return false.  */
-  unsigned long testaddr = addr - (vma->start - addr);
+  uintptr_t testaddr = addr - (vma->start - addr);
   if (testaddr > addr) /* overflow? */
     return 0;
   /* Here testaddr <= addr < vma->start.  */
@@ -248,7 +248,7 @@ mincore_is_near_this (unsigned long addr, struct vma_struct *vma)
 /* Info about the gap between this VMA and the next one.
    addr must be > vma->end - 1.  */
 static int
-mincore_is_near_this (unsigned long addr, struct vma_struct *vma)
+mincore_is_near_this (uintptr_t addr, struct vma_struct *vma)
 {
   /*   addr - vma->end < (vma->next_start - vma->end) / 2
      is mathematically equivalent to
@@ -258,7 +258,7 @@ mincore_is_near_this (unsigned long addr, struct vma_struct *vma)
      we consider a tiny "guard page" mapping [0, 0] to be present around
      NULL; it intersects the range (vma->end, 2 * addr - vma->end),
      therefore return false.  */
-  unsigned long testaddr = addr + (addr - vma->end);
+  uintptr_t testaddr = addr + (addr - vma->end);
   if (testaddr < addr) /* overflow? */
     return 0;
   /* Here vma->end - 1 < addr <= testaddr.  */
@@ -271,7 +271,7 @@ mincore_is_near_this (unsigned long addr, struct vma_struct *vma)
 STATIC
 #endif
 int
-sigsegv_get_vma (unsigned long address, struct vma_struct *vma)
+sigsegv_get_vma (uintptr_t address, struct vma_struct *vma)
 {
   if (pagesize == 0)
     init_pagesize ();

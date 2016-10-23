@@ -1,5 +1,5 @@
 /* Test the dispatcher.
-   Copyright (C) 2002-2006, 2008, 2011  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002-2006, 2008, 2011, 2016  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 #endif
 
 #include "sigsegv.h"
+#include <stdint.h>
 #include <stdio.h>
 
 #if HAVE_SIGSEGV_RECOVERY
@@ -30,7 +31,7 @@
 static sigsegv_dispatcher dispatcher;
 
 static volatile unsigned int logcount = 0;
-static volatile unsigned long logdata[10];
+static volatile uintptr_t logdata[10];
 
 /* Note about SIGSEGV_FAULT_ADDRESS_ALIGNMENT: It does not matter whether
    fault_address is rounded off here because all intervals that we pass to
@@ -39,12 +40,12 @@ static volatile unsigned long logdata[10];
 static int
 area_handler (void *fault_address, void *user_arg)
 {
-  unsigned long area = *(unsigned long *)user_arg;
+  uintptr_t area = *(uintptr_t *)user_arg;
   logdata[logcount++] = area;
   if (logcount >= sizeof (logdata) / sizeof (logdata[0]))
     abort ();
-  if (!((unsigned long)fault_address >= area
-        && (unsigned long)fault_address - area < 0x4000))
+  if (!((uintptr_t)fault_address >= area
+        && (uintptr_t)fault_address - area < 0x4000))
     abort ();
   if (mprotect ((void *) area, 0x4000, PROT_READ_WRITE) == 0)
     return 1;
@@ -67,9 +68,9 @@ main ()
 {
   int prot_unwritable;
   void *p;
-  unsigned long area1;
-  unsigned long area2;
-  unsigned long area3;
+  uintptr_t area1;
+  uintptr_t area2;
+  uintptr_t area3;
 
   /* Preparations.  */
 #if !HAVE_MMAP_ANON && !HAVE_MMAP_ANONYMOUS && HAVE_MMAP_DEVZERO
@@ -94,7 +95,7 @@ main ()
       fprintf (stderr, "mmap_zeromap failed.\n");
       exit (2);
     }
-  area1 = (unsigned long) p;
+  area1 = (uintptr_t) p;
   sigsegv_register (&dispatcher, (void *) area1, 0x4000, &area_handler, &area1);
   if (mprotect ((void *) area1, 0x4000, PROT_NONE) < 0)
     {
@@ -108,7 +109,7 @@ main ()
       fprintf (stderr, "mmap_zeromap failed.\n");
       exit (2);
     }
-  area2 = (unsigned long) p;
+  area2 = (uintptr_t) p;
   sigsegv_register (&dispatcher, (void *) area2, 0x4000, &area_handler, &area2);
   if (mprotect ((void *) area2, 0x4000, prot_unwritable) < 0)
     {
@@ -128,7 +129,7 @@ main ()
       fprintf (stderr, "mmap_zeromap failed.\n");
       exit (2);
     }
-  area3 = (unsigned long) p;
+  area3 = (uintptr_t) p;
   sigsegv_register (&dispatcher, (void *) area3, 0x4000, &area_handler, &area3);
   mprotect ((void *) area3, 0x4000, prot_unwritable);
 

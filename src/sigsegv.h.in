@@ -1,5 +1,5 @@
 /* Page fault handling library.
-   Copyright (C) 1998-1999, 2002, 2004-2011  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 1998-1999, 2002, 2004-2011, 2016  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -148,7 +148,7 @@ typedef void (*stackoverflow_handler_t) (int emergency, stackoverflow_context_t 
  * overflow.
  */
 extern int stackoverflow_install_handler (stackoverflow_handler_t handler,
-                                          void* extra_stack, unsigned long extra_stack_size);
+                                          void* extra_stack, size_t extra_stack_size);
 
 /*
  * Deinstalls the stack overflow handler.
@@ -195,7 +195,7 @@ extern void sigsegv_init (sigsegv_dispatcher* dispatcher);
  * Returns a "ticket" that can be used to remove the handler later.
  */
 extern void* sigsegv_register (sigsegv_dispatcher* dispatcher,
-                               void* address, unsigned long len,
+                               void* address, size_t len,
                                sigsegv_area_handler_t handler, void* handler_arg);
 
 /*

@@ -1,5 +1,5 @@
 /* Determine the virtual memory area of a given address.  FreeBSD version.
-   Copyright (C) 2002-2003, 2006, 2008, 2011  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002-2003, 2006, 2008, 2011, 2016  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -29,15 +29,15 @@
 #endif
 
 int
-sigsegv_get_vma (unsigned long address, struct vma_struct *vma)
+sigsegv_get_vma (uintptr_t address, struct vma_struct *vma)
 {
   struct rofile rof;
   int c;
   /* The stack appears as multiple adjacents segments, therefore we
      merge adjacent segments.  */
-  unsigned long next_start, next_end, curr_start, curr_end;
+  uintptr_t next_start, next_end, curr_start, curr_end;
 #if STACK_DIRECTION < 0
-  unsigned long prev_end;
+  uintptr_t prev_end;
 #endif
 
   /* Open the current process' maps file.  It describes one VMA per line.

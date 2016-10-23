@@ -1,5 +1,5 @@
 /* Fault handler information.  MacOSX version.
-   Copyright (C) 1993-1999, 2002-2003, 2007-2008  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 1993-1999, 2002-2003, 2007-2008, 2016  Bruno Haible <bruno@clisp.org>
    Copyright (C) 2003  Paolo Bonzini <bonzini@gnu.org>
 
    This program is free software; you can redistribute it and/or modify
@@ -18,6 +18,7 @@
 
 #include "sigsegv.h"
 
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
@@ -146,8 +147,8 @@ static int emergency = -1;
 
 /* User's stack overflow handler.  */
 static stackoverflow_handler_t stk_user_handler = (stackoverflow_handler_t)NULL;
-static unsigned long stk_extra_stack;
-static unsigned long stk_extra_stack_size;
+static uintptr_t stk_extra_stack;
+static size_t stk_extra_stack_size;
 
 /* User's fault handler.  */
 static sigsegv_handler_t user_handler = (sigsegv_handler_t)NULL;
@@ -203,8 +204,8 @@ catch_exception_raise (mach_port_t exception_port,
 #endif
   SIGSEGV_THREAD_STATE_TYPE thread_state;
   mach_msg_type_number_t state_count;
-  unsigned long addr;
-  unsigned long sp;
+  uintptr_t addr;
+  uintptr_t sp;
 
 #ifdef DEBUG_EXCEPTION_HANDLING
   fprintf (stderr, "Exception: 0x%x Code: 0x%x 0x%x in catch....\n",
@@ -242,8 +243,8 @@ catch_exception_raise (mach_port_t exception_port,
       return KERN_FAILURE;
     }
 
-  addr = (unsigned long) (SIGSEGV_FAULT_ADDRESS (thread_state, exc_state));
-  sp = (unsigned long) (SIGSEGV_STACK_POINTER (thread_state));
+  addr = (uintptr_t) (SIGSEGV_FAULT_ADDRESS (thread_state, exc_state));
+  sp = (uintptr_t) (SIGSEGV_STACK_POINTER (thread_state));
 
   /* Got the thread's state. Now extract the address that caused the
      fault and invoke the user's handler.  */
@@ -253,7 +254,7 @@ catch_exception_raise (mach_port_t exception_port,
      Otherwise, treat it like a normal SIGSEGV.  */
   if (addr <= sp + 4096 && sp <= addr + 4096)
     {
-      unsigned long new_safe_esp;
+      uintptr_t new_safe_esp;
 #ifdef DEBUG_EXCEPTION_HANDLING
       fprintf (stderr, "Treating as stack overflow, sp = 0x%lx\n", (char *) sp);
 #endif
@@ -270,7 +271,7 @@ catch_exception_raise (mach_port_t exception_port,
       SIGSEGV_STACK_POINTER (thread_state) = new_safe_esp;
       /* Continue handling this fault in the faulting thread.  (We cannot longjmp while
          in the exception handling thread, so we need to mimic what signals do!)  */
-      SIGSEGV_PROGRAM_COUNTER (thread_state) = (unsigned long) altstack_handler;
+      SIGSEGV_PROGRAM_COUNTER (thread_state) = (uintptr_t) altstack_handler;
     }
   else
     {
@@ -289,7 +290,7 @@ catch_exception_raise (mach_port_t exception_port,
           if (done)
             return KERN_SUCCESS;
         }
-      SIGSEGV_PROGRAM_COUNTER (thread_state) = (unsigned long) terminating_handler;
+      SIGSEGV_PROGRAM_COUNTER (thread_state) = (uintptr_t) terminating_handler;
     }
 
   /* See http://web.mit.edu/darwin/src/modules/xnu/osfmk/man/thread_set_state.html.  */
@@ -491,14 +492,14 @@ sigsegv_leave_handler (void (*continuation) (void*, void*, void*),
 
 #if defined __ppc64__ || defined __ppc__ || defined __x86_64__
       /* Store arguments in registers.  */
-      SIGSEGV_INTEGER_ARGUMENT_1 (thread_state) = (unsigned long) cont_arg1;
-      SIGSEGV_INTEGER_ARGUMENT_2 (thread_state) = (unsigned long) cont_arg2;
-      SIGSEGV_INTEGER_ARGUMENT_3 (thread_state) = (unsigned long) cont_arg3;
+      SIGSEGV_INTEGER_ARGUMENT_1 (thread_state) = (uintptr_t) cont_arg1;
+      SIGSEGV_INTEGER_ARGUMENT_2 (thread_state) = (uintptr_t) cont_arg2;
+      SIGSEGV_INTEGER_ARGUMENT_3 (thread_state) = (uintptr_t) cont_arg3;
 #endif
 #if defined __x86_64__
       /* Align stack.  */
       {
-        unsigned long new_esp = SIGSEGV_STACK_POINTER (thread_state);
+        uintptr_t new_esp = SIGSEGV_STACK_POINTER (thread_state);
         new_esp &= -16; /* align */
         new_esp -= sizeof (void *); *(void **)new_esp = SIGSEGV_FRAME_POINTER (thread_state); /* push %rbp */
         SIGSEGV_STACK_POINTER (thread_state) = new_esp;
@@ -507,7 +508,7 @@ sigsegv_leave_handler (void (*continuation) (void*, void*, void*),
 #elif defined __i386__
       /* Push arguments onto the stack.  */
       {
-        unsigned long new_esp = SIGSEGV_STACK_POINTER (thread_state);
+        uintptr_t new_esp = SIGSEGV_STACK_POINTER (thread_state);
         new_esp &= -16; /* align */
         new_esp -= sizeof (void *); /* unused room, alignment */
         new_esp -= sizeof (void *); *(void **)new_esp = cont_arg3;
@@ -518,7 +519,7 @@ sigsegv_leave_handler (void (*continuation) (void*, void*, void*),
       }
 #endif
       /* Point program counter to continuation to be executed.  */
-      SIGSEGV_PROGRAM_COUNTER (thread_state) = (unsigned long) continuation;
+      SIGSEGV_PROGRAM_COUNTER (thread_state) = (uintptr_t) continuation;
 
       /* See http://web.mit.edu/darwin/src/modules/xnu/osfmk/man/thread_set_state.html.  */
       if (thread_set_state (thread, SIGSEGV_THREAD_STATE_FLAVOR,
@@ -543,7 +544,7 @@ sigsegv_leave_handler (void (*continuation) (void*, void*, void*),
 
 int
 stackoverflow_install_handler (stackoverflow_handler_t handler,
-                               void *extra_stack, unsigned long extra_stack_size)
+                               void *extra_stack, size_t extra_stack_size)
 {
   if (!mach_initialized)
     mach_initialized = (mach_initialize () >= 0 ? 1 : -1);
@@ -551,7 +552,7 @@ stackoverflow_install_handler (stackoverflow_handler_t handler,
     return -1;
 
   stk_user_handler = handler;
-  stk_extra_stack = (unsigned long) extra_stack;
+  stk_extra_stack = (uintptr_t) extra_stack;
   stk_extra_stack_size = extra_stack_size;
   return 0;
 }
