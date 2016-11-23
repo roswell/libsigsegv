@@ -1,3 +1,10 @@
+2016-11-23  Bruno Haible  <bruno@clisp.org>
+
+	Drop the nickname "woe32".
+	* README.windows: Renamed from README.woe32.
+	* README: Update.
+	* Makefile.am (EXTRA_DIST): Update.
+
 2016-10-22  Bruno Haible  <bruno@clisp.org>
 
 	Support for platforms with 32-bit 'long' and 64-bit pointers.

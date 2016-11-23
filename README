@@ -116,9 +116,9 @@ Installation instructions on Unix:
         make check
         make install
 
-Installation instructions on Woe32:
+Installation instructions on Microsoft Windows:
 
-        See README.woe32.
+        See README.windows.
 
 
 Using libsigsegv in your package:
