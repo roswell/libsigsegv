@@ -18,6 +18,9 @@
 #ifndef _SIGSEGV_H
 #define _SIGSEGV_H
 
+/* Get size_t.  */
+#include <stddef.h>
+
 @FAULT_CONTEXT_INCLUDE@
 
 /* HAVE_SIGSEGV_RECOVERY
