@@ -1,3 +1,9 @@
+2016-12-04  Bruno Haible  <bruno@clisp.org>
+
+	Always use the newest released copies of files brought in from Automake.
+	* autogen.sh: Make sure to get new versions of files brought in by
+	automake.
+
 2016-11-27  Bruno Haible  <bruno@clisp.org>
 
 	Fix compilation error on Cygwin, regression from 2016-10-22.
