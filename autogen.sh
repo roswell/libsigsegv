@@ -27,7 +27,7 @@
 
 # Usage: ./autogen.sh [--skip-gnulib]
 #
-# Usage from a CVS checkout:                 ./autogen.sh
+# Usage from a git checkout:                 ./autogen.sh
 # This uses an up-to-date gnulib checkout.
 #
 # Usage from a released tarball:             ./autogen.sh --skip-gnulib
