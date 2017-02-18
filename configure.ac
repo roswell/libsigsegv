@@ -1,7 +1,7 @@
 dnl Autoconf configuration for libsigsegv.
 dnl Process this file with autoconf to produce a configure script.
 dnl
-dnl Copyright (C) 2002-2011  Bruno Haible <bruno@clisp.org>
+dnl Copyright (C) 2002-2017  Bruno Haible <bruno@clisp.org>
 dnl
 dnl This program is free software; you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ RSE_BOLD
 
 { echo; echo "${term_bold}Build Tools:${term_norm}"; } >& AS_MESSAGE_FD
 
-AM_INIT_AUTOMAKE([libsigsegv], [2.10])
+AM_INIT_AUTOMAKE([libsigsegv], [2.11])
 AM_CONFIG_HEADER([config.h])
 
 dnl Override automake's tar command used for creating distributions.

@@ -1,5 +1,5 @@
 ## Makefile for libsigsegv/src.
-## Copyright (C) 2002-2006, 2008-2011, 2016 Bruno Haible <bruno@clisp.org>
+## Copyright (C) 2002-2006, 2008-2011, 2016-2017 Bruno Haible <bruno@clisp.org>
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -80,7 +80,7 @@ libsigsegv_la_LDFLAGS = \
 
 # Before making a release, change this according to the libtool documentation,
 # section "Library interface versions".
-LIBSIGSEGV_VERSION_INFO = 2:3:0
+LIBSIGSEGV_VERSION_INFO = 2:4:0
 
 # Dependencies.
 handler.$(OBJEXT) : ../config.h sigsegv.h @CFG_HANDLER@ $(noinst_HEADERS) 

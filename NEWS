@@ -1,8 +1,16 @@
 New in 2.11:
 
 * Added support for catching stack overflow on Linux/SPARC.
+
 * Provide a correct value for SIGSTKSZ on 64-bit AIX and on HP-UX. The one
   defined by these systems is too small.
+
+* Updated build infrastructure.
+
+* Compilation now requires the <stdint.h> include file. Platforms which
+  don't have this include file (such as IRIX) are no longer supported.
+
+* NOTE: Support for Cygwin and native Windows is currently not up-to-date.
 
 New in 2.10:
 

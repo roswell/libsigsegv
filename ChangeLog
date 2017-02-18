@@ -1,5 +1,14 @@
 2017-02-18  Bruno Haible  <bruno@clisp.org>
 
+	Prepare for new release.
+	* configure.ac: Bump version number to 2.11.
+	* src/sigsegv.h.in (LIBSIGSEGV_VERSION): Likewise.
+	* README: Likewise.
+	* src/Makefile.am (LIBSIGSEGV_VERSION_INFO): Bump to 2:4:0.
+	* NEWS: Mention the <stdint.h> requirement.
+
+2017-02-18  Bruno Haible  <bruno@clisp.org>
+
 	Improve cross-compilation guesses.
 	* configure.ac: Include results on kFreeBSD9.0.
 	Treat FreeBSD >= 10 like FreeBSD 4 to 9.
