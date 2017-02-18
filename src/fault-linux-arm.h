@@ -17,11 +17,11 @@
 
 #include "fault-posix-ucontext.h"
 
-/* See glibc-ports/sysdeps/unix/sysv/linux/arm/sys/ucontext.h
+/* See glibc/sysdeps/unix/sysv/linux/arm/sys/ucontext.h
    and the definition of GET_STACK in
-   glibc-ports/sysdeps/unix/sysv/linux/arm/sigcontextinfo.h.
+   glibc/sysdeps/unix/sysv/linux/arm/sigcontextinfo.h.
    Note that the 'mcontext_t' defined in
-   glibc-ports/sysdeps/unix/sysv/linux/arm/sys/ucontext.h
+   glibc/sysdeps/unix/sysv/linux/arm/sys/ucontext.h
    and the 'struct sigcontext' defined in <asm/sigcontext.h>
    are actually the same.  */
 

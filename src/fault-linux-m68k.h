@@ -17,14 +17,12 @@
 
 #include "fault-posix-ucontext.h"
 
-/* See glibc-ports/sysdeps/unix/sysv/linux/m68k/sys/ucontext.h
+/* See glibc/sysdeps/unix/sysv/linux/m68k/sys/ucontext.h
    and the definition of GET_STACK in
-   glibc-ports/sysdeps/unix/sysv/linux/m68k/sigcontextinfo.h.
+   glibc/sysdeps/unix/sysv/linux/m68k/sigcontextinfo.h.
    Note that the 'mcontext_t' defined in
-   glibc-ports/sysdeps/unix/sysv/linux/m68k/sys/ucontext.h
-   and the 'struct sigcontext' defined in
-   glibc-ports/sysdeps/unix/sysv/linux/m68k/bits/sigcontext.h
-   (see also <asm/sigcontext.h>)
+   glibc/sysdeps/unix/sysv/linux/m68k/sys/ucontext.h
+   and the 'struct sigcontext' defined in <asm/sigcontext.h>
    are quite different types.  */
 
 #define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext.gregs[R_SP]

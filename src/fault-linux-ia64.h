@@ -21,7 +21,7 @@
    Note that the 'mcontext_t' defined in
    glibc/sysdeps/unix/sysv/linux/ia64/sys/ucontext.h
    and the 'struct sigcontext' defined in
-   glibc/sysdeps/unix/sysv/linux/ia64/ia64/bits/sigcontext.h
+   glibc/sysdeps/unix/sysv/linux/ia64/bits/sigcontext.h
    (see also <asm/sigcontext.h>)
    are actually the same.  */
 

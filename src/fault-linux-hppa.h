@@ -17,9 +17,9 @@
 
 #include "fault-posix-ucontext.h"
 
-/* See glibc-ports/sysdeps/unix/sysv/linux/hppa/sys/ucontext.h.
+/* See glibc/sysdeps/unix/sysv/linux/hppa/sys/ucontext.h.
    Note that the 'mcontext_t' defined in
-   glibc-ports/sysdeps/unix/sysv/linux/hppa/sys/ucontext.h
+   glibc/sysdeps/unix/sysv/linux/hppa/sys/ucontext.h
    and the 'struct sigcontext' defined in <asm/sigcontext.h>
    are actually the same.  */
 

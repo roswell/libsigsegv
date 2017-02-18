@@ -21,13 +21,13 @@
 #if defined __x86_64__
 /* 64 bit registers */
 
-/* See glibc/sysdeps/unix/sysv/linux/x86_64/sys/ucontext.h
+/* See glibc/sysdeps/unix/sysv/linux/x86/sys/ucontext.h
    and the definition of GET_STACK in
    glibc/sysdeps/unix/sysv/linux/x86_64/sigcontextinfo.h.
    Note that the 'mcontext_t' defined in
-   glibc/sysdeps/unix/sysv/linux/x86_64/sys/ucontext.h
+   glibc/sysdeps/unix/sysv/linux/x86/sys/ucontext.h
    and the 'struct sigcontext' defined in
-   glibc/sysdeps/unix/sysv/linux/x86_64/bits/sigcontext.h
+   glibc/sysdeps/unix/sysv/linux/x86/bits/sigcontext.h
    (see also <asm/sigcontext.h>)
    are effectively the same.  */
 
@@ -36,11 +36,11 @@
 #else
 /* 32 bit registers */
 
-/* See glibc/sysdeps/unix/sysv/linux/i386/sys/ucontext.h
+/* See glibc/sysdeps/unix/sysv/linux/x86/sys/ucontext.h
    and the definition of GET_STACK in
    glibc/sysdeps/unix/sysv/linux/i386/sigcontextinfo.h.
    Note that the 'mcontext_t' defined in
-   glibc/sysdeps/unix/sysv/linux/i386/sys/ucontext.h
+   glibc/sysdeps/unix/sysv/linux/x86/sys/ucontext.h
    and the 'struct sigcontext_ia32' defined in <asm/sigcontext32.h>
    are effectively the same.  */
 
