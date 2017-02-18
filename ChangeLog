@@ -1,5 +1,18 @@
 2017-02-18  Bruno Haible  <bruno@clisp.org>
 
+	On Solaris, prefer the newer /proc fs API to the older (deprecated) one.
+	Reported by Roger Faulkner in
+	http://savannah.gnu.org/bugs/?42187 .
+	* configure.ac: Accept <sys/procfs.h> even if it does no longer define
+	PIOCNMAP and PIOCMAP.
+	* src/stackvma-procfs.c: Define _STRUCTURED_PROC before including
+	<sys/procfs.h>.
+	(sigsegv_get_vma_fallback): New function.
+	(sigsegv_get_vma): If PIOCNMAP and PIOCMAP are no longer defined, use
+	the newer /proc interface.
+
+2017-02-18  Bruno Haible  <bruno@clisp.org>
+
 	Override value of SIGSTKSZ on 64-bit AIX and on HP-UX.
 	* src/sigsegv.h.in: On 64-bit AIX, set SIGSTKSZ to 8 KB.
 	On HP-UX, set SIGSTKSZ to 16 KB.

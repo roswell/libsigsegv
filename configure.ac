@@ -659,9 +659,9 @@ dnl ========================= Determine CFG_STACKVMA =========================
 dnl Requires AC_CANONICAL_HOST.
 
 dnl Determination of the stack's virtual memory area.
-AC_CACHE_CHECK([for PIOCMAP in sys/procfs.h], [sv_cv_procfsvma], [
+AC_CACHE_CHECK([for prmap_t in sys/procfs.h], [sv_cv_procfsvma], [
   AC_TRY_LINK([#include <sys/procfs.h>],
-    [int x = PIOCNMAP + PIOCMAP; prmap_t y;],
+    [prmap_t x;],
     [sv_cv_procfsvma=yes], [sv_cv_procfsvma=no])
 ])
 AC_CHECK_FUNCS([mquery mincore])
