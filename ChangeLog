@@ -1,5 +1,11 @@
 2017-02-18  Bruno Haible  <bruno@clisp.org>
 
+	Improve cross-compilation guesses.
+	* configure.ac: Include results on kFreeBSD9.0.
+	Treat FreeBSD >= 10 like FreeBSD 4 to 9.
+
+2017-02-18  Bruno Haible  <bruno@clisp.org>
+
 	On Solaris, prefer the newer /proc fs API to the older (deprecated) one.
 	Reported by Roger Faulkner in
 	http://savannah.gnu.org/bugs/?42187 .

@@ -141,7 +141,7 @@ case "$host_os" in
 
 dnl FIXME: Put in some more known values into the third argument.
 SV_TRY_FAULT([POSIX], sv_cv_fault_posix,
-  [*-*-solaris2.[7-9] | i?86-*-linux2.[4-9]* | sparc*-*-linux2.6.* | i?86-*-freebsd[4-9]* | i?86-*-mirbsd1[0-9] | alpha*-dec-osf[4-9]* | *-*-hpux11* | mips-sgi-irix6*],
+  [*-*-solaris2.[7-9] | i?86-*-linux2.[4-9]* | sparc*-*-linux2.6.* | i?86-*-freebsd[4-9]* | i?86-*-freebsd[1-9][0-9]* | i?86-*-kfreebsd[4-9]* | i?86-*-kfreebsd[1-9][0-9]* | x86_64-*-kfreebsd[4-9]* | x86_64-*-kfreebsd[1-9][0-9]* | i?86-*-mirbsd1[0-9] | alpha*-dec-osf[4-9]* | *-*-hpux11* | mips-sgi-irix6*],
   [],
   [int sig, siginfo_t *sip, void *ucp],
   [sip->si_addr],
@@ -181,7 +181,7 @@ SV_TRY_FAULT([Linux/HPPA], sv_cv_fault_linux_hppa, [],
    action.sa_flags = SA_SIGINFO;])
 
 dnl FIXME: Put in some more known values into the third argument.
-SV_TRY_FAULT([BSD], sv_cv_fault_bsd, [i?86-*-freebsd[4-9]*],
+SV_TRY_FAULT([BSD], sv_cv_fault_bsd, [i?86-*-freebsd[4-9]* | i?86-*-freebsd[1-9][0-9]* | x86_64-*-kfreebsd[4-9]* | x86_64-*-kfreebsd[1-9][0-9]*],
   [],
   [int sig, int code, struct sigcontext *scp, void *addr],
   [addr])
@@ -721,13 +721,13 @@ case "$host_os" in
 
 dnl FIXME: Put in some more known values into the third argument.
 SV_TRY_LEAVE_HANDLER_LONGJMP([], sv_cv_leave_handler_longjmp,
-  [*-*-osf[4-9]* | *-*-hpux11* | *-*-linux2.[2-9]*],
+  [*-*-kfreebsd* | *-*-osf[4-9]* | *-*-hpux11* | *-*-linux2.[2-9]*],
   [], [])
 
 dnl FIXME: Put in some more known values into the third argument.
 SV_TRY_LEAVE_HANDLER_LONGJMP([ and sigaltstack],
   sv_cv_leave_handler_longjmp_sigaltstack,
-  [*-*-freebsd*],
+  [*-*-freebsd* | *-*-kfreebsd*],
   [
 #ifndef SS_ONSTACK
 #define SS_ONSTACK SA_ONSTACK
@@ -744,7 +744,7 @@ SV_TRY_LEAVE_HANDLER_LONGJMP([ and sigaltstack],
 dnl FIXME: Put in some more known values into the third argument.
 SV_TRY_LEAVE_HANDLER_LONGJMP([ and setcontext],
   sv_cv_leave_handler_longjmp_setcontext,
-  [*-*-irix* | *-*-solaris*],
+  [*-*-kfreebsd* | *-*-irix* | *-*-solaris*],
   [#include <ucontext.h>
 #ifndef SS_ONSTACK
 #define SS_ONSTACK SA_ONSTACK
@@ -779,13 +779,13 @@ case "$host_os" in
 
 dnl FIXME: Put in some more known values into the third argument.
 SV_TRY_LEAVE_HANDLER_SIGLONGJMP([], sv_cv_leave_handler_siglongjmp,
-  [*-*-osf[4-9]* | *-*-hpux11* | *-*-linux2.[2-9]* | *-*-irix* | *-*-solaris*],
+  [*-*-kfreebsd* | *-*-osf[4-9]* | *-*-hpux11* | *-*-linux2.[2-9]* | *-*-irix* | *-*-solaris*],
   [], [])
 
 dnl FIXME: Put in some more known values into the third argument.
 SV_TRY_LEAVE_HANDLER_SIGLONGJMP([ and sigaltstack],
   sv_cv_leave_handler_siglongjmp_sigaltstack,
-  [*-*-freebsd*],
+  [*-*-freebsd* | *-*-kfreebsd*],
   [
 #ifndef SS_ONSTACK
 #define SS_ONSTACK SA_ONSTACK
@@ -802,7 +802,7 @@ SV_TRY_LEAVE_HANDLER_SIGLONGJMP([ and sigaltstack],
 dnl FIXME: Put in some more known values into the third argument.
 SV_TRY_LEAVE_HANDLER_SIGLONGJMP([ and setcontext],
   sv_cv_leave_handler_siglongjmp_setcontext,
-  [],
+  [*-*-kfreebsd*],
   [#include <ucontext.h>
 #ifndef SS_ONSTACK
 #define SS_ONSTACK SA_ONSTACK
