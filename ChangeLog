@@ -1,5 +1,16 @@
 2017-02-18  Bruno Haible  <bruno@clisp.org>
 
+	Make stack overflow detection work on Linux/sparc.
+	* src/fault-linux-sparc.h (SIGSEGV_FAULT_STACKPOINTER): Fix: ucp is a
+	'struct sigcontext *', not an 'ucontext_t *'.
+	(BOGUS_FAULT_ADDRESS_UPON_STACK_OVERFLOW): New macro.
+	* src/handler-unix.c (sigsegv_handler): Handle the
+	BOGUS_FAULT_ADDRESS_UPON_STACK_OVERFLOW case.
+	Handle errno consistently.
+	* NEWS: Document the improvement.
+
+2017-02-18  Bruno Haible  <bruno@clisp.org>
+
 	Fix glibc version determination.
 	* configure.ac (glibcversion): Use postprocessing that works also with
 	gcc 5 or newer.

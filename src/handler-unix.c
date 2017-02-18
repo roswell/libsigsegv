@@ -1,5 +1,5 @@
 /* Fault handler information.  Unix version.
-   Copyright (C) 1993-1999, 2002-2003, 2006, 2008-2009, 2016  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 1993-1999, 2002-2003, 2006, 2008-2009, 2016-2017  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -168,6 +168,7 @@ sigsegv_handler (SIGSEGV_FAULT_HANDLER_ARGLIST)
               errno = saved_errno;
               if (ret >= 0)
                 {
+#ifndef BOGUS_FAULT_ADDRESS_UPON_STACK_OVERFLOW
                   /* Heuristic AC: If the fault_address is nearer to the stack
                      segment's [start,end] than to the previous segment, we
                      consider it a stack overflow.
@@ -189,7 +190,44 @@ sigsegv_handler (SIGSEGV_FAULT_HANDLER_ARGLIST)
                       : vma.is_near_this (addr, &vma))
 #endif
 #endif
+                    {
+#else /* BOGUS_FAULT_ADDRESS_UPON_STACK_OVERFLOW */
+#if HAVE_GETRLIMIT && defined RLIMIT_STACK
+                  /* Heuristic BC: If the stack size has reached its maximal size,
+                     and old_sp is near the low end, we consider it a stack
+                     overflow.  */
+                  struct rlimit rl;
+
+                  saved_errno = errno;
+                  ret = getrlimit (RLIMIT_STACK, &rl);
+                  errno = saved_errno;
+                  if (ret >= 0)
+                    {
+                      uintptr_t current_stack_size = vma.end - vma.start;
+                      uintptr_t max_stack_size = rl.rlim_cur;
+                      if (current_stack_size <= max_stack_size + 4096
+                          && max_stack_size <= current_stack_size + 4096
 #else
+                    {
+                      if (1
+#endif
+#ifdef SIGSEGV_FAULT_STACKPOINTER
+                          /* Heuristic BC: If we know old_sp, and it is neither
+                             near the low end, nor in the alternate stack, then
+                             it's probably not a stack overflow.  */
+                          && ((old_sp >= stk_extra_stack
+                               && old_sp <= stk_extra_stack + stk_extra_stack_size)
+#if STACK_DIRECTION < 0
+                              || (old_sp <= vma.start + 4096
+                                  && vma.start <= old_sp + 4096))
+#else
+                              || (old_sp <= vma.end + 4096
+                                  && vma.end <= old_sp + 4096))
+#endif
+#endif
+                         )
+#endif /* BOGUS_FAULT_ADDRESS_UPON_STACK_OVERFLOW */
+#else /* !HAVE_STACKVMA */
           /* Heuristic AB: If the fault address is near the stack pointer,
              it's a stack overflow.  */
           uintptr_t addr = (uintptr_t) address;
@@ -201,19 +239,21 @@ sigsegv_handler (SIGSEGV_FAULT_HANDLER_ARGLIST)
              )
             {
                 {
-#endif
                     {
+#endif /* !HAVE_STACKVMA */
+                        {
 #ifdef SIGSEGV_FAULT_STACKPOINTER
-                      int emergency =
-                        (old_sp >= stk_extra_stack
-                         && old_sp <= stk_extra_stack + stk_extra_stack_size);
-                      stackoverflow_context_t context = (SIGSEGV_FAULT_CONTEXT);
+                          int emergency =
+                            (old_sp >= stk_extra_stack
+                             && old_sp <= stk_extra_stack + stk_extra_stack_size);
+                          stackoverflow_context_t context = (SIGSEGV_FAULT_CONTEXT);
 #else
-                      int emergency = 0;
-                      stackoverflow_context_t context = (void *) 0;
+                          int emergency = 0;
+                          stackoverflow_context_t context = (void *) 0;
 #endif
-                      /* Call user's handler.  */
-                      (*stk_user_handler) (emergency, context);
+                          /* Call user's handler.  */
+                          (*stk_user_handler) (emergency, context);
+                        }
                     }
                 }
             }
@@ -264,9 +304,12 @@ sigsegv_handler (int sig)
           /* Determine stack bounds.  */
           int saved_errno;
           struct vma_struct vma;
+          int ret;
 
           saved_errno = errno;
-          if (sigsegv_get_vma (stack_top, &vma) >= 0)
+          ret = sigsegv_get_vma (stack_top, &vma);
+          errno = saved_errno;
+          if (ret >= 0)
             {
 #if HAVE_GETRLIMIT && defined RLIMIT_STACK
               /* Heuristic BC: If the stack size has reached its maximal size,
@@ -274,7 +317,10 @@ sigsegv_handler (int sig)
                  overflow.  */
               struct rlimit rl;
 
-              if (getrlimit (RLIMIT_STACK, &rl) >= 0)
+              saved_errno = errno;
+              ret = getrlimit (RLIMIT_STACK, &rl);
+              errno = saved_errno;
+              if (ret >= 0)
                 {
                   uintptr_t current_stack_size = vma.end - vma.start;
                   uintptr_t max_stack_size = rl.rlim_cur;
@@ -314,7 +360,6 @@ sigsegv_handler (int sig)
                     }
                 }
             }
-          errno = saved_errno;
         }
     }
 
