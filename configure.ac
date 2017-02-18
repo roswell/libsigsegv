@@ -60,7 +60,15 @@ cat > conftest.c << EOF
 Version __GLIBC__ . __GLIBC_MINOR__
 #endif
 EOF
-glibcversion=`$CPP $CPPFLAGS conftest.c 2>/dev/null | grep Version | sed -e 's/Version//' -e 's/ //g'`
+dnl We cannot simply use 'grep Version' on the output; see
+dnl https://lists.gnu.org/archive/html/bug-autoconf/2017-02/msg00001.html
+sed_extract_lines_after_version='/Version/{
+:a
+p
+n
+ba
+}'
+glibcversion=`$CPP $CPPFLAGS conftest.c 2>/dev/null | sed -e '/^#/d' | sed -n -e "$sed_extract_lines_after_version" | tr -d '\n' | sed -e 's/Version//' -e 's/ //g'`
 if test -n "$glibcversion"; then
   sv_cv_host="$sv_cv_host-glibc$glibcversion"
 fi

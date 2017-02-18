@@ -1,5 +1,11 @@
 2017-02-18  Bruno Haible  <bruno@clisp.org>
 
+	Fix glibc version determination.
+	* configure.ac (glibcversion): Use postprocessing that works also with
+	gcc 5 or newer.
+
+2017-02-18  Bruno Haible  <bruno@clisp.org>
+
 	Update comments.
 	* src/fault-linux-*.h: Update references to the glibc sources.
 
