@@ -65,7 +65,7 @@
 
 2015-12-03  Waldemar Brodkorb  <wbx@uclibc-ng.org>
 
-	* src/fault-linux-sparc.h (SIGSEGV_FAULT_ADDRESS_ROUNDOFF_BITS)
+	* src/fault-linux-sparc.h (SIGSEGV_FAULT_STACKPOINTER)
 	<__WORDSIZE == 64>: New macro.
 
 2014-12-30  Simon Dawson  <spdawson@gmail.com>  (tiny change)
