@@ -389,7 +389,7 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_posix" = yes; then
             alpha*)
               CFG_FAULT=fault-linux-alpha.h
               ;;
-            arm* | strongarm* | xscale*)
+            arm* | strongarm* | xscale* | aarch64*)
               CFG_FAULT=fault-linux-arm.h
               ;;
             cris)

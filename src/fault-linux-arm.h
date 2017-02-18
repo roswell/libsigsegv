@@ -1,5 +1,5 @@
 /* Fault handler information.  Linux/ARM version when it supports POSIX.
-   Copyright (C) 2002, 2009  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002, 2009, 2017  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -17,6 +17,18 @@
 
 #include "fault-posix-ucontext.h"
 
+#if __WORDSIZE == 64
+
+/* See glibc/sysdeps/unix/sysv/linux/aarch64/sys/ucontext.h.
+   Note that the 'mcontext_t' defined in
+   glibc/sysdeps/unix/sysv/linux/aarch64/sys/ucontext.h
+   and the 'struct sigcontext' defined in <asm/sigcontext.h>
+   are actually the same.  */
+
+#define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext.sp
+
+#else
+
 /* See glibc/sysdeps/unix/sysv/linux/arm/sys/ucontext.h
    and the definition of GET_STACK in
    glibc/sysdeps/unix/sysv/linux/arm/sigcontextinfo.h.
@@ -26,3 +38,5 @@
    are actually the same.  */
 
 #define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext.arm_sp
+
+#endif

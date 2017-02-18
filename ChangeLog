@@ -1,5 +1,11 @@
 2017-02-18  Bruno Haible  <bruno@clisp.org>
 
+	Improve Linux/aarch64 support.
+	* src/fault-linux-arm.h: Add code for aarch64.
+	* configure.ac: For aarch64 platforms, use fault-linux-arm.h.
+
+2017-02-18  Bruno Haible  <bruno@clisp.org>
+
 	Make stack overflow detection work on Linux/sparc.
 	* src/fault-linux-sparc.h (SIGSEGV_FAULT_STACKPOINTER): Fix: ucp is a
 	'struct sigcontext *', not an 'ucontext_t *'.
