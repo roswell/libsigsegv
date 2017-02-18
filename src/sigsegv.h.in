@@ -23,6 +23,20 @@
 
 @FAULT_CONTEXT_INCLUDE@
 
+/* Correct the value of SIGSTKSZ on some systems.
+   AIX 64-bit: original value 4096 is too small.
+   HP-UX: original value 8192 is too small.  */
+#if defined _AIX && defined _ARCH_PPC64
+# include <signal.h>
+# undef SIGSTKSZ
+# define SIGSTKSZ 8192
+#endif
+#if defined __hpux
+# include <signal.h>
+# undef SIGSTKSZ
+# define SIGSTKSZ 16384
+#endif
+
 /* HAVE_SIGSEGV_RECOVERY
    is defined if the system supports catching SIGSEGV.  */
 #if @HAVE_SIGSEGV_RECOVERY@

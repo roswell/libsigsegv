@@ -1,5 +1,12 @@
 2017-02-18  Bruno Haible  <bruno@clisp.org>
 
+	Override value of SIGSTKSZ on 64-bit AIX and on HP-UX.
+	* src/sigsegv.h.in: On 64-bit AIX, set SIGSTKSZ to 8 KB.
+	On HP-UX, set SIGSTKSZ to 16 KB.
+	* NEWS: Document the improvement.
+
+2017-02-18  Bruno Haible  <bruno@clisp.org>
+
 	Improve Linux/aarch64 support.
 	* src/fault-linux-arm.h: Add code for aarch64.
 	* configure.ac: For aarch64 platforms, use fault-linux-arm.h.
