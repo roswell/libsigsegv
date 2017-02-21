@@ -29,7 +29,9 @@ noinst_HEADERS = \
   fault-beos.h fault-beos-i386.h \
   fault-cygwin-old.h \
   fault-bsd.h fault-freebsd-i386.h \
-  fault-hpux.h fault-hpux-hppa.h fault-hurd.h fault-irix.h fault-irix-mips.h \
+  fault-hpux.h fault-hpux-hppa.h \
+  fault-hurd.h fault-hurd-i386.h \
+  fault-irix.h fault-irix-mips.h \
   fault-linux.h fault-linux-alpha.h fault-linux-alpha-old.h \
   fault-linux-arm.h fault-linux-arm-old.h \
   fault-linux-cris.h fault-linux-cris-old.h \

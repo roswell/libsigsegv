@@ -75,6 +75,7 @@ i386-apple-darwin9.8.0                        |   yes   |   yes   | 2.11
 i386-apple-darwin10.2.0                       |   yes   |   yes   | 2.6
 i386-apple-darwin10.3.0                       |   yes   |   yes   | 2.6
 i686-unknown-gnu0.3-glibc2.13                 |   yes   |   no    | 2.10
+i686-unknown-gnu0.9-glibc2.24                 |   yes   |   yes   | 2.11+
 i586-pc-linux2.2.14-gnu-glibc2.1              |   yes   |   yes   | 2.1
 i686-pc-linux2.2.14-gnu-glibc2.1              |   yes   |   yes   | 2.0
 i686-pc-linux2.2.19-gnu-glibc2.1              |   yes   |   yes   | 1.95

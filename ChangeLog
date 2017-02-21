@@ -1,3 +1,11 @@
+2017-02-21  Bruno Haible  <bruno@clisp.org>
+
+	Improve Hurd/i386 support.
+	* src/fault-hurd-i386.h: New file.
+	* src/Makefile.am (noinst_HEADERS): Add it.
+	* configure.ac: Use it on Hurd/i386.
+	* NEWS: Document the improvement.
+
 2017-02-18  Bruno Haible  <bruno@clisp.org>
 
 	Prepare for new release.

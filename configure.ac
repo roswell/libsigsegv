@@ -301,7 +301,14 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_hurd" = yes; then
     netbsd*) # A false positive.
       ;;
     *)
-      CFG_FAULT=fault-hurd.h
+      case "$host_cpu" in
+        i?86)
+          CFG_FAULT=fault-hurd-i386.h
+          ;;
+        *)
+          CFG_FAULT=fault-hurd.h
+          ;;
+      esac
       FAULT_CONTEXT='struct sigcontext'
       ;;
   esac
