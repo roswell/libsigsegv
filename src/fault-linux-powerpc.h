@@ -1,5 +1,5 @@
 /* Fault handler information.  Linux/PowerPC version when it supports POSIX.
-   Copyright (C) 2002, 2009  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002, 2009, 2017  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -26,13 +26,13 @@
    and the 'struct pt_regs' defined in <asm/ptrace.h>
    are quite different types.  */
 
-#if __WORDSIZE == 32
+#if defined(__powerpc64__) || defined(_ARCH_PPC64) /* 64-bit */
+# define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext.gp_regs[1]
+#else /* 32-bit */
 /* both should be equivalent */
 # if 0
 #  define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext.regs->gpr[1]
 # else
 #  define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext.uc_regs->gregs[1]
 # endif
-#else
-# define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext.gp_regs[1]
 #endif

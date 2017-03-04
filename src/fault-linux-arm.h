@@ -17,7 +17,7 @@
 
 #include "fault-posix-ucontext.h"
 
-#if __WORDSIZE == 64
+#if defined(__aarch64__) || defined(__ARM_64BIT_STATE) || defined(__ARM_PCS_AAPCS64) /* 64-bit */
 
 /* See glibc/sysdeps/unix/sysv/linux/aarch64/sys/ucontext.h.
    Note that the 'mcontext_t' defined in
@@ -27,7 +27,7 @@
 
 #define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext.sp
 
-#else
+#else /* 32-bit */
 
 /* See glibc/sysdeps/unix/sysv/linux/arm/sys/ucontext.h
    and the definition of GET_STACK in

@@ -1,3 +1,13 @@
+2017-03-04  Bruno Haible  <bruno@clisp.org>
+
+	Avoid use of glibc-internal macros.
+	* src/fault-linux-arm.h: Use compiler-defined preprocessor macros,
+	rather than __WORDSIZE.
+	* src/fault-linux-powerpc.h: Likewise.
+	* src/fault-linux-sparc.h: Likewise.
+	* src/fault-linux-sparc-old.h: Likewise.
+	Reported by Andreas Schwab <schwab@linux-m68k.org>.
+
 2017-02-21  Bruno Haible  <bruno@clisp.org>
 
 	Improve Hurd/i386 support.

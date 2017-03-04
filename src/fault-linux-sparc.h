@@ -27,13 +27,13 @@
    (see also <asm/sigcontext.h>)
    are quite different types.  */
 
-#if __WORDSIZE == 64
+#if defined(__sparcv9) || defined(__arch64__) /* 64-bit */
 /* From linux-4.8.1/arch/sparc/kernel/signal_64.c, function setup_rt_frame, we
    see that ucp is not an 'ucontext_t *' but rather a 'struct sigcontext *'
    that happens to have the same value as sip (which is possible because a
    'struct sigcontext' starts with 128 bytes room for the siginfo_t).  */
 #define SIGSEGV_FAULT_STACKPOINTER  (((struct sigcontext *) ucp)->sigc_regs.u_regs[14] + 2047)
-#else
+#else /* 32-bit */
 /* From linux-4.8.1/arch/sparc/kernel/signal_32.c, function setup_rt_frame,
    and linux-4.8.1/arch/sparc/kernel/signal32.c, function setup_rt_frame32, we
    see that ucp is a 'struct pt_regs *' or 'struct pt_regs32 *', respectively.

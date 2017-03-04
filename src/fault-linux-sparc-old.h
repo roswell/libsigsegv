@@ -1,5 +1,5 @@
 /* Fault handler information.  Linux/SPARC version.
-   Copyright (C) 2002, 2009  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002, 2009, 2017  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -23,9 +23,9 @@
 #if 1 /* Old? FIXME */
 # define SIGSEGV_FAULT_STACKPOINTER  scp->sigc_sp
 #else
-# if __WORDSIZE == 64
+# if defined(__sparcv9) || defined(__arch64__) /* 64-bit */
 #  define SIGSEGV_FAULT_STACKPOINTER  scp->sigc_regs.u_regs[14]
-# else
+# else /* 32-bit */
 #  define SIGSEGV_FAULT_STACKPOINTER  scp->si_regs.u_regs[14]
 # endif
 #endif
