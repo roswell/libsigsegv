@@ -1,5 +1,5 @@
 /* Determine the virtual memory area of a given address.
-   Copyright (C) 2006, 2008-2010, 2016  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2006, 2008-2010, 2016-2017  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -17,7 +17,8 @@
 
 /* mincore() is a system call that allows to inquire the status of a
    range of pages of virtual memory.  In particular, it allows to inquire
-   whether a page is mapped at all.
+   whether a page is mapped at all (except on Mac OS X, where mincore
+   returns 0 even for unmapped addresses).
    As of 2006, mincore() is supported by:        possible bits:
      - Linux,   since Linux 2.4 and glibc 2.2,   1
      - Solaris, since Solaris 9,                 1

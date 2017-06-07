@@ -1,3 +1,8 @@
+2017-03-10  Bruno Haible  <bruno@clisp.org>
+
+	Fix a comment.
+	* src/stackvma-mincore.c: Update comment regarding Mac OS X.
+
 2017-03-04  Bruno Haible  <bruno@clisp.org>
 
 	Avoid use of glibc-internal macros.
