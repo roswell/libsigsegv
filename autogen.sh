@@ -10,7 +10,7 @@
 #     in a gnulib checkout, or
 #   - an internet connection.
 
-# Copyright (C) 2009-2016 Free Software Foundation, Inc.
+# Copyright (C) 2009-2017 Free Software Foundation, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -77,6 +77,8 @@ autoheader && touch config.h.in
 # Make sure we get new versions of files brought in by automake.
 (cd build-aux && rm -f ar-lib compile depcomp install-sh mdate-sh missing test-driver)
 automake --add-missing --copy
+# Get rid of autom4te.cache directory.
+rm -rf autom4te.cache
 
 # Generate config.h.msvc, src/sigsegv.h.msvc.
 ./configure \
