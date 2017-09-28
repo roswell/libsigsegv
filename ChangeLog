@@ -1,3 +1,12 @@
+2017-09-28  Bruno Haible  <bruno@clisp.org>
+
+	Make stack VMA detection more reliable on Linux, FreeBSD, NetBSD.
+	* src/stackvma-rofile.c (struct rofile, rof_open, rof_peekchar,
+	rof_close): Read the entire file into memory in a single system call.
+	* src/stackvma-linux.c (sigsegv_get_vma): Update.
+	* src/stackvma-freebsd.c (sigsegv_get_vma): Likewise.
+	* src/stackvma-netbsd.c (sigsegv_get_vma): Likewise.
+
 2017-07-15  Bruno Haible  <bruno@clisp.org>
 
 	Get rid of autom4te.cache directory (left over from autoconf, automake).

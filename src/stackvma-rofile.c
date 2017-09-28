@@ -1,5 +1,5 @@
 /* Buffered read-only streams.
-   Copyright (C) 2008, 2016  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2008, 2016-2017  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -18,35 +18,133 @@
 #include <errno.h> /* errno, EINTR */
 #include <fcntl.h> /* O_RDONLY */
 #include <stddef.h> /* size_t */
-#include <unistd.h> /* read, close */
+#include <unistd.h> /* getpagesize, lseek, read, close */
+#include <sys/types.h>
+#include <sys/mman.h> /* mmap, munmap */
+
+/* DragonFly BSD 3.8 still has only MAP_ANON and not MAP_ANONYMOUS.  */
+#if HAVE_MMAP_ANON && !HAVE_MMAP_ANONYMOUS
+# define MAP_ANONYMOUS MAP_ANON
+#endif
 
 /* Buffered read-only streams.
    We cannot use <stdio.h> here, because fopen() calls malloc(), and a malloc()
    call may have been interrupted.
-   The buffer cannot be too large, because this can be called when we are
-   in the context of an alternate stack of just SIGSTKSZ bytes.  */
+   Also, we cannot use multiple read() calls, because if the buffer size is
+   smaller than the file's contents:
+     - On NetBSD, the second read() call would return 0, thus making the file
+       appear truncated.
+     - On DragonFly BSD, the first read() call would fail with errno = EFBIG.
+     - On all platforms, if some other thread is doing memory allocations or
+       deallocations between two read() calls, there is a high risk that the
+       result of these two read() calls don't fit together, and as a
+       consequence we will parse gargage and either omit some VMAs or return
+       VMAs with nonsensical addresses.
+   So use mmap(), and ignore the resulting VMA.
+   The stack-allocated buffer cannot be too large, because this can be called
+   when we are in the context of an alternate stack of just SIGSTKSZ bytes.  */
 
 struct rofile
   {
-    int fd;
     size_t position;
     size_t filled;
     int eof_seen;
-    char buffer[1024];
+    /* These fields deal with allocation of the buffer.  */
+    char *buffer;
+    char *auxmap;
+    size_t auxmap_length;
+    uintptr_t auxmap_start;
+    uintptr_t auxmap_end;
+    char stack_allocated_buffer[1024];
   };
 
 /* Open a read-only file stream.  */
 static int
 rof_open (struct rofile *rof, const char *filename)
 {
-  int fd = open (filename, O_RDONLY);
+  int fd;
+  uintptr_t pagesize;
+  size_t size;
+
+  fd = open (filename, O_RDONLY);
   if (fd < 0)
     return -1;
-  rof->fd = fd;
   rof->position = 0;
-  rof->filled = 0;
   rof->eof_seen = 0;
-  return 0;
+  /* Try the static buffer first.  */
+  pagesize = 0;
+  rof->buffer = rof->stack_allocated_buffer;
+  size = sizeof (rof->stack_allocated_buffer);
+  rof->auxmap = NULL;
+  rof->auxmap_start = 0;
+  rof->auxmap_end = 0;
+  for (;;)
+    {
+      /* Attempt to read the contents in a single system call.  */
+      {
+        int n = read (fd, rof->buffer, size);
+#ifdef EINTR
+        if (n < 0 && errno == EINTR)
+          goto retry;
+#endif
+#if defined __DragonFly__
+        if (!(n < 0 && errno == EFBIG))
+#endif
+          {
+            if (n <= 0)
+              /* Empty file.  */
+              goto fail1;
+            if (n < size)
+              {
+                /* The buffer was sufficiently large.  */
+                rof->filled = n;
+                close (fd);
+                return 0;
+              }
+          }
+      }
+      /* Allocate a larger buffer.  */
+      if (pagesize == 0)
+        {
+          pagesize = getpagesize ();
+          size = pagesize;
+        }
+      else
+        {
+          size = 2 * size;
+          if (size == 0)
+            /* Wraparound.  */
+            goto fail1;
+          if (rof->auxmap != NULL)
+            munmap (rof->auxmap, rof->auxmap_length);
+        }
+      rof->auxmap = (void *) mmap ((void *) 0, size, PROT_READ | PROT_WRITE,
+                                   MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+      if (rof->auxmap == (void *) -1)
+        {
+          close (fd);
+          return -1;
+        }
+      rof->auxmap_length = size;
+      rof->auxmap_start = (uintptr_t) rof->auxmap;
+      rof->auxmap_end = rof->auxmap_start + size;
+      rof->buffer = (char *) rof->auxmap;
+     retry:
+      /* Restart.  */
+      if (lseek (fd, 0, SEEK_SET) < 0)
+        {
+          close (fd);
+          fd = open (filename, O_RDONLY);
+          if (fd < 0)
+            goto fail2;
+        }
+    }
+ fail1:
+  close (fd);
+ fail2:
+  if (rof->auxmap != NULL)
+    munmap (rof->auxmap, rof->auxmap_length);
+  return -1;
 }
 
 /* Return the next byte from a read-only file stream without consuming it,
@@ -56,25 +154,8 @@ rof_peekchar (struct rofile *rof)
 {
   if (rof->position == rof->filled)
     {
-      if (rof->eof_seen)
-        return -1;
-      else
-        for (;;)
-          {
-            int n = read (rof->fd, rof->buffer, sizeof (rof->buffer));
-#ifdef EINTR
-            if (n < 0 && errno == EINTR)
-              continue;
-#endif
-            if (n <= 0)
-              {
-                rof->eof_seen = 1;
-                return -1;
-              }
-            rof->filled = n;
-            rof->position = 0;
-            break;
-          }
+      rof->eof_seen = 1;
+      return -1;
     }
   return (unsigned char) rof->buffer[rof->position];
 }
@@ -119,5 +200,6 @@ rof_scanf_lx (struct rofile *rof, uintptr_t *valuep)
 static void
 rof_close (struct rofile *rof)
 {
-  close (rof->fd);
+  if (rof->auxmap != NULL)
+    munmap (rof->auxmap, rof->auxmap_length);
 }
