@@ -1,5 +1,5 @@
 /* Determine the virtual memory area of a given address.
-   Copyright (C) 2002, 2006, 2008-2009, 2016  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002, 2006, 2008-2009, 2016-2017  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -46,29 +46,76 @@ init_pagesize (void)
 }
 #endif
 
-static int
-sigsegv_get_vma_fallback (uintptr_t address, struct vma_struct *vma)
+struct callback_locals
 {
-#if HAVE_MINCORE
-  return mincore_get_vma (address, vma);
+  uintptr_t address;
+  struct vma_struct *vma;
+#if STACK_DIRECTION < 0
+  uintptr_t prev;
 #else
-  return -1;
+  int stop_at_next_vma;
 #endif
+  int retval;
+};
+
+static int
+callback (struct callback_locals *locals, uintptr_t start, uintptr_t end)
+{
+#if STACK_DIRECTION < 0
+  if (locals->address >= start && locals->address <= end - 1)
+    {
+      locals->vma->start = start;
+      locals->vma->end = end;
+      locals->vma->prev_end = locals->prev;
+      locals->retval = 0;
+      return 1;
+    }
+  locals->prev = end;
+#else
+  if (locals->stop_at_next_vma)
+    {
+      locals->vma->next_start = start;
+      locals->stop_at_next_vma = 0;
+      return 1;
+    }
+  if (locals->address >= start && locals->address <= end - 1)
+    {
+      locals->vma->start = start;
+      locals->vma->end = end;
+      locals->retval = 0;
+      locals->stop_at_next_vma = 1;
+      return 0;
+    }
+#endif
+  return 0;
 }
 
-/* Note: Solaris <sys/procfs.h> defines a different type prmap_t with
-   _STRUCTURED_PROC than without! Here's a table of sizeof(prmap_t):
-                                32-bit   64-bit
-       _STRUCTURED_PROC = 0       32       56
-       _STRUCTURED_PROC = 1       96      104
-   Therefore, if the include files provide the newer API, prmap_t has
-   the bigger size, and thus you MUST use the newer API.  And if the
-   include files provide the older API, prmap_t has the smaller size,
-   and thus you MUST use the older API.  */
-
-int
-sigsegv_get_vma (uintptr_t address, struct vma_struct *vma)
+/* Iterate over the virtual memory areas of the current process.
+   If such iteration is supported, the callback is called once for every
+   virtual memory area, in ascending order, with the following arguments:
+     - LOCALS is the same argument as passed to vma_iterate.
+     - START is the address of the first byte in the area, page-aligned.
+     - END is the address of the last byte in the area plus 1, page-aligned.
+       Note that it may be 0 for the last area in the address space.
+   If the callback returns 0, the iteration continues.  If it returns 1,
+   the iteration terminates prematurely.
+   This function may open file descriptors, but does not call malloc().
+   Return 0 if all went well, or -1 in case of error.  */
+/* This code is a simplied copy (no handling of protection flags) of the
+   code in gnulib's lib/vma-iter.c.  */
+static int
+vma_iterate (struct callback_locals *locals)
 {
+  /* Note: Solaris <sys/procfs.h> defines a different type prmap_t with
+     _STRUCTURED_PROC than without! Here's a table of sizeof(prmap_t):
+                                  32-bit   64-bit
+         _STRUCTURED_PROC = 0       32       56
+         _STRUCTURED_PROC = 1       96      104
+     Therefore, if the include files provide the newer API, prmap_t has
+     the bigger size, and thus you MUST use the newer API.  And if the
+     include files provide the older API, prmap_t has the smaller size,
+     and thus you MUST use the older API.  */
+
 #if defined PIOCNMAP && defined PIOCMAP
   /* We must use the older /proc interface.  */
 
@@ -77,25 +124,21 @@ sigsegv_get_vma (uintptr_t address, struct vma_struct *vma)
   int fd;
   int nmaps;
   size_t memneed;
-#if HAVE_MMAP_ANON
-# define zero_fd -1
-# define map_flags MAP_ANON
-#elif HAVE_MMAP_ANONYMOUS
-# define zero_fd -1
-# define map_flags MAP_ANONYMOUS
-#else
+# if HAVE_MMAP_ANON
+#  define zero_fd -1
+#  define map_flags MAP_ANON
+# elif HAVE_MMAP_ANONYMOUS
+#  define zero_fd -1
+#  define map_flags MAP_ANONYMOUS
+# else /* Solaris <= 7 */
   int zero_fd;
-# define map_flags 0
-#endif
+#  define map_flags 0
+# endif
   void *auxmap;
   uintptr_t auxmap_start;
   uintptr_t auxmap_end;
   prmap_t* maps;
   prmap_t* mp;
-  uintptr_t start, end;
-#if STACK_DIRECTION < 0
-  uintptr_t prev;
-#endif
 
   if (pagesize == 0)
     init_pagesize ();
@@ -114,27 +157,28 @@ sigsegv_get_vma (uintptr_t address, struct vma_struct *vma)
 
   fd = open (fname, O_RDONLY);
   if (fd < 0)
-    goto failed;
+    return -1;
 
   if (ioctl (fd, PIOCNMAP, &nmaps) < 0)
     goto fail2;
 
   memneed = (nmaps + 10) * sizeof (prmap_t);
   /* Allocate memneed bytes of memory.
-     We cannot use alloca here, because we are low on stack space.
-     We also cannot use malloc here, because a malloc() call may have been
-     interrupted.
+     We cannot use alloca here, because not much stack space is guaranteed.
+     We also cannot use malloc here, because a malloc() call may call mmap()
+     and thus pre-allocate available memory.
      So use mmap(), and ignore the resulting VMA.  */
   memneed = ((memneed - 1) / pagesize + 1) * pagesize;
-#if !(HAVE_MMAP_ANON || HAVE_MMAP_ANONYMOUS)
+# if !(HAVE_MMAP_ANON || HAVE_MMAP_ANONYMOUS)
   zero_fd = open ("/dev/zero", O_RDONLY, 0644);
   if (zero_fd < 0)
     goto fail2;
-#endif
-  auxmap = (void *) mmap ((void *) 0, memneed, PROT_READ | PROT_WRITE, map_flags | MAP_PRIVATE, zero_fd, 0);
-#if !(HAVE_MMAP_ANON || HAVE_MMAP_ANONYMOUS)
+# endif
+  auxmap = (void *) mmap ((void *) 0, memneed, PROT_READ | PROT_WRITE,
+                          map_flags | MAP_PRIVATE, zero_fd, 0);
+# if !(HAVE_MMAP_ANON || HAVE_MMAP_ANONYMOUS)
   close (zero_fd);
-#endif
+# endif
   if (auxmap == (void *) -1)
     goto fail2;
   auxmap_start = (uintptr_t) auxmap;
@@ -144,11 +188,10 @@ sigsegv_get_vma (uintptr_t address, struct vma_struct *vma)
   if (ioctl (fd, PIOCMAP, maps) < 0)
     goto fail1;
 
-#if STACK_DIRECTION < 0
-  prev = 0;
-#endif
   for (mp = maps;;)
     {
+      uintptr_t start, end;
+
       start = (uintptr_t) mp->pr_vaddr;
       end = start + mp->pr_size;
       if (start == 0 && end == 0)
@@ -158,58 +201,28 @@ sigsegv_get_vma (uintptr_t address, struct vma_struct *vma)
         {
           /* Consider [start,end-1] \ [auxmap_start,auxmap_end-1]
              = [start,auxmap_start-1] u [auxmap_end,end-1].  */
-          if (start != auxmap_start)
-            {
-              if (address >= start && address <= auxmap_start - 1)
-                {
-                  end = auxmap_start;
-                  goto found;
-                }
-#if STACK_DIRECTION < 0
-              prev = auxmap_start;
-#endif
-            }
-          if (end != auxmap_end)
-            {
-              if (address >= auxmap_end && address <= end - 1)
-                {
-                  start = auxmap_end;
-                  goto found;
-                }
-#if STACK_DIRECTION < 0
-              prev = end;
-#endif
-            }
+          if (start < auxmap_start)
+            if (callback (locals, start, auxmap_start))
+              break;
+          if (auxmap_end - 1 < end - 1)
+            if (callback (locals, auxmap_end, end))
+              break;
         }
       else
         {
-          if (address >= start && address <= end - 1)
-            goto found;
-#if STACK_DIRECTION < 0
-          prev = end;
-#endif
+          if (callback (locals, start, end))
+            break;
         }
     }
+  munmap (auxmap, memneed);
+  close (fd);
+  return 0;
 
  fail1:
   munmap (auxmap, memneed);
  fail2:
   close (fd);
- failed:
-  return sigsegv_get_vma_fallback (address, vma);
-
- found:
-  vma->start = start;
-  vma->end = end;
-#if STACK_DIRECTION < 0
-  vma->prev_end = prev;
-#else
-  vma->next_start = (uintptr_t) mp->pr_vaddr;
-#endif
-  munmap (auxmap, memneed);
-  close (fd);
-  vma->is_near_this = simple_is_near_this;
-  return 0;
+  return -1;
 
 #else
   /* We must use the newer /proc interface.
@@ -224,26 +237,22 @@ sigsegv_get_vma (uintptr_t address, struct vma_struct *vma)
   int fd;
   int nmaps;
   size_t memneed;
-#if HAVE_MMAP_ANON
-# define zero_fd -1
-# define map_flags MAP_ANON
-#elif HAVE_MMAP_ANONYMOUS
-# define zero_fd -1
-# define map_flags MAP_ANONYMOUS
-#else
+# if HAVE_MMAP_ANON
+#  define zero_fd -1
+#  define map_flags MAP_ANON
+# elif HAVE_MMAP_ANONYMOUS
+#  define zero_fd -1
+#  define map_flags MAP_ANONYMOUS
+# else /* Solaris <= 7 */
   int zero_fd;
-# define map_flags 0
-#endif
+#  define map_flags 0
+# endif
   void *auxmap;
   uintptr_t auxmap_start;
   uintptr_t auxmap_end;
   prmap_t* maps;
   prmap_t* maps_end;
   prmap_t* mp;
-  uintptr_t start, end;
-#if STACK_DIRECTION < 0
-  uintptr_t prev;
-#endif
 
   if (pagesize == 0)
     init_pagesize ();
@@ -262,7 +271,7 @@ sigsegv_get_vma (uintptr_t address, struct vma_struct *vma)
 
   fd = open (fname, O_RDONLY);
   if (fd < 0)
-    goto failed;
+    return -1;
 
   {
     struct stat statbuf;
@@ -273,20 +282,21 @@ sigsegv_get_vma (uintptr_t address, struct vma_struct *vma)
 
   memneed = (nmaps + 10) * sizeof (prmap_t);
   /* Allocate memneed bytes of memory.
-     We cannot use alloca here, because we are low on stack space.
-     We also cannot use malloc here, because a malloc() call may have been
-     interrupted.
+     We cannot use alloca here, because not much stack space is guaranteed.
+     We also cannot use malloc here, because a malloc() call may call mmap()
+     and thus pre-allocate available memory.
      So use mmap(), and ignore the resulting VMA.  */
   memneed = ((memneed - 1) / pagesize + 1) * pagesize;
-#if !(HAVE_MMAP_ANON || HAVE_MMAP_ANONYMOUS)
+# if !(HAVE_MMAP_ANON || HAVE_MMAP_ANONYMOUS)
   zero_fd = open ("/dev/zero", O_RDONLY, 0644);
   if (zero_fd < 0)
     goto fail2;
-#endif
-  auxmap = (void *) mmap ((void *) 0, memneed, PROT_READ | PROT_WRITE, map_flags | MAP_PRIVATE, zero_fd, 0);
-#if !(HAVE_MMAP_ANON || HAVE_MMAP_ANONYMOUS)
+# endif
+  auxmap = (void *) mmap ((void *) 0, memneed, PROT_READ | PROT_WRITE,
+                          map_flags | MAP_PRIVATE, zero_fd, 0);
+# if !(HAVE_MMAP_ANON || HAVE_MMAP_ANONYMOUS)
   close (zero_fd);
-#endif
+# endif
   if (auxmap == (void *) -1)
     goto fail2;
   auxmap_start = (uintptr_t) auxmap;
@@ -321,68 +331,69 @@ sigsegv_get_vma (uintptr_t address, struct vma_struct *vma)
     maps_end = maps + nmaps;
   }
 
-#if STACK_DIRECTION < 0
-  prev = 0;
-#endif
   for (mp = maps; mp < maps_end; mp++)
     {
+      uintptr_t start, end;
+
       start = (uintptr_t) mp->pr_vaddr;
       end = start + mp->pr_size;
       if (start <= auxmap_start && auxmap_end - 1 <= end - 1)
         {
           /* Consider [start,end-1] \ [auxmap_start,auxmap_end-1]
              = [start,auxmap_start-1] u [auxmap_end,end-1].  */
-          if (start != auxmap_start)
-            {
-              if (address >= start && address <= auxmap_start - 1)
-                {
-                  end = auxmap_start;
-                  goto found;
-                }
-#if STACK_DIRECTION < 0
-              prev = auxmap_start;
-#endif
-            }
-          if (end != auxmap_end)
-            {
-              if (address >= auxmap_end && address <= end - 1)
-                {
-                  start = auxmap_end;
-                  goto found;
-                }
-#if STACK_DIRECTION < 0
-              prev = end;
-#endif
-            }
+          if (start < auxmap_start)
+            if (callback (locals, start, auxmap_start))
+              break;
+          if (auxmap_end - 1 < end - 1)
+            if (callback (locals, auxmap_end, end))
+              break;
         }
       else
         {
-          if (address >= start && address <= end - 1)
-            goto found;
-#if STACK_DIRECTION < 0
-          prev = end;
-#endif
+          if (callback (locals, start, end))
+            break;
         }
     }
+  munmap (auxmap, memneed);
+  close (fd);
+  return 0;
 
  fail1:
   munmap (auxmap, memneed);
  fail2:
   close (fd);
- failed:
-  return sigsegv_get_vma_fallback (address, vma);
+  return -1;
 
- found:
-  vma->start = start;
-  vma->end = end;
-#if STACK_DIRECTION < 0
-  vma->prev_end = prev;
-#else
-  vma->next_start = (uintptr_t) mp->pr_vaddr;
 #endif
-  munmap (auxmap, memneed);
-  close (fd);
-  vma->is_near_this = simple_is_near_this;
-  return 0;
+}
+
+int
+sigsegv_get_vma (uintptr_t address, struct vma_struct *vma)
+{
+  struct callback_locals locals;
+  locals.address = address;
+  locals.vma = vma;
+#if STACK_DIRECTION < 0
+  locals.prev = 0;
+#else
+  locals.stop_at_next_vma = 0;
+#endif
+  locals.retval = -1;
+
+  vma_iterate (&locals);
+  if (locals.retval == 0)
+    {
+#if !(STACK_DIRECTION < 0)
+      if (locals.stop_at_next_vma)
+        vma->next_start = 0;
+#endif
+      vma->is_near_this = simple_is_near_this;
+      return 0;
+    }
+
+#if HAVE_MINCORE
+  return mincore_get_vma (address, vma);
+#else
+  return -1;
 #endif
 }

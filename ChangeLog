@@ -1,5 +1,18 @@
 2017-09-28  Bruno Haible  <bruno@clisp.org>
 
+	Make stack VMA detection code more maintainable.
+	* src/stackvma-linux.c (struct callback_locals): New type.
+	(callback): New function.
+	(vma_iterate): New function, extracted from gnulib's lib/vma-iter.c.
+	(sigsegv_get_vma): Use vma_iterate.
+	* src/stackvma-freebsd.c: Likewise.
+	* src/stackvma-netbsd.c: Likewise.
+	* src/stackvma-beos.c: Likewise.
+	* src/stackvma-procfs.c: Likewise.
+	(sigsegv_get_vma_fallback): Inline and remove function.
+
+2017-09-28  Bruno Haible  <bruno@clisp.org>
+
 	Make stack VMA detection more reliable on Linux, FreeBSD, NetBSD.
 	* src/stackvma-rofile.c (struct rofile, rof_open, rof_peekchar,
 	rof_close): Read the entire file into memory in a single system call.
