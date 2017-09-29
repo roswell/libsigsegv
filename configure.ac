@@ -678,7 +678,8 @@ if test $sv_cv_procfsvma = yes; then
 else
   case "$host_os" in
     linux*)                CFG_STACKVMA=stackvma-linux.c ;;
-    freebsd* | dragonfly*) CFG_STACKVMA=stackvma-freebsd.c ;;
+    freebsd* | kfreebsd*-gnu* | dragonfly*)
+                           CFG_STACKVMA=stackvma-freebsd.c ;;
     netbsd*)               CFG_STACKVMA=stackvma-netbsd.c ;;
     beos*)                 CFG_STACKVMA=stackvma-beos.c ;;
     macos* | darwin*)      CFG_STACKVMA=stackvma-mach.c ;;

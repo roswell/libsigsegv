@@ -86,77 +86,7 @@ callback (struct callback_locals *locals, uintptr_t start, uintptr_t end)
   return 0;
 }
 
-/* Iterate over the virtual memory areas of the current process.
-   If such iteration is supported, the callback is called once for every
-   virtual memory area, in ascending order, with the following arguments:
-     - LOCALS is the same argument as passed to vma_iterate.
-     - START is the address of the first byte in the area, page-aligned.
-     - END is the address of the last byte in the area plus 1, page-aligned.
-       Note that it may be 0 for the last area in the address space.
-   If the callback returns 0, the iteration continues.  If it returns 1,
-   the iteration terminates prematurely.
-   This function may open file descriptors, but does not call malloc().
-   Return 0 if all went well, or -1 in case of error.  */
-/* This code is a simplied copy (no handling of protection flags) of the
-   code in gnulib's lib/vma-iter.c.  */
-static int
-vma_iterate (struct callback_locals *locals)
-{
-  struct rofile rof;
-
-  /* Open the current process' maps file.  It describes one VMA per line.
-     There are two such files:
-       - /proc/curproc/map in near-FreeBSD syntax,
-       - /proc/curproc/maps in Linux syntax.
-     Cf. <http://cvsweb.netbsd.org/bsdweb.cgi/src/sys/miscfs/procfs/procfs_map.c?rev=HEAD> */
-  if (rof_open (&rof, "/proc/curproc/map") >= 0)
-    {
-      uintptr_t auxmap_start = rof.auxmap_start;
-      uintptr_t auxmap_end = rof.auxmap_end;
-
-      for (;;)
-        {
-          uintptr_t start, end;
-          int c;
-
-          /* Parse one line.  First start.  */
-          if (!(rof_getchar (&rof) == '0'
-                && rof_getchar (&rof) == 'x'
-                && rof_scanf_lx (&rof, &start) >= 0))
-            break;
-          while (c = rof_peekchar (&rof), c == ' ' || c == '\t')
-            rof_getchar (&rof);
-          /* Then end.  */
-          if (!(rof_getchar (&rof) == '0'
-                && rof_getchar (&rof) == 'x'
-                && rof_scanf_lx (&rof, &end) >= 0))
-            break;
-          while (c = rof_getchar (&rof), c != -1 && c != '\n')
-            ;
-
-          if (start <= auxmap_start && auxmap_end - 1 <= end - 1)
-            {
-              /* Consider [start,end-1] \ [auxmap_start,auxmap_end-1]
-                 = [start,auxmap_start-1] u [auxmap_end,end-1].  */
-              if (start < auxmap_start)
-                if (callback (locals, start, auxmap_start))
-                  break;
-              if (auxmap_end - 1 < end - 1)
-                if (callback (locals, auxmap_end, end))
-                  break;
-            }
-          else
-            {
-              if (callback (locals, start, end))
-                break;
-            }
-        }
-      rof_close (&rof);
-      return 0;
-    }
-
-  return -1;
-}
+#include "stackvma-vma-iter.c"
 
 int
 sigsegv_get_vma (uintptr_t address, struct vma_struct *vma)

@@ -1,3 +1,17 @@
+2017-09-29  Bruno Haible  <bruno@clisp.org>
+
+	Make stack VMA detection work on GNU/kFreeBSD even without mincore.
+	It needs to use the vma_iterate for Linux combined with the callback
+	for FreeBSD.
+	* src/stackvma-vma-iter.c: New file, extracted from
+	src/stackvma-linux.c, src/stackvma-freebsd.c, src/stackvma-netbsd.c.
+	* src/stackvma-linux.c: Include stackvma-vma-iter.c.
+	(vma_iterate): Moved to src/stackvma-vma-iter.c.
+	* src/stackvma-freebsd.c: Likewise.
+	* src/stackvma-netbsd.c: Likewise.
+	* src/Makefile.am (EXTRA_DIST): Add stackvma-vma-iter.c.
+	* configure.ac (CFG_STACKVMA): Treat GNU/kFreeBSD like FreeBSD.
+
 2017-09-28  Bruno Haible  <bruno@clisp.org>
 
 	Make stack VMA detection code more maintainable.
