@@ -683,6 +683,10 @@ else
     netbsd*)               CFG_STACKVMA=stackvma-netbsd.c ;;
     beos*)                 CFG_STACKVMA=stackvma-beos.c ;;
     macos* | darwin*)      CFG_STACKVMA=stackvma-mach.c ;;
+    dnl About gnu*): GNU/Hurd provides a /proc/self/maps file that is similar
+    dnl to one on Linux, and the vma_iterate (from gnulib) that reads this file
+    dnl works fine on GNU/Hurd under normal conditions. But in the context of
+    dnl libsigsegv, that is, during a SIGSEGV handler, it just hangs.
   esac
 fi
 dnl We prefer the mquery based approach over the mincore based approach,

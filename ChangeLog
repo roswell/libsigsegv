@@ -1,3 +1,8 @@
+2017-10-01  Bruno Haible  <bruno@clisp.org>
+
+	Comment.
+	* configure.ac: Add a comment about GNU/Hurd.
+
 2017-09-29  Bruno Haible  <bruno@clisp.org>
 
 	Make stack VMA detection work on GNU/kFreeBSD even without mincore.
