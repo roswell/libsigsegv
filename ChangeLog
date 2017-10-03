@@ -1,5 +1,13 @@
 2017-10-03  Bruno Haible  <bruno@clisp.org>
 
+	Add support for NetBSD/sparc.
+	* src/sigsegv.h.in (SIGSEGV_FAULT_ADDRESS_ALIGNMENT) [NetBSD/sparc]:
+	Define to 0x1000.
+	* m4/fault.m4 (SV_TRY_FAULT): On NetBSD/sparc, set
+	SIGSEGV_FAULT_ADDRESS_ROUNDOFF_BITS like on Linux/s390.
+
+2017-10-03  Bruno Haible  <bruno@clisp.org>
+
 	Fix a message.
 	* tests/sigsegv3.c (handler): Fix message.
 

@@ -1,4 +1,4 @@
-# fault.m4 serial 7 (libsigsegv-2.11)
+# fault.m4 serial 8 (libsigsegv-2.12)
 dnl Copyright (C) 2002-2003, 2011 Bruno Haible <bruno@clisp.org>
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
@@ -43,7 +43,7 @@ $4
 static int zero_fd;
 # define map_flags MAP_FILE | MAP_PRIVATE
 #endif
-#if defined __linux__ && (defined __s390__ || defined __s390x__)
+#if (defined __linux__ && (defined __s390__ || defined __s390x__)) || (defined __NetBSD__ && defined __sparc__)
 # define SIGSEGV_FAULT_ADDRESS_ROUNDOFF_BITS (0x1000UL - 1)
 #else
 # define SIGSEGV_FAULT_ADDRESS_ROUNDOFF_BITS 0UL
