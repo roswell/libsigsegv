@@ -61,7 +61,7 @@ handler (void *fault_address, int serious)
                                 & ~(SIGSEGV_FAULT_ADDRESS_ALIGNMENT - 1)))
     abort ();
   pass++;
-  printf ("Stack overflow %d caught.\n", pass);
+  printf ("Fault %d caught.\n", pass);
   sigprocmask (SIG_SETMASK, &mainsigset, NULL);
   return sigsegv_leave_handler (handler_continuation, NULL, NULL, NULL);
 }

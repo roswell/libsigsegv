@@ -1,3 +1,8 @@
+2017-10-03  Bruno Haible  <bruno@clisp.org>
+
+	Fix a message.
+	* tests/sigsegv3.c (handler): Fix message.
+
 2017-10-01  Bruno Haible  <bruno@clisp.org>
 
 	Comment.
