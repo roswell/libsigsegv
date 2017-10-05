@@ -1,3 +1,10 @@
+2017-10-05  Bruno Haible  <bruno@clisp.org>
+
+	Fix support for NetBSD/sparc on SPARC64 machines.
+	* src/sigsegv.h.in (SIGSEGV_FAULT_ADDRESS_ALIGNMENT) [NetBSD/sparc]:
+	Use getpagesize().
+	* m4/fault.m4 (SV_TRY_FAULT): On NetBSD/sparc, use getpagesize().
+
 2017-10-03  Bruno Haible  <bruno@clisp.org>
 
 	Add support for NetBSD/sparc.

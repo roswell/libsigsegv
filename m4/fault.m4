@@ -1,5 +1,5 @@
-# fault.m4 serial 8 (libsigsegv-2.12)
-dnl Copyright (C) 2002-2003, 2011 Bruno Haible <bruno@clisp.org>
+# fault.m4 serial 9 (libsigsegv-2.12)
+dnl Copyright (C) 2002-2003, 2011, 2017 Bruno Haible <bruno@clisp.org>
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
 dnl Public License, this file may be distributed as part of a program
@@ -43,7 +43,11 @@ $4
 static int zero_fd;
 # define map_flags MAP_FILE | MAP_PRIVATE
 #endif
-#if (defined __linux__ && (defined __s390__ || defined __s390x__)) || (defined __NetBSD__ && defined __sparc__)
+#if defined __NetBSD__ && (defined __sparc__ || defined __sparc64__)
+  /* getpagesize () is 0x1000 or 0x2000, depending on hardware.  */
+# include <unistd.h>
+# define SIGSEGV_FAULT_ADDRESS_ROUNDOFF_BITS (getpagesize () - 1)
+#elif defined __linux__ && (defined __s390__ || defined __s390x__)
 # define SIGSEGV_FAULT_ADDRESS_ROUNDOFF_BITS (0x1000UL - 1)
 #else
 # define SIGSEGV_FAULT_ADDRESS_ROUNDOFF_BITS 0UL
