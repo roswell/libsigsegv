@@ -37,6 +37,13 @@
 #include <signal.h>
 #include <setjmp.h>
 
+#if SIGSEGV_FAULT_ADDRESS_ALIGNMENT > 1UL
+# include <unistd.h>
+# define SIGSEGV_FAULT_ADDRESS_ROUNDOFF_BITS (getpagesize () - 1)
+#else
+# define SIGSEGV_FAULT_ADDRESS_ROUNDOFF_BITS 0
+#endif
+
 jmp_buf mainloop;
 sigset_t mainsigset;
 
@@ -57,8 +64,8 @@ handler (void *fault_address, int serious)
   handler_called++;
   if (handler_called > 10)
     abort ();
-  if (fault_address != (void *)((page + 0x678 + 8 * pass)
-                                & ~(SIGSEGV_FAULT_ADDRESS_ALIGNMENT - 1)))
+  if (fault_address
+      != (void *)((page + 0x678 + 8 * pass) & ~SIGSEGV_FAULT_ADDRESS_ROUNDOFF_BITS))
     abort ();
   pass++;
   printf ("Fault %d caught.\n", pass);

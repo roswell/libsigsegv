@@ -1,3 +1,16 @@
+2017-10-06  Bruno Haible  <bruno@clisp.org>
+
+	Fix definition of SIGSEGV_FAULT_ADDRESS_ALIGNMENT: don't break clisp.
+	Existing versions of clisp expect that SIGSEGV_FAULT_ADDRESS_ALIGNMENT
+	is a constant expression. We cannot include a variable reference or
+	a function call in it.
+	* src/sigsegv.h.in (SIGSEGV_FAULT_ADDRESS_ALIGNMENT): Define as a
+	constant expression.
+	* tests/sigsegv1.c (SIGSEGV_FAULT_ADDRESS_ROUNDOFF_BITS): Define based
+	on SIGSEGV_FAULT_ADDRESS_ALIGNMENT.
+	(handler): Use it.
+	* tests/sigsegv3.c: Likewise.
+
 2017-10-05  Bruno Haible  <bruno@clisp.org>
 
 	Fix support for NetBSD/sparc on SPARC64 machines.

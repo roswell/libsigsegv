@@ -28,6 +28,13 @@
 #include "mmaputil.h"
 #include <stdlib.h>
 
+#if SIGSEGV_FAULT_ADDRESS_ALIGNMENT > 1UL
+# include <unistd.h>
+# define SIGSEGV_FAULT_ADDRESS_ROUNDOFF_BITS (getpagesize () - 1)
+#else
+# define SIGSEGV_FAULT_ADDRESS_ROUNDOFF_BITS 0
+#endif
+
 uintptr_t page;
 
 volatile int handler_called = 0;
@@ -39,7 +46,7 @@ handler (void *fault_address, int serious)
   if (handler_called > 10)
     abort ();
   if (fault_address
-      != (void *)((page + 0x678) & ~(SIGSEGV_FAULT_ADDRESS_ALIGNMENT - 1)))
+      != (void *)((page + 0x678) & ~SIGSEGV_FAULT_ADDRESS_ROUNDOFF_BITS))
     abort ();
   if (mprotect ((void *) page, 0x4000, PROT_READ_WRITE) == 0)
     return 1;
