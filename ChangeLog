@@ -1,3 +1,11 @@
+2017-10-07  Bruno Haible  <bruno@clisp.org>
+
+	Fix broken VMA detection on Linux (regression from 2017-09-28).
+	* src/stackvma-rofile.c (MIN_LEFTOVER): New macro.
+	(STACK_ALLOCATED_BUFFER_SIZE): New macro.
+	(rof_open): On Linux, do multiple read() calls and make sure
+	MIN_LEFTOVER bytes are left when read() returns.
+
 2017-10-06  Bruno Haible  <bruno@clisp.org>
 
 	Fix definition of SIGSEGV_FAULT_ADDRESS_ALIGNMENT: don't break clisp.
