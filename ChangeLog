@@ -1,5 +1,12 @@
 2017-10-08  Bruno Haible  <bruno@clisp.org>
 
+	Make VMA detection more reliable on FreeBSD.
+	* src/stackvma-vma-iter.c (vma_iterate_proc): Extracted from vma_iterate.
+	(vma_iterate_bsd): New function.
+	(vma_iterate): Call both, in the appropriate order.
+
+2017-10-08  Bruno Haible  <bruno@clisp.org>
+
 	Fix broken VMA detection on NetBSD (regression from 2017-10-07).
 	* src/stackvma-rofile.c (MIN_LEFTOVER): Define to 1, not 0.
 
