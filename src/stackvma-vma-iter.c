@@ -193,15 +193,15 @@ vma_iterate_bsd (struct callback_locals *locals)
           /* Consider [start,end-1] \ [auxmap_start,auxmap_end-1]
              = [start,auxmap_start-1] u [auxmap_end,end-1].  */
           if (start < auxmap_start)
-            if (callback (data, start, auxmap_start))
+            if (callback (locals, start, auxmap_start))
               break;
           if (auxmap_end - 1 < end - 1)
-            if (callback (data, auxmap_end, end))
+            if (callback (locals, auxmap_end, end))
               break;
         }
       else
         {
-          if (callback (data, start, end))
+          if (callback (locals, start, end))
             break;
         }
       p += kve->kve_structsize;

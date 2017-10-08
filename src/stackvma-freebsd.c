@@ -21,6 +21,11 @@
 #include "stackvma-simple.c"
 #include "stackvma-rofile.c"
 
+#if defined __FreeBSD__ || defined __FreeBSD_kernel__ /* FreeBSD, GNU/kFreeBSD */
+# include <sys/user.h> /* struct kinfo_vmentry */
+# include <sys/sysctl.h> /* sysctl */
+#endif
+
 #if HAVE_MINCORE
 # define sigsegv_get_vma mincore_get_vma
 # define STATIC static

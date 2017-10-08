@@ -4,6 +4,7 @@
 	* src/stackvma-vma-iter.c (vma_iterate_proc): Extracted from vma_iterate.
 	(vma_iterate_bsd): New function.
 	(vma_iterate): Call both, in the appropriate order.
+	* src/stackvma-freebsd.c: Include <sys/user.h> and <sys/sysctl.h>.
 
 2017-10-08  Bruno Haible  <bruno@clisp.org>
 
