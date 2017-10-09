@@ -1,3 +1,8 @@
+2017-10-09  Bruno Haible  <bruno@clisp.org>
+
+	Avoid build failures caused by parallel make.
+	* Makefile.am (GNUMAKEFLAGS): New variable.
+
 2017-10-08  Bruno Haible  <bruno@clisp.org>
 
 	Make VMA detection more reliable on FreeBSD.
