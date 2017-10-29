@@ -368,6 +368,14 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_posix" = yes; then
           ;;
       esac
       ;;
+    haiku*)
+      case "$host_cpu" in
+        i?86 | x86_64) CFG_FAULT=fault-haiku-i386.h ;;
+        *) CFG_FAULT=fault-haiku.h ;;
+      esac
+      FAULT_CONTEXT='ucontext_t'
+      FAULT_CONTEXT_INCLUDE='#include <signal.h>'
+      ;;
   esac
   if test -z "$CFG_FAULT"; then
     dnl <ucontext.h> was required by POSIX:2001, and many systems have it. But
@@ -681,7 +689,7 @@ else
     freebsd* | kfreebsd*-gnu* | dragonfly*)
                            CFG_STACKVMA=stackvma-freebsd.c ;;
     netbsd*)               CFG_STACKVMA=stackvma-netbsd.c ;;
-    beos*)                 CFG_STACKVMA=stackvma-beos.c ;;
+    beos* | haiku*)        CFG_STACKVMA=stackvma-beos.c ;;
     macos* | darwin*)      CFG_STACKVMA=stackvma-mach.c ;;
     dnl About gnu*): GNU/Hurd provides a /proc/self/maps file that is similar
     dnl to one on Linux, and the vma_iterate (from gnulib) that reads this file
