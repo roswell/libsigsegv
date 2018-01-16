@@ -1,5 +1,14 @@
 2018-01-16  Bruno Haible  <bruno@clisp.org>
 
+	Prepare for new release.
+	* configure.ac: Bump version number to 2.12.
+	* src/sigsegv.h.in (LIBSIGSEGV_VERSION): Likewise.
+	* README: Likewise.
+	* src/Makefile.am (LIBSIGSEGV_VERSION_INFO): Bump to 2:5:0.
+	* NEWS: Mention some more improvements.
+
+2018-01-16  Bruno Haible  <bruno@clisp.org>
+
 	Correct distinction between stack overflow and other fault on AIX.
 	* src/stackvma-mincore.c (MINCORE_ADDR_T): New type.
 	(is_mapped, mapped_range_start, mapped_range_end): Use it.
