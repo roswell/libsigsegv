@@ -4,6 +4,8 @@ New in 2.12:
 
 * Added support for catching stack overflow on Haiku.
 
+* Corrected distinction between stack overflow and other fault on AIX.
+
 New in 2.11:
 
 * Added support for catching stack overflow on Linux/SPARC.

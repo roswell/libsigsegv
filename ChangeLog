@@ -1,3 +1,11 @@
+2018-01-16  Bruno Haible  <bruno@clisp.org>
+
+	Correct distinction between stack overflow and other fault on AIX.
+	* src/stackvma-mincore.c (MINCORE_ADDR_T): New type.
+	(is_mapped, mapped_range_start, mapped_range_end): Use it.
+	* configure.ac: Don't use stackvma-procfs.c on AIX.
+	* NEWS: Mention the improvement.
+
 2017-10-29  Bruno Haible  <bruno@clisp.org>
 
 	Improve Haiku support.

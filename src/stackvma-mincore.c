@@ -1,5 +1,5 @@
 /* Determine the virtual memory area of a given address.
-   Copyright (C) 2006, 2008-2010, 2016-2017  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2006, 2008-2010, 2016-2018  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -26,9 +26,11 @@
      - FreeBSD, since FreeBSD 6.0,               MINCORE_{INCORE,REFERENCED,MODIFIED}
      - NetBSD,  since NetBSD 3.0 (at least),     1
      - OpenBSD, since OpenBSD 2.6 (at least),    1
+     - AIX,     since AIX 5.3,                   1
    However, while the API allows to easily determine the bounds of mapped
-   virtual memory, it does not make it easy the bounds of _unmapped_ virtual
-   memory ranges.  We try to work around this, but it may still be slow.  */
+   virtual memory, it does not make it easy to find the bounds of _unmapped_
+   virtual memory ranges.  We try to work around this, but it may still be
+   slow.  */
 
 #include "stackvma.h"
 #include <limits.h>
@@ -37,6 +39,14 @@
 #endif
 #include <sys/types.h>
 #include <sys/mman.h>
+
+/* The AIX declaration of mincore() uses 'caddr_t', whereas the other platforms
+   use 'void *'. */
+#ifdef UNIX_AIX
+typedef caddr_t MINCORE_ADDR_T;
+#else
+typedef void* MINCORE_ADDR_T;
+#endif
 
 /* The glibc declaration of mincore() uses 'unsigned char *', whereas the BSD
    declaration uses 'char *'.  */
@@ -68,7 +78,7 @@ static int
 is_mapped (uintptr_t addr)
 {
   pageinfo_t vec[1];
-  return mincore ((void *) addr, pagesize, vec) >= 0;
+  return mincore ((MINCORE_ADDR_T) addr, pagesize, vec) >= 0;
 }
 
 /* Assuming that the page starting at ADDR is among the address range,
@@ -92,7 +102,7 @@ mapped_range_start (uintptr_t addr)
       max_remaining = addr / pagesize;
       if (stepsize > max_remaining)
         stepsize = max_remaining;
-      if (mincore ((void *) (addr - stepsize * pagesize),
+      if (mincore ((MINCORE_ADDR_T) (addr - stepsize * pagesize),
                    stepsize * pagesize, vec) < 0)
         /* Time to search in smaller steps.  */
         break;
@@ -112,7 +122,7 @@ mapped_range_start (uintptr_t addr)
       halfstepsize2 = stepsize / 2;
       /* halfstepsize1 + halfstepsize2 = stepsize.  */
 
-      if (mincore ((void *) (addr - halfstepsize1 * pagesize),
+      if (mincore ((MINCORE_ADDR_T) (addr - halfstepsize1 * pagesize),
                    halfstepsize1 * pagesize, vec) < 0)
         stepsize = halfstepsize1;
       else
@@ -145,7 +155,7 @@ mapped_range_end (uintptr_t addr)
       max_remaining = (- addr) / pagesize;
       if (stepsize > max_remaining)
         stepsize = max_remaining;
-      if (mincore ((void *) addr, stepsize * pagesize, vec) < 0)
+      if (mincore ((MINCORE_ADDR_T) addr, stepsize * pagesize, vec) < 0)
         /* Time to search in smaller steps.  */
         break;
       /* The entire range exists.  Continue searching in large steps.  */
@@ -164,7 +174,7 @@ mapped_range_end (uintptr_t addr)
       halfstepsize2 = stepsize / 2;
       /* halfstepsize1 + halfstepsize2 = stepsize.  */
 
-      if (mincore ((void *) addr, halfstepsize1 * pagesize, vec) < 0)
+      if (mincore ((MINCORE_ADDR_T) addr, halfstepsize1 * pagesize, vec) < 0)
         stepsize = halfstepsize1;
       else
         {

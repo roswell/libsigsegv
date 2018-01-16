@@ -1,7 +1,7 @@
 dnl Autoconf configuration for libsigsegv.
 dnl Process this file with autoconf to produce a configure script.
 dnl
-dnl Copyright (C) 2002-2017  Bruno Haible <bruno@clisp.org>
+dnl Copyright (C) 2002-2018  Bruno Haible <bruno@clisp.org>
 dnl
 dnl This program is free software; you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
@@ -682,8 +682,17 @@ AC_CACHE_CHECK([for prmap_t in sys/procfs.h], [sv_cv_procfsvma], [
 AC_CHECK_FUNCS([mquery mincore])
 CFG_STACKVMA=
 if test $sv_cv_procfsvma = yes; then
-  CFG_STACKVMA=stackvma-procfs.c
-else
+  # Note: On AIX, there is a /proc/$pic/map file, that contains records of type
+  # prmap_t, defined in <sys/procfs.h>.  But it lists only the virtual memory
+  # areas that are connected to a file, not the anonymous ones.  Therefore, on
+  # this platform, stackvma-procfs.c returns bogus results, whereas
+  # stackvma-mincore.c returns correct ones.
+  case "$host_os" in
+    aix*) ;;
+    *) CFG_STACKVMA=stackvma-procfs.c ;;
+  esac
+fi
+if test -z "$CFG_STACKVMA"; then
   case "$host_os" in
     linux*)                CFG_STACKVMA=stackvma-linux.c ;;
     freebsd* | kfreebsd*-gnu* | dragonfly*)
