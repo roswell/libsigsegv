@@ -4,6 +4,7 @@ Successfully tested platforms
                                                           STACK
 __PLATFORM_____________________________________SIGSEGV___OVERFLOW__VERSION__
                                               |         |         |
+aarch64-unknown-freebsd11.1                   |   yes   |   yes   | 2.11
 aarch64-unknown-linux3.13.0-gnu-glibc2.19     |   yes   |   yes   | 2.11
 aarch64-unknown-linux3.16.0-gnu-glibc2.19     |   yes   |   yes   | 2.11
 alpha-dec-osf4.0d                             |   yes   |   yes   | 2.1
@@ -52,6 +53,7 @@ hppa64-hp-hpux11.31                           |   yes   |   yes   | 2.11
 hppa-unknown-linux2.4.19-gnu-glibc2.2         |   yes   |   yes   | 2.0.1
 hppa64-unknown-linux2.4.17-gnu-glibc2.2       |   yes   |   yes   | 2.1
 hppa2.0-unknown-linux2.6.20.1-gnu-glibc2.3    |   yes   |   no    | 2.4
+hppa-unknown-linux4.4.0-gnu-glibc2.23         |   yes   |   no    | 2.11
 i370-ibm-openedition                          |   no    |   no    | 2.6
 i586-pc-beos                                  |   no    |   yes   | 2.1
 i686-pc-cygwin                                |   yes   |   yes   | 2.10
@@ -76,6 +78,7 @@ i386-apple-darwin10.2.0                       |   yes   |   yes   | 2.6
 i386-apple-darwin10.3.0                       |   yes   |   yes   | 2.6
 i686-unknown-gnu0.3-glibc2.13                 |   yes   |   no    | 2.10
 i686-unknown-gnu0.9-glibc2.24                 |   yes   |   yes   | 2.11+
+i586-pc-haiku                                 |   yes   |   yes   | 2.11+
 i586-pc-linux2.2.14-gnu-glibc2.1              |   yes   |   yes   | 2.1
 i686-pc-linux2.2.14-gnu-glibc2.1              |   yes   |   yes   | 2.0
 i686-pc-linux2.2.19-gnu-glibc2.1              |   yes   |   yes   | 1.95
@@ -103,7 +106,7 @@ i686-pc-linux2.6.18-gnu-glibc2.5              |   yes   |   yes   | 2.11
 i386-pc-mingw32                               |   yes   |   yes   | 2.6
 i586-pc-mingw32                               |   yes   |   yes   | 2.9
 i686-pc-mingw32                               |   yes   |   yes   | 2.10
-i686-w64-mingw32                              |   yes   |   yes   | 2.10
+i686-w64-mingw32                              |   yes   |   yes   | 2.11
 i686-pc-minix3.1.8                            |   no    |   no    | 2.10
 i386-unknown-mirbsd10                         |   yes   |   yes   | 2.11
 i386-pc-os2-emx                               |   no    |   no    | 2.5
@@ -128,12 +131,15 @@ i386-unknown-freebsd6.4                       |   yes   |   yes   | 2.6
 i386-portbld-freebsd8.0                       |   yes   |   yes   | 2.8
 i386-unknown-freebsd8.1                       |   yes   |   yes   | 2.9
 i386-unknown-freebsd9.1                       |   yes   |   yes   | 2.11
+i586-unknown-freebsd11.0                      |   yes   |   yes   | 2.11
 i686-unknown-kfreebsd6.2-gnu-glibc2.6         |   yes   |   yes   | 2.5+
+i386-unknown-dragonfly3.8                     |   yes   |   yes   | 2.12
 i386-unknown-netbsdelf1.6                     |   no    |   no    | 2.8
 i386-unknown-netbsdelf2.0.2                   |   yes   |   yes   | 2.4
 i386-unknown-netbsdelf3.0                     |   yes   |   yes   | 2.4
 i386-unknown-netbsdelf5.0.2                   |   yes   |   yes   | 2.9
 i386-unknown-netbsdelf5.1                     |   yes   |   yes   | 2.11
+i386-unknown-netbsdelf7.0                     |   yes   |   yes   | 2.11
 i386-unknown-netbsd                           |   yes   |   no    | 2.2
 i386-unknown-openbsd3.2                       |   yes   |   yes   | 2.3
 i386-unknown-openbsd3.3                       |   yes   |   yes   | 2.1
@@ -145,6 +151,7 @@ i386-unknown-openbsd4.0                       |   yes   |   yes   | 2.6
 i386-unknown-openbsd4.7                       |   yes   |   yes   | 2.9
 i386-unknown-openbsd4.9                       |   yes   |   yes   | 2.11
 i386-unknown-openbsd5.1                       |   yes   |   no    | 2.11
+i386-unknown-openbsd6.0                       |   yes   |   yes   | 2.11
 ia64-portbld-freebsd7.0                       |   yes   |   no    | 2.3
 ia64-hp-hpux11.22                             |   yes   |   no    | 2.1
 ia64-hp-hpux11.23                             |   yes   |   no    | 2.2
@@ -164,6 +171,7 @@ mipsel-unknown-linux3.16.0-gnu-glibc2.19      |   yes   |   yes   | 2.11
 mips64-unknown-linux3.16.0-gnu-glibc2.19      |   yes   |   yes   | 2.11
 mips64el-unknown-linux2.6.27.1-gnu-glibc2.7   |   yes   |   yes   | 2.9
 mips64el-unknown-linux3.16.0-gnu-glibc2.19    |   yes   |   yes   | 2.11
+mips64el-unknown-linux4.1.4-gnu-glibc2.19     |   yes   |   yes   | 2.11
 nsr-tandem-nsk                                |   no    |   no    | 2.1
 rs6000-ibm-aix3.2.5                           |   yes   |   no    | 2.2
 rs6000-ibm-aix4.2.0.0                         |   yes   |   yes   | 2.2
@@ -219,6 +227,7 @@ s390x-ibm-linux2.6.16.46-gnu-glibc2.4         |   no    |   yes   | 2.5
 s390x-ibm-linux2.6.26-gnu-glibc2.11           |   yes   |   yes   | 2.10
 s390x-ibm-linux3.16.0-gnu-glibc2.19           |   yes   |   yes   | 2.11
 sparc-unknown-linux2.4.32-gnu-glibc2.3        |   yes   |   no    | 2.1
+sparc-unknown-netbsdelf7.1                    |   yes   |   no    | 2.12
 sparc-unknown-openbsd3.9                      |   yes   |   no    | 2.4
 sparc-sun-solaris2.5.1                        |   yes   |   yes   | 2.2
 sparc-sun-solaris2.6                          |   yes   |   yes   | 2.8
@@ -233,6 +242,7 @@ sparc64-unknown-linux2.6.26-gnu-glibc2.7      |   yes   |   no    | 2.10+
 sparc64-unknown-linux2.6.33-gnu-glibc2.11     |   yes   |   no    | 2.9
 sparc64-unknown-linux3.2.0-gnu-glibc2.13      |   yes   |   yes   | 2.11
 sparc64-unknown-linux4.5.0-gnu-glibc2.24      |   yes   |   yes   | 2.11
+sparc64-unknown-netbsd8.0                     |   yes   |   no    | 2.12
 sparc64-unknown-openbsd3.6                    |   no    |   no    | 2.2
 x86_64-apple-darwin9.8.0                      |   yes   |   yes   | 2.11
 x86_64-apple-darwin10.3.0                     |   yes   |   yes   | 2.8
@@ -292,8 +302,9 @@ x86_64-unknown-openbsd5.5                     |   yes   |   yes   | 2.11
 x86_64-unknown-openbsd5.6                     |   yes   |   yes   | 2.11
 x86_64-unknown-openbsd5.7                     |   yes   |   yes   | 2.11
 x86_64-unknown-openbsd5.8                     |   yes   |   yes   | 2.11
+x86_64-unknown-openbsd6.0                     |   yes   |   yes   | 2.11
 x86_64-pc-solaris2.10                         |   yes   |   yes   | 2.11
-x86_64-pc-solaris2.11                         |   yes   |   yes   | 2.5
+x86_64-pc-solaris2.11                         |   yes   |   yes   | 2.11
 amd64-portbld-freebsd5.4                      |   yes   |   yes   | 2.2
 amd64-portbld-freebsd6.0                      |   yes   |   yes   | 2.3
 amd64-portbld-freebsd7.0                      |   yes   |   yes   | 2.3
