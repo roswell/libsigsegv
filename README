@@ -118,7 +118,7 @@ Installation instructions on Unix:
 
 Installation instructions on Microsoft Windows:
 
-        See README.windows.
+        See INSTALL.windows.
 
 
 Using libsigsegv in your package:
