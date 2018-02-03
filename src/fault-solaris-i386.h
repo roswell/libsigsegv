@@ -1,5 +1,5 @@
 /* Fault handler information.  Solaris/i386 version.
-   Copyright (C) 2002  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002, 2018  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -17,4 +17,14 @@
 
 #include "fault-solaris.h"
 
-#define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext.gregs[ESP]
+#if defined __x86_64__
+/* 64 bit registers */
+
+# define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext.gregs[REG_RSP]
+
+#else
+/* 32 bit registers */
+
+# define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext.gregs[ESP]
+
+#endif

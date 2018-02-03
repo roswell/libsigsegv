@@ -1,3 +1,9 @@
+2018-02-03  Bruno Haible  <bruno@clisp.org>
+
+	Fix compilation error on Solaris 11 Dyson in 64-bit mode.
+	* src/fault-solaris-i386.h (SIGSEGV_FAULT_STACKPOINTER): In 64-bit mode,
+	use the 64-bit stack pointer.
+
 2018-01-27  Bruno Haible  <bruno@clisp.org>
 
 	Rename some file.
