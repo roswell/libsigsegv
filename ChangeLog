@@ -1,3 +1,11 @@
+2018-02-18  Bruno Haible  <bruno@clisp.org>
+
+	Avoid "warning: command substitution: ignored null byte in input".
+	Reported by Nelson Beebe.
+	* m4/bold.m4 (RSE_BOLD): For vt100, remove trailing NUL bytes. Only
+	physical terminals need these NULs; physical terminals are not in use
+	any more nowadays.
+
 2018-02-03  Bruno Haible  <bruno@clisp.org>
 
 	Fix compilation error on Solaris 11 Dyson in 64-bit mode.
