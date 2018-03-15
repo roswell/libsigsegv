@@ -42,6 +42,7 @@ noinst_HEADERS = \
   fault-linux-m68k.h fault-linux-m68k-old.h fault-linux-m68k-old.c \
   fault-linux-mips.h fault-linux-mips-old.h \
   fault-linux-powerpc.h fault-linux-powerpc-old.h \
+  fault-linux-riscv64.h \
   fault-linux-s390.h fault-linux-s390-old.h \
   fault-linux-sh.h fault-linux-sh-old.h \
   fault-linux-sparc.h fault-linux-sparc-old.h \

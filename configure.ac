@@ -428,6 +428,9 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_posix" = yes; then
             powerpc* | rs6000)
               CFG_FAULT=fault-linux-powerpc.h
               ;;
+            riscv64)
+              CFG_FAULT=fault-linux-riscv64.h
+              ;;
             s390*)
               CFG_FAULT=fault-linux-s390.h
               ;;
