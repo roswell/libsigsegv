@@ -1,6 +1,6 @@
 /* Iterate through the virtual memory areas of the current process,
    by reading from the /proc file system.
-   Copyright (C) 2002-2017  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002-2018  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -81,7 +81,7 @@ vma_iterate_proc (struct callback_locals *locals)
 
   /* Open the current process' maps file.  It describes one VMA per line.
      On FreeBSD:
-       Cf. <http://www.freebsd.org/cgi/cvsweb.cgi/src/sys/fs/procfs/procfs_map.c?annotate=HEAD>
+       Cf. <https://www.freebsd.org/cgi/cvsweb.cgi/src/sys/fs/procfs/procfs_map.c?annotate=HEAD>
      On NetBSD, there are two such files:
        - /proc/curproc/map in near-FreeBSD syntax,
        - /proc/curproc/maps in Linux syntax.

@@ -1,5 +1,5 @@
 /* Fault handler information.  MacOSX version.
-   Copyright (C) 1993-1999, 2002-2003, 2007-2008, 2016  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 1993-1999, 2002-2003, 2007-2008, 2016, 2018  Bruno Haible <bruno@clisp.org>
    Copyright (C) 2003  Paolo Bonzini <bonzini@gnu.org>
 
    This program is free software; you can redistribute it and/or modify
@@ -73,7 +73,7 @@
 
 /* This is not defined in any header, although documented.  */
 
-/* http://web.mit.edu/darwin/src/modules/xnu/osfmk/man/exc_server.html says:
+/* https://web.mit.edu/darwin/src/modules/xnu/osfmk/man/exc_server.html says:
    The exc_server function is the MIG generated server handling function
    to handle messages from the kernel relating to the occurrence of an
    exception in a thread. Such messages are delivered to the exception port
@@ -92,7 +92,7 @@ extern boolean_t
                    mach_msg_header_t *reply_msg);
 
 
-/* http://web.mit.edu/darwin/src/modules/xnu/osfmk/man/catch_exception_raise.html
+/* https://web.mit.edu/darwin/src/modules/xnu/osfmk/man/catch_exception_raise.html
    These functions are defined in this file, and called by exc_server.
    FIXME: What needs to be done when this code is put into a shared library? */
 kern_return_t
@@ -214,7 +214,7 @@ catch_exception_raise (mach_port_t exception_port,
            code_count > 1 ? code[1] : -1);
 #endif
 
-  /* See http://web.mit.edu/darwin/src/modules/xnu/osfmk/man/thread_get_state.html.  */
+  /* See https://web.mit.edu/darwin/src/modules/xnu/osfmk/man/thread_get_state.html.  */
 #ifdef SIGSEGV_EXC_STATE_TYPE
   state_count = SIGSEGV_EXC_STATE_COUNT;
   if (thread_get_state (thread, SIGSEGV_EXC_STATE_FLAVOR,
@@ -293,7 +293,7 @@ catch_exception_raise (mach_port_t exception_port,
       SIGSEGV_PROGRAM_COUNTER (thread_state) = (uintptr_t) terminating_handler;
     }
 
-  /* See http://web.mit.edu/darwin/src/modules/xnu/osfmk/man/thread_set_state.html.  */
+  /* See https://web.mit.edu/darwin/src/modules/xnu/osfmk/man/thread_set_state.html.  */
   if (thread_set_state (thread, SIGSEGV_THREAD_STATE_FLAVOR,
                         (void *) &thread_state, state_count)
       != KERN_SUCCESS)
@@ -311,7 +311,7 @@ catch_exception_raise (mach_port_t exception_port,
 static void *
 mach_exception_thread (void *arg)
 {
-  /* See http://web.mit.edu/darwin/src/modules/xnu/osfmk/man/mach_thread_self.html.  */
+  /* See https://web.mit.edu/darwin/src/modules/xnu/osfmk/man/mach_thread_self.html.  */
   our_exception_thread = mach_thread_self ();
 
   for (;;)
@@ -402,7 +402,7 @@ mach_initialize ()
       != KERN_SUCCESS)
     return -1;
 
-  /* See http://web.mit.edu/darwin/src/modules/xnu/osfmk/man/mach_port_insert_right.html.  */
+  /* See https://web.mit.edu/darwin/src/modules/xnu/osfmk/man/mach_port_insert_right.html.  */
   if (mach_port_insert_right (self, our_exception_port, our_exception_port,
                               MACH_MSG_TYPE_MAKE_SEND)
       != KERN_SUCCESS)
@@ -426,7 +426,7 @@ mach_initialize ()
      for a particular thread.  This has the effect that when our exception
      port gets the message, the thread specific exception port has already
      been asked, and we don't need to bother about it.
-     See http://web.mit.edu/darwin/src/modules/xnu/osfmk/man/task_set_exception_ports.html.  */
+     See https://web.mit.edu/darwin/src/modules/xnu/osfmk/man/task_set_exception_ports.html.  */
   if (task_set_exception_ports (self, mask, our_exception_port,
                                 EXCEPTION_DEFAULT, MACHINE_THREAD_STATE)
       != KERN_SUCCESS)
@@ -477,7 +477,7 @@ sigsegv_leave_handler (void (*continuation) (void*, void*, void*),
           return 0;
         }
 
-      /* See http://web.mit.edu/darwin/src/modules/xnu/osfmk/man/thread_get_state.html.  */
+      /* See https://web.mit.edu/darwin/src/modules/xnu/osfmk/man/thread_get_state.html.  */
       state_count = SIGSEGV_THREAD_STATE_COUNT;
       if (thread_get_state (thread, SIGSEGV_THREAD_STATE_FLAVOR,
                             (void *) &thread_state, &state_count)
@@ -521,7 +521,7 @@ sigsegv_leave_handler (void (*continuation) (void*, void*, void*),
       /* Point program counter to continuation to be executed.  */
       SIGSEGV_PROGRAM_COUNTER (thread_state) = (uintptr_t) continuation;
 
-      /* See http://web.mit.edu/darwin/src/modules/xnu/osfmk/man/thread_set_state.html.  */
+      /* See https://web.mit.edu/darwin/src/modules/xnu/osfmk/man/thread_set_state.html.  */
       if (thread_set_state (thread, SIGSEGV_THREAD_STATE_FLAVOR,
                             (void *) &thread_state, state_count)
           != KERN_SUCCESS)

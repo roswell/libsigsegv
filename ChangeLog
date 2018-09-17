@@ -199,7 +199,7 @@
 
 	On Solaris, prefer the newer /proc fs API to the older (deprecated) one.
 	Reported by Roger Faulkner in
-	http://savannah.gnu.org/bugs/?42187 .
+	https://savannah.gnu.org/bugs/?42187 .
 	* configure.ac: Accept <sys/procfs.h> even if it does no longer define
 	PIOCNMAP and PIOCMAP.
 	* src/stackvma-procfs.c: Define _STRUCTURED_PROC before including

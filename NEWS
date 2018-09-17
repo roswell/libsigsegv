@@ -98,7 +98,7 @@ New in 2.6:
 * Improved distinction between stack overflow and other fault on NetBSD,
   OpenBSD, FreeBSD, Linux, AIX, Solaris. Contributed by Eric Blake.
 * GNU gnulib now has an autoconf macro for locating libsigsegv:
-  http://www.gnu.org/software/gnulib/MODULES.html#module=libsigsegv
+  https://www.gnu.org/software/gnulib/MODULES.html#module=libsigsegv
 
 New in 2.5:
 
