@@ -17,7 +17,7 @@ dnl You should have received a copy of the GNU General Public License
 dnl along with this program; if not, write to the Free Software Foundation,
 dnl Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-AC_PREREQ([2.62])
+AC_PREREQ([2.63])
 AC_INIT
 AC_CONFIG_SRCDIR([src/sigsegv.h.in])
 AC_CONFIG_AUX_DIR([build-aux])
