@@ -43,6 +43,7 @@ AC_DEFUN([SV_STACK_DIRECTION],
       pdp11 | \
       pj* | \
       powerpc* | rs6000 | \
+      riscv* | \
       romp | \
       s390* | \
       sh* | \

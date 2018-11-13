@@ -1,3 +1,8 @@
+2018-11-13  Thomas Petazzoni <thomas.petazzoni@bootlin.com>
+
+	Fix cross-compilation for RISC-V.
+	* m4/stack-direction.m4: Add stack direction for RISC-V.
+
 2018-10-24  Bruno Haible  <bruno@clisp.org>
 
 	Update after gnulib changed.
