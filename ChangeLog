@@ -1,3 +1,11 @@
+2019-01-28  Bruno Haible  <bruno@clisp.org>
+
+	Improve support for Android.
+	* src/stackvma-mincore.c (pageinfo_t): Set to 'unsigned char' on
+	Android.
+	* src/stackvma-rofile.c: Treat Android like Linux.
+	* src/stackvma-vma-iter.c: Likewise.
+
 2018-11-13  Thomas Petazzoni <thomas.petazzoni@bootlin.com>
 
 	Fix cross-compilation for RISC-V.

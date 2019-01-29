@@ -1,6 +1,6 @@
 /* Iterate through the virtual memory areas of the current process,
    by reading from the /proc file system.
-   Copyright (C) 2002-2018  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002-2019  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
    code in gnulib's lib/vma-iter.c.  */
 
 
-#if defined __linux__ || (defined __FreeBSD_kernel__ && !defined __FreeBSD__) /* || defined __CYGWIN__ */
+#if defined __linux__ || defined __ANDROID__ || (defined __FreeBSD_kernel__ && !defined __FreeBSD__) /* || defined __CYGWIN__ */
 /* GNU/kFreeBSD mounts /proc as linprocfs, which looks like a Linux /proc
    file system.  */
 
@@ -231,7 +231,7 @@ vma_iterate_bsd (struct callback_locals *locals)
 static int
 vma_iterate (struct callback_locals *locals)
 {
-#if defined __linux__ || defined __FreeBSD_kernel__ || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ /* || defined __CYGWIN__ */
+#if defined __linux__ || defined __ANDROID__ || defined __FreeBSD_kernel__ || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ /* || defined __CYGWIN__ */
 
 # if defined __FreeBSD__
   /* On FreeBSD with procfs (but not GNU/kFreeBSD, which uses linprocfs), the

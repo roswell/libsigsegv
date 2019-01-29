@@ -22,7 +22,7 @@
 #include <sys/types.h>
 #include <sys/mman.h> /* mmap, munmap */
 
-#if defined __linux__
+#if defined __linux__ || defined __ANDROID__
 # include <limits.h> /* PATH_MAX */
 #endif
 
@@ -48,7 +48,7 @@
    The stack-allocated buffer cannot be too large, because this can be called
    when we are in the context of an alternate stack of just SIGSTKSZ bytes.  */
 
-#ifdef __linux__
+#if defined __linux__ || defined __ANDROID__
   /* On Linux, if the file does not entirely fit into the buffer, the read()
      function stops before the line that would come out truncated.  The
      maximum size of such a line is 73 + PATH_MAX bytes.  To be sure that we
@@ -120,7 +120,7 @@ rof_open (struct rofile *rof, const char *filename)
                 {
                   /* The buffer was sufficiently large.  */
                   rof->filled = n;
-#ifdef __linux__
+#if defined __linux__ || defined __ANDROID__
                   /* On Linux, the read() call may stop even if the buffer was
                      large enough.  We need the equivalent of full_read().  */
                   for (;;)
