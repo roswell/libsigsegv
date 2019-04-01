@@ -5,12 +5,11 @@
 # with new versions of autoconf or automake.
 #
 # This script requires autoconf-2.63..2.69 and automake-1.11..1.15 in the PATH.
-# If the option --skip-gnulib is not given, it also requires either
-#   - the GNULIB_TOOL environment variable pointing to the gnulib-tool script
-#     in a gnulib checkout, or
-#   - an internet connection.
+# If not used from a released tarball, it also requires either
+#   - the GNULIB_SRCDIR environment variable pointing to a gnulib checkout, or
+#   - a preceding invocation of './gitsub.sh pull'.
 
-# Copyright (C) 2009-2017 Free Software Foundation, Inc.
+# Copyright (C) 2009-2019 Free Software Foundation, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,12 +25,6 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 # Usage: ./autogen.sh [--skip-gnulib]
-#
-# Usage from a git checkout:                 ./autogen.sh
-# This uses an up-to-date gnulib checkout.
-#
-# Usage from a released tarball:             ./autogen.sh --skip-gnulib
-# This does not use a gnulib checkout.
 
 skip_gnulib=false
 while :; do
@@ -42,28 +35,29 @@ while :; do
 done
 
 if test $skip_gnulib = false; then
-  if test -z "$GNULIB_TOOL"; then
-    # Check out gnulib in a subdirectory 'gnulib'.
-    if test -d gnulib; then
-      (cd gnulib && git pull)
-    else
-      git clone git://git.savannah.gnu.org/gnulib.git
-    fi
-    # Now it should contain a gnulib-tool.
-    if test -f gnulib/gnulib-tool; then
-      GNULIB_TOOL=`pwd`/gnulib/gnulib-tool
-    else
-      echo "** warning: gnulib-tool not found" 1>&2
-    fi
+  if test -n "$GNULIB_SRCDIR"; then
+    test -d "$GNULIB_SRCDIR" || {
+      echo "*** GNULIB_SRCDIR is set but does not point to an existing directory." 1>&2
+      exit 1
+    }
+  else
+    GNULIB_SRCDIR=`pwd`/gnulib
+    test -d "$GNULIB_SRCDIR" || {
+      echo "*** Subdirectory 'gnulib' does not yet exist. Use './gitsub.sh pull' to create it, or set the environment variable GNULIB_SRCDIR." 1>&2
+      exit 1
+    }
   fi
-  # Skip the gnulib-tool step if gnulib-tool was not found.
-  if test -n "$GNULIB_TOOL"; then
-    $GNULIB_TOOL --copy-file m4/relocatable-lib.m4
-    # Fetch config.guess, config.sub.
-    for file in config.guess config.sub; do
-      $GNULIB_TOOL --copy-file build-aux/$file; chmod a+x build-aux/$file
-    done
-  fi
+  # Now it should contain a gnulib-tool.
+  GNULIB_TOOL="$GNULIB_SRCDIR/gnulib-tool"
+  test -f "$GNULIB_TOOL" || {
+    echo "*** gnulib-tool not found." 1>&2
+    exit 1
+  }
+  $GNULIB_TOOL --copy-file m4/relocatable-lib.m4
+  # Fetch config.guess, config.sub.
+  for file in config.guess config.sub; do
+    $GNULIB_TOOL --copy-file build-aux/$file; chmod a+x build-aux/$file
+  done
 fi
 
 # Generate aclocal.m4.
