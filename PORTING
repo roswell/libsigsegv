@@ -35,6 +35,7 @@ alphaev56-unknown-linux2.6.34-gnu-glibc2.11   |   yes   |   yes   | 2.9
 alpha-unknown-openbsd3.7                      |   yes   |   yes   | 2.2
 alpha-unknown-openbsd4.5                      |   yes   |   yes   | 2.6
 alpha-unknown-netbsd1.6                       |   yes   |   yes   | 2.1
+armv7l-unknown-linux3.0.31-androideabi        |   yes   |   yes   | 2.12+
 armv4l-unknown-linux2.4.0-gnu-glibc2.2        |   no    |   yes   | 2.1
 armv4l-unknown-linux2.4.3-gnu-glibc2.2        |   yes   |   yes   | 2.1
 armv4l-unknown-linux2.4.9-gnu-glibc2.2        |   no    |   yes   | 2.0.1
@@ -44,12 +45,13 @@ arm-angstrom-linux2.6.23-gnueabi-glibc2.4     |   yes   |   yes   | 2.5
 armv5tejl-unknown-linux3.16.0-gnueabi-glibc2.19 | yes   |   yes   | 2.11
 armv7l-unknown-linux3.16.0-gnueabihf-glibc2.19 |  yes   |   yes   | 2.11
 armv6l-unknown-linux4.4.34-gnueabihf-glibc2.24 |  yes   |   yes   | 2.12
+armv7l-unknown-linux4.4.132-gnueabihf-glibc2.24 | yes   |   yes   | 2.12
 armv7l-unknown-linux4.9.8-gnueabihf-glibc2.24 |   yes   |   yes   | 2.11
 hppa1.1-hp-hpux11.00                          |   yes   |   yes   | 2.1
 hppa2.0-hp-hpux10.20                          |   yes   |   yes   | 2.2
 hppa2.0w-hp-hpux11.00                         |   yes   |   yes   | 2.6
 hppa2.0w-hp-hpux11.11                         |   yes   |   yes   | 2.12
-hppa2.0w-hp-hpux11.31                         |   yes   |   yes   | 2.11
+hppa2.0w-hp-hpux11.31                         |   yes   |   yes   | 2.12
 hppa64-hp-hpux11.31                           |   yes   |   yes   | 2.11
 hppa-unknown-linux2.4.19-gnu-glibc2.2         |   yes   |   yes   | 2.0.1
 hppa64-unknown-linux2.4.17-gnu-glibc2.2       |   yes   |   yes   | 2.1
@@ -133,6 +135,7 @@ i386-portbld-freebsd8.0                       |   yes   |   yes   | 2.8
 i386-unknown-freebsd8.1                       |   yes   |   yes   | 2.9
 i386-unknown-freebsd9.1                       |   yes   |   yes   | 2.12
 i586-unknown-freebsd11.0                      |   yes   |   yes   | 2.11
+i586-unknown-freebsd12.0                      |   yes   |   yes   | 2.12
 i686-unknown-kfreebsd6.2-gnu-glibc2.6         |   yes   |   yes   | 2.5+
 i386-unknown-kfreebsd9.0-gnu-glibc2.13        |   yes   |   yes   | 2.12
 i386-unknown-dragonfly3.8                     |   yes   |   yes   | 2.12
@@ -185,6 +188,7 @@ powerpc-ibm-aix5.2.0.0                        |   yes   |   yes   | 2.5
 powerpc-ibm-aix5.3.0.0                        |   yes   |   yes   | 2.9
 powerpc-ibm-aix6.1.0.0                        |   yes   |   yes   | 2.6
 powerpc-ibm-aix7.1.3.0                        |   yes   |   yes   | 2.12
+powerpc-ibm-aix7.2.0.0                        |   yes   |   yes   | 2.12
 powerpc-apple-darwin5.5                       |   yes   |   yes   | 2.2
 powerpc-apple-darwin6.0                       |   yes   |   yes   | 2.4
 powerpc-apple-darwin6.8                       |   yes   |   yes   | 2.2
@@ -224,6 +228,8 @@ powerpc64-unknown-linux2.6.31-gnu-glibc2.11   |   yes   |   yes   | 2.9
 powerpc64-unknown-linux2.6.32-gnu-glibc2.11   |   yes   |   yes   | 2.10
 powerpc64-unknown-linux3.17.2-gnu-glibc2.18   |   yes   |   yes   | 2.11
 powerpc64le-unknown-linux3.17.4-gnu-glibc2.20 |   yes   |   yes   | 2.11
+riscv32-unknown-linux4.15.0-gnu-glibc2.26     |   yes   |   yes   | 2.12
+riscv64-unknown-linux4.15.0-gnu-glibc2.27     |   yes   |   yes   | 2.12
 riscv64-unknown-linux4.16.0-gnu-glibc2.27     |   yes   |   yes   | 2.12+
 sh-unknown-openbsd4.6                         |   yes   |   yes   | 2.5
 s390x-ibm-linux2.6.16.46-gnu-glibc2.4         |   no    |   yes   | 2.5
@@ -232,10 +238,10 @@ s390x-ibm-linux3.16.0-gnu-glibc2.19           |   yes   |   yes   | 2.11
 sparc-unknown-linux2.4.32-gnu-glibc2.3        |   yes   |   no    | 2.1
 sparc-unknown-netbsdelf7.1                    |   yes   |   no    | 2.12
 sparc-unknown-openbsd3.9                      |   yes   |   no    | 2.4
-sparc-sun-solaris2.5.1                        |   yes   |   yes   | 2.2
+sparc-sun-solaris2.5.1                        |   yes   |   yes   | 2.12
 sparc-sun-solaris2.6                          |   yes   |   yes   | 2.8
 sparc-sun-solaris2.7                          |   yes   |   yes   | 2.8
-sparc-sun-solaris2.8                          |   yes   |   yes   | 2.9
+sparc-sun-solaris2.8                          |   yes   |   yes   | 2.12
 sparc-sun-solaris2.9                          |   yes   |   yes   | 2.6
 sparc-sun-solaris2.10                         |   yes   |   yes   | 2.12
 sparc-sun-solaris2.11                         |   yes   |   yes   | 2.4
@@ -245,6 +251,7 @@ sparc64-unknown-linux2.6.26-gnu-glibc2.7      |   yes   |   no    | 2.10+
 sparc64-unknown-linux2.6.33-gnu-glibc2.11     |   yes   |   no    | 2.9
 sparc64-unknown-linux3.2.0-gnu-glibc2.13      |   yes   |   yes   | 2.11
 sparc64-unknown-linux4.5.0-gnu-glibc2.24      |   yes   |   yes   | 2.11
+sparc64-unknown-linux4.19.0-gnu-glibc2.28     |   yes   |   yes   | 2.12
 sparc64-unknown-netbsd8.0                     |   yes   |   no    | 2.12
 sparc64-unknown-openbsd3.6                    |   no    |   no    | 2.2
 x86_64-apple-darwin9.8.0                      |   yes   |   yes   | 2.11
