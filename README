@@ -153,7 +153,9 @@ Homepage
     https://savannah.gnu.org/projects/libsigsegv
     http://libsigsegv.sourceforge.net/ (old)
 
-Bug reports to
---------------
+Bug reports
+-----------
 
-    <bug-libsigsegv@gnu.org>
+Report bugs
+  - in the bug tracker at <https://savannah.gnu.org/projects/libsigsegv>
+  - or by email to <bug-libsigsegv@gnu.org>.

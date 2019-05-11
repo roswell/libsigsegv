@@ -1,3 +1,8 @@
+2019-05-11  Bruno Haible  <bruno@clisp.org>
+
+	Update bug reporting instructions.
+	* README: Tell users to report bugs in the bug tracker or by email.
+
 2019-04-01  Bruno Haible  <bruno@clisp.org>
 
 	build: Separate git operations from build operations.
