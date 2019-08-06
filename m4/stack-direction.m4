@@ -39,6 +39,7 @@ AC_DEFUN([SV_STACK_DIRECTION],
       mn10200 | \
       mn10300 | \
       nios2 | \
+      nds32* | \
       ns32k | \
       pdp11 | \
       pj* | \

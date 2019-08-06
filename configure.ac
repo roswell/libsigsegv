@@ -425,6 +425,9 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_posix" = yes; then
             mips*)
               CFG_FAULT=fault-linux-mips.h
               ;;
+	    nds32*)
+              CFG_FAULT=fault-linux-nds32.h
+              ;;
             powerpc* | rs6000)
               CFG_FAULT=fault-linux-powerpc.h
               ;;
