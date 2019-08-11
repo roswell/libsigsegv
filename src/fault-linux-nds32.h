@@ -1,4 +1,4 @@
-/* Fault handler information.  Andse NDS32 32-bit version.
+/* Fault handler information.  Andes NDS32 32-bit version.
  * Copyright (C) 2018  Nylon Chen <nylon7@andestech.com>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,11 +19,9 @@
 #include "fault-posix-ucontext.h"
 
 /* See glibc/sysdeps/unix/sysv/linux/nds32/sys/ucontext.h
- * and the definition of GET_STACK in
- * glibc/sysdeps/unix/sysv/linux/nds32/sigcontextinfo.h.
- * Note that the 'mcontext_t' defined in
- * glibc/sysdeps/unix/sysv/linux/arm/nds32/ucontext.h
- * and the 'struct sigcontext' defined in <asm/sigcontext.h>
- */
+   and the definition of GET_STACK in
+   glibc/sysdeps/unix/sysv/linux/nds32/sigcontextinfo.h.
+   Both are found in <https://patches-gcc.linaro.org/cover/4409/> part 08/11
+   <https://sourceware.org/ml/libc-alpha/2018-05/msg00125.html>.  */
 
 #define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext.nds32_sp

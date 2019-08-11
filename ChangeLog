@@ -1,3 +1,11 @@
+2019-08-07  Nylon Chen  <nylon7@andestech.com>
+
+	Improve support for Linux/NDS32.
+	* src/fault-linux-nds32.h: New file.
+	* src/Makefile.am (noinst_HEADERS): Add it.
+	* configure.ac (CFG_FAULT): Use this file on Linux/NDS32.
+	* m4/stack-direction.m4: Add stack direction for NDS32.
+
 2019-05-11  Bruno Haible  <bruno@clisp.org>
 
 	Update bug reporting instructions.
