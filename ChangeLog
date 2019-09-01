@@ -1,3 +1,11 @@
+2019-09-01  Bruno Haible  <bruno@clisp.org>
+
+	build: Add support for shallow-cloning of subdirectories.
+	* gitsub.sh (func_usage): Document allowed git options with 'git pull'.
+	(func_pull): Accept GIT_OPTIONS argument.
+	(pull): Parse git options before complaining about too many arguments.
+	Pass the git options to func_pull.
+
 2019-08-07  Nylon Chen  <nylon7@andestech.com>
 
 	Improve support for Linux/NDS32.
