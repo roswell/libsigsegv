@@ -49,3 +49,12 @@ Then you can proceed with "./configure" as usual.
 Each time you want to update the source, do not only "git pull".  Instead do
   git pull && ./gitsub.sh pull
   ./autogen.sh
+
+
+Continuous integration
+======================
+
+The package is built automatically, at regular intervals.  You find the latest
+build results here:
+  https://gitlab.com/gnu-libsigsegv/ci-distcheck/pipelines
+  https://gitlab.com/gnu-libsigsegv/ci-distcheck/-/jobs?scope=finished
