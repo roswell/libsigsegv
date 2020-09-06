@@ -1,3 +1,8 @@
+2020-09-06  Bruno Haible  <bruno@clisp.org>
+
+	build: Update after gnulib changed.
+	* configure.ac (AC_PREREQ): Bump minimum Autoconf version to 2.64.
+
 2019-09-01  Bruno Haible  <bruno@clisp.org>
 
 	build: Add support for shallow-cloning of subdirectories.
