@@ -169,7 +169,7 @@ ia64-unknown-linux2.6.18-gnu-glibc2.3         |   yes   |   yes   | 2.6
 ia64-unknown-linux2.6.18-gnu-glibc2.5         |   yes   |   yes   | 2.11
 mips-sgi-irix5.3                              |   yes   |   yes   | 2.10
 mips-sgi-irix6.2                              |   yes   |   yes   | 2.6+
-mips-sgi-irix6.5                              |   yes   |   yes   | 2.9
+mips-sgi-irix6.5                              |   yes   |   yes   | 2.12
 mips-unknown-linux2.4.27-gnu-glibc2.3         |   yes   |   yes   | 2.6
 mips-unknown-linux3.16.0-gnu-glibc2.19        |   yes   |   yes   | 2.11
 mipsel-unknown-linux3.16.0-gnu-glibc2.19      |   yes   |   yes   | 2.11
@@ -329,6 +329,7 @@ x86_64-unknown-openbsd5.9                     |   yes   |   yes   | 2.12
 x86_64-unknown-openbsd6.0                     |   yes   |   yes   | 2.12
 x86_64-unknown-openbsd6.1                     |   yes   |   yes   | 2.12
 x86_64-unknown-openbsd6.2                     |   yes   |   yes   | 2.12
+x86_64-unknown-openbsd6.5                     |   yes   |   yes   | 2.12
 x86_64-unknown-bitrig1.0                      |   yes   |   yes   | 2.12
 x86_64-pc-solaris2.10                         |   yes   |   yes   | 2.11
 x86_64-pc-solaris2.11                         |   yes   |   yes   | 2.12
