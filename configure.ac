@@ -18,16 +18,16 @@ dnl along with this program; if not, write to the Free Software Foundation,
 dnl Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 AC_PREREQ([2.64])
-AC_INIT
+AC_INIT([libsigsegv], [2.12])
 AC_CONFIG_SRCDIR([src/sigsegv.h.in])
 AC_CONFIG_AUX_DIR([build-aux])
+AC_CONFIG_HEADERS([config.h])
 
 RSE_BOLD
 
 { echo; echo "${term_bold}Build Tools:${term_norm}"; } >& AS_MESSAGE_FD
 
-AM_INIT_AUTOMAKE([libsigsegv], [2.12])
-AM_CONFIG_HEADER([config.h])
+AM_INIT_AUTOMAKE
 
 dnl Override automake's tar command used for creating distributions.
 am__tar='${AMTAR} chf - --owner=root --group=root "$$tardir"'
@@ -681,8 +681,8 @@ dnl Requires AC_CANONICAL_HOST.
 
 dnl Determination of the stack's virtual memory area.
 AC_CACHE_CHECK([for prmap_t in sys/procfs.h], [sv_cv_procfsvma], [
-  AC_TRY_LINK([#include <sys/procfs.h>],
-    [prmap_t x;],
+  AC_LINK_IFELSE(
+    [AC_LANG_PROGRAM([[#include <sys/procfs.h>]], [[prmap_t x;]])],
     [sv_cv_procfsvma=yes], [sv_cv_procfsvma=no])
 ])
 AC_CHECK_FUNCS([mquery mincore])
@@ -1029,9 +1029,11 @@ gl_RELOCATABLE_NOP
 
 { echo; echo "${term_bold}Output Substitution:${term_norm}"; } >& AS_MESSAGE_FD
 
-dnl AC_OUTPUT([Makefile])
-AC_OUTPUT([Makefile
-           src/Makefile src/sigsegv.h
-           tests/Makefile])
+dnl AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([Makefile
+                 src/Makefile src/sigsegv.h
+                 tests/Makefile])
 
 { echo; echo "Now please type '${term_bold}make${term_norm}' to compile. Good luck."; echo; } >& AS_MESSAGE_FD
+
+AC_OUTPUT

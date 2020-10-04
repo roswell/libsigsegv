@@ -1,3 +1,10 @@
+2020-10-04  Bruno Haible  <bruno@clisp.org>
+
+	build: Fix warnings from Autoconf 2.69c.
+	* configure.ac: Move AM_INIT_AUTOMAKE arguments to AC_INIT. Use
+	AC_CONFIG_HEADERS instead of AM_CONFIG_HEADER. Use AC_LINK_IFELSE.
+	Update AC_OUTPUT invocation.
+
 2020-09-06  Bruno Haible  <bruno@clisp.org>
 
 	build: Update after gnulib changed.
