@@ -15,6 +15,33 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
+#if defined __arm64__
+
+#define SIGSEGV_EXC_STATE_TYPE                      arm_exception_state64_t
+#define SIGSEGV_EXC_STATE_FLAVOR                    ARM_EXCEPTION_STATE64
+#define SIGSEGV_EXC_STATE_COUNT                     ARM_EXCEPTION_STATE64_COUNT
+#define SIGSEGV_THREAD_STATE_TYPE                   arm_thread_state64_t
+#define SIGSEGV_THREAD_STATE_FLAVOR                 ARM_THREAD_STATE64
+#define SIGSEGV_THREAD_STATE_COUNT                  ARM_THREAD_STATE64_COUNT
+
+#if MacOS_X_10_5_HEADERS && __DARWIN_UNIX03
+#define SIGSEGV_FAULT_ADDRESS(thr_state,exc_state)  (exc_state).__far
+#define SIGSEGV_STACK_POINTER(thr_state)            (thr_state).__sp
+#define SIGSEGV_PROGRAM_COUNTER(thr_state)          (thr_state).__pc
+#define SIGSEGV_INTEGER_ARGUMENT_1(thr_state)       (thr_state).__x[0]
+#define SIGSEGV_INTEGER_ARGUMENT_2(thr_state)       (thr_state).__x[1]
+#define SIGSEGV_INTEGER_ARGUMENT_3(thr_state)       (thr_state).__x[2]
+#else
+#define SIGSEGV_FAULT_ADDRESS(thr_state,exc_state)  (exc_state).far
+#define SIGSEGV_STACK_POINTER(thr_state)            (thr_state).sp
+#define SIGSEGV_PROGRAM_COUNTER(thr_state)          (thr_state).pc
+#define SIGSEGV_INTEGER_ARGUMENT_1(thr_state)       (thr_state).x[0]
+#define SIGSEGV_INTEGER_ARGUMENT_2(thr_state)       (thr_state).x[1]
+#define SIGSEGV_INTEGER_ARGUMENT_3(thr_state)       (thr_state).x[2]
+#endif
+
+#endif
+
 #if defined __ppc__ || defined __ppc64__
 
 #if defined __ppc64__

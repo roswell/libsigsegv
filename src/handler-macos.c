@@ -490,7 +490,7 @@ sigsegv_leave_handler (void (*continuation) (void*, void*, void*),
           return 0;
         }
 
-#if defined __ppc64__ || defined __ppc__ || defined __x86_64__
+#if defined __arm64__ || defined __ppc64__ || defined __ppc__ || defined __x86_64__
       /* Store arguments in registers.  */
       SIGSEGV_INTEGER_ARGUMENT_1 (thread_state) = (uintptr_t) cont_arg1;
       SIGSEGV_INTEGER_ARGUMENT_2 (thread_state) = (uintptr_t) cont_arg2;
