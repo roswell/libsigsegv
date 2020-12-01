@@ -1,5 +1,5 @@
 /* Fault handler information.  MacOSX version.
-   Copyright (C) 1993-1999, 2002-2003, 2007-2008, 2016, 2018  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 1993-1999, 2002-2003, 2007-2008, 2016, 2018, 2020  Bruno Haible <bruno@clisp.org>
    Copyright (C) 2003  Paolo Bonzini <bonzini@gnu.org>
 
    This program is free software; you can redistribute it and/or modify
@@ -490,7 +490,7 @@ sigsegv_leave_handler (void (*continuation) (void*, void*, void*),
           return 0;
         }
 
-#if defined __arm64__ || defined __ppc64__ || defined __ppc__ || defined __x86_64__
+#if defined __aarch64__ || defined __ppc64__ || defined __ppc__ || defined __x86_64__
       /* Store arguments in registers.  */
       SIGSEGV_INTEGER_ARGUMENT_1 (thread_state) = (uintptr_t) cont_arg1;
       SIGSEGV_INTEGER_ARGUMENT_2 (thread_state) = (uintptr_t) cont_arg2;

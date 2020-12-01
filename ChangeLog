@@ -1,3 +1,12 @@
+2020-12-01  Bruno Haible  <bruno@clisp.org>
+
+	Use canonical test for arm64 CPU.
+	This is for consistency with gnulib and with predef.sourceforge.net.
+	* configure.ac: Test __aarch64__, not __arm64__.
+	* src/handler-macos.c: Likewise.
+	* src/machfault-macos.h: Likewise.
+	* src/stackvma-mach.c: Likewise.
+
 2020-11-29  Hill Ma  <maahiuzeon@gmail.com>
 
 	mach: macos: preliminary support for darwin arm64.

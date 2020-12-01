@@ -491,7 +491,7 @@ if test -z "$CFG_FAULT"; then
           CFG_MACHFAULT=machfault-macos.h
           FAULT_CONTEXT_INCLUDE='#include <signal.h>
 #include <mach/thread_status.h>
-#if defined __arm64__
+#if defined __aarch64__
 #define sigsegv_thread_state_t arm_thread_state64_t
 #endif
 #if defined __ppc64__

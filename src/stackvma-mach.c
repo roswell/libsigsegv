@@ -1,6 +1,6 @@
 /* Determine the virtual memory area of a given address.  Mach version.
    Copyright (C) 2003, 2006  Paolo Bonzini <bonzini@gnu.org>
-   Copyright (C) 2010, 2016  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2010, 2016, 2020  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -74,7 +74,7 @@ sigsegv_get_vma (uintptr_t req_address, struct vma_struct *vma)
          In 64-bit processes, we could use vm_region_64 or mach_vm_region.
          I choose vm_region_64 because it uses the same types as vm_region,
          resulting in less conditional code.  */
-# if defined __arm64__ || defined __ppc64__ || defined __x86_64__
+# if defined __aarch64__ || defined __ppc64__ || defined __x86_64__
       struct vm_region_basic_info_64 info;
       mach_msg_type_number_t info_count = VM_REGION_BASIC_INFO_COUNT_64;
 

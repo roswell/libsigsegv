@@ -1,5 +1,5 @@
 /* Fault handler information.  MacOSX version (both PowerPC and i386).
-   Copyright (C) 2003-2004, 2006-2008  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2003-2004, 2006-2008, 2020  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#if defined __arm64__
+#if defined __aarch64__
 
 #define SIGSEGV_EXC_STATE_TYPE                      arm_exception_state64_t
 #define SIGSEGV_EXC_STATE_FLAVOR                    ARM_EXCEPTION_STATE64
