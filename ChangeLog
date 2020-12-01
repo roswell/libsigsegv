@@ -1,3 +1,13 @@
+2020-11-29  Hill Ma  <maahiuzeon@gmail.com>
+
+	mach: macos: preliminary support for darwin arm64.
+	* configure.ac: Treat macos/arm64 like the other macos platforms.
+	* src/handler-macos.c (sigsegv_leave_handler): On arm64, pass arguments
+	in registers.
+	* src/machfault-macos.h (SIGSEGV_*): Define appropriately for arm64.
+	* src/stackvma-mach.c (sigsegv_get_vma): On arm64, use 64-bit type
+	definitions.
+
 2020-10-04  Bruno Haible  <bruno@clisp.org>
 
 	build: Fix warnings from Autoconf 2.69c.
