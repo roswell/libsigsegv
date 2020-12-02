@@ -376,14 +376,23 @@ For each of these, the approach should be:
     For CFG_FAULT, the best starting point is to run the tests/sigsegv1
     program with a breakpoint set at 'sigsegv_handler'.
 
-  - Add to configure.in a test whether your new code works.  This will
+  - Add to configure.ac a test whether your new code works.  This will
     help portability to platforms similar to yours.
     Then regenerate the configure script (run "autoconf") and verify
     that the test says "yes" on your platform.
 
   - Create a platform dependent file (e.g. fault-<os>-<cpu>.h) and change
-    configure.in to choose this particular file when your test says "yes".
+    configure.ac to choose this particular file when your test says "yes".
     Then regenerate the configure script (run "autoconf").
+
+  - Specifically for CFG_FAULT:
+    - Use './configure --disable-stackvma'.  This makes sure that the
+      stackoverflow* tests use the SIGSEGV_FAULT_STACKPOINTER macro
+      and not some other heuristic.
+    - For Linux platforms, search for definitions of 'setup_frame' and
+      'setup_rt_frame' functions in the kernel source code.
+    - For FreeBSD platforms, search for definitions of 'sendsig' functions
+      in the kernel source code.
 
   - Verify that "make" and "make check" pass.
 

@@ -1,3 +1,8 @@
+2020-12-02  Bruno Haible  <bruno@clisp.org>
+
+	Improve porting documentation.
+	* PORTING: Add some more porting tips.
+
 2020-12-01  Bruno Haible  <bruno@clisp.org>
 
 	Add configure option --disable-stackvma, for testing the fault-* files.
