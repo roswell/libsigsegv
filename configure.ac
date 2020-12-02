@@ -682,50 +682,58 @@ SV_STACK_DIRECTION
 dnl ========================= Determine CFG_STACKVMA =========================
 dnl Requires AC_CANONICAL_HOST.
 
-dnl Determination of the stack's virtual memory area.
-AC_CACHE_CHECK([for prmap_t in sys/procfs.h], [sv_cv_procfsvma], [
-  AC_LINK_IFELSE(
-    [AC_LANG_PROGRAM([[#include <sys/procfs.h>]], [[prmap_t x;]])],
-    [sv_cv_procfsvma=yes], [sv_cv_procfsvma=no])
-])
-AC_CHECK_FUNCS([mquery mincore])
-CFG_STACKVMA=
-if test $sv_cv_procfsvma = yes; then
-  # Note: On AIX, there is a /proc/$pic/map file, that contains records of type
-  # prmap_t, defined in <sys/procfs.h>.  But it lists only the virtual memory
-  # areas that are connected to a file, not the anonymous ones.  Therefore, on
-  # this platform, stackvma-procfs.c returns bogus results, whereas
-  # stackvma-mincore.c returns correct ones.
-  case "$host_os" in
-    aix*) ;;
-    *) CFG_STACKVMA=stackvma-procfs.c ;;
-  esac
-fi
-if test -z "$CFG_STACKVMA"; then
-  case "$host_os" in
-    linux*)                CFG_STACKVMA=stackvma-linux.c ;;
-    freebsd* | kfreebsd*-gnu* | dragonfly*)
-                           CFG_STACKVMA=stackvma-freebsd.c ;;
-    netbsd*)               CFG_STACKVMA=stackvma-netbsd.c ;;
-    beos* | haiku*)        CFG_STACKVMA=stackvma-beos.c ;;
-    macos* | darwin*)      CFG_STACKVMA=stackvma-mach.c ;;
-    dnl About gnu*): GNU/Hurd provides a /proc/self/maps file that is similar
-    dnl to one on Linux, and the vma_iterate (from gnulib) that reads this file
-    dnl works fine on GNU/Hurd under normal conditions. But in the context of
-    dnl libsigsegv, that is, during a SIGSEGV handler, it just hangs.
-  esac
-fi
-dnl We prefer the mquery based approach over the mincore based approach,
-dnl because stackvma-mincore.c:is_unmapped() has a bad worst-case runtime.
-if test -z "$CFG_STACKVMA" && test $ac_cv_func_mquery = yes; then
-  CFG_STACKVMA=stackvma-mquery.c
-fi
-if test -z "$CFG_STACKVMA" && test $ac_cv_func_mincore = yes; then
-  CFG_STACKVMA=stackvma-mincore.c
-fi
-if test -n "$CFG_STACKVMA"; then
-  AC_DEFINE([HAVE_STACKVMA], [1],
-    [Define if CFG_STACKVMA is set to a nontrivial source file.])
+AC_ARG_ENABLE([stackvma],
+  AS_HELP_STRING([--disable-stackvma],
+    [detect stack overflow without stack VMA heuristic]),
+  [use_stackvma=$enableval], [use_stackvma=yes])
+if test "$use_stackvma" != no; then
+  dnl Determination of the stack's virtual memory area.
+  AC_CACHE_CHECK([for prmap_t in sys/procfs.h], [sv_cv_procfsvma], [
+    AC_LINK_IFELSE(
+      [AC_LANG_PROGRAM([[#include <sys/procfs.h>]], [[prmap_t x;]])],
+      [sv_cv_procfsvma=yes], [sv_cv_procfsvma=no])
+  ])
+  AC_CHECK_FUNCS([mquery mincore])
+  CFG_STACKVMA=
+  if test $sv_cv_procfsvma = yes; then
+    # Note: On AIX, there is a /proc/$pic/map file, that contains records of type
+    # prmap_t, defined in <sys/procfs.h>.  But it lists only the virtual memory
+    # areas that are connected to a file, not the anonymous ones.  Therefore, on
+    # this platform, stackvma-procfs.c returns bogus results, whereas
+    # stackvma-mincore.c returns correct ones.
+    case "$host_os" in
+      aix*) ;;
+      *) CFG_STACKVMA=stackvma-procfs.c ;;
+    esac
+  fi
+  if test -z "$CFG_STACKVMA"; then
+    case "$host_os" in
+      linux*)                CFG_STACKVMA=stackvma-linux.c ;;
+      freebsd* | kfreebsd*-gnu* | dragonfly*)
+                             CFG_STACKVMA=stackvma-freebsd.c ;;
+      netbsd*)               CFG_STACKVMA=stackvma-netbsd.c ;;
+      beos* | haiku*)        CFG_STACKVMA=stackvma-beos.c ;;
+      macos* | darwin*)      CFG_STACKVMA=stackvma-mach.c ;;
+      dnl About gnu*): GNU/Hurd provides a /proc/self/maps file that is similar
+      dnl to one on Linux, and the vma_iterate (from gnulib) that reads this file
+      dnl works fine on GNU/Hurd under normal conditions. But in the context of
+      dnl libsigsegv, that is, during a SIGSEGV handler, it just hangs.
+    esac
+  fi
+  dnl We prefer the mquery based approach over the mincore based approach,
+  dnl because stackvma-mincore.c:is_unmapped() has a bad worst-case runtime.
+  if test -z "$CFG_STACKVMA" && test $ac_cv_func_mquery = yes; then
+    CFG_STACKVMA=stackvma-mquery.c
+  fi
+  if test -z "$CFG_STACKVMA" && test $ac_cv_func_mincore = yes; then
+    CFG_STACKVMA=stackvma-mincore.c
+  fi
+  if test -n "$CFG_STACKVMA"; then
+    AC_DEFINE([HAVE_STACKVMA], [1],
+      [Define if CFG_STACKVMA is set to a nontrivial source file.])
+  else
+    CFG_STACKVMA=stackvma-none.c
+  fi
 else
   CFG_STACKVMA=stackvma-none.c
 fi

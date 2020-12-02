@@ -1,5 +1,11 @@
 2020-12-01  Bruno Haible  <bruno@clisp.org>
 
+	Add configure option --disable-stackvma, for testing the fault-* files.
+	* configure.ac: Add option --enable/disable-stackvma. Set CFG_STACKVMA
+	to 'stackvma-none.c' if --disable-stackvma was specified.
+
+2020-12-01  Bruno Haible  <bruno@clisp.org>
+
 	Use canonical test for arm64 CPU.
 	This is for consistency with gnulib and with predef.sourceforge.net.
 	* configure.ac: Test __aarch64__, not __arm64__.
