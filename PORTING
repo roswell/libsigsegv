@@ -5,6 +5,7 @@ Successfully tested platforms
 __PLATFORM_____________________________________SIGSEGV___OVERFLOW__VERSION__
                                               |         |         |
 aarch64-unknown-freebsd11.1                   |   yes   |   yes   | 2.11
+aarch64-unknown-freebsd12.2                   |   yes   |   yes   | 2.12+
 aarch64-unknown-linux3.13.0-gnu-glibc2.19     |   yes   |   yes   | 2.11
 aarch64-unknown-linux3.16.0-gnu-glibc2.19     |   yes   |   yes   | 2.12
 alpha-dec-osf4.0d                             |   yes   |   yes   | 2.1
@@ -36,6 +37,7 @@ alpha-unknown-openbsd3.7                      |   yes   |   yes   | 2.2
 alpha-unknown-openbsd4.5                      |   yes   |   yes   | 2.6
 alpha-unknown-netbsd1.6                       |   yes   |   yes   | 2.1
 armv7l-unknown-linux3.0.31-androideabi        |   yes   |   yes   | 2.12+
+armv7-unknown-freebsd12.2-gnueabihf           |   yes   |   yes   | 2.12+
 armv4l-unknown-linux2.4.0-gnu-glibc2.2        |   no    |   yes   | 2.1
 armv4l-unknown-linux2.4.3-gnu-glibc2.2        |   yes   |   yes   | 2.1
 armv4l-unknown-linux2.4.9-gnu-glibc2.2        |   no    |   yes   | 2.0.1

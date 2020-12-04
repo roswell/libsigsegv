@@ -396,6 +396,16 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_posix" = yes; then
             *) CFG_FAULT=fault-aix5.h ;;
           esac
           ;;
+        freebsd* | dragonfly* | kfreebsd*)
+          case "$host_cpu" in
+            arm* | strongarm* | xscale* | aarch64*)
+              CFG_FAULT=fault-freebsd-arm.h
+              ;;
+            *)
+              CFG_FAULT=fault-posix-ucontext.h
+              ;;
+          esac
+          ;;
         netbsd*)
           CFG_FAULT=fault-netbsd.h
           ;;

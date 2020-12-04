@@ -1,5 +1,13 @@
 2020-12-04  Bruno Haible  <bruno@clisp.org>
 
+	Improve support for FreeBSD/arm and FreeBSD/arm64.
+	* src/fault-freebsd-arm.h: New file.
+	* src/Makefile.am (noinst_HEADERS): Add it.
+	* configure.ac (CFG_FAULT): Use this file on FreeBSD/arm and
+	FreeBSD/arm64.
+
+2020-12-04  Bruno Haible  <bruno@clisp.org>
+
 	Improve support for FreeBSD/x86 and FreeBSD/x86_64.
 	* src/fault-freebsd-i386.h: Add alternative code that uses SA_SIGINFO.
 

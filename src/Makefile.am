@@ -28,7 +28,9 @@ noinst_HEADERS = \
   fault.h fault-aix3.h fault-aix3-powerpc.h fault-aix5.h fault-aix5-powerpc.h \
   fault-beos.h fault-beos-i386.h \
   fault-cygwin-old.h \
-  fault-bsd.h fault-freebsd-i386.h \
+  fault-bsd.h \
+  fault-freebsd-arm.h \
+  fault-freebsd-i386.h \
   fault-haiku.h fault-haiku-i386.h \
   fault-hpux.h fault-hpux-hppa.h \
   fault-hurd.h fault-hurd-i386.h \
