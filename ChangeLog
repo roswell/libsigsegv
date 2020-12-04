@@ -1,5 +1,10 @@
 2020-12-04  Bruno Haible  <bruno@clisp.org>
 
+	Improve support for FreeBSD/x86 and FreeBSD/x86_64.
+	* src/fault-freebsd-i386.h: Add alternative code that uses SA_SIGINFO.
+
+2020-12-04  Bruno Haible  <bruno@clisp.org>
+
 	Add support for macOS on arm64.
 	Helped by Hill Ma <maahiuzeon@gmail.com> in
 	<https://savannah.gnu.org/bugs/?59539>.
