@@ -208,6 +208,13 @@ catch_exception_raise (mach_port_t exception_port,
   uintptr_t sp;
 
 #ifdef DEBUG_EXCEPTION_HANDLING
+  /* Notes:
+     - The exception types are listed in xnu-VERSION/osfmk/mach/exception_types.h.
+       Value 0x1 is EXC_BAD_ACCESS.
+     - The first code is the exception code, listed in
+         xnu-VERSION/osfmk/mach/i386/exception.h
+         xnu-VERSION/osfmk/mach/arm/exception.h
+     - The second code is the address.  */
   fprintf (stderr, "Exception: 0x%x Code: 0x%x 0x%x in catch....\n",
            exception,
            code_count > 0 ? code[0] : -1,
@@ -264,8 +271,10 @@ catch_exception_raise (mach_port_t exception_port,
 #else
         stk_extra_stack + 256;
 #endif
-#if defined __x86_64__ || defined __i386__
+#if defined __aarch64__ || defined __x86_64__ || defined __i386__
       new_safe_esp &= -16; /* align */
+#endif
+#if defined __x86_64__ || defined __i386__
       new_safe_esp -= sizeof (void *); /* make room for (unused) return address slot */
 #endif
       SIGSEGV_STACK_POINTER (thread_state) = new_safe_esp;

@@ -1,3 +1,11 @@
+2020-12-04  Bruno Haible  <bruno@clisp.org>
+
+	Add support for macOS on arm64.
+	Helped by Hill Ma <maahiuzeon@gmail.com> in
+	<https://savannah.gnu.org/bugs/?59539>.
+	* src/handler-macos.c (catch_exception_raise): Align the stack also on
+	arm64 CPUs.
+
 2020-12-02  Bruno Haible  <bruno@clisp.org>
 
 	Improve porting documentation.
