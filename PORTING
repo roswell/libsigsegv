@@ -6,7 +6,7 @@ __PLATFORM_____________________________________SIGSEGV___OVERFLOW__VERSION__
                                               |         |         |
 aarch64-unknown-freebsd11.1                   |   yes   |   yes   | 2.11
 aarch64-unknown-linux3.13.0-gnu-glibc2.19     |   yes   |   yes   | 2.11
-aarch64-unknown-linux3.16.0-gnu-glibc2.19     |   yes   |   yes   | 2.11
+aarch64-unknown-linux3.16.0-gnu-glibc2.19     |   yes   |   yes   | 2.12
 alpha-dec-osf4.0d                             |   yes   |   yes   | 2.1
 alpha-dec-osf4.0f                             |   yes   |   yes   | 2.1
 alphaev56-dec-osf4.0d                         |   yes   |   yes   | 2.6
@@ -15,7 +15,7 @@ alpha-dec-osf4.0g                             |   yes   |   yes   | 2.1
 alpha-dec-osf5.1                              |   yes   |   yes   | 2.1
 alphaev67-dec-osf5.1                          |   yes   |   yes   | 2.2
 alphaev67-dec-osf5.1a                         |   yes   |   yes   | 2.6
-alphaev56-dec-osf5.1b                         |   yes   |   yes   | 2.6
+alphaev56-dec-osf5.1b                         |   yes   |   yes   | 2.12
 alphaev6-dec-osf5.1b                          |   yes   |   yes   | 2.9
 alphaev68-dec-osf5.1b                         |   yes   |   yes   | 2.10
 alpha-unknown-freebsd4.8                      |   yes   |   yes   | 2.1
@@ -252,6 +252,7 @@ sparc64-unknown-linux2.6.33-gnu-glibc2.11     |   yes   |   no    | 2.9
 sparc64-unknown-linux3.2.0-gnu-glibc2.13      |   yes   |   yes   | 2.11
 sparc64-unknown-linux4.5.0-gnu-glibc2.24      |   yes   |   yes   | 2.11
 sparc64-unknown-linux4.19.0-gnu-glibc2.28     |   yes   |   yes   | 2.12
+sparc64-unknown-freebsd12.2                   |   no    |   no    | 2.12+
 sparc64-unknown-netbsd8.0                     |   yes   |   no    | 2.12
 sparc64-unknown-openbsd3.6                    |   no    |   no    | 2.2
 x86_64-apple-darwin9.8.0                      |   yes   |   yes   | 2.11
