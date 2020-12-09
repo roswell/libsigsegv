@@ -1,3 +1,8 @@
+2020-12-08  Bruno Haible  <bruno@clisp.org>
+
+	Switch to autoconf 2.70.
+	* autogen.sh: Update comment.
+
 2020-12-04  Bruno Haible  <bruno@clisp.org>
 
 	Improve support for FreeBSD/arm and FreeBSD/arm64.
