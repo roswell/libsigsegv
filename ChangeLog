@@ -1,3 +1,8 @@
+2021-01-11  Bruno Haible  <bruno@clisp.org>
+
+	Switch to automake 1.16.3.
+	* autogen.sh: Update comment.
+
 2020-12-08  Bruno Haible  <bruno@clisp.org>
 
 	Switch to autoconf 2.70.
