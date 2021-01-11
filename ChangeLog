@@ -1,5 +1,14 @@
 2021-01-11  Bruno Haible  <bruno@clisp.org>
 
+	Find stack detection reliably, even with GCC >= 10.
+	Reported by Andreas Schwab <schwab@gnu.org> in
+	<https://savannah.gnu.org/bugs/?59714>.
+	* m4/stack-direction.m4 (SV_STACK_DIRECTION): In the test program, use
+	the find_stack_direction function from Autoconf 2.70 (with parameters
+	that depend on argc, and with a recursion depth 20 instead of 2).
+
+2021-01-11  Bruno Haible  <bruno@clisp.org>
+
 	Switch to automake 1.16.3.
 	* autogen.sh: Update comment.
 

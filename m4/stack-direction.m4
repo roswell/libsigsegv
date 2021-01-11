@@ -1,5 +1,6 @@
-# stack-direction.m4 serial 4 (libsigsegv-2.13)
-dnl Copyright (C) 2002-2009, 2013-2014 Bruno Haible <bruno@clisp.org>
+# stack-direction.m4 serial 5 (libsigsegv-2.13)
+dnl Copyright (C) 2002-2009, 2013-2014, 2021 Bruno Haible <bruno@clisp.org>
+dnl Copyright (C) 2002-2021 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
 dnl Public License, this file may be distributed as part of a program
@@ -65,28 +66,19 @@ AC_DEFUN([SV_STACK_DIRECTION],
           cat > conftest.c <<EOF
 #include <stdio.h>
 int
-get_stack_direction ()
+find_stack_direction (int *addr, int depth)
 {
-  auto char dummy;
-  static char *dummyaddr = (char *)0;
-  if (dummyaddr != (char *)0)
-    return &dummy > dummyaddr ? 1 : &dummy < dummyaddr ? -1 : 0;
-  else
-    {
-      dummyaddr = &dummy;
-      {
-        int result = get_stack_direction ();
-        /* The next assignment avoids tail recursion elimination
-           (IRIX 6.4 CC).  */
-        dummyaddr = (char *)0;
-        return result;
-      }
-    }
+  int dir, dummy = 0;
+  if (! addr)
+    addr = &dummy;
+  *addr = addr < &dummy ? 1 : addr == &dummy ? 0 : -1;
+  dir = depth ? find_stack_direction (addr, depth - 1) : 0;
+  return dir + dummy;
 }
 int
-main ()
+main (int argc, char *argv[])
 {
-  printf ("%d\n", get_stack_direction ());
+  printf ("%d\n", find_stack_direction (NULL, argc + 20));
   return 0;
 }
 EOF
