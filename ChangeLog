@@ -1,5 +1,10 @@
 2021-01-16  Bruno Haible  <bruno@clisp.org>
 
+	Override value of SIGSTKSZ on 64-bit Solaris/x86_64.
+	* src/sigsegv.h.in: On 64-bit Solaris/x86_64, set SIGSTKSZ to 16 KB.
+
+2021-01-16  Bruno Haible  <bruno@clisp.org>
+
 	Add support for catching stack overflow on Solaris 11/SPARC.
 	* src/fault-solaris11-sparc.h: New file.
 	* src/Makefile.am (noinst_HEADERS): Add it.

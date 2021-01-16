@@ -1,5 +1,5 @@
 /* Page fault handling library.
-   Copyright (C) 1998-1999, 2002, 2004-2011, 2016-2018  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 1998-1999, 2002, 2004-2011, 2016-2018, 2021  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -25,13 +25,14 @@
 
 /* Correct the value of SIGSTKSZ on some systems.
    AIX 64-bit: original value 4096 is too small.
-   HP-UX: original value 8192 is too small.  */
+   HP-UX: original value 8192 is too small.
+   Solaris 11/x86_64: original value 8192 is too small.  */
 #if defined _AIX && defined _ARCH_PPC64
 # include <signal.h>
 # undef SIGSTKSZ
 # define SIGSTKSZ 8192
 #endif
-#if defined __hpux
+#if defined __hpux || (defined __sun && (defined __x86_64__ || defined __amd64__))
 # include <signal.h>
 # undef SIGSTKSZ
 # define SIGSTKSZ 16384
