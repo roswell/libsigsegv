@@ -1,7 +1,7 @@
 dnl Autoconf configuration for libsigsegv.
 dnl Process this file with autoconf to produce a configure script.
 dnl
-dnl Copyright (C) 2002-2020  Bruno Haible <bruno@clisp.org>
+dnl Copyright (C) 2002-2021  Bruno Haible <bruno@clisp.org>
 dnl
 dnl This program is free software; you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
@@ -386,7 +386,16 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_posix" = yes; then
         solaris*)
           case "$host_cpu" in
             i?86 | x86_64) CFG_FAULT=fault-solaris-i386.h ;;
-            sparc*) CFG_FAULT=fault-solaris-sparc.h ;;
+            sparc*)
+              case "$host_os" in
+                solaris2.11)
+                  CFG_FAULT=fault-solaris11-sparc.h
+                  ;;
+                *)
+                  CFG_FAULT=fault-solaris-sparc.h
+                  ;;
+              esac
+              ;;
             *) CFG_FAULT=fault-solaris.h ;;
           esac
           ;;

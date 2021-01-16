@@ -1,3 +1,10 @@
+2021-01-16  Bruno Haible  <bruno@clisp.org>
+
+	Add support for catching stack overflow on Solaris 11/SPARC.
+	* src/fault-solaris11-sparc.h: New file.
+	* src/Makefile.am (noinst_HEADERS): Add it.
+	* configure.ac (CFG_FAULT): Choose it on Solaris 11/SPARC.
+
 2021-01-11  Bruno Haible  <bruno@clisp.org>
 
 	Find stack detection reliably, even with GCC >= 10.
