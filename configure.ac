@@ -18,7 +18,7 @@ dnl along with this program; if not, write to the Free Software Foundation,
 dnl Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 AC_PREREQ([2.64])
-AC_INIT([libsigsegv], [2.12])
+AC_INIT([libsigsegv], [2.13])
 AC_CONFIG_SRCDIR([src/sigsegv.h.in])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_HEADERS([config.h])

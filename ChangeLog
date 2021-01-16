@@ -1,5 +1,14 @@
 2021-01-16  Bruno Haible  <bruno@clisp.org>
 
+	Prepare for version 2.13.
+	* configure.ac (AC_INIT): Bump version to 2.13.
+	* src/sigsegv.h.in (LIBSIGSEGV_VERSION): Likewise.
+	* README: Likewise.
+	* src/Makefile.am (LIBSIGSEGV_VERSION_INFO): Bump to 2:6:0.
+	* NEWS: Add entries.
+
+2021-01-16  Bruno Haible  <bruno@clisp.org>
+
 	Add support for catching stack overflow on 64-bit Haiku.
 	* src/stackvma-beos.c (vma_iterate): Adapt to changed signature of
 	get_next_area_info.
