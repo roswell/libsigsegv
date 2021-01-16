@@ -1,5 +1,11 @@
 2021-01-16  Bruno Haible  <bruno@clisp.org>
 
+	Add support for catching stack overflow on 64-bit Haiku.
+	* src/stackvma-beos.c (vma_iterate): Adapt to changed signature of
+	get_next_area_info.
+
+2021-01-16  Bruno Haible  <bruno@clisp.org>
+
 	Fix compilation errors and warnings on Solaris OpenIndiana.
 	* src/handler-unix.c: Define __EXTENSIONS__.
 	* src/stackvma-mincore.c: Likewise.
