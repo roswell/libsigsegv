@@ -1,5 +1,11 @@
 2021-01-16  Bruno Haible  <bruno@clisp.org>
 
+	Fix compilation errors and warnings on Solaris OpenIndiana.
+	* src/handler-unix.c: Define __EXTENSIONS__.
+	* src/stackvma-mincore.c: Likewise.
+
+2021-01-16  Bruno Haible  <bruno@clisp.org>
+
 	Override value of SIGSTKSZ on 64-bit Solaris/x86_64.
 	* src/sigsegv.h.in: On 64-bit Solaris/x86_64, set SIGSTKSZ to 16 KB.
 

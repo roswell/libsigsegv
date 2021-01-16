@@ -1,5 +1,5 @@
 /* Fault handler information.  Unix version.
-   Copyright (C) 1993-1999, 2002-2003, 2006, 2008-2009, 2016-2017  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 1993-1999, 2002-2003, 2006, 2008-2009, 2016-2017, 2021  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -18,6 +18,10 @@
 /* Persuade glibc <sys/ucontext.h> to declare macros designating register
    indices: REG_RSP on x86_64, REG_ESP on i386.  */
 #define _GNU_SOURCE 1
+
+/* Persuade Solaris OpenIndiana <ucontext.h> to include <sys/regset.h>,
+   which declares macros designating register indices, such as ESP on i386.  */
+#define __EXTENSIONS__ 1
 
 #include "sigsegv.h"
 

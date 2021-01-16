@@ -1,5 +1,5 @@
 /* Determine the virtual memory area of a given address.
-   Copyright (C) 2006, 2008-2010, 2016-2018  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2006, 2008-2010, 2016-2018, 2021  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -31,6 +31,9 @@
    virtual memory, it does not make it easy to find the bounds of _unmapped_
    virtual memory ranges.  We try to work around this, but it may still be
    slow.  */
+
+/* Persuade Solaris OpenIndiana <unistd.h> to declare mincore().  */
+#define __EXTENSIONS__ 1
 
 #include "stackvma.h"
 #include <limits.h>
