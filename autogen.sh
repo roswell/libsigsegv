@@ -4,7 +4,7 @@
 # also regenerates all aclocal.m4, config.h.in, Makefile.in, configure files
 # with new versions of autoconf or automake.
 #
-# This script requires autoconf-2.63..2.70 and automake-1.11..1.16.3 in the PATH.
+# This script requires autoconf-2.63..2.71 and automake-1.11..1.16.3 in the PATH.
 # If not used from a released tarball, it also requires either
 #   - the GNULIB_SRCDIR environment variable pointing to a gnulib checkout, or
 #   - a preceding invocation of './gitsub.sh pull'.
