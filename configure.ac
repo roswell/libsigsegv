@@ -99,7 +99,8 @@ dnl Requires AC_CANONICAL_HOST.
 dnl List of signals that are sent when an invalid virtual memory address
 dnl is accessed, or when the stack overflows.
 case "$host_os" in
-  sunos4* | freebsd* | dragonfly* | openbsd* | netbsd* | kfreebsd* | knetbsd*)
+  sunos4* | freebsd* | dragonfly* | openbsd* | netbsd* | midnightbsd* | \
+  kfreebsd* | knetbsd*)
     CFG_SIGNALS=signals-bsd.h ;;
   hpux*)
     CFG_SIGNALS=signals-hpux.h ;;

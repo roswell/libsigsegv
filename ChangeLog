@@ -1,5 +1,14 @@
 2021-02-20  Bruno Haible  <bruno@clisp.org>
 
+	Support creating shared libraries on MidnightBSD.
+	Patch from <https://savannah.gnu.org/patch/?10007>.
+	* m4/libtool.m4: Treat MidnightBSD like FreeBSD.
+	* build-aux/ltmain.sh: Likewise.
+	* configure.ac (CFG_SIGNALS): Likewise.
+	* NEWS: Mention it.
+
+2021-02-20  Bruno Haible  <bruno@clisp.org>
+
 	Switch to autoconf 2.71.
 	* autogen.sh: Update comment.
 

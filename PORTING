@@ -154,6 +154,7 @@ i386-unknown-freebsd8.1                          |   yes   |   yes   | 2.9
 i386-unknown-freebsd9.1                          |   yes   |   yes   | 2.12
 i586-unknown-freebsd11.0                         |   yes   |   yes   | 2.13
 i586-unknown-freebsd12.0                         |   yes   |   yes   | 2.13
+i386-unknown-midnightbsd2.0.2                    |   yes   |   yes   | 2.13+
 i686-unknown-kfreebsd6.2-gnu-glibc2.6            |   yes   |   yes   | 2.5+
 i386-unknown-kfreebsd9.0-gnu-glibc2.13           |   yes   |   yes   | 2.13
 i386-unknown-dragonfly3.8                        |   yes   |   yes   | 2.13
@@ -376,6 +377,7 @@ x86_64-unknown-freebsd12.0                       |   yes   |   yes   | 2.13
 x86_64-unknown-freebsd-trident1903               |   yes   |   yes   | 2.13
 x86_64-unknown-kfreebsd6.2-gnu-glibc2.6          |   yes   |   yes   | 2.5+
 x86_64-unknown-kfreebsd9.0-gnu-glibc2.13         |   yes   |   yes   | 2.13
+x86_64-unknown-midnightbsd2.0.3                  |   yes   |   yes   | 2.13+
 x86_64-unknown-dragonfly3.8                      |   yes   |   yes   | 2.12
 x86_64-unknown-dragonfly3.9                      |   yes   |   yes   | 2.12
 x86_64-unknown-dragonfly4.0                      |   yes   |   yes   | 2.12
