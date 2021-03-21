@@ -4,6 +4,7 @@ Successfully tested platforms
                                                              STACK
 __PLATFORM________________________________________SIGSEGV___OVERFLOW__VERSION__
                                                  |         |         |
+aarch64-apple-darwin20.3.0                       |   yes   |   yes   | 2.13
 aarch64-unknown-freebsd11.1                      |   yes   |   yes   | 2.13
 aarch64-unknown-freebsd12.2                      |   yes   |   yes   | 2.13
 aarch64-unknown-linux3.13.0-gnu-glibc2.19        |   yes   |   yes   | 2.13
