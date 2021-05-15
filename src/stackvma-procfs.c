@@ -1,5 +1,5 @@
 /* Determine the virtual memory area of a given address.
-   Copyright (C) 2002, 2006, 2008-2009, 2016-2017  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002, 2006, 2008-2009, 2016-2017, 2021  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -15,8 +15,11 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
+/* Persuade Solaris OpenIndiana <signal.h> to declare 'struct sigaltstack'.  */
+#define __EXTENSIONS__ 1
+
 #include "stackvma.h"
-#include <unistd.h> /* open, close, read */
+#include <unistd.h> /* getpagesize, getpid, close, read */
 #include <errno.h> /* EINTR */
 #include <fcntl.h> /* open */
 #include <string.h> /* memcpy */

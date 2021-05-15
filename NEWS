@@ -1,5 +1,7 @@
 New in 2.14:
 
+* Improved support for Solaris OpenIndiana.
+
 * Added support for MidnightBSD.
 
 New in 2.13:

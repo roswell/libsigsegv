@@ -710,7 +710,11 @@ if test "$use_stackvma" != no; then
   dnl Determination of the stack's virtual memory area.
   AC_CACHE_CHECK([for prmap_t in sys/procfs.h], [sv_cv_procfsvma], [
     AC_LINK_IFELSE(
-      [AC_LANG_PROGRAM([[#include <sys/procfs.h>]], [[prmap_t x;]])],
+      [AC_LANG_PROGRAM([[
+         /* Persuade Solaris OpenIndiana <signal.h> to declare 'struct sigaltstack'.  */
+         #define __EXTENSIONS__ 1
+         #include <sys/procfs.h>
+         ]], [[prmap_t x;]])],
       [sv_cv_procfsvma=yes], [sv_cv_procfsvma=no])
   ])
   AC_CHECK_FUNCS([mquery mincore])

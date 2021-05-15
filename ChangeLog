@@ -1,3 +1,11 @@
+2021-05-15  Bruno Haible  <bruno@clisp.org>
+
+	Improve support for Solaris OpenIndiana.
+	* configure.ac: Make the test for <sys/procfs.h> succeed on Solaris
+	OpenIndiana even with -D_XOPEN_SOURCE=700.
+	* src/stackvma-procfs.c: Define __EXTENSIONS__, for Solaris OpenIndiana.
+	* NEWS: Mention the change.
+
 2021-02-28  Bruno Haible  <bruno@clisp.org>
 
 	Update DEPENDENCIES.
