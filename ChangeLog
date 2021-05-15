@@ -1,5 +1,10 @@
 2021-05-15  Bruno Haible  <bruno@clisp.org>
 
+	Fix possible warnings on AIX.
+	* src/stackvma-mincore.c (MINCORE_ADDR_T): Test _AIX, not UNIX_AIX.
+
+2021-05-15  Bruno Haible  <bruno@clisp.org>
+
 	Improve support for Solaris OpenIndiana.
 	* configure.ac: Make the test for <sys/procfs.h> succeed on Solaris
 	OpenIndiana even with -D_XOPEN_SOURCE=700.

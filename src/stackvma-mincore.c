@@ -27,6 +27,9 @@
      - NetBSD,  since NetBSD 3.0 (at least),     1
      - OpenBSD, since OpenBSD 2.6 (at least),    1
      - AIX,     since AIX 5.3,                   1
+     - IRIX.
+   As of 2019, also on
+     - Hurd.
    However, while the API allows to easily determine the bounds of mapped
    virtual memory, it does not make it easy to find the bounds of _unmapped_
    virtual memory ranges.  We try to work around this, but it may still be
@@ -45,7 +48,7 @@
 
 /* The AIX declaration of mincore() uses 'caddr_t', whereas the other platforms
    use 'void *'. */
-#ifdef UNIX_AIX
+#ifdef _AIX
 typedef caddr_t MINCORE_ADDR_T;
 #else
 typedef void* MINCORE_ADDR_T;
