@@ -1,5 +1,5 @@
 ## Makefile for libsigsegv/tests.
-## Copyright (C) 2002-2003, 2008-2010, 2016 Bruno Haible <bruno@clisp.org>
+## Copyright (C) 2002-2003, 2008-2010, 2016, 2021 Bruno Haible <bruno@clisp.org>
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ AUTOMAKE_OPTIONS = 1.11 gnits no-dependencies color-tests
 
 TESTS = sigsegv1 sigsegv2 sigsegv3 stackoverflow1 stackoverflow2
 
-EXTRA_DIST = mmaputil.h altstack.h
+EXTRA_DIST = mmaputil.h altstack-util.h
 
 AM_CPPFLAGS = -I../src
 DEFS = @DEFS@

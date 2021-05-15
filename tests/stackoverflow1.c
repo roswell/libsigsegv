@@ -1,5 +1,5 @@
 /* Test the stack overflow handler.
-   Copyright (C) 2002-2006, 2008, 2010  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002-2006, 2008, 2010, 2021  Bruno Haible <bruno@clisp.org>
    Copyright (C) 2010 Eric Blake <eblake@redhat.com>
 
    This program is free software; you can redistribute it and/or modify
@@ -42,7 +42,7 @@
 # include <sys/time.h>
 # include <sys/resource.h>
 #endif
-#include "altstack.h"
+#include "altstack-util.h"
 
 jmp_buf mainloop;
 sigset_t mainsigset;
