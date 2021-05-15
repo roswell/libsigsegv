@@ -58,6 +58,9 @@
      On OSes which preallocate the stack's VMA with its maximum size
      (like BeOS), we use the stack's VMA directly.
  */
+/* Note: Solaris 11 defines a function 'stack_violation'
+   <https://docs.oracle.com/cd/E26502_01/html/E29034/stack-violation-3c.html>.
+   It merely implements heuristic BC, therefore no need to use it.  */
 
 #include <stdint.h>
 #include <stdlib.h>

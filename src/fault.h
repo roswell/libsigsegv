@@ -1,5 +1,5 @@
 /* Fault handler information.
-   Copyright (C) 2002  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002, 2021  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -20,10 +20,10 @@
      SIGSEGV_FAULT_HANDLER_ARGLIST
           is the argument list for the actual fault handler.
 
+   and if available (optional):
+
      SIGSEGV_FAULT_ADDRESS
           is a macro for fetching the fault address.
-
-   and if available (optional):
 
      SIGSEGV_FAULT_CONTEXT
           is a macro giving a pointer to the entire fault context (i.e.

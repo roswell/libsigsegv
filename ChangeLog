@@ -1,5 +1,12 @@
 2021-05-15  Bruno Haible  <bruno@clisp.org>
 
+	Improve comments.
+	* src/handler-unix.c: Mention Solaris 11 stack_violation().
+	* src/fault.h: SIGSEGV_FAULT_ADDRESS is not mandatory.
+	* src/stackvma-mquery.c: Update.
+
+2021-05-15  Bruno Haible  <bruno@clisp.org>
+
 	Fix possible warnings on AIX.
 	* src/stackvma-mincore.c (MINCORE_ADDR_T): Test _AIX, not UNIX_AIX.
 

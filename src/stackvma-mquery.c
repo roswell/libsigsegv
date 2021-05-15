@@ -1,5 +1,5 @@
 /* Determine the virtual memory area of a given address.
-   Copyright (C) 2011, 2016  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2011, 2016, 2021  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
    range of pages of virtual memory.  In particular, it allows to inquire
    whether a page is mapped at all, and where is the next unmapped page
    after a given address.
-   As of 2011, mquery() is supported by:
+   As of 2021, mquery() is supported by:
      - OpenBSD, since OpenBSD 3.4.
    Note that this file can give different results.  For example, on
    OpenBSD 4.4 / i386 the stack segment (which starts around 0xcdbfe000)
