@@ -22,7 +22,7 @@ AUTOMAKE_OPTIONS = 1.11 gnits no-dependencies color-tests
 
 TESTS = sigsegv1 sigsegv2 sigsegv3 stackoverflow1 stackoverflow2
 
-EXTRA_DIST = mmaputil.h altstack-util.h
+EXTRA_DIST = mmap-anon-util.h altstack-util.h
 
 AM_CPPFLAGS = -I../src
 DEFS = @DEFS@

@@ -1,5 +1,5 @@
 /* Test the dispatcher.
-   Copyright (C) 2002-2006, 2008, 2011, 2016  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002-2006, 2008, 2011, 2016, 2021  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
 
 #if HAVE_SIGSEGV_RECOVERY
 
-#include "mmaputil.h"
+#include "mmap-anon-util.h"
 #include <stdlib.h>
 
 static sigsegv_dispatcher dispatcher;

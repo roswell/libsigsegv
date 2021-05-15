@@ -34,7 +34,7 @@
 # define sigprocmask(how,set,oldset)
 #endif
 
-#include "mmaputil.h"
+#include "mmap-anon-util.h"
 #include <stddef.h> /* needed for NULL on SunOS4 */
 #include <stdlib.h> /* for abort, exit */
 #include <signal.h>
