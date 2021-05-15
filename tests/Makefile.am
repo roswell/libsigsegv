@@ -24,7 +24,8 @@ TESTS = \
   test-catch-segv1 \
   test-catch-segv2 \
   test-segv-dispatcher1 \
-  stackoverflow1 stackoverflow2
+  test-catch-stackoverflow1 \
+  stackoverflow2
 
 EXTRA_DIST = mmap-anon-util.h altstack-util.h
 
@@ -35,7 +36,8 @@ noinst_PROGRAMS = \
   test-catch-segv1 \
   test-catch-segv2 \
   test-segv-dispatcher1 \
-  stackoverflow1 stackoverflow2
+  test-catch-stackoverflow1 \
+  stackoverflow2
 
 if CYGWIN
 TESTS += cygwin1
