@@ -22,8 +22,9 @@ AUTOMAKE_OPTIONS = 1.11 gnits no-dependencies color-tests
 
 TESTS = \
   test-catch-segv1 \
+  test-catch-segv2 \
   test-segv-dispatcher1 \
-  sigsegv3 stackoverflow1 stackoverflow2
+  stackoverflow1 stackoverflow2
 
 EXTRA_DIST = mmap-anon-util.h altstack-util.h
 
@@ -32,8 +33,9 @@ DEFS = @DEFS@
 LDADD = ../src/libsigsegv.la
 noinst_PROGRAMS = \
   test-catch-segv1 \
+  test-catch-segv2 \
   test-segv-dispatcher1 \
-  sigsegv3 stackoverflow1 stackoverflow2
+  stackoverflow1 stackoverflow2
 
 if CYGWIN
 TESTS += cygwin1
