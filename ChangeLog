@@ -1,5 +1,11 @@
 2021-05-15  Bruno Haible  <bruno@clisp.org>
 
+	Avoid warning on systems with musl libc.
+	* src/stackvma-mincore.c (pageinfo_t): Treat all libcs on Linux like
+	glibc.
+
+2021-05-15  Bruno Haible  <bruno@clisp.org>
+
 	Rename test files.
 	* tests/test-catch-segv1.c: Renamed from tests/sigsegv1.c.
 	* tests/test-catch-segv2.c: Renamed from tests/sigsegv3.c.

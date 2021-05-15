@@ -54,9 +54,9 @@ typedef caddr_t MINCORE_ADDR_T;
 typedef void* MINCORE_ADDR_T;
 #endif
 
-/* The glibc declaration of mincore() uses 'unsigned char *', whereas the BSD
-   declaration uses 'char *'.  */
-#if __GLIBC__ >= 2 || defined __ANDROID__
+/* The glibc and musl declaration of mincore() uses 'unsigned char *', whereas
+   the BSD declaration uses 'char *'.  */
+#if __GLIBC__ >= 2 || defined __linux__ || defined __ANDROID__
 typedef unsigned char pageinfo_t;
 #else
 typedef char pageinfo_t;
