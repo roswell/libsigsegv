@@ -19,7 +19,8 @@
 
 /* On Solaris 11.3/SPARC, both in 32-bit and 64-bit mode, when catching
    stack overflow, the fault address is correct the first time, but is zero
-   or near zero the second time.  'truss tests/stackoverflow1' shows it:
+   or near zero the second time.  'truss tests/test-catch-stackoverflow1'
+   shows it:
 
    In 32-bit mode:
 

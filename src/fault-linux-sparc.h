@@ -1,5 +1,5 @@
 /* Fault handler information.  Linux/SPARC version when it supports POSIX.
-   Copyright (C) 2009, 2017  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2009, 2017, 2021  Bruno Haible <bruno@clisp.org>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -42,9 +42,9 @@
 #endif
 
 /* The sip->si_addr field is correct for a normal fault, but unusable in case
-   of a stack overflow. What I observe (when running tests/stackoverflow1, with
-   a printf right at the beginning of sigsegv_handler) is that sip->si_addr is
-   near 0:
+   of a stack overflow. What I observe (when running
+   tests/test-catch-stackoverflow1, with a printf right at the beginning of
+   sigsegv_handler) is that sip->si_addr is near 0:
      - in 64-bit mode: sip->si_addr = 0x000000000000030F, and gdb shows me that
        the fault occurs in an instruction 'stx %o3,[%fp+0x30f]' and %fp is 0.
        In fact, all registers %l0..%l7 and %i0..%i7 are 0.

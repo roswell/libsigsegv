@@ -1,5 +1,18 @@
 2021-05-15  Bruno Haible  <bruno@clisp.org>
 
+	Rename test files.
+	* tests/test-catch-segv1.c: Renamed from tests/sigsegv1.c.
+	* tests/test-catch-segv2.c: Renamed from tests/sigsegv3.c.
+	* tests/test-catch-stackoverflow1.c: Renamed from
+	tests/stackoverflow1.c.
+	* tests/test-catch-stackoverflow2.c: Renamed from
+	tests/stackoverflow2.c.
+	* tests/test-segv-dispatcher1.c: Renamed from tests/sigsegv2.c.
+	* tests/altstack-util.h: Renamed from tests/altstack.h.
+	* tests/mmap-anon-util.h: Renamed from tests/mmaputil.h.
+
+2021-05-15  Bruno Haible  <bruno@clisp.org>
+
 	Improve comments.
 	* src/handler-unix.c: Mention Solaris 11 stack_violation().
 	* src/fault.h: SIGSEGV_FAULT_ADDRESS is not mandatory.

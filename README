@@ -26,9 +26,9 @@ This library supports three sets of functions, all defined in <sigsegv.h>:
 Each of the three APIs can be used independently or simultaneously.
 For examples of the use of the APIs, see:
 
-  - Global SIGSEGV handlers: see tests/sigsegv1.c.
-  - Local SIGSEGV handlers: see tests/sigsegv2.c.
-  - Stack overflow handlers: see tests/stackoverflow1.c.
+  - Global SIGSEGV handlers: see tests/test-catch-segv1.c.
+  - Local SIGSEGV handlers: see tests/test-segv-dispatcher1.c.
+  - Stack overflow handlers: see tests/test-catch-stackoverflow1.c.
 
 
 About portability.
