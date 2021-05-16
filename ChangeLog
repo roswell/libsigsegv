@@ -1,5 +1,15 @@
 2021-05-16  Bruno Haible  <bruno@clisp.org>
 
+	Drop supporting outdated way of building on native Windows.
+	* autogen.sh: Don't create config.h.msvc, src/sigsegv.h.msvc.
+	* Makefile.msvc: Remove file.
+	* Makefile.am (EXTRA_DIST): Remove Makefile.msvc, config.h.msvc.
+	(config.h.msvc): Remove rule.
+	* src/Makefile.am (EXTRA_DIST): Remove sigsegv.h.msvc.
+	(sigsegv.h.msvc): Remove rule.
+
+2021-05-16  Bruno Haible  <bruno@clisp.org>
+
 	Moved sigaltstack.m4 and stack-direction.m4 to gnulib.
 	* m4/sigaltstack.m4: Remove file.
 	* m4/stack-direction.m4: Remove file.

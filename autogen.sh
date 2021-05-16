@@ -75,9 +75,3 @@ autoheader && touch config.h.in
 automake --add-missing --copy
 # Get rid of autom4te.cache directory.
 rm -rf autom4te.cache
-
-# Generate config.h.msvc, src/sigsegv.h.msvc.
-./configure \
-  && make config.h.msvc \
-  && (cd src && make sigsegv.h.msvc) \
-  && make distclean

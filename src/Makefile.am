@@ -70,8 +70,7 @@ EXTRA_DIST = \
   stackvma-none.c stackvma-simple.c stackvma-linux.c stackvma-freebsd.c \
   stackvma-netbsd.c stackvma-procfs.c stackvma-beos.c stackvma-mach.c \
   stackvma-mquery.c stackvma-mincore.c stackvma-rofile.c stackvma-vma-iter.c \
-  leave-none.c leave-nop.c leave-sigaltstack.c leave-setcontext.c \
-  sigsegv.h.msvc
+  leave-none.c leave-nop.c leave-sigaltstack.c leave-setcontext.c
 
 AM_CPPFLAGS = -I. -I$(srcdir)
 DEFS = @DEFS@
@@ -108,14 +107,3 @@ uninstall-local:
 
 
 DISTCLEANFILES = sigsegv.h
-
-
-# Rules for "make dist".
-
-sigsegv.h.msvc : sigsegv.h.in
-	sed -e 's/@''FAULT_CONTEXT_INCLUDE''@/#include <windows.h>/' \
-	    -e 's/@''FAULT_CONTEXT''@/CONTEXT/' \
-	    -e 's/@''HAVE_SIGSEGV_RECOVERY''@/1/' \
-	    -e 's/@''HAVE_STACK_OVERFLOW_RECOVERY''@/1/' \
-	    < $(srcdir)/sigsegv.h.in > $@
-
