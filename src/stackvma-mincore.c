@@ -27,7 +27,6 @@
      - NetBSD,  since NetBSD 3.0 (at least),     1
      - OpenBSD, since OpenBSD 2.6 (at least),    1
      - AIX,     since AIX 5.3,                   1
-     - IRIX.
    As of 2019, also on
      - Hurd.
    However, while the API allows to easily determine the bounds of mapped
