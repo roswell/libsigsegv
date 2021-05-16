@@ -1,5 +1,12 @@
 2021-05-16  Bruno Haible  <bruno@clisp.org>
 
+	Moved sigaltstack.m4 and stack-direction.m4 to gnulib.
+	* m4/sigaltstack.m4: Remove file.
+	* m4/stack-direction.m4: Remove file.
+	* autogen.sh: Copy the two files from gnulib.
+
+2021-05-16  Bruno Haible  <bruno@clisp.org>
+
 	Avoid compiler warning.
 	* src/stackvma-netbsd.c (sigsegv_get_vma): Avoid unreachable statement.
 

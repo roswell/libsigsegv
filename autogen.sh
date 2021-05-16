@@ -54,6 +54,8 @@ if test $skip_gnulib = false; then
     exit 1
   }
   $GNULIB_TOOL --copy-file m4/relocatable-lib.m4
+  $GNULIB_TOOL --copy-file m4/sigaltstack.m4
+  $GNULIB_TOOL --copy-file m4/stack-direction.m4
   # Fetch config.guess, config.sub.
   for file in config.guess config.sub; do
     $GNULIB_TOOL --copy-file build-aux/$file; chmod a+x build-aux/$file
