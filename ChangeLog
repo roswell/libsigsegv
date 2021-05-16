@@ -1,3 +1,8 @@
+2021-05-16  Bruno Haible  <bruno@clisp.org>
+
+	Avoid compiler warning.
+	* src/stackvma-netbsd.c (sigsegv_get_vma): Avoid unreachable statement.
+
 2021-05-15  Bruno Haible  <bruno@clisp.org>
 
 	Avoid warning on systems with musl libc.

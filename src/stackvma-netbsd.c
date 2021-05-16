@@ -131,6 +131,7 @@ sigsegv_get_vma (uintptr_t address, struct vma_struct *vma)
 
 #if HAVE_MINCORE
   return mincore_get_vma (address, vma);
-#endif
+#else
   return -1;
+#endif
 }
