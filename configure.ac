@@ -640,7 +640,7 @@ else
       ;;
     macos* | darwin*)
       case "$host_cpu" in
-        i?86 | x86_64) CFG_FAULT=fault-macos-i386.h ;;
+        i?86 | x86_64) CFG_FAULT=fault-macos-i386-old.h ;;
       esac
       FAULT_CONTEXT='struct sigcontext'
       ;;

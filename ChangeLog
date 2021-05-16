@@ -1,5 +1,12 @@
 2021-05-16  Bruno Haible  <bruno@clisp.org>
 
+	Rename fault-macos-i386.h to fault-macos-i386-old.h.
+	* src/fault-macos-i386-old.h: Renamed from src/fault-macos-i386.h.
+	* configure.ac (CFG_FAULT): Update.
+	* src/Makefile.am (noinst_HEADERS): Likewise.
+
+2021-05-16  Bruno Haible  <bruno@clisp.org>
+
 	Simplify inclusion of stackvma-mincore.c.
 	* src/stackvma-mincore.c (mincore_get_vma): Renamed from
 	sigsegv_get_vma.
