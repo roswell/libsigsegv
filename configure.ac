@@ -132,11 +132,12 @@ dnl Requires AC_CANONICAL_HOST, SV_MMAP_ANON.
 
 # How to write a SIGSEGV handler with access to the fault address.
 
-# On MacOS X 10.2 or newer, we don't need these tests, because we'll end up
+# On MacOS X 10.2 to 10.12, we don't need these tests, because we'll end up
 # using handler-macos.c anyway. If we were to perform the tests, 5 Crash Report
 # dialog windows would pop up.
+# Starting with MacOS X 10.13 (at least), handler-unix.c works fine too.
 case "$host_os" in
-  macos* | darwin[[6-9]]* | darwin[[1-9]][[0-9]]*) ;;
+  macos* | darwin[[6-9]]* | darwin1[[0-6]]*) ;;
   *)
 
 dnl FIXME: Put in some more known values into the third argument.
@@ -367,6 +368,16 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_posix" = yes; then
           FAULT_CONTEXT='struct sigcontext'
           ;;
       esac
+      ;;
+    darwin*)
+      case "$host_cpu" in
+        aarch64*) CFG_FAULT=fault-macos-arm64.h ;;
+        i?86 | x86_64) CFG_FAULT=fault-macos-i386.h ;;
+        powerpc* | rs6000) CFG_FAULT=fault-macos-powerpc.h ;;
+        *) CFG_FAULT=fault-macos.h ;;
+      esac
+      FAULT_CONTEXT='ucontext_t'
+      FAULT_CONTEXT_INCLUDE='#include <sys/ucontext.h>'
       ;;
     haiku*)
       case "$host_cpu" in

@@ -1,5 +1,16 @@
 2021-05-16  Bruno Haible  <bruno@clisp.org>
 
+	Simplify: Use the POSIX API instead of Mach API on newer macOS versions.
+	* src/fault-macos.h: New file.
+	* src/fault-macos-arm64.h: New file.
+	* src/fault-macos-i386.h: New file.
+	* src/fault-macos-powerpc.h: New file.
+	* src/Makefile.am (noinst_HEADERS): Add them.
+	* configure.ac (CFG_FAULT): On macOS 10.13 or newer, use fault-macos*.h
+	and handler-unix.c, instead of handler-macos.c.
+
+2021-05-16  Bruno Haible  <bruno@clisp.org>
+
 	Rename fault-macos-i386.h to fault-macos-i386-old.h.
 	* src/fault-macos-i386-old.h: Renamed from src/fault-macos-i386.h.
 	* configure.ac (CFG_FAULT): Update.

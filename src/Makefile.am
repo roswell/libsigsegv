@@ -48,6 +48,7 @@ noinst_HEADERS = \
   fault-linux-sh.h fault-linux-sh-old.h \
   fault-linux-sparc.h fault-linux-sparc-old.h \
   fault-linux-x86_64-old.h \
+  fault-macos.h fault-macos-arm64.h fault-macos-i386.h fault-macos-powerpc.h \
   fault-macos-i386-old.h \
   fault-macosdarwin5-powerpc.h fault-macosdarwin5-powerpc.c \
   fault-macosdarwin7-powerpc.h fault-macosdarwin7-powerpc.c \
