@@ -1,5 +1,21 @@
 2021-05-16  Bruno Haible  <bruno@clisp.org>
 
+	Simplify inclusion of stackvma-mincore.c.
+	* src/stackvma-mincore.c (mincore_get_vma): Renamed from
+	sigsegv_get_vma.
+	* src/stackvma-linux.c: No need to define 'sigsegv_get_vma' and 'STATIC'
+	macros before including stackvma-mincore.c.
+	* src/stackvma-freebsd.c: Likewise.
+	* src/stackvma-netbsd.c: Likewise.
+	* src/stackvma-mquery.c: Likewise.
+	* src/stackvma-procfs.c: Likewise.
+	* src/stackvma-aix.c: New file.
+	* src/Makefile.am (EXTRA_DIST): Add it.
+	* configure.ac (CFG_STACKVMA): Set to stackvma-aix.c instead of
+	stackvma-mincore.c.
+
+2021-05-16  Bruno Haible  <bruno@clisp.org>
+
 	Drop supporting outdated way of building on native Windows.
 	* autogen.sh: Don't create config.h.msvc, src/sigsegv.h.msvc.
 	* Makefile.msvc: Remove file.

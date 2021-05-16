@@ -33,10 +33,7 @@
 #include "stackvma-simple.c"
 
 #if HAVE_MINCORE
-# define sigsegv_get_vma mincore_get_vma
-# define STATIC static
 # include "stackvma-mincore.c"
-# undef sigsegv_get_vma
 #else
 /* Cache for getpagesize().  */
 static uintptr_t pagesize;

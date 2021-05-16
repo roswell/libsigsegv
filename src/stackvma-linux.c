@@ -1,5 +1,5 @@
 /* Determine the virtual memory area of a given address.  Linux version.
-   Copyright (C) 2002, 2006, 2008, 2016-2017  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002, 2006, 2008, 2016-2017, 2021  Bruno Haible <bruno@clisp.org>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -21,10 +21,7 @@
 #include "stackvma-rofile.c"
 
 #if HAVE_MINCORE
-# define sigsegv_get_vma mincore_get_vma
-# define STATIC static
 # include "stackvma-mincore.c"
-# undef sigsegv_get_vma
 #endif
 
 struct callback_locals

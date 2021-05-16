@@ -749,7 +749,7 @@ if test "$use_stackvma" != no; then
     CFG_STACKVMA=stackvma-mquery.c
   fi
   if test -z "$CFG_STACKVMA" && test $ac_cv_func_mincore = yes; then
-    CFG_STACKVMA=stackvma-mincore.c
+    CFG_STACKVMA=stackvma-aix.c
   fi
   if test -n "$CFG_STACKVMA"; then
     AC_DEFINE([HAVE_STACKVMA], [1],

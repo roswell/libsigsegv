@@ -1,5 +1,5 @@
 /* Determine the virtual memory area of a given address.  FreeBSD version.
-   Copyright (C) 2002-2003, 2006, 2008, 2011, 2016-2017  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002-2003, 2006, 2008, 2011, 2016-2017, 2021  Bruno Haible <bruno@clisp.org>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -26,10 +26,7 @@
 #endif
 
 #if HAVE_MINCORE
-# define sigsegv_get_vma mincore_get_vma
-# define STATIC static
 # include "stackvma-mincore.c"
-# undef sigsegv_get_vma
 #endif
 
 struct callback_locals

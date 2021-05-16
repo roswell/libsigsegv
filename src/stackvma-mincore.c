@@ -282,11 +282,8 @@ mincore_is_near_this (uintptr_t addr, struct vma_struct *vma)
 
 #endif
 
-#ifdef STATIC
-STATIC
-#endif
-int
-sigsegv_get_vma (uintptr_t address, struct vma_struct *vma)
+static int
+mincore_get_vma (uintptr_t address, struct vma_struct *vma)
 {
   if (pagesize == 0)
     init_pagesize ();

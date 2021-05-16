@@ -40,14 +40,11 @@
 # define mapped_range_start mincore_mapped_range_start
 # define mapped_range_end mincore_mapped_range_end
 # define is_unmapped mincore_is_unmapped
-# define sigsegv_get_vma mincore_get_vma
-# define STATIC static
 # include "stackvma-mincore.c"
 # undef is_mapped
 # undef mapped_range_start
 # undef mapped_range_end
 # undef is_unmapped
-# undef sigsegv_get_vma
 # define is_mapped mquery_is_mapped
 # define mapped_range_start mquery_mapped_range_start
 # define mapped_range_end mquery_mapped_range_end
