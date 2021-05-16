@@ -1,5 +1,20 @@
 2021-05-16  Bruno Haible  <bruno@clisp.org>
 
+	On Cygwin, use the sigaltstack-based approach by default.
+	* src/fault-cygwin.h: New file.
+	* src/fault-cygwin-i386.h: New file.
+	* src/stackvma-cygwin.c: New file, based on src/stackvma-netbsd.c.
+	* src/stackvma-vma-iter.c: Enable /proc-reading code also on Cygwin.
+	* src/Makefile.am (noinst_HEADERS): Add fault-cygwin.h,
+	fault-cygwin-i386.h.
+	(EXTRA_DIST): Add stackvma-cygwin.c.
+	* configure.ac: Use fault-cygwin-i386.h instead of
+	fault-posix-ucontext.h. Add --enable-support-old-cygwin option. When it
+	is not specified, use handler-unix.c and stackvma-cygwin.c
+	* NEWS: Mention that 64-bit Cygwin is now supported.
+
+2021-05-16  Bruno Haible  <bruno@clisp.org>
+
 	Simplify: Use the POSIX API instead of Mach API on newer macOS versions.
 	* src/fault-macos.h: New file.
 	* src/fault-macos-arm64.h: New file.

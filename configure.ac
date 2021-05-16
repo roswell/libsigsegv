@@ -132,6 +132,13 @@ dnl Requires AC_CANONICAL_HOST, SV_MMAP_ANON.
 
 # How to write a SIGSEGV handler with access to the fault address.
 
+# Cygwin >= 2.1 supports sigaltstack().  For older versions of Cygwin,
+# a Windows API based handler is needed, with complex code to make EFAULT work.
+# Use the simpler approach by default.
+AC_ARG_ENABLE([support-old-cygwin],
+  [AS_HELP_STRING([--enable-support-old-cygwin],
+                  [enable support of Cygwin older than 2.1 (2015)])])
+
 # On MacOS X 10.2 to 10.12, we don't need these tests, because we'll end up
 # using handler-macos.c anyway. If we were to perform the tests, 5 Crash Report
 # dialog windows would pop up.
@@ -478,6 +485,16 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_posix" = yes; then
               ;;
           esac
           ;;
+        cygwin*)
+          case "$host_cpu" in
+            i?86* | x86_64*)
+              CFG_FAULT=fault-cygwin-i386.h
+              ;;
+            *)
+              CFG_FAULT=fault-cygwin.h
+              ;;
+          esac
+          ;;
         *)
           CFG_FAULT=fault-posix-ucontext.h
           ;;
@@ -585,16 +602,18 @@ case "$host_os" in
     CFG_FAULT=fault-win32.h # nonexistent, just a dummy
     ;;
   cygwin*)
-    FAULT_CONTEXT='struct _CONTEXT'
-    # CONTEXT is defined in <windows.h>, but cygwin programs should not
-    # normally inspect the contents of CONTEXT, and the outright inclusion
-    # of <windows.h> pollutes the namespace.
-    FAULT_CONTEXT_INCLUDE='struct _CONTEXT;'
-    # Cygwin 1.7 uses fault-posix.h. Cygwin 1.5.x needs a hacky workaround.
-    if test -z "$CFG_FAULT"; then
-      CFG_FAULT=fault-cygwin-old.h
-      AC_DEFINE([OLD_CYGWIN_WORKAROUND], [1],
-        [Define to 1 on Cygwin versions older than 1.7.])
+    if test "$enable_support_old_cygwin" = yes; then
+      FAULT_CONTEXT='struct _CONTEXT'
+      # CONTEXT is defined in <windows.h>, but cygwin programs should not
+      # normally inspect the contents of CONTEXT, and the outright inclusion
+      # of <windows.h> pollutes the namespace.
+      FAULT_CONTEXT_INCLUDE='struct _CONTEXT;'
+      # Cygwin 1.7 uses fault-posix.h. Cygwin 1.5.x needs a hacky workaround.
+      if test -z "$CFG_FAULT"; then
+        CFG_FAULT=fault-cygwin-old.h
+        AC_DEFINE([OLD_CYGWIN_WORKAROUND], [1],
+          [Define to 1 on Cygwin versions older than 1.7.])
+      fi
     fi
     ;;
 esac
@@ -746,6 +765,10 @@ if test "$use_stackvma" != no; then
       freebsd* | kfreebsd*-gnu* | dragonfly*)
                              CFG_STACKVMA=stackvma-freebsd.c ;;
       netbsd*)               CFG_STACKVMA=stackvma-netbsd.c ;;
+      cygwin*)               if test "$enable_support_old_cygwin" != yes; then
+                               CFG_STACKVMA=stackvma-cygwin.c
+                             fi
+                             ;;
       beos* | haiku*)        CFG_STACKVMA=stackvma-beos.c ;;
       macos* | darwin*)      CFG_STACKVMA=stackvma-mach.c ;;
       dnl About gnu*): GNU/Hurd provides a /proc/self/maps file that is similar
@@ -1018,18 +1041,21 @@ dnl Requires AC_CANONICAL_HOST, CFG_HANDLER / CFG_FAULT / etc.,
 dnl HAVE_SIGSEGV_RECOVERY, HAVE_STACK_OVERFLOW_RECOVERY.
 
 case "$host_os" in
-  mingw* | cygwin*) CFG_HANDLER=handler-win32.c ;;
-  *)
-    if test -z "$CFG_HANDLER"; then
-      if test $sv_cv_have_sigsegv_recovery = no \
-         && test $sv_cv_have_stack_overflow_recovery = no; then
-        CFG_HANDLER=handler-none.c
-      else
-        CFG_HANDLER=handler-unix.c
-      fi
+  mingw*) CFG_HANDLER=handler-win32.c ;;
+  cygwin*)
+    if test "$enable_support_old_cygwin" = yes; then
+      CFG_HANDLER=handler-win32.c
     fi
     ;;
 esac
+if test -z "$CFG_HANDLER"; then
+  if test $sv_cv_have_sigsegv_recovery = no \
+     && test $sv_cv_have_stack_overflow_recovery = no; then
+    CFG_HANDLER=handler-none.c
+  else
+    CFG_HANDLER=handler-unix.c
+  fi
+fi
 AC_DEFINE_UNQUOTED([CFG_HANDLER], ["$CFG_HANDLER"],
   [The name of the file implementing the handler functionality.])
 AC_SUBST([CFG_HANDLER])

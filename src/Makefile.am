@@ -25,7 +25,7 @@ lib_LTLIBRARIES = libsigsegv.la
 noinst_HEADERS = \
   fault.h fault-aix3.h fault-aix3-powerpc.h fault-aix5.h fault-aix5-powerpc.h \
   fault-beos.h fault-beos-i386.h \
-  fault-cygwin-old.h \
+  fault-cygwin.h fault-cygwin-i386.h fault-cygwin-old.h \
   fault-bsd.h \
   fault-freebsd-arm.h \
   fault-freebsd-i386.h \
@@ -69,8 +69,8 @@ noinst_HEADERS = \
 EXTRA_DIST = \
   handler-none.c handler-unix.c handler-macos.c handler-win32.c \
   stackvma-none.c stackvma-simple.c stackvma-linux.c stackvma-freebsd.c \
-  stackvma-netbsd.c stackvma-aix.c stackvma-procfs.c stackvma-beos.c \
-  stackvma-mach.c stackvma-mquery.c \
+  stackvma-netbsd.c stackvma-aix.c stackvma-procfs.c stackvma-cygwin.c \
+  stackvma-beos.c stackvma-mach.c stackvma-mquery.c \
   stackvma-mincore.c stackvma-rofile.c stackvma-vma-iter.c \
   leave-none.c leave-nop.c leave-sigaltstack.c leave-setcontext.c
 
