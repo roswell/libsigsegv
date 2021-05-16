@@ -375,6 +375,7 @@ x86_64-unknown-freebsd10.4                       |   yes   |   yes   | 2.13
 x86_64-unknown-freebsd11.0                       |   yes   |   yes   | 2.13
 x86_64-unknown-freebsd11.1                       |   yes   |   yes   | 2.13
 x86_64-unknown-freebsd12.0                       |   yes   |   yes   | 2.13
+x86_64-unknown-freebsd13.0                       |   yes   |   yes   | 2.13+
 x86_64-unknown-freebsd-trident1903               |   yes   |   yes   | 2.13
 x86_64-unknown-kfreebsd6.2-gnu-glibc2.6          |   yes   |   yes   | 2.5+
 x86_64-unknown-kfreebsd9.0-gnu-glibc2.13         |   yes   |   yes   | 2.13
