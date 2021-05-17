@@ -1,5 +1,14 @@
 2021-05-16  Bruno Haible  <bruno@clisp.org>
 
+	Avoid compilation error with glibc >= 2.34.
+	* lib/sigsegv.h.in (SIGSTKSZ): On glibc systems, redefine to a suitable
+	constant.
+	* m4/sigaltstack-longjmp.m4 (SV_TRY_LEAVE_HANDLER_LONGJMP): Likewise.
+	* m4/sigaltstack-siglongjmp.m4 (SV_TRY_LEAVE_HANDLER_SIGLONGJMP):
+	Likewise.
+
+2021-05-16  Bruno Haible  <bruno@clisp.org>
+
 	On Cygwin, use the sigaltstack-based approach by default.
 	* src/fault-cygwin.h: New file.
 	* src/fault-cygwin-i386.h: New file.

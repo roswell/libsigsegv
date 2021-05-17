@@ -1,5 +1,5 @@
-# sigaltstack-longjmp.m4 serial 6 (libsigsegv-2.7)
-dnl Copyright (C) 2002-2003, 2006, 2008 Bruno Haible <bruno@clisp.org>
+# sigaltstack-longjmp.m4 serial 7 (libsigsegv-2.14)
+dnl Copyright (C) 2002-2003, 2006, 2008, 2021 Bruno Haible <bruno@clisp.org>
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
 dnl Public License, this file may be distributed as part of a program
@@ -26,6 +26,16 @@ $4
 # include <sys/types.h>
 # include <sys/time.h>
 # include <sys/resource.h>
+#endif
+/* In glibc >= 2.34, when _GNU_SOURCE is defined, SIGSTKSZ is no longer a
+   compile-time constant.  But we need a simple constant here.  */
+#if __GLIBC__ >= 2
+# undef SIGSTKSZ
+# if defined __ia64__
+#  define SIGSTKSZ 262144
+# else
+#  define SIGSTKSZ 16384
+# endif
 #endif
 #ifndef SIGSTKSZ
 # define SIGSTKSZ 16384
