@@ -74,7 +74,7 @@ callback (struct callback_locals *locals, uintptr_t start, uintptr_t end)
    the iteration terminates prematurely.
    This function may open file descriptors, but does not call malloc().
    Return 0 if all went well, or -1 in case of error.  */
-/* This code is a simplied copy (no handling of protection flags) of the
+/* This code is a simplified copy (no handling of protection flags) of the
    code in gnulib's lib/vma-iter.c.  */
 static int
 vma_iterate (struct callback_locals *locals)

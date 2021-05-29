@@ -1,3 +1,10 @@
+2021-05-29  Bruno Haible  <bruno@clisp.org>
+
+	Fix typo in comment.
+	* src/stackvma-procfs.c: Fix typo in comment, found by Paul Eggert.
+	* src/stackvma-vma-iter.c: Likewise.
+	* src/stackvma-beos.c: Likewise.
+
 2021-05-16  Bruno Haible  <bruno@clisp.org>
 
 	Avoid compilation error with glibc >= 2.34.
