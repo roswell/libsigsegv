@@ -1,3 +1,11 @@
+2021-06-09  Bruno Haible  <bruno@clisp.org>
+
+	tests: Hide a null pointer from the compiler's optimizations.
+	Patch by Paul Eggert.
+	* tests/test-catch-stackoverflow2.c (null_pointer_to_volatile_int): New
+	variable.
+	(main): Use it.
+
 2021-06-06  Bruno Haible  <bruno@clisp.org>
 
 	Avoid a gcc warning "declaration of 'sig' shadows a parameter".
