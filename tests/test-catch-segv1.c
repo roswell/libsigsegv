@@ -38,7 +38,7 @@ uintptr_t page;
 
 volatile int handler_called = 0;
 
-int
+static int
 handler (void *fault_address, int serious)
 {
   handler_called++;
@@ -52,7 +52,7 @@ handler (void *fault_address, int serious)
   return 0;
 }
 
-void
+static void
 crasher (uintptr_t p)
 {
   *(volatile int *) (p + 0x678) = 42;
