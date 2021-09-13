@@ -6,6 +6,8 @@ New in 2.14:
 
 * Added support for MidnightBSD.
 
+* Improved support for OpenBSD/PowerPC64.
+
 New in 2.13:
 
 * Added support for macOS/arm64.

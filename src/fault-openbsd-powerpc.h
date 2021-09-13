@@ -1,5 +1,5 @@
 /* Fault handler information.  OpenBSD/PowerPC version.
-   Copyright (C) 2010  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2010-2021  Bruno Haible <bruno@clisp.org>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -16,7 +16,18 @@
 
 #include "fault-openbsd.h"
 
+#if defined(__powerpc64__) || defined(_ARCH_PPC64) /* 64-bit */
+
+/* See the definition of 'struct sigcontext' in
+   openbsd-src/sys/arch/powerpc64/include/signal.h.  */
+
+# define SIGSEGV_FAULT_STACKPOINTER  scp->sc_sp
+
+#else /* 32-bit */
+
 /* See the definition of 'struct sigcontext' and 'struct trapframe' in
    openbsd-src/sys/arch/powerpc/include/signal.h.  */
 
-#define SIGSEGV_FAULT_STACKPOINTER  scp->sc_frame.fixreg[1]
+# define SIGSEGV_FAULT_STACKPOINTER  scp->sc_frame.fixreg[1]
+
+#endif
