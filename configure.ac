@@ -1,7 +1,7 @@
 dnl Autoconf configuration for libsigsegv.
 dnl Process this file with autoconf to produce a configure script.
 dnl
-dnl Copyright (C) 2002-2021  Bruno Haible <bruno@clisp.org>
+dnl Copyright (C) 2002-2022  Bruno Haible <bruno@clisp.org>
 dnl
 dnl This program is free software: you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
@@ -455,6 +455,9 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_posix" = yes; then
               ;;
             ia64)
               CFG_FAULT=fault-linux-ia64.h
+              ;;
+            loongarch64)
+              CFG_FAULT=fault-linux-loongarch.h
               ;;
             m68*)
               CFG_FAULT=fault-linux-m68k.h

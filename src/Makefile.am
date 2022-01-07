@@ -1,5 +1,5 @@
 ## Makefile for libsigsegv/src.
-## Copyright (C) 2002-2006, 2008-2011, 2016-2018, 2021 Bruno Haible <bruno@clisp.org>
+## Copyright (C) 2002-2006, 2008-2011, 2016-2018, 2021-2022 Bruno Haible <bruno@clisp.org>
 ##
 ## This program is free software: you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -39,6 +39,7 @@ noinst_HEADERS = \
   fault-linux-hppa.h fault-linux-hppa-old.h \
   fault-linux-i386.h fault-linux-i386-old.h fault-linux-i386-oldold.h \
   fault-linux-ia64.h fault-linux-ia64-old.h \
+  fault-linux-loongarch.h \
   fault-linux-m68k.h fault-linux-m68k-old.h fault-linux-m68k-old.c \
   fault-linux-mips.h fault-linux-mips-old.h \
   fault-linux-nds32.h \

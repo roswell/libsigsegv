@@ -2,6 +2,8 @@ New in 2.14:
 
 * Added support for 64-bit Cygwin.
 
+* Improved support for Linux/LoongArch64.
+
 * Improved support for Solaris OpenIndiana.
 
 * Added support for MidnightBSD.
