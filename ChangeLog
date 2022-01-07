@@ -1,9 +1,18 @@
 2022-01-07  Bruno Haible  <bruno@clisp.org>
 
+	Prepare for version 2.14.
+	* configure.ac (AC_INIT): Bump version to 2.14.
+	* src/sigsegv.h.in (LIBSIGSEGV_VERSION): Likewise.
+	* README: Likewise.
+	* src/Makefile.am (LIBSIGSEGV_VERSION_INFO): Bump to 2:7:0.
+
+2022-01-07  Bruno Haible  <bruno@clisp.org>
+
 	Improve support for Linux/LoongArch64.
 	* src/fault-linux-loongarch.h: New file.
 	* src/Makefile.am (noinst_HEADERS): Add it.
 	* configure.ac (CFG_FAULT): Use this file on Linux/LoongArch64.
+	* NEWS: Mention it.
 
 2021-09-13  Bruno Haible  <bruno@clisp.org>
 
