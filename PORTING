@@ -189,6 +189,7 @@ ia64-unknown-linux2.6.9-gnu-glibc2.3             |   yes   |   yes   | 2.6
 ia64-unknown-linux2.6.18-gnu-glibc2.3            |   yes   |   yes   | 2.6
 ia64-unknown-linux2.6.16.27-gnu-glibc2.4         |   yes   |   yes   | 2.6
 ia64-unknown-linux2.6.18-gnu-glibc2.5            |   yes   |   yes   | 2.13
+loongarch64-unknown-linux5.15.0-gnu-glibc2.34    |   yes   |   yes   | 2.14
 mips-sgi-irix5.3                                 |   yes   |   yes   | 2.10
 mips-sgi-irix6.2                                 |   yes   |   yes   | 2.6+
 mips-sgi-irix6.5                                 |   yes   |   yes   | 2.13
@@ -205,6 +206,7 @@ mips64el-unknown-linux3.16.0-gnuabin32-glibc2.19 |   yes   |   yes   | 2.13
 mips64el-unknown-linux4.1.4-gnuabin32-glibc2.19  |   yes   |   yes   | 2.13
 mips64el-unknown-linux3.16.0-gnuabi64-glibc2.19  |   yes   |   yes   | 2.13
 mips64el-unknown-linux4.1.4-gnuabi64-glibc2.19   |   yes   |   yes   | 2.13
+mips64-unknown-openbsd6.9                        |   yes   |   yes   | 2.13
 nsr-tandem-nsk                                   |   no    |   no    | 2.1
 rs6000-ibm-aix3.2.5                              |   yes   |   no    | 2.2
 rs6000-ibm-aix4.2.0.0                            |   yes   |   yes   | 2.2
@@ -276,6 +278,7 @@ s390x-ibm-linux5.10.7-musl                       |   yes   |   yes   | 2.13
 sparc-unknown-linux2.4.32-gnu-glibc2.3           |   yes   |   no    | 2.1
 sparc-unknown-netbsdelf7.1                       |   yes   |   no    | 2.13
 sparc-unknown-openbsd3.9                         |   yes   |   no    | 2.4
+sparc-sun-sunos4.1.4                             |   yes   |   no    | 2.13
 sparc-sun-solaris2.5.1                           |   yes   |   yes   | 2.12
 sparc-sun-solaris2.6                             |   yes   |   yes   | 2.8
 sparc-sun-solaris2.7                             |   yes   |   yes   | 2.8
@@ -391,6 +394,7 @@ x86_64-unknown-dragonfly4.7                      |   yes   |   yes   | 2.12
 x86_64-unknown-dragonfly4.8                      |   yes   |   yes   | 2.12
 x86_64-unknown-dragonfly5.0                      |   yes   |   yes   | 2.12
 x86_64-unknown-dragonfly5.1                      |   yes   |   yes   | 2.12
+x86_64-unknown-dragonfly6.0                      |   yes   |   yes   | 2.13
 x86_64-unknown-netbsd3.0                         |   yes   |   yes   | 2.4
 x86_64-unknown-netbsd4.99.72                     |   yes   |   yes   | 2.5
 x86_64-unknown-netbsd6.1                         |   yes   |   yes   | 2.12
