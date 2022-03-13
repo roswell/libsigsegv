@@ -9,7 +9,7 @@
 #   - the GNULIB_SRCDIR environment variable pointing to a gnulib checkout, or
 #   - a preceding invocation of './gitsub.sh pull'.
 
-# Copyright (C) 2009-2021 Free Software Foundation, Inc.
+# Copyright (C) 2009-2022 Free Software Foundation, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -53,6 +53,7 @@ if test $skip_gnulib = false; then
     echo "*** gnulib-tool not found." 1>&2
     exit 1
   }
+  $GNULIB_TOOL --copy-file m4/musl.m4
   $GNULIB_TOOL --copy-file m4/relocatable-lib.m4
   $GNULIB_TOOL --copy-file m4/sigaltstack.m4
   $GNULIB_TOOL --copy-file m4/stack-direction.m4

@@ -1,3 +1,7 @@
+New in 2.15:
+
+* Added support for Linux/PowerPC (32-bit) with musl libc.
+
 New in 2.14:
 
 * Added support for 64-bit Cygwin.

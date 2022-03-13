@@ -75,6 +75,8 @@ AC_MSG_RESULT([$sv_cv_host])
 PLATFORM="$sv_cv_host"
 AC_SUBST([PLATFORM])
 
+gl_MUSL_LIBC
+
 dnl ========================== Done with PLATFORM ==========================
 
 
