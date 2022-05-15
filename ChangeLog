@@ -1,3 +1,13 @@
+2022-05-15  Bruno Haible  <bruno@clisp.org>
+
+	Switch to libtool 2.4.7.
+	* m4/libtool.m4: Update from libtool-2.4.7.
+	* m4/ltoptions.m4: Likewise.
+	* m4/ltsugar.m4: Likewise.
+	* m4/ltversion.m4: Likewise.
+	* m4/lt~obsolete.m4: Likewise.
+	* build-aux/ltmain.sh: Likewise.
+
 2022-03-13  Bruno Haible  <bruno@clisp.org>
 
 	Add support for Linux/PowerPC (32-bit) with musl libc.
