@@ -1,3 +1,11 @@
+2022-05-22  Bruno Haible  <bruno@clisp.org>
+
+	Add GNU Project notice.
+	* JOIN-GNU: New file. Inspired by a suggestion from José E. Marchesi
+	on the gnu-prog-discuss mailing list.
+	* README: Refer to it.
+	* Makefile.am (EXTRA_DIST): Add it.
+
 2022-05-15  Bruno Haible  <bruno@clisp.org>
 
 	Switch to libtool 2.4.7.
