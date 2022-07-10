@@ -754,13 +754,8 @@ if test "$use_stackvma" != no; then
   AC_CHECK_FUNCS([mquery mincore])
   CFG_STACKVMA=
   if test $sv_cv_procfsvma = yes; then
-    # Note: On AIX, there is a /proc/$pic/map file, that contains records of type
-    # prmap_t, defined in <sys/procfs.h>.  But it lists only the virtual memory
-    # areas that are connected to a file, not the anonymous ones.  Therefore, on
-    # this platform, stackvma-procfs.c returns bogus results, whereas
-    # stackvma-mincore.c returns correct ones.
     case "$host_os" in
-      aix*) ;;
+      aix*) CFG_STACKVMA=stackvma-aix.c ;;
       *) CFG_STACKVMA=stackvma-procfs.c ;;
     esac
   fi

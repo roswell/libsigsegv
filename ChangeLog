@@ -1,3 +1,15 @@
+2022-07-10  Bruno Haible  <bruno@clisp.org>
+
+	Optimize stackvma implementation for AIX 7.
+	Reported by Neha Jain <nehajain29@in.ibm.com> in
+	<https://lists.gnu.org/archive/html/bug-m4/2022-06/msg00005.html>
+	via Eric Blake.
+	* src/stackvma-aix.c: Add implementation that uses /proc/$pid/map,
+	based on src/stackvma-procfs.h and gnulib/lib/vma-iter.c.
+	(sigsegv_get_vma): Use it on AIX 7 or higher.
+	* configure.ac (CFG_STACKVMA): On AIX, use stackvma-aix.c always.
+	* NEWS: Mention the improvement.
+
 2022-05-22  Bruno Haible  <bruno@clisp.org>
 
 	Add GNU Project notice.
