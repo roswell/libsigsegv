@@ -6,6 +6,7 @@
 \#*#
 
 # Files brought in by gnulib-tool:
+m4/musl.m4
 m4/relocatable-lib.m4
 m4/sigaltstack.m4
 m4/stack-direction.m4
