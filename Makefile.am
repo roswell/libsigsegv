@@ -25,7 +25,9 @@ GNUMAKEFLAGS = -j1
 
 SUBDIRS = src tests
 
-EXTRA_DIST = ChangeLog.1 PORTING INSTALL.windows JOIN-GNU
+EXTRA_DIST = \
+  ChangeLog.1 PORTING INSTALL.windows HACKING JOIN-GNU \
+  autogen.sh
 
 DISTCLEANFILES = termbold termnorm
 

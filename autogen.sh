@@ -5,9 +5,6 @@
 # with new versions of autoconf or automake.
 #
 # This script requires autoconf-2.63..2.71 and automake-1.11..1.16.3 in the PATH.
-# If not used from a released tarball, it also requires either
-#   - the GNULIB_SRCDIR environment variable pointing to a gnulib checkout, or
-#   - a preceding invocation of './gitsub.sh pull'.
 
 # Copyright (C) 2009-2022 Free Software Foundation, Inc.
 #
@@ -24,44 +21,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Usage: ./autogen.sh [--skip-gnulib]
-
-skip_gnulib=false
-while :; do
-  case "$1" in
-    --skip-gnulib) skip_gnulib=true; shift;;
-    *) break ;;
-  esac
-done
-
-if test $skip_gnulib = false; then
-  if test -n "$GNULIB_SRCDIR"; then
-    test -d "$GNULIB_SRCDIR" || {
-      echo "*** GNULIB_SRCDIR is set but does not point to an existing directory." 1>&2
-      exit 1
-    }
-  else
-    GNULIB_SRCDIR=`pwd`/gnulib
-    test -d "$GNULIB_SRCDIR" || {
-      echo "*** Subdirectory 'gnulib' does not yet exist. Use './gitsub.sh pull' to create it, or set the environment variable GNULIB_SRCDIR." 1>&2
-      exit 1
-    }
-  fi
-  # Now it should contain a gnulib-tool.
-  GNULIB_TOOL="$GNULIB_SRCDIR/gnulib-tool"
-  test -f "$GNULIB_TOOL" || {
-    echo "*** gnulib-tool not found." 1>&2
-    exit 1
-  }
-  $GNULIB_TOOL --copy-file m4/musl.m4
-  $GNULIB_TOOL --copy-file m4/relocatable-lib.m4
-  $GNULIB_TOOL --copy-file m4/sigaltstack.m4
-  $GNULIB_TOOL --copy-file m4/stack-direction.m4
-  # Fetch config.guess, config.sub.
-  for file in config.guess config.sub; do
-    $GNULIB_TOOL --copy-file build-aux/$file; chmod a+x build-aux/$file
-  done
-fi
+# Prerequisite (if not used from a released tarball): ./autopull.sh
+# Usage: ./autogen.sh
 
 # Generate aclocal.m4.
 aclocal -I m4
@@ -76,3 +37,5 @@ autoheader && touch config.h.in
 automake --add-missing --copy
 # Get rid of autom4te.cache directory.
 rm -rf autom4te.cache
+
+echo "$0: done.  Now you can run './configure'."

@@ -4,7 +4,7 @@
 /missing
 /test-driver
 
-# Other files brought in by autogen.sh:
+# Other files brought in by autopull.sh:
 /config.guess
 /config.sub
 
