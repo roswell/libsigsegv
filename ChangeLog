@@ -1,5 +1,10 @@
 2022-07-18  Bruno Haible  <bruno@clisp.org>
 
+	Make autopull.sh more suited for continuous integration.
+	* autopull.sh: Support option --one-time.
+
+2022-07-18  Bruno Haible  <bruno@clisp.org>
+
 	Move gnulib-tool invocation back from autopull.sh to autogen.sh.
 	* autogen.sh: Revert last change. Improve comments.
 	* autopull.sh: Only call 'gitsub.sh pull'.
