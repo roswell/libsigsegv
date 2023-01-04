@@ -1,5 +1,5 @@
 /* Fault handler information.  MacOSX version.
-   Copyright (C) 1993-1999, 2002-2003, 2007-2008, 2016, 2018, 2020  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 1993-1999, 2002-2003, 2007-2008, 2016, 2018, 2020, 2023  Bruno Haible <bruno@clisp.org>
    Copyright (C) 2003  Paolo Bonzini <bonzini@gnu.org>
 
    This program is free software: you can redistribute it and/or modify
@@ -509,7 +509,7 @@ sigsegv_leave_handler (void (*continuation) (void*, void*, void*),
       {
         uintptr_t new_esp = SIGSEGV_STACK_POINTER (thread_state);
         new_esp &= -16; /* align */
-        new_esp -= sizeof (void *); *(void **)new_esp = SIGSEGV_FRAME_POINTER (thread_state); /* push %rbp */
+        new_esp -= sizeof (void *); *(void **)new_esp = (void *) SIGSEGV_FRAME_POINTER (thread_state); /* push %rbp */
         SIGSEGV_STACK_POINTER (thread_state) = new_esp;
         SIGSEGV_FRAME_POINTER (thread_state) = new_esp; /* mov %rsp,%rbp */
       }

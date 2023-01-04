@@ -1,3 +1,11 @@
+2023-01-04  Bruno Haible  <bruno@clisp.org>
+
+	Add support for macOS/x86_64 with clang 15.
+	Reported at <https://savannah.gnu.org/bugs/?63617>.
+	* src/handler-macos.c (sigsegv_leave_handler): Add a cast, to silence a
+	warning that became an error in clang 15.
+	* NEWS: Mention it.
+
 2022-07-18  Bruno Haible  <bruno@clisp.org>
 
 	Make autopull.sh more suited for continuous integration.
