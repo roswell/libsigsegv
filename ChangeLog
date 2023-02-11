@@ -1,3 +1,11 @@
+2023-02-11  Bruno Haible  <bruno@clisp.org>
+
+	Add support for clang 16 on OpenBSD and Mac OS X 10/PowerPC.
+	clang 16 will report an error for -Wincompatible-function-pointer-types
+	by default.
+	* src/handler-unix.c (install_for): Add a cast when assigning to
+	action.sa_sigaction.
+
 2023-01-04  Bruno Haible  <bruno@clisp.org>
 
 	Add support for macOS/x86_64 with clang 15.

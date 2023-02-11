@@ -1,5 +1,5 @@
 /* Fault handler information.  Unix version.
-   Copyright (C) 1993-1999, 2002-2003, 2006, 2008-2009, 2016-2017, 2021  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 1993-1999, 2002-2003, 2006, 2008-2009, 2016-2017, 2021, 2023  Bruno Haible <bruno@clisp.org>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -382,7 +382,7 @@ install_for (int sig)
   struct sigaction action;
 
 #ifdef SIGSEGV_FAULT_ADDRESS_FROM_SIGINFO
-  action.sa_sigaction = &sigsegv_handler;
+  action.sa_sigaction = (void (*) (int, siginfo_t *, void *)) &sigsegv_handler;
 #else
   action.sa_handler = (void (*) (int)) &sigsegv_handler;
 #endif
