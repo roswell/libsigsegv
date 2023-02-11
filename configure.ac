@@ -1,7 +1,7 @@
 dnl Autoconf configuration for libsigsegv.
 dnl Process this file with autoconf to produce a configure script.
 dnl
-dnl Copyright (C) 2002-2022  Bruno Haible <bruno@clisp.org>
+dnl Copyright (C) 2002-2023  Bruno Haible <bruno@clisp.org>
 dnl
 dnl This program is free software: you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
@@ -238,7 +238,7 @@ SV_TRY_FAULT([MacOSX/Darwin7 PowerPC], sv_cv_fault_macosdarwin7_ppc,
   [#include "$srcdir/src/fault-macosdarwin7-powerpc.c"],
   [int sig, siginfo_t *sip, ucontext_t *ucp],
   [get_fault_addr (sip, ucp)],
-  [action.sa_sigaction = &sigsegv_handler;
+  [action.sa_sigaction = (void (*) (int, siginfo_t *, void *)) &sigsegv_handler;
    action.sa_flags = SA_SIGINFO;])
 
 if test "$sv_cv_fault_macosdarwin7_ppc" != yes; then

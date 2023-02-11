@@ -1,5 +1,15 @@
 2023-02-11  Bruno Haible  <bruno@clisp.org>
 
+	Don't let configure tests fail due to the picky clang 16 compiler.
+	clang 16 will report an error for -Wincompatible-function-pointer-types
+	by default.
+	Reported by Sam James <sam@gentoo.org> in
+	<https://savannah.gnu.org/bugs/index.php?63788>.
+	* configure.ac (MacOSX/Darwin7 PowerPC): Add a cast when assigning to
+	action.sa_sigaction.
+
+2023-02-11  Bruno Haible  <bruno@clisp.org>
+
 	Add support for clang 16 on OpenBSD and Mac OS X 10/PowerPC.
 	clang 16 will report an error for -Wincompatible-function-pointer-types
 	by default.
