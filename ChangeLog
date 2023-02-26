@@ -1,3 +1,10 @@
+2023-02-26  Bruno Haible  <bruno@clisp.org>
+
+	Modernize handling of m4 macro dirs.
+	* configure.ac (AC_CONFIG_MACRO_DIRS): Specify the m4 macro dirs here.
+	* Makefile.am (ACLOCAL_AMFLAGS): ... not here.
+	* autogen.sh: Update comments.
+
 2023-02-11  Bruno Haible  <bruno@clisp.org>
 
 	Don't let configure tests fail due to the picky clang 16 compiler.

@@ -4,9 +4,9 @@
 # also regenerates all aclocal.m4, config.h.in, Makefile.in, configure files
 # with new versions of autoconf or automake.
 #
-# This script requires autoconf-2.63..2.71 and automake-1.11..1.16.3 in the PATH.
+# This script requires autoconf-2.70..2.71 and automake-1.13..1.16.5 in the PATH.
 
-# Copyright (C) 2009-2022 Free Software Foundation, Inc.
+# Copyright (C) 2009-2023 Free Software Foundation, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -73,7 +73,7 @@ if test $skip_gnulib = false; then
 fi
 
 # Generate aclocal.m4.
-aclocal -I m4
+aclocal
 # Generate configure.
 autoconf
 # Generate config.h.in.
