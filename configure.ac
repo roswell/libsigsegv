@@ -313,7 +313,7 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_hurd" = yes; then
       ;;
     *)
       case "$host_cpu" in
-        i?86)
+        i?86 | x86_64)
           CFG_FAULT=fault-hurd-i386.h
           ;;
         *)

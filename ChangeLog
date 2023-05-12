@@ -1,3 +1,10 @@
+2023-05-12  Bruno Haible  <bruno@clisp.org>
+
+	Tentative support for Hurd/x86_64.
+	Reported by Samuel Thibault <samuel.thibault@ens-lyon.org>.
+	* src/fault-hurd-i386.h: Add support for x86_64 CPU.
+	* configure.ac (CFG_FAULT): Use fault-hurd-i386.h also on x86_64.
+
 2023-02-26  Bruno Haible  <bruno@clisp.org>
 
 	Modernize handling of m4 macro dirs.
