@@ -1,5 +1,12 @@
 2023-05-14  Bruno Haible  <bruno@clisp.org>
 
+	Tentative support for Hurd/x86_64.
+	Reported by Sergey Bugaev <bugaevc@gmail.com>.
+	* src/fault-hurd.h (SIGSEGV_FAULT_HANDLER_ARGLIST): Change type of
+	second parameter.
+
+2023-05-14  Bruno Haible  <bruno@clisp.org>
+
 	Fix comments.
 	* src/fault-hurd-i386.h: Fix comments, based on info by Sergey Bugaev in
 	<https://lists.gnu.org/archive/html/bug-hurd/2023-05/msg00210.html>.
