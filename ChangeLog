@@ -1,3 +1,13 @@
+2023-05-15  Bruno Haible  <bruno@clisp.org>
+
+	Add support for Hurd through the POSIX API.
+	Suggested by Sergey Bugaev <bugaevc@gmail.com>.
+	* src/fault-hurd-i386-old.h: Renamed from src/fault-hurd-i386.h.
+	* src/fault-hurd-i386.h: New file, based on src/fault-hurd-i386-old.h.
+	* src/Makefile.am (noinst_HEADERS): Add fault-hurd-i386-old.h.
+	* configure.ac (CFG_FAULT): Use fault-hurd-i386.h or
+	fault-posix-ucontext.h when the POSIX API works on Hurd.
+
 2023-05-14  Bruno Haible  <bruno@clisp.org>
 
 	Tentative support for Hurd/x86_64.

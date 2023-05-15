@@ -1,5 +1,5 @@
-/* Fault handler information.  Hurd/{i386,x86_64} version when it supports POSIX.
-   Copyright (C) 2023  Bruno Haible <bruno@clisp.org>
+/* Fault handler information.  Hurd/i386 and Hurd/x86_64 versions.
+   Copyright (C) 2017, 2023  Bruno Haible <bruno@clisp.org>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -14,13 +14,13 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
-#include "fault-posix-ucontext.h"
+#include "fault-hurd.h"
 
 #if defined __x86_64__
 /* 64 bit registers */
 
-/* ucp points to a 'ucontext_t' (defined in
-   glibc/sysdeps/x86_64/sys/ucontext.h).
+/* scp points to a 'struct sigcontext' (defined in
+   glibc/sysdeps/mach/hurd/x86_64/bits/sigcontext.h).
    The registers, at the moment the signal occurred, get pushed on the kernel
    stack through gnumach/x86_64/locore.S:alltraps. They are denoted by a
    'struct i386_saved_state' (defined in gnumach/i386/i386/thread.h).
@@ -40,18 +40,17 @@
    1. sets rsp to the same value as ursp,
    2. copies the 'struct i386_thread_state' into the appropriate part of a
       'struct sigcontext', defined in
-      glibc/sysdeps/mach/hurd/x86_64/bits/sigcontext.h,
-   3. copies the general registers into uc_mcontext.gregs, through function
-      fill_ucontext.  */
-/* Both sc_rsp and sc_ursp have the same value.  But sc_ursp is not copied into
-   uc_mcontext.gregs.  */
-# define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext.gregs[REG_RSP]
+      glibc/sysdeps/mach/hurd/x86_64/bits/sigcontext.h.  */
+/* Both sc_rsp and sc_ursp have the same value.
+   It appears more reliable to use sc_ursp because sc_rsp is marked as
+   "not used".  */
+# define SIGSEGV_FAULT_STACKPOINTER  scp->sc_ursp
 
 #else
 /* 32 bit registers */
 
-/* ucp points to a 'ucontext_t' (defined in
-   glibc/sysdeps/i386/sys/ucontext.h).
+/* scp points to a 'struct sigcontext' (defined in
+   glibc/sysdeps/mach/hurd/i386/bits/sigcontext.h).
    The registers, at the moment the signal occurred, get pushed on the kernel
    stack through gnumach/i386/i386/locore.S:alltraps. They are denoted by a
    'struct i386_saved_state' (defined in gnumach/i386/i386/thread.h).
@@ -70,12 +69,10 @@
    1. sets esp to the same value as uesp,
    2. copies the 'struct i386_thread_state' into the appropriate part of a
       'struct sigcontext', defined in
-      glibc/sysdeps/mach/hurd/i386/bits/sigcontext.h,
-   3. copies the general registers into uc_mcontext.gregs, through function
-      fill_ucontext.  */
+      glibc/sysdeps/mach/hurd/i386/bits/sigcontext.h.  */
 /* Both sc_esp and sc_uesp have the same value.
    It appears more reliable to use sc_uesp because sc_esp is marked as
    "not used".  */
-# define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext.gregs[REG_UESP]
+# define SIGSEGV_FAULT_STACKPOINTER  scp->sc_uesp
 
 #endif

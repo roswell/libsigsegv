@@ -309,12 +309,13 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_netbsd_alpha" = yes; then
 fi
 if test -z "$CFG_FAULT" && test "$sv_cv_fault_hurd" = yes; then
   case "$host_os" in
-    netbsd*) # A false positive.
-      ;;
-    *)
+    gnu*)
+      # Test $sv_cv_fault_hurd before testing $sv_cv_fault_posix, because
+      # support for SA_SIGINFO in Hurd is present only in upstream glibc ≥ 2.33
+      # or in Debian glibc ≥ 2.19.
       case "$host_cpu" in
         i?86 | x86_64)
-          CFG_FAULT=fault-hurd-i386.h
+          CFG_FAULT=fault-hurd-i386-old.h
           ;;
         *)
           CFG_FAULT=fault-hurd.h
@@ -498,6 +499,16 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_posix" = yes; then
               ;;
             *)
               CFG_FAULT=fault-cygwin.h
+              ;;
+          esac
+          ;;
+        gnu*)
+          case "$host_cpu" in
+            i?86 | x86_64)
+              CFG_FAULT=fault-hurd-i386.h
+              ;;
+            *)
+              CFG_FAULT=fault-posix-ucontext.h
               ;;
           esac
           ;;
