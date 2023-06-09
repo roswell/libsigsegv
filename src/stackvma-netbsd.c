@@ -1,5 +1,5 @@
 /* Determine the virtual memory area of a given address.  NetBSD version.
-   Copyright (C) 2002-2003, 2006, 2008, 2011, 2016-2017, 2021  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002-2003, 2006, 2008, 2011, 2016-2017, 2021, 2023  Bruno Haible <bruno@clisp.org>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ struct callback_locals
 {
   uintptr_t address;
   struct vma_struct *vma;
-  /* The stack appears as multiple adjacents segments, therefore we
+  /* The stack appears as multiple adjacent segments, therefore we
      merge adjacent segments.  */
   uintptr_t curr_start, curr_end;
 #if STACK_DIRECTION < 0

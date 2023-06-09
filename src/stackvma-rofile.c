@@ -1,5 +1,5 @@
 /* Buffered read-only streams.
-   Copyright (C) 2008, 2016-2017  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2008, 2016-2017, 2023  Bruno Haible <bruno@clisp.org>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@
      - On all platforms, if some other thread is doing memory allocations or
        deallocations between two read() calls, there is a high risk that the
        result of these two read() calls don't fit together, and as a
-       consequence we will parse gargage and either omit some VMAs or return
+       consequence we will parse garbage and either omit some VMAs or return
        VMAs with nonsensical addresses.
    So use mmap(), and ignore the resulting VMA.
    The stack-allocated buffer cannot be too large, because this can be called
