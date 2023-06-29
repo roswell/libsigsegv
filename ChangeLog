@@ -1,3 +1,12 @@
+2023-06-29  Bruno Haible  <bruno@clisp.org>
+
+	Make the autoconf tests more robust.
+	Triggered by
+	https://gitlab.com/redhat/centos-stream/rpms/libsigsegv/-/blob/c9s/configure.patch
+	from Petr Šabata <contyk@redhat.com>.
+	* m4/fault.m4 (SV_TRY_FAULT): Mark the variables that are accessed by
+	the signal handler as 'volatile'.
+
 2023-05-21  Bruno Haible  <bruno@clisp.org>
 
 	Support creating shared libraries on Hurd/x86_64.

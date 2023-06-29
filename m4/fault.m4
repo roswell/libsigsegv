@@ -1,5 +1,5 @@
-# fault.m4 serial 9 (libsigsegv-2.12)
-dnl Copyright (C) 2002-2003, 2011, 2017 Bruno Haible <bruno@clisp.org>
+# fault.m4 serial 10 (libsigsegv-2.15)
+dnl Copyright (C) 2002-2003, 2011, 2017, 2023 Bruno Haible <bruno@clisp.org>
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
 dnl Public License, this file may be distributed as part of a program
@@ -52,8 +52,8 @@ static int zero_fd;
 #else
 # define SIGSEGV_FAULT_ADDRESS_ROUNDOFF_BITS 0UL
 #endif
-unsigned long page;
-int handler_called = 0;
+unsigned long volatile page;
+int volatile handler_called = 0;
 void sigsegv_handler ($5)
 {
   void *fault_address = (void *) ($6);
