@@ -1,5 +1,10 @@
 2023-06-29  Bruno Haible  <bruno@clisp.org>
 
+	Update the installation instructions for Windows.
+	* INSTALL.windows: Add a note about MSYS2.
+
+2023-06-29  Bruno Haible  <bruno@clisp.org>
+
 	Make the autoconf tests more robust.
 	Triggered by
 	https://gitlab.com/redhat/centos-stream/rpms/libsigsegv/-/blob/c9s/configure.patch
