@@ -613,7 +613,7 @@ if test -z "$CFG_FAULT" && test "$sv_cv_fault_macosdarwin5_ppc" = yes; then
   esac
 fi
 case "$host_os" in
-  mingw*)
+  mingw* | windows*)
     FAULT_CONTEXT='CONTEXT'
     FAULT_CONTEXT_INCLUDE='#include <windows.h>'
     CFG_FAULT=fault-win32.h # nonexistent, just a dummy
@@ -984,7 +984,7 @@ AC_CACHE_CHECK([if the system supports catching stack overflow],
     sv_cv_have_stack_overflow_recovery=yes
   else
     case "$host_os" in
-      mingw* | cygwin*) sv_cv_have_stack_overflow_recovery=yes ;;
+      mingw* | windows* | cygwin*) sv_cv_have_stack_overflow_recovery=yes ;;
       *)
         if test "$CFG_LEAVE" != 'leave-none.c'; then
           if test "$sv_cv_sigaltstack" != no; then
@@ -1053,7 +1053,7 @@ dnl Requires AC_CANONICAL_HOST, CFG_HANDLER / CFG_FAULT / etc.,
 dnl HAVE_SIGSEGV_RECOVERY, HAVE_STACK_OVERFLOW_RECOVERY.
 
 case "$host_os" in
-  mingw*) CFG_HANDLER=handler-win32.c ;;
+  mingw* | windows*) CFG_HANDLER=handler-win32.c ;;
   cygwin*)
     if test "$enable_support_old_cygwin" = yes; then
       CFG_HANDLER=handler-win32.c

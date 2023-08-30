@@ -1,5 +1,6 @@
-# efault.m4 serial 1 (libsigsegv-2.8)
+# efault.m4 serial 2 (libsigsegv-2.15)
 dnl Copyright (C) 2009 Eric Blake <ebb9@byu.net>
+dnl Copyright (C) 2023 Bruno Haible <bruno@clisp.org>
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
 dnl Public License, this file may be distributed as part of a program
@@ -40,8 +41,8 @@ const char *null_pointer = NULL;
            [dnl When cross-compiling, guess yes everywhere except on
             dnl native Win32.
             case "$host_os" in
-              mingw*) sv_cv_syscalls_EFAULT="guessing no" ;;
-              *)      sv_cv_syscalls_EFAULT="guessing yes" ;;
+              mingw* | windows*) sv_cv_syscalls_EFAULT="guessing no" ;;
+              *)                 sv_cv_syscalls_EFAULT="guessing yes" ;;
             esac
            ])
          ;;

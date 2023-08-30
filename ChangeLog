@@ -1,3 +1,9 @@
+2023-08-30  Bruno Haible  <bruno@clisp.org>
+
+	Recognize the *-*-windows* config triplets introduced on 2023-06-26.
+	* configure.ac: Treat windows* as equivalent to mingw*.
+	* m4/efault.m4 (SV_SYSCALLS_EFAULT): Likewise.
+
 2023-06-29  Bruno Haible  <bruno@clisp.org>
 
 	Update the installation instructions for Windows.
