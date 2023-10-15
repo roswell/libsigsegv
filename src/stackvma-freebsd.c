@@ -21,6 +21,7 @@
 #include "stackvma-rofile.c"
 
 #if defined __FreeBSD__ || defined __FreeBSD_kernel__ /* FreeBSD, GNU/kFreeBSD */
+# include <sys/param.h> /* prerequisite of <sys/user.h> */
 # include <sys/user.h> /* struct kinfo_vmentry */
 # include <sys/sysctl.h> /* sysctl */
 #endif

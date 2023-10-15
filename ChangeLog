@@ -1,3 +1,8 @@
+2023-10-15  Bruno Haible  <bruno@clisp.org>
+
+	Fix compilation error on FreeBSD 5.2.1.
+	* src/stackvma-freebsd.c: Include <sys/param.h>.
+
 2023-09-18  Bruno Haible  <bruno@clisp.org>
 
 	Fix shared library support on Android.
