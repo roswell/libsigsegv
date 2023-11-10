@@ -1,5 +1,5 @@
 /* Fault handler information.  FreeBSD/ARM version when it supports POSIX.
-   Copyright (C) 2020  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2020-2023  Bruno Haible <bruno@clisp.org>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -22,7 +22,11 @@
 
 /* See sys/arm64/include/ucontext.h.  */
 
+#if defined(__CHERI__)
+#define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext.mc_capregs.cap_sp
+#else
 #define SIGSEGV_FAULT_STACKPOINTER  ((ucontext_t *) ucp)->uc_mcontext.mc_gpregs.gp_sp
+#endif
 
 #else /* 32-bit */
 

@@ -1,5 +1,5 @@
 /* List of signals.  BSD version.
-   Copyright (C) 2002  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002-2023  Bruno Haible <bruno@clisp.org>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -16,5 +16,17 @@
 
 /* List of signals that are sent when an invalid virtual memory address
    is accessed, or when the stack overflows.  */
-#define SIGSEGV_FOR_ALL_SIGNALS(var,body) \
-  { int var; var = SIGSEGV; { body } var = SIGBUS; { body } }
+#if defined __CHERI__
+# define SIGSEGV_FOR_ALL_SIGNALS(var,body) \
+    { int var;                             \
+      var = SIGSEGV; { body }              \
+      var = SIGBUS; { body }               \
+      var = SIGPROT; { body }              \
+    }
+#else
+# define SIGSEGV_FOR_ALL_SIGNALS(var,body) \
+    { int var;                             \
+      var = SIGSEGV; { body }              \
+      var = SIGBUS; { body }               \
+    }
+#endif

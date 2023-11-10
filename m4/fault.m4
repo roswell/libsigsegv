@@ -1,4 +1,4 @@
-# fault.m4 serial 10 (libsigsegv-2.15)
+# fault.m4 serial 11 (libsigsegv-2.15)
 dnl Copyright (C) 2002-2003, 2011, 2017, 2023 Bruno Haible <bruno@clisp.org>
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
@@ -16,6 +16,7 @@ AC_DEFUN([SV_TRY_FAULT], [
   AC_CACHE_CHECK([whether a fault handler according to $1 works], [$2], [
     AC_RUN_IFELSE([
       AC_LANG_SOURCE([[
+#include <stdint.h>
 #include <stdlib.h>
 #include <signal.h>
 #if HAVE_SYS_SIGNAL_H
@@ -52,7 +53,7 @@ static int zero_fd;
 #else
 # define SIGSEGV_FAULT_ADDRESS_ROUNDOFF_BITS 0UL
 #endif
-unsigned long volatile page;
+uintptr_t volatile page;
 int volatile handler_called = 0;
 void sigsegv_handler ($5)
 {
@@ -66,7 +67,7 @@ void sigsegv_handler ($5)
   if (mprotect ((void *) page, 0x10000, PROT_READ | PROT_WRITE) < 0)
     exit (2);
 }
-void crasher (unsigned long p)
+void crasher (uintptr_t p)
 {
   *(int *) (p + 0x678) = 42;
 }
@@ -88,7 +89,7 @@ int main ()
 #endif
   if (p == (void *)(-1))
     exit (2);
-  page = (unsigned long) p;
+  page = (uintptr_t) p;
   /* Make it read-only.  */
 #if defined __linux__ && defined __sparc__
   /* On Linux 2.6.26/SPARC64, PROT_READ has the same effect as
