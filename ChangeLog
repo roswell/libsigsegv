@@ -1,3 +1,14 @@
+2024-04-04  Bruno Haible  <bruno@clisp.org>
+
+	Fix macro file 'serial' numbers for 'aclocal --install'.
+	* m4/bold.m4: Make 'serial' effective.
+	* m4/efault.m4: Likewise.
+	* m4/fault.m4: Likewise.
+	* m4/getpagesize.m4: Likewise.
+	* m4/mmap-anon.m4: Likewise.
+	* m4/sigaltstack-longjmp.m4: Likewise.
+	* m4/sigaltstack-siglongjmp.m4: Likewise.
+
 2023-11-09  Bruno Haible  <bruno@clisp.org>
 
 	Port to CHERI.

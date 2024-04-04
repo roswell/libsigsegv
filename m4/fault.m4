@@ -1,5 +1,6 @@
-# fault.m4 serial 11 (libsigsegv-2.15)
-dnl Copyright (C) 2002-2003, 2011, 2017, 2023 Bruno Haible <bruno@clisp.org>
+# fault.m4
+# serial 11 (libsigsegv-2.15)
+dnl Copyright (C) 2002-2024 Bruno Haible <bruno@clisp.org>
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
 dnl Public License, this file may be distributed as part of a program

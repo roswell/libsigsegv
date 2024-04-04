@@ -1,5 +1,6 @@
-# sigaltstack-siglongjmp.m4 serial 7 (libsigsegv-2.14)
-dnl Copyright (C) 2002-2003, 2006, 2008, 2021 Bruno Haible <bruno@clisp.org>
+# sigaltstack-siglongjmp.m4
+# serial 7 (libsigsegv-2.14)
+dnl Copyright (C) 2002-2024 Bruno Haible <bruno@clisp.org>
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
 dnl Public License, this file may be distributed as part of a program

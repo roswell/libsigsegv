@@ -1,6 +1,7 @@
-# bold.m4 serial 2 (libsigsegv-2.2)
+# bold.m4
+# serial 2 (libsigsegv-2.2)
 dnl Copyright (C) 1999-2002 Ralf S. Engelschall <rse@engelschall.com>
-dnl Copyright (C) 2002, 2018 Bruno Haible <bruno@clisp.org>
+dnl Copyright (C) 2002-2024 Bruno Haible <bruno@clisp.org>
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
 dnl Public License, this file may be distributed as part of a program

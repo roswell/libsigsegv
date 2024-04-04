@@ -1,5 +1,6 @@
-# getpagesize.m4 serial 3 (libsigsegv-2.9)
-dnl Copyright (C) 2002-2003, 2010 Bruno Haible <bruno@clisp.org>
+# getpagesize.m4
+# serial 3 (libsigsegv-2.9)
+dnl Copyright (C) 2002-2024 Bruno Haible <bruno@clisp.org>
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
 dnl Public License, this file may be distributed as part of a program

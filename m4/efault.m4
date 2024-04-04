@@ -1,6 +1,7 @@
-# efault.m4 serial 2 (libsigsegv-2.15)
+# efault.m4
+# serial 2 (libsigsegv-2.15)
 dnl Copyright (C) 2009 Eric Blake <ebb9@byu.net>
-dnl Copyright (C) 2023 Bruno Haible <bruno@clisp.org>
+dnl Copyright (C) 2023-2024 Bruno Haible <bruno@clisp.org>
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General
 dnl Public License, this file may be distributed as part of a program
