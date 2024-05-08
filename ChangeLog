@@ -1,3 +1,11 @@
+2024-05-08  Bruno Haible  <bruno@clisp.org>
+
+	Avoid test failures with ASAN.
+	* tests/test-catch-stackoverflow1.c (HAVE_STACK_OVERFLOW_RECOVERY):
+	Undefine if ASAN is enabled.
+	* tests/test-catch-stackoverflow2.c (HAVE_STACK_OVERFLOW_RECOVERY):
+	Likewise.
+
 2024-04-04  Bruno Haible  <bruno@clisp.org>
 
 	Fix macro file 'serial' numbers for 'aclocal --install'.
