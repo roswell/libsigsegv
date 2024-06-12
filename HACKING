@@ -54,7 +54,12 @@ Each time you want to update the source, do not only "git pull".  Instead do
 Continuous integration
 ======================
 
-The package is built automatically, at regular intervals.  You find the latest
-build results here:
+There are two continuous integrations that regularly build and test
+libsigsegv:
+* On a Linux/glibc system only:
   https://gitlab.com/gnu-libsigsegv/ci-distcheck/pipelines
   https://gitlab.com/gnu-libsigsegv/ci-distcheck/-/jobs?scope=finished
+  This one will catch only the most blatant mistakes.
+* On many platforms:
+  https://github.com/gnu-libsigsegv/ci-check/actions
+  This one catches platform-specific bugs.
