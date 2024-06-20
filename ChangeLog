@@ -1,3 +1,13 @@
+2024-06-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	avoid unlikely undefined behavior
+	Problem found by Coverity for diffutils and reported by Wasser Mai in:
+	https://bugs.gnu.org/71535
+	* src/stackvma-rofile.c (rof_open) [__linux__ || __FreeBSD__ || etc]:
+	Don’t assume result of ‘read’ fits in int.
+	Avoid undefined behavior if ‘n + MIN_LEFTOVER’ would overflow.
+	Also, move a test to be after an (n == 0) test, to help the compiler.
+
 2024-06-12  Bruno Haible  <bruno@clisp.org>
 
 	Update HACKING.
