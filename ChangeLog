@@ -1,3 +1,9 @@
+2024-08-24  Bruno Haible  <bruno@clisp.org>
+
+	Fix shared library support in 32-bit mode on FreeBSD/powerpc64.
+	Patch from <https://savannah.gnu.org/patch/index.php?10469>.
+	* m4/libtool.m4: On FreeBSD, fix shlibpath_var.
+
 2024-07-12  Bruno Haible  <bruno@clisp.org>
 
 	Switch to autoconf 2.72, automake 1.17.
