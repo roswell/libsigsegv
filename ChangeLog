@@ -1,3 +1,12 @@
+2024-09-21  Bruno Haible  <bruno@clisp.org>
+
+	Avoid test failure with gcc 14.
+	Patch by Paul Eggert.
+	* tests/test-catch-stackoverflow2.c (null_pointer): Make it a
+	volatile pointer, not a pointer to volatile. Also, rename from
+	null_pointer_to_volatile_int.
+	(main): Update.
+
 2024-08-30  Bruno Haible  <bruno@clisp.org>
 
 	Clarify license of the *.m4 files.
