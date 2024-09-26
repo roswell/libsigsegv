@@ -7,6 +7,7 @@ __PLATFORM________________________________________SIGSEGV___OVERFLOW__VERSION__
 aarch64-apple-darwin20.3.0                       |   yes   |   yes   | 2.13
 aarch64-unknown-freebsd11.1                      |   yes   |   yes   | 2.13
 aarch64-unknown-freebsd12.2                      |   yes   |   yes   | 2.13
+aarch64c-unknown-freebsd14.0                     |   yes   |   yes   | 2.14+
 aarch64-unknown-linux3.13.0-gnu-glibc2.19        |   yes   |   yes   | 2.13
 aarch64-unknown-linux3.16.0-gnu-glibc2.19        |   yes   |   yes   | 2.13
 aarch64-unknown-linux3.13.0-gnuabiarm-glibc2.19  |   yes   |   yes   | 2.13
@@ -39,7 +40,8 @@ alphaev56-unknown-linux2.6.34-gnu-glibc2.11      |   yes   |   yes   | 2.9
 alpha-unknown-openbsd3.7                         |   yes   |   yes   | 2.2
 alpha-unknown-openbsd4.5                         |   yes   |   yes   | 2.6
 alpha-unknown-netbsd1.6                          |   yes   |   yes   | 2.1
-armv7l-unknown-linux3.0.31-androideabi           |   yes   |   yes   | 2.12+
+armv7l-unknown-linux3.0.31-androideabi           |   yes   |   yes   | 2.13
+armv7l-unknown-linux4.19.127-androideabi         |   yes   |   yes   | 2.13+
 armv7-unknown-freebsd12.2-gnueabihf              |   yes   |   yes   | 2.13
 armv4l-unknown-linux2.4.0-gnu-glibc2.2           |   no    |   yes   | 2.1
 armv4l-unknown-linux2.4.3-gnu-glibc2.2           |   yes   |   yes   | 2.1
@@ -64,6 +66,7 @@ hppa-unknown-linux2.4.19-gnu-glibc2.2            |   yes   |   yes   | 2.0.1
 hppa64-unknown-linux2.4.17-gnu-glibc2.2          |   yes   |   yes   | 2.1
 hppa2.0-unknown-linux2.6.20.1-gnu-glibc2.3       |   yes   |   no    | 2.4
 hppa-unknown-linux4.4.0-gnu-glibc2.23            |   yes   |   no    | 2.11
+hppa1.1-unknown-linux6.3.0-gnu-glibc2.37         |   yes   |   yes   | 2.14+
 i370-ibm-openedition                             |   no    |   no    | 2.6
 i586-pc-beos                                     |   no    |   yes   | 2.1
 i686-pc-cygwin                                   |   yes   |   yes   | 2.10
@@ -89,7 +92,9 @@ i386-apple-darwin10.3.0                          |   yes   |   yes   | 2.6
 i686-unknown-gnu0.3-glibc2.13                    |   yes   |   no    | 2.10
 i686-unknown-gnu0.9-glibc2.24                    |   yes   |   yes   | 2.13
 i686-unknown-gnu0.9-glibc2.28                    |   yes   |   yes   | 2.13
-i586-pc-haiku                                    |   yes   |   yes   | 2.13
+i686-unknown-gnu0.9-glibc2.31                    |   yes   |   yes   | 2.14
+i686-unknown-gnu0.9-glibc2.34                    |   yes   |   yes   | 2.14
+i586-pc-haiku                                    |   yes   |   yes   | 2.13+
 i586-pc-linux2.2.14-gnu-glibc2.1                 |   yes   |   yes   | 2.1
 i686-pc-linux2.2.14-gnu-glibc2.1                 |   yes   |   yes   | 2.0
 i686-pc-linux2.2.19-gnu-glibc2.1                 |   yes   |   yes   | 1.95
@@ -189,7 +194,7 @@ ia64-unknown-linux2.6.9-gnu-glibc2.3             |   yes   |   yes   | 2.6
 ia64-unknown-linux2.6.18-gnu-glibc2.3            |   yes   |   yes   | 2.6
 ia64-unknown-linux2.6.16.27-gnu-glibc2.4         |   yes   |   yes   | 2.6
 ia64-unknown-linux2.6.18-gnu-glibc2.5            |   yes   |   yes   | 2.13
-loongarch64-unknown-linux5.15.0-gnu-glibc2.34    |   yes   |   yes   | 2.14
+loongarch64-unknown-linux5.15.0-gnu-glibc2.34    |   yes   |   yes   | 2.13+
 mips-sgi-irix5.3                                 |   yes   |   yes   | 2.10
 mips-sgi-irix6.2                                 |   yes   |   yes   | 2.6+
 mips-sgi-irix6.5                                 |   yes   |   yes   | 2.13
@@ -263,6 +268,8 @@ powerpc64-unknown-linux2.6.32-gnu-glibc2.11      |   yes   |   yes   | 2.10
 powerpc64-unknown-linux3.10.0-gnu-glibc2.17      |   yes   |   yes   | 2.13
 powerpc64-unknown-linux3.17.2-gnu-glibc2.18      |   yes   |   yes   | 2.11
 powerpc64-unknown-linux3.10.0-gnuabi32-glibc2.17 |   yes   |   yes   | 2.13
+powerpc64-unknown-linux6.0.0-gnu-glibc2.35       |   yes   |   yes   | 2.13+
+powerpc64-unknown-linux6.4.0-gnu-glibc2.37       |   yes   |   yes   | 2.14
 powerpc64le-unknown-linux3.10.0-gnu-glibc2.17    |   yes   |   yes   | 2.13
 powerpc64le-unknown-linux3.16.0-gnu-glibc2.19    |   yes   |   yes   | 2.13
 powerpc64le-unknown-linux3.17.4-gnu-glibc2.20    |   yes   |   yes   | 2.11
@@ -282,7 +289,7 @@ sparc-sun-sunos4.1.4                             |   yes   |   no    | 2.13
 sparc-sun-solaris2.5.1                           |   yes   |   yes   | 2.12
 sparc-sun-solaris2.6                             |   yes   |   yes   | 2.8
 sparc-sun-solaris2.7                             |   yes   |   yes   | 2.8
-sparc-sun-solaris2.8                             |   yes   |   yes   | 2.12
+sparc-sun-solaris2.8                             |   yes   |   yes   | 2.13+
 sparc-sun-solaris2.9                             |   yes   |   yes   | 2.6
 sparc64-unknown-linux2.2.18-gnu-glibc2.1         |   no    |   no    | 1.95
 sparc64-unknown-linux2.4.28-gnu-glibc2.3         |   yes   |   no    | 2.8
@@ -301,6 +308,7 @@ sparc64-sun-solaris2.11.3-abi32                  |   yes   |   yes   | 2.13
 sparc64-unknown-freebsd12.2                      |   no    |   no    | 2.13
 sparc64-unknown-netbsd8.0                        |   yes   |   no    | 2.13
 sparc64-unknown-openbsd3.6                       |   no    |   no    | 2.2
+sparc64-unknown-openbsd7.2                       |   no    |   no    | 2.14
 x86_64-pc-cygwin2.9                              |   yes   |   yes   | 2.13
 x86_64-apple-darwin9.8.0                         |   yes   |   yes   | 2.13
 x86_64-apple-darwin10.3.0                        |   yes   |   yes   | 2.8
@@ -310,7 +318,7 @@ x86_64-apple-darwin10.6.0                        |   yes   |   yes   | 2.9
 x86_64-apple-darwin10.7.0                        |   yes   |   yes   | 2.8
 x86_64-apple-darwin15.6.0                        |   yes   |   yes   | 2.11
 x86_64-apple-darwin17.5.0                        |   yes   |   yes   | 2.13
-x86_64-unknown-haiku                             |   yes   |   yes   | 2.13
+x86_64-unknown-haiku                             |   yes   |   yes   | 2.13+
 x86_64-unknown-linux2.4.21-gnu-glibc2.2          |   yes   |   yes   | 2.1
 x86_64-unknown-linux2.4.21-gnu-glibc2.3          |   yes   |   yes   | 2.1
 x86_64-unknown-linux2.6.3-gnu-glibc2.3           |   yes   |   yes   | 2.1
