@@ -1,3 +1,8 @@
+2024-11-07  Bruno Haible  <bruno@clisp.org>
+
+	Update the GPL text.
+	* COPYING: Update from <https://ftp.gnu.org/gnu/Licenses/gpl-2.0.txt>.
+
 2024-09-26  Bruno Haible  <bruno@clisp.org>
 
 	Switch to libtool 2.5.3.
