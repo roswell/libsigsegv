@@ -1,3 +1,10 @@
+2024-11-22  Bruno Haible  <bruno@clisp.org>
+
+	Switch to libtool 2.5.4.
+	* m4/libtool.m4: Update from libtool-2.5.4.
+	* m4/ltversion.m4: Likewise.
+	* build-aux/ltmain.sh: Likewise.
+
 2024-11-07  Bruno Haible  <bruno@clisp.org>
 
 	Update the GPL text.
