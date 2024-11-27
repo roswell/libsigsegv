@@ -1,5 +1,12 @@
 2024-11-27  Bruno Haible  <bruno@clisp.org>
 
+	Add installation information for the tarball users and from a git checkout.
+	* autogen.sh: Import INSTALL.generic from gnulib.
+	* INSTALL: Entirely rewritten, based on poke/INSTALL.
+	* Makefile.am (EXTRA_DIST): Add INSTALL.generic.
+
+2024-11-27  Bruno Haible  <bruno@clisp.org>
+
 	Distribute DEPENDENCIES.
 	* Makefile.am (EXTRA_DIST): Add DEPENDENCIES.
 

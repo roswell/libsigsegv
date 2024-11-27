@@ -26,7 +26,7 @@ SUBDIRS = src tests
 
 EXTRA_DIST = \
   ChangeLog.1 PORTING \
-  DEPENDENCIES INSTALL.windows HACKING JOIN-GNU \
+  DEPENDENCIES INSTALL.generic INSTALL.windows HACKING JOIN-GNU \
   autogen.sh
 
 DISTCLEANFILES = termbold termnorm

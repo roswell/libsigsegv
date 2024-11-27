@@ -70,6 +70,8 @@ if test $skip_gnulib = false; then
   for file in config.guess config.sub; do
     $GNULIB_TOOL --copy-file build-aux/$file; chmod a+x build-aux/$file
   done
+  # Fetch INSTALL.generic.
+  $GNULIB_TOOL --copy-file doc/INSTALL.UTF-8 INSTALL.generic
 fi
 
 # Generate aclocal.m4.
