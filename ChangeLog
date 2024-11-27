@@ -1,3 +1,8 @@
+2024-11-27  Bruno Haible  <bruno@clisp.org>
+
+	Distribute DEPENDENCIES.
+	* Makefile.am (EXTRA_DIST): Add DEPENDENCIES.
+
 2024-11-22  Bruno Haible  <bruno@clisp.org>
 
 	Switch to libtool 2.5.4.
