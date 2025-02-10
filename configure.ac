@@ -1115,7 +1115,8 @@ gl_RELOCATABLE_NOP
 dnl AC_CONFIG_FILES([Makefile])
 AC_CONFIG_FILES([Makefile
                  src/Makefile src/sigsegv.h
-                 tests/Makefile])
+                 tests/Makefile
+                 libsigsegv.pc])
 
 { echo; echo "Now please type '${term_bold}make${term_norm}' to compile. Good luck."; echo; } >& AS_MESSAGE_FD
 

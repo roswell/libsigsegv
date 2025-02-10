@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: libsigsegv
+Description: Handling page faults in user mode
+Version: @VERSION@
+Libs: -L${libdir} -lsigsegv
+Cflags: -I${includedir}
