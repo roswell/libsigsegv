@@ -26,9 +26,13 @@ SUBDIRS = src tests
 
 EXTRA_DIST = \
   ChangeLog.1 PORTING INSTALL.windows HACKING JOIN-GNU \
-  autogen.sh
+  autogen.sh \
+  libsigsegv.pc.in
 
-DISTCLEANFILES = termbold termnorm
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = libsigsegv.pc
+
+DISTCLEANFILES = termbold termnorm libsigsegv.pc
 
 
 # Lead the user through the installation, in the hope that he will help us
