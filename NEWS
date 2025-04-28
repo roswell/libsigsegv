@@ -2,6 +2,8 @@ New in 2.15:
 
 * Added support for Linux/PowerPC (32-bit) with musl libc.
 
+* Added support for Hurd/x86_64.
+
 * Added support for macOS/x86_64 with clang 15.
 
 * Optimize distinction between stack overflow and other fault on AIX 7.

@@ -1,5 +1,14 @@
 2025-04-28  Bruno Haible  <bruno@clisp.org>
 
+	Prepare for version 2.15.
+	* configure.ac (AC_INIT): Bump version to 2.15.
+	* src/sigsegv.h.in (LIBSIGSEGV_VERSION): Likewise.
+	* README: Likewise.
+	* src/Makefile.am (LIBSIGSEGV_VERSION_INFO): Bump to 2:8:0.
+	* NEWS: Update.
+
+2025-04-28  Bruno Haible  <bruno@clisp.org>
+
 	Fix compilation error on Mac OS X 10.4/powerpc.
 	Patch by Evan Miller <emmiller@gmail.com> in
 	<https://lists.gnu.org/archive/html/bug-gnulib/2021-08/msg00153.html>.

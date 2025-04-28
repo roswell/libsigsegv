@@ -132,7 +132,7 @@ Using libsigsegv in your package:
 Copyright notice
 ----------------
 
-Copyright 1998-1999, 2002-2012, 2016-2021  Bruno Haible <bruno@clisp.org>
+Copyright 1998-1999, 2002-2012, 2016-2025  Bruno Haible <bruno@clisp.org>
 Copyright 2002-2005, 2009  Paolo Bonzini <bonzini@gnu.org>
 Copyright 2008-2010  Eric Blake <ebb9@byu.net>
 Copyright 2002-2021  Free Software Foundation, Inc.
@@ -145,7 +145,7 @@ There is ABSOLUTELY NO WARRANTY, explicit or implied, on this software.
 Download
 --------
 
-    https://ftp.gnu.org/gnu/libsigsegv/libsigsegv-2.14.tar.gz
+    https://ftp.gnu.org/gnu/libsigsegv/libsigsegv-2.15.tar.gz
 
 Homepage
 --------
