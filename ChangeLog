@@ -1,3 +1,11 @@
+2025-04-28  Bruno Haible  <bruno@clisp.org>
+
+	Fix compilation error on Mac OS X 10.4/powerpc.
+	Patch by Evan Miller <emmiller@gmail.com> in
+	<https://lists.gnu.org/archive/html/bug-gnulib/2021-08/msg00153.html>.
+	* src/fault-macos-powerpc.h (SIGSEGV_FAULT_STACKPOINTER): On Mac OS X
+	<= 10.4, assume struct field names without underscores.
+
 2025-04-16  Bruno Haible  <bruno@clisp.org>
 
 	Update after gnulib changed.
