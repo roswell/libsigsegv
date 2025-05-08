@@ -1,5 +1,5 @@
 /* Determine the virtual memory area of a given address.
-   Copyright (C) 2006, 2008-2010, 2016-2018, 2021  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2006, 2008-2010, 2016-2018, 2021, 2025  Bruno Haible <bruno@clisp.org>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -14,8 +14,8 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
-/* mincore() is a system call that allows to inquire the status of a
-   range of pages of virtual memory.  In particular, it allows to inquire
+/* mincore() is a system call that supports inquiring the status of a
+   range of pages of virtual memory.  In particular, it supports inquiring
    whether a page is mapped at all (except on Mac OS X, where mincore
    returns 0 even for unmapped addresses).
    As of 2006, mincore() is supported by:        possible bits:
@@ -28,7 +28,7 @@
      - AIX,     since AIX 5.3,                   1
    As of 2019, also on
      - Hurd.
-   However, while the API allows to easily determine the bounds of mapped
+   However, while the API allows easily determining the bounds of mapped
    virtual memory, it does not make it easy to find the bounds of _unmapped_
    virtual memory ranges.  We try to work around this, but it may still be
    slow.  */

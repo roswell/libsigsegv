@@ -1,5 +1,5 @@
 /* Determine the virtual memory area of a given address.
-   Copyright (C) 2011, 2016, 2021  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2011, 2016, 2021, 2025  Bruno Haible <bruno@clisp.org>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -14,8 +14,8 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
-/* mquery() is a system call that allows to inquire the status of a
-   range of pages of virtual memory.  In particular, it allows to inquire
+/* mquery() is a system call that supports inquiring the status of a
+   range of pages of virtual memory.  In particular, it supports inquiring
    whether a page is mapped at all, and where is the next unmapped page
    after a given address.
    As of 2021, mquery() is supported by:

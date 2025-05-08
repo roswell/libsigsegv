@@ -1,3 +1,9 @@
+2025-05-08  Paul Eggert  <eggert@cs.ucla.edu>  (tiny change)
+
+	Fix some ungrammatical uses of "allows to".
+	* src/stackvma-mincore.c: Tweak comment wording.
+	* src/stackvma-mquery.c: Likewise.
+
 2025-04-28  Bruno Haible  <bruno@clisp.org>
 
 	Prepare for version 2.15.
