@@ -1105,6 +1105,20 @@ dnl Test for features used in tests.
 AC_TYPE_UINTPTR_T
 
 
+dnl Test for features used in install-tests.
+dnl shlibpath_var and PATH_SEPARATOR are set by LT_INIT.
+if test -n "${shlibpath_var}"; then
+  if test "${shlibpath_var}" = PATH; then
+    AUGMENT_SHLIBPATH="PATH='\$(bindir)'${PATH_SEPARATOR}\"\$\$PATH\";"
+  else
+    AUGMENT_SHLIBPATH="${shlibpath_var}='\$(libdir)':\"\$\$${shlibpath_var}\"; export ${shlibpath_var};"
+  fi
+else
+  AUGMENT_SHLIBPATH=
+fi
+AC_SUBST([AUGMENT_SHLIBPATH])
+
+
 { echo; echo "${term_bold}Build Parameters:${term_norm}"; } >& AS_MESSAGE_FD
 
 dnl Relocatability is a nop for this package.
@@ -1115,7 +1129,8 @@ gl_RELOCATABLE_NOP
 dnl AC_CONFIG_FILES([Makefile])
 AC_CONFIG_FILES([Makefile
                  src/Makefile src/sigsegv.h
-                 tests/Makefile])
+                 tests/Makefile
+                 install-tests/Makefile])
 
 { echo; echo "Now please type '${term_bold}make${term_norm}' to compile. Good luck."; echo; } >& AS_MESSAGE_FD
 

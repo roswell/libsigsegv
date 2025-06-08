@@ -1,5 +1,5 @@
 ## Makefile for libsigsegv.
-## Copyright (C) 2002-2024 Bruno Haible <bruno@clisp.org>
+## Copyright (C) 2002-2025 Bruno Haible <bruno@clisp.org>
 ##
 ## This program is free software: you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ AUTOMAKE_OPTIONS = 1.7h gnu no-dependencies
 # So, turn off parallel execution (at least in GNU make >= 4.0).
 GNUMAKEFLAGS = -j1
 
-SUBDIRS = src tests
+SUBDIRS = src tests install-tests
 
 EXTRA_DIST = \
   ChangeLog.1 PORTING \

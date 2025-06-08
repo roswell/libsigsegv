@@ -80,8 +80,8 @@ aclocal
 autoconf
 # Generate config.h.in.
 autoheader && touch config.h.in
-# Generate Makefile.in, src/Makefile.in, tests/Makefile.in, and some
-# build-aux/* files.
+# Generate Makefile.in, src/Makefile.in, tests/Makefile.in,
+# install-tests/Makefile.in, and some build-aux/* files.
 # Make sure we get new versions of files brought in by automake.
 (cd build-aux && rm -f ar-lib compile depcomp install-sh mdate-sh missing test-driver)
 automake --add-missing --copy
