@@ -1,3 +1,13 @@
+2025-06-09  Bruno Haible  <bruno@clisp.org>
+
+	build: Fix "make installcheck" failure on MSVC with --enable-shared.
+	* configure.ac (WOE32DLL): New conditional and variable.
+	(WINDOWS_MSVC): New conditional.
+	* src/sigsegv.h.in (libsigsegv_version): Add __declspec attribute, as
+	needed on Windows with --enable-shared.
+	* src/Makefile.am (libsigsegv_la_CPPFLAGS): New variable.
+	(libsigsegv_la_LDFLAGS): Add --export-all-symbols for Cygwin and mingw.
+
 2025-05-31  Bruno Haible  <bruno@clisp.org>
 
 	Mark automake 1.18 as supported.

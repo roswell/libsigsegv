@@ -1101,6 +1101,40 @@ if test $enable_EFAULT = yes; then
 fi
 
 
+dnl Compilation on native Windows and Cygwin with --enable-shared needs special
+dnl handling of exported variables.
+if test "$enable_shared" = yes; then
+  case "$host_os" in
+    mingw* | windows* | cygwin*) is_woe32dll=yes ;;
+    *) is_woe32dll=no ;;
+  esac
+else
+  is_woe32dll=no
+fi
+AM_CONDITIONAL([WOE32DLL], [test $is_woe32dll = yes])
+if test $is_woe32dll = yes; then
+  WOE32DLL=1
+else
+  WOE32DLL=0
+fi
+AC_SUBST([WOE32DLL])
+
+dnl Linking a shared library works slightly differently on MSVC than on
+dnl Cygwin and mingw.
+is_msvc=false
+case "$host_os" in
+  windows*-msvc*) is_msvc=true ;;
+  mingw* | windows*)
+    AC_EGREP_CPP([Special], [
+#ifdef _MSC_VER
+ Special
+#endif
+], [is_msvc=true])
+    ;;
+esac
+AM_CONDITIONAL([WINDOWS_MSVC], [$is_msvc])
+
+
 dnl Test for features used in tests.
 AC_TYPE_UINTPTR_T
 

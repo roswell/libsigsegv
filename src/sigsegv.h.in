@@ -64,7 +64,17 @@ extern "C" {
 #endif
 
 #define LIBSIGSEGV_VERSION 0x020F    /* version number: (major<<8) + minor */
-extern int libsigsegv_version;       /* Likewise */
+extern
+#if @WOE32DLL@
+# if defined IN_LIBSIGSEGV
+#  if defined DLL_EXPORT
+__declspec (dllexport)
+#  endif
+# else
+__declspec (dllimport)
+# endif
+#endif
+int libsigsegv_version;              /* Likewise */
 
 /* -------------------------------------------------------------------------- */
 
