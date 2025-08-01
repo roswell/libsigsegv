@@ -1,3 +1,10 @@
+2025-08-01  Bruno Haible  <bruno@clisp.org>
+
+	Use new ioctl available in Linux >= 6.11.
+	* src/stackvma-linux.c: Include <sys/ioctl.h>, <linux/fs.h>.
+	* src/stackvma-vma-iter.c (vma_iterate_procmap_query): New function.
+	(vma_iterate): Try vma_iterate_procmap_query first.
+
 2025-06-09  Bruno Haible  <bruno@clisp.org>
 
 	build: Fix "make installcheck" failure on MSVC with --enable-shared.

@@ -1,5 +1,5 @@
 /* Determine the virtual memory area of a given address.  Linux version.
-   Copyright (C) 2002, 2006, 2008, 2016-2017, 2021  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002-2025  Bruno Haible <bruno@clisp.org>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -16,6 +16,11 @@
 
 #include "stackvma.h"
 #include <stdio.h>
+
+#if defined __linux__ || defined __ANDROID__
+# include <sys/ioctl.h> /* ioctl */
+# include <linux/fs.h> /* PROCMAP_QUERY, struct procmap_query */
+#endif
 
 #include "stackvma-simple.c"
 #include "stackvma-rofile.c"
