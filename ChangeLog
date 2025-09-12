@@ -1,3 +1,12 @@
+2025-09-12  Bruno Haible  <bruno@clisp.org>
+
+	tests: Work around a longjmp bug on GNU/Hurd.
+	From gnulib 2025-01-05.
+	* tests/test-catch-stackoverflow1.c (_FORTIFY_SOURCE,
+	__USE_FORTIFY_LEVEL): Undefine, as a workaround to the Hurd longjmp bug.
+	* tests/test-catch-stackoverflow2.c (_FORTIFY_SOURCE,
+	__USE_FORTIFY_LEVEL): Likewise.
+
 2025-08-01  Bruno Haible  <bruno@clisp.org>
 
 	Use new ioctl available in Linux >= 6.11.
