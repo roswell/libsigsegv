@@ -1,5 +1,13 @@
 2025-09-12  Bruno Haible  <bruno@clisp.org>
 
+	tests: Prefer the __gnu_hurd__ macro over __GNU__.
+	Patch by Collin Funk in gnulib 2025-03-18 (tiny change).
+	* tests/test-catch-stackoverflow1.c: Replace use of __GNU__ with
+	__gnu_hurd__.
+	* tests/test-catch-stackoverflow2.c: Likewise.
+
+2025-09-12  Bruno Haible  <bruno@clisp.org>
+
 	tests: Work around a longjmp bug on GNU/Hurd.
 	From gnulib 2025-01-05.
 	* tests/test-catch-stackoverflow1.c (_FORTIFY_SOURCE,
