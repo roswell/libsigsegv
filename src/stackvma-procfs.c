@@ -1,5 +1,5 @@
 /* Determine the virtual memory area of a given address.
-   Copyright (C) 2002, 2006, 2008-2009, 2016-2017, 2021  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002, 2006, 2008-2009, 2016-2017, 2021, 2025  Bruno Haible <bruno@clisp.org>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -118,11 +118,6 @@ vma_iterate (struct callback_locals *locals)
 #if defined PIOCNMAP && defined PIOCMAP
   /* We must use the older /proc interface.  */
 
-  char fnamebuf[6+10+1];
-  char *fname;
-  int fd;
-  int nmaps;
-  size_t memneed;
 # if HAVE_MMAP_ANON
 #  define zero_fd -1
 #  define map_flags MAP_ANON
@@ -133,17 +128,13 @@ vma_iterate (struct callback_locals *locals)
   int zero_fd;
 #  define map_flags 0
 # endif
-  void *auxmap;
-  uintptr_t auxmap_start;
-  uintptr_t auxmap_end;
-  prmap_t* maps;
-  prmap_t* mp;
 
   if (pagesize == 0)
     init_pagesize ();
 
+  char fnamebuf[6+10+1];
   /* Construct fname = sprintf (fnamebuf+i, "/proc/%u", getpid ()).  */
-  fname = fnamebuf + sizeof (fnamebuf) - 1;
+  char *fname = fnamebuf + sizeof (fnamebuf) - 1;
   *fname = '\0';
   {
     unsigned int value = getpid ();
@@ -154,14 +145,15 @@ vma_iterate (struct callback_locals *locals)
   fname -= 6;
   memcpy (fname, "/proc/", 6);
 
-  fd = open (fname, O_RDONLY);
+  int fd = open (fname, O_RDONLY);
   if (fd < 0)
     return -1;
 
+  int nmaps;
   if (ioctl (fd, PIOCNMAP, &nmaps) < 0)
     goto fail2;
 
-  memneed = (nmaps + 10) * sizeof (prmap_t);
+  size_t memneed = (nmaps + 10) * sizeof (prmap_t);
   /* Allocate memneed bytes of memory.
      We cannot use alloca here, because not much stack space is guaranteed.
      We also cannot use malloc here, because a malloc() call may call mmap()
@@ -173,26 +165,24 @@ vma_iterate (struct callback_locals *locals)
   if (zero_fd < 0)
     goto fail2;
 # endif
-  auxmap = (void *) mmap ((void *) 0, memneed, PROT_READ | PROT_WRITE,
-                          map_flags | MAP_PRIVATE, zero_fd, 0);
+  void *auxmap = (void *) mmap ((void *) 0, memneed, PROT_READ | PROT_WRITE,
+                                map_flags | MAP_PRIVATE, zero_fd, 0);
 # if !(HAVE_MMAP_ANON || HAVE_MMAP_ANONYMOUS)
   close (zero_fd);
 # endif
   if (auxmap == (void *) -1)
     goto fail2;
-  auxmap_start = (uintptr_t) auxmap;
-  auxmap_end = auxmap_start + memneed;
-  maps = (prmap_t *) auxmap;
+  uintptr_t auxmap_start = (uintptr_t) auxmap;
+  uintptr_t auxmap_end = auxmap_start + memneed;
+  prmap_t *maps = (prmap_t *) auxmap;
 
   if (ioctl (fd, PIOCMAP, maps) < 0)
     goto fail1;
 
-  for (mp = maps;;)
+  for (prmap_t *mp = maps;;)
     {
-      uintptr_t start, end;
-
-      start = (uintptr_t) mp->pr_vaddr;
-      end = start + mp->pr_size;
+      uintptr_t start = (uintptr_t) mp->pr_vaddr;
+      uintptr_t end = start + mp->pr_size;
       if (start == 0 && end == 0)
         break;
       mp++;
@@ -231,11 +221,6 @@ vma_iterate (struct callback_locals *locals)
      prmap_t.  These are different in 32-bit and 64-bit processes,
      but here we are fortunately accessing only the current process.  */
 
-  char fnamebuf[6+10+4+1];
-  char *fname;
-  int fd;
-  int nmaps;
-  size_t memneed;
 # if HAVE_MMAP_ANON
 #  define zero_fd -1
 #  define map_flags MAP_ANON
@@ -246,18 +231,13 @@ vma_iterate (struct callback_locals *locals)
   int zero_fd;
 #  define map_flags 0
 # endif
-  void *auxmap;
-  uintptr_t auxmap_start;
-  uintptr_t auxmap_end;
-  prmap_t* maps;
-  prmap_t* maps_end;
-  prmap_t* mp;
 
   if (pagesize == 0)
     init_pagesize ();
 
+  char fnamebuf[6+10+4+1];
   /* Construct fname = sprintf (fnamebuf+i, "/proc/%u/map", getpid ()).  */
-  fname = fnamebuf + sizeof (fnamebuf) - 1 - 4;
+  char *fname = fnamebuf + sizeof (fnamebuf) - 1 - 4;
   memcpy (fname, "/map", 4 + 1);
   {
     unsigned int value = getpid ();
@@ -268,10 +248,11 @@ vma_iterate (struct callback_locals *locals)
   fname -= 6;
   memcpy (fname, "/proc/", 6);
 
-  fd = open (fname, O_RDONLY);
+  int fd = open (fname, O_RDONLY);
   if (fd < 0)
     return -1;
 
+  int nmaps;
   {
     struct stat statbuf;
     if (fstat (fd, &statbuf) < 0)
@@ -279,7 +260,7 @@ vma_iterate (struct callback_locals *locals)
     nmaps = statbuf.st_size / sizeof (prmap_t);
   }
 
-  memneed = (nmaps + 10) * sizeof (prmap_t);
+  size_t memneed = (nmaps + 10) * sizeof (prmap_t);
   /* Allocate memneed bytes of memory.
      We cannot use alloca here, because not much stack space is guaranteed.
      We also cannot use malloc here, because a malloc() call may call mmap()
@@ -291,18 +272,19 @@ vma_iterate (struct callback_locals *locals)
   if (zero_fd < 0)
     goto fail2;
 # endif
-  auxmap = (void *) mmap ((void *) 0, memneed, PROT_READ | PROT_WRITE,
-                          map_flags | MAP_PRIVATE, zero_fd, 0);
+  void *auxmap = (void *) mmap ((void *) 0, memneed, PROT_READ | PROT_WRITE,
+                                map_flags | MAP_PRIVATE, zero_fd, 0);
 # if !(HAVE_MMAP_ANON || HAVE_MMAP_ANONYMOUS)
   close (zero_fd);
 # endif
   if (auxmap == (void *) -1)
     goto fail2;
-  auxmap_start = (uintptr_t) auxmap;
-  auxmap_end = auxmap_start + memneed;
-  maps = (prmap_t *) auxmap;
+  uintptr_t auxmap_start = (uintptr_t) auxmap;
+  uintptr_t auxmap_end = auxmap_start + memneed;
+  prmap_t *maps = (prmap_t *) auxmap;
 
   /* Read up to memneed bytes from fd into maps.  */
+  prmap_t *maps_end;
   {
     size_t remaining = memneed;
     size_t total_read = 0;
@@ -330,12 +312,10 @@ vma_iterate (struct callback_locals *locals)
     maps_end = maps + nmaps;
   }
 
-  for (mp = maps; mp < maps_end; mp++)
+  for (prmap_t *mp = maps; mp < maps_end; mp++)
     {
-      uintptr_t start, end;
-
-      start = (uintptr_t) mp->pr_vaddr;
-      end = start + mp->pr_size;
+      uintptr_t start = (uintptr_t) mp->pr_vaddr;
+      uintptr_t end = start + mp->pr_size;
       if (start <= auxmap_start && auxmap_end - 1 <= end - 1)
         {
           /* Consider [start,end-1] \ [auxmap_start,auxmap_end-1]

@@ -1,5 +1,5 @@
 /* Buffered read-only streams.
-   Copyright (C) 2008, 2016-2017, 2023-2024  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2008, 2016-2017, 2023-2025  Bruno Haible <bruno@clisp.org>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -84,19 +84,15 @@ struct rofile
 static int
 rof_open (struct rofile *rof, const char *filename)
 {
-  int fd;
-  uintptr_t pagesize;
-  size_t size;
-
-  fd = open (filename, O_RDONLY);
+  int fd = open (filename, O_RDONLY);
   if (fd < 0)
     return -1;
   rof->position = 0;
   rof->eof_seen = 0;
   /* Try the static buffer first.  */
-  pagesize = 0;
+  uintptr_t pagesize = 0;
   rof->buffer = rof->stack_allocated_buffer;
-  size = sizeof (rof->stack_allocated_buffer);
+  size_t size = sizeof (rof->stack_allocated_buffer);
   rof->auxmap = NULL;
   rof->auxmap_start = 0;
   rof->auxmap_end = 0;

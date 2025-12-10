@@ -115,15 +115,12 @@ mapped_range_start (uintptr_t addr)
     }
   for (;;)
     {
-      uintptr_t halfstepsize1;
-      uintptr_t halfstepsize2;
-
       if (stepsize == 1)
         return addr;
 
       /* Here we know that less than stepsize pages exist starting at addr.  */
-      halfstepsize1 = (stepsize + 1) / 2;
-      halfstepsize2 = stepsize / 2;
+      uintptr_t halfstepsize1 = (stepsize + 1) / 2;
+      uintptr_t halfstepsize2 = stepsize / 2;
       /* halfstepsize1 + halfstepsize2 = stepsize.  */
 
       if (mincore ((MINCORE_ADDR_T) (addr - halfstepsize1 * pagesize),
@@ -151,12 +148,10 @@ mapped_range_end (uintptr_t addr)
   addr += pagesize;
   for (;;)
     {
-      uintptr_t max_remaining;
-
       if (addr == 0) /* wrapped around? */
         return addr;
 
-      max_remaining = (- addr) / pagesize;
+      uintptr_t max_remaining = (- addr) / pagesize;
       if (stepsize > max_remaining)
         stepsize = max_remaining;
       if (mincore ((MINCORE_ADDR_T) addr, stepsize * pagesize, vec) < 0)
@@ -167,15 +162,12 @@ mapped_range_end (uintptr_t addr)
     }
   for (;;)
     {
-      uintptr_t halfstepsize1;
-      uintptr_t halfstepsize2;
-
       if (stepsize == 1)
         return addr;
 
       /* Here we know that less than stepsize pages exist starting at addr.  */
-      halfstepsize1 = (stepsize + 1) / 2;
-      halfstepsize2 = stepsize / 2;
+      uintptr_t halfstepsize1 = (stepsize + 1) / 2;
+      uintptr_t halfstepsize2 = stepsize / 2;
       /* halfstepsize1 + halfstepsize2 = stepsize.  */
 
       if (mincore ((MINCORE_ADDR_T) addr, halfstepsize1 * pagesize, vec) < 0)
@@ -193,9 +185,6 @@ mapped_range_end (uintptr_t addr)
 static int
 is_unmapped (uintptr_t addr1, uintptr_t addr2)
 {
-  uintptr_t count;
-  uintptr_t stepsize;
-
   /* Round addr1 down.  */
   addr1 = (addr1 / pagesize) * pagesize;
   /* Round addr2 up and turn it into an exclusive bound.  */
@@ -211,20 +200,19 @@ is_unmapped (uintptr_t addr1, uintptr_t addr2)
      average, therefore we have good chances of hitting a mapped area if we
      traverse only every second, or only fourth page, etc.  This doesn't
      decrease the worst-case runtime, only the average runtime.  */
-  count = (addr2 - addr1) / pagesize;
+  uintptr_t count = (addr2 - addr1) / pagesize;
   /* We have to test is_mapped (addr1 + i * pagesize) for 0 <= i < count.  */
+  uintptr_t stepsize;
   for (stepsize = 1; stepsize < count; )
     stepsize = 2 * stepsize;
   for (;;)
     {
-      uintptr_t addr_stepsize;
-      uintptr_t i;
-      uintptr_t addr;
-
       stepsize = stepsize / 2;
       if (stepsize == 0)
         break;
-      addr_stepsize = stepsize * pagesize;
+      uintptr_t addr_stepsize = stepsize * pagesize;
+      uintptr_t i;
+      uintptr_t addr;
       for (i = stepsize, addr = addr1 + addr_stepsize;
            i < count;
            i += 2 * stepsize, addr += 2 * addr_stepsize)

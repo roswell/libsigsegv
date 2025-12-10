@@ -1,5 +1,5 @@
 /* Determine the virtual memory area of a given address.  BeOS version.
-   Copyright (C) 2002, 2006, 2016-2017, 2021  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002, 2006, 2016-2017, 2021, 2025  Bruno Haible <bruno@clisp.org>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -79,16 +79,12 @@ callback (struct callback_locals *locals, uintptr_t start, uintptr_t end)
 static int
 vma_iterate (struct callback_locals *locals)
 {
+  ssize_t cookie = 0;
   area_info info;
-  ssize_t cookie;
-
-  cookie = 0;
   while (get_next_area_info (0, &cookie, &info) == B_OK)
     {
-      uintptr_t start, end;
-
-      start = (uintptr_t) info.address;
-      end = start + info.size;
+      uintptr_t start = (uintptr_t) info.address;
+      uintptr_t end = start + info.size;
 
       if (callback (locals, start, end))
         break;

@@ -87,16 +87,12 @@ is_mapped (uintptr_t addr)
 static uintptr_t
 mapped_range_start (uintptr_t addr)
 {
-  uintptr_t stepsize;
-  uintptr_t known_unmapped_page;
-
   /* Look at smaller addresses, in larger and larger steps, to minimize the
      number of mquery() calls.  */
-  stepsize = pagesize;
+  uintptr_t known_unmapped_page;
+  uintptr_t stepsize = pagesize;
   for (;;)
     {
-      uintptr_t hole;
-
       if (addr == 0)
         abort ();
 
@@ -106,8 +102,8 @@ mapped_range_start (uintptr_t addr)
           break;
         }
 
-      hole = (uintptr_t) mquery ((void *) (addr - stepsize), pagesize,
-                                     0, 0, -1, 0);
+      uintptr_t hole = (uintptr_t) mquery ((void *) (addr - stepsize), pagesize,
+                                           0, 0, -1, 0);
       if (!(hole == (uintptr_t) (void *) -1 || hole >= addr))
         {
           /* Some part of [addr - stepsize, addr - 1] is unmapped.  */
@@ -130,11 +126,9 @@ mapped_range_start (uintptr_t addr)
   /* Still 0 < addr - known_unmapped_page <= stepsize.  */
   while (stepsize > pagesize)
     {
-      uintptr_t hole;
-
       stepsize = stepsize / 2;
-      hole = (uintptr_t) mquery ((void *) (addr - stepsize), pagesize,
-                                     0, 0, -1, 0);
+      uintptr_t hole = (uintptr_t) mquery ((void *) (addr - stepsize), pagesize,
+                                           0, 0, -1, 0);
       if (!(hole == (uintptr_t) (void *) -1 || hole >= addr))
         /* Some part of [addr - stepsize, addr - 1] is unmapped.  */
         known_unmapped_page = hole;
@@ -153,12 +147,10 @@ mapped_range_start (uintptr_t addr)
 static uintptr_t
 mapped_range_end (uintptr_t addr)
 {
-  uintptr_t end;
-
   if (addr == 0)
     abort ();
 
-  end = (uintptr_t) mquery ((void *) addr, pagesize, 0, 0, -1, 0);
+  uintptr_t end = (uintptr_t) mquery ((void *) addr, pagesize, 0, 0, -1, 0);
   if (end == (uintptr_t) (void *) -1)
     end = 0; /* wrap around */
   return end;

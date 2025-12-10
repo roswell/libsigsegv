@@ -1,5 +1,5 @@
 /* Determine the virtual memory area of a given address.  AIX version.
-   Copyright (C) 2021-2022  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2021-2022, 2025  Bruno Haible <bruno@clisp.org>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -94,16 +94,12 @@ vma_iterate (struct callback_locals *locals)
      only the virtual memory areas that are connected to a file, not the
      anonymous ones.  But at least since AIX 7.1, it is well usable.  */
 
-  char fnamebuf[6+10+4+1];
-  char *fname;
-  int fd;
-  size_t memneed;
-
   if (pagesize == 0)
     init_pagesize ();
 
+  char fnamebuf[6+10+4+1];
   /* Construct fname = sprintf (fnamebuf+i, "/proc/%u/map", getpid ()).  */
-  fname = fnamebuf + sizeof (fnamebuf) - (4+1);
+  char *fname = fnamebuf + sizeof (fnamebuf) - (4+1);
   memcpy (fname, "/map", 4+1);
   {
     unsigned int value = getpid ();
@@ -114,7 +110,7 @@ vma_iterate (struct callback_locals *locals)
   fname -= 6;
   memcpy (fname, "/proc/", 6);
 
-  fd = open (fname, O_RDONLY | O_CLOEXEC);
+  int fd = open (fname, O_RDONLY | O_CLOEXEC);
   if (fd < 0)
     return -1;
 
@@ -125,7 +121,7 @@ vma_iterate (struct callback_locals *locals)
      We read the entire contents, but look only at the prmap_t entries and
      ignore the tail part.  */
 
-  for (memneed = 2 * pagesize; ; memneed = 2 * memneed)
+  for (size_t memneed = 2 * pagesize; ; memneed = 2 * memneed)
     {
       /* Allocate memneed bytes of memory.
          We cannot use alloca here, because not much stack space is guaranteed.
@@ -134,25 +130,21 @@ vma_iterate (struct callback_locals *locals)
          So use mmap(), and ignore the resulting VMA if it occurs among the
          resulting VMAs.  (Normally it doesn't, because it was allocated after
          the open() call.)  */
-      void *auxmap;
-      unsigned long auxmap_start;
-      unsigned long auxmap_end;
-      ssize_t nbytes;
-
-      auxmap = (void *) mmap ((void *) 0, memneed, PROT_READ | PROT_WRITE,
-                              MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+      void *auxmap = (void *) mmap ((void *) 0, memneed, PROT_READ | PROT_WRITE,
+                                    MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
       if (auxmap == (void *) -1)
         {
           close (fd);
           return -1;
         }
-      auxmap_start = (unsigned long) auxmap;
-      auxmap_end = auxmap_start + memneed;
+      unsigned long auxmap_start = (unsigned long) auxmap;
+      unsigned long auxmap_end = auxmap_start + memneed;
 
       /* Read the contents of /proc/<pid>/map in a single system call.
          This guarantees a consistent result (no duplicated or omitted
          entries).  */
-     retry:
+     retry: ;
+      ssize_t nbytes;
       do
         nbytes = read (fd, auxmap, memneed);
       while (nbytes < 0 && errno == EINTR);
@@ -187,7 +179,7 @@ vma_iterate (struct callback_locals *locals)
             }
 
           /* We now have the entire contents of /proc/<pid>/map in memory.  */
-          prmap_t* maps = (prmap_t *) auxmap;
+          prmap_t *maps = (prmap_t *) auxmap;
 
           /* The entries are not sorted by address.  Therefore
              1. Extract the relevant information into an array.
@@ -204,46 +196,41 @@ vma_iterate (struct callback_locals *locals)
           vma_t *vmas = (vma_t *) auxmap;
 
           vma_t *vp = vmas;
-          {
-            prmap_t* mp;
-            for (mp = maps;;)
-              {
-                unsigned long start, end;
-
-                start = (unsigned long) mp->pr_vaddr;
-                end = start + mp->pr_size;
-                if (start == 0 && end == 0 && mp->pr_mflags == 0)
-                  break;
-                /* Discard empty VMAs and kernel VMAs.  */
-                if (start < end && (mp->pr_mflags & MA_KERNTEXT) == 0)
-                  {
-                    if (start <= auxmap_start && auxmap_end - 1 <= end - 1)
-                      {
-                        /* Consider [start,end-1] \ [auxmap_start,auxmap_end-1]
-                           = [start,auxmap_start-1] u [auxmap_end,end-1].  */
-                        if (start < auxmap_start)
-                          {
-                            vp->start = start;
-                            vp->end = auxmap_start;
-                            vp++;
-                          }
-                        if (auxmap_end - 1 < end - 1)
-                          {
-                            vp->start = auxmap_end;
-                            vp->end = end;
-                            vp++;
-                          }
-                      }
-                    else
-                      {
-                        vp->start = start;
-                        vp->end = end;
-                        vp++;
-                      }
-                  }
-                mp++;
-              }
-          }
+          for (prmap_t *mp = maps;;)
+            {
+              unsigned long start = (unsigned long) mp->pr_vaddr;
+              unsigned long end = start + mp->pr_size;
+              if (start == 0 && end == 0 && mp->pr_mflags == 0)
+                break;
+              /* Discard empty VMAs and kernel VMAs.  */
+              if (start < end && (mp->pr_mflags & MA_KERNTEXT) == 0)
+                {
+                  if (start <= auxmap_start && auxmap_end - 1 <= end - 1)
+                    {
+                      /* Consider [start,end-1] \ [auxmap_start,auxmap_end-1]
+                         = [start,auxmap_start-1] u [auxmap_end,end-1].  */
+                      if (start < auxmap_start)
+                        {
+                          vp->start = start;
+                          vp->end = auxmap_start;
+                          vp++;
+                        }
+                      if (auxmap_end - 1 < end - 1)
+                        {
+                          vp->start = auxmap_end;
+                          vp->end = end;
+                          vp++;
+                        }
+                    }
+                  else
+                    {
+                      vp->start = start;
+                      vp->end = end;
+                      vp++;
+                    }
+                }
+              mp++;
+            }
 
           size_t nvmas = vp - vmas;
           /* Sort the array in ascending order.
@@ -251,32 +238,25 @@ vma_iterate (struct callback_locals *locals)
              Insertion-sort is OK in this case, despite its worst-case running
              time of O(N²), since the number of VMAs will rarely be larger than
              1000.  */
-          {
-            size_t i;
-            for (i = 1; i < nvmas; i++)
-              {
-                /* Invariant: Here vmas[0..i-1] is sorted.  */
-                size_t j;
-                for (j = i; j > 0 && vmas[j - 1].start > vmas[j].start; j--)
-                  {
-                    vma_t tmp = vmas[j - 1];
-                    vmas[j - 1] = vmas[j];
-                    vmas[j] = tmp;
-                  }
-                /* Invariant: Here vmas[0..i] is sorted.  */
-              }
-          }
+          for (size_t i = 1; i < nvmas; i++)
+            {
+              /* Invariant: Here vmas[0..i-1] is sorted.  */
+              for (size_t j = i; j > 0 && vmas[j - 1].start > vmas[j].start; j--)
+                {
+                  vma_t tmp = vmas[j - 1];
+                  vmas[j - 1] = vmas[j];
+                  vmas[j] = tmp;
+                }
+              /* Invariant: Here vmas[0..i] is sorted.  */
+            }
 
           /* Invoke the callback.  */
-          {
-            size_t i;
-            for (i = 0; i < nvmas; i++)
-              {
-                vma_t *vpi = &vmas[i];
-                if (callback (locals, vpi->start, vpi->end))
-                  break;
-              }
-          }
+          for (size_t i = 0; i < nvmas; i++)
+            {
+              vma_t *vpi = &vmas[i];
+              if (callback (locals, vpi->start, vpi->end))
+                break;
+            }
 
           munmap (auxmap, memneed);
           break;

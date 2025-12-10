@@ -1,3 +1,22 @@
+2025-12-10  Bruno Haible  <bruno@clisp.org>
+
+	Reduce scope of local variables.
+	M = Move variable declaration to its initialization.
+	R = Reduce scope.
+	S = Split scope, create separate variables from one variable.
+	B = Insert braces, creating a block scope.
+	* src/stackvma-aix.c (vma_iterate): MR.
+	* src/stackvma-beos.c (vma_iterate): M.
+	* src/stackvma-mincore.c (mapped_range_start): M.
+	(mapped_range_end): M.
+	(is_unmapped): MR.
+	* src/stackvma-mquery.c (mapped_range_start): M.
+	(mapped_range_end): M.
+	* src/stackvma-procfs.c (vma_iterate): MR.
+	* src/stackvma-rofile.c (rof_open): M.
+	* src/stackvma-vma-iter.c (vma_iterate_proc): RSB.
+	(vma_iterate_bsd): MB.
+
 2025-09-12  Bruno Haible  <bruno@clisp.org>
 
 	tests: Prefer the __gnu_hurd__ macro over __GNU__.

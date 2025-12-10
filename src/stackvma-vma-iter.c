@@ -36,16 +36,18 @@ vma_iterate_proc (struct callback_locals *locals)
 
       for (;;)
         {
-          uintptr_t start, end;
-          int c;
-
           /* Parse one line.  First start and end.  */
+          uintptr_t start, end;
           if (!(rof_scanf_lx (&rof, &start) >= 0
                 && rof_getchar (&rof) == '-'
                 && rof_scanf_lx (&rof, &end) >= 0))
             break;
-          while (c = rof_getchar (&rof), c != -1 && c != '\n')
-            ;
+
+          {
+            int c;
+            while (c = rof_getchar (&rof), c != -1 && c != '\n')
+              ;
+          }
 
           if (start <= auxmap_start && auxmap_end - 1 <= end - 1)
             {
@@ -92,23 +94,28 @@ vma_iterate_proc (struct callback_locals *locals)
 
       for (;;)
         {
-          uintptr_t start, end;
-          int c;
-
           /* Parse one line.  First start.  */
+          uintptr_t start;
           if (!(rof_getchar (&rof) == '0'
                 && rof_getchar (&rof) == 'x'
                 && rof_scanf_lx (&rof, &start) >= 0))
             break;
-          while (c = rof_peekchar (&rof), c == ' ' || c == '\t')
-            rof_getchar (&rof);
+          {
+            int c;
+            while (c = rof_peekchar (&rof), c == ' ' || c == '\t')
+              rof_getchar (&rof);
+          }
           /* Then end.  */
+          uintptr_t end;
           if (!(rof_getchar (&rof) == '0'
                 && rof_getchar (&rof) == 'x'
                 && rof_scanf_lx (&rof, &end) >= 0))
             break;
-          while (c = rof_getchar (&rof), c != -1 && c != '\n')
-            ;
+          {
+            int c;
+            while (c = rof_getchar (&rof), c != -1 && c != '\n')
+              ;
+          }
 
           if (start <= auxmap_start && auxmap_end - 1 <= end - 1)
             {
@@ -144,17 +151,7 @@ vma_iterate_bsd (struct callback_locals *locals)
 {
   /* Documentation: https://www.freebsd.org/cgi/man.cgi?sysctl(3)  */
   int info_path[] = { CTL_KERN, KERN_PROC, KERN_PROC_VMMAP, getpid () };
-  size_t len;
-  size_t pagesize;
-  size_t memneed;
-  void *auxmap;
-  unsigned long auxmap_start;
-  unsigned long auxmap_end;
-  char *mem;
-  char *p;
-  char *p_end;
-
-  len = 0;
+  size_t len = 0;
   if (sysctl (info_path, 4, NULL, &len, NULL, 0) < 0)
     return -1;
   /* Allow for small variations over time.  In a multithreaded program
@@ -165,46 +162,48 @@ vma_iterate_bsd (struct callback_locals *locals)
      We also cannot use malloc here, because a malloc() call may call mmap()
      and thus pre-allocate available memory.
      So use mmap(), and ignore the resulting VMA.  */
-  pagesize = getpagesize ();
-  memneed = len;
+  size_t pagesize = getpagesize ();
+  size_t memneed = len;
   memneed = ((memneed - 1) / pagesize + 1) * pagesize;
-  auxmap = (void *) mmap ((void *) 0, memneed, PROT_READ | PROT_WRITE,
-                          MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+  void *auxmap = (void *) mmap ((void *) 0, memneed, PROT_READ | PROT_WRITE,
+                                MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
   if (auxmap == (void *) -1)
     return -1;
-  auxmap_start = (unsigned long) auxmap;
-  auxmap_end = auxmap_start + memneed;
-  mem = (char *) auxmap;
+  unsigned long auxmap_start = (unsigned long) auxmap;
+  unsigned long auxmap_end = auxmap_start + memneed;
+  char *mem = (char *) auxmap;
   if (sysctl (info_path, 4, mem, &len, NULL, 0) < 0)
     {
       munmap (auxmap, memneed);
       return -1;
     }
-  p = mem;
-  p_end = mem + len;
-  while (p < p_end)
-    {
-      struct kinfo_vmentry *kve = (struct kinfo_vmentry *) p;
-      unsigned long start = kve->kve_start;
-      unsigned long end = kve->kve_end;
-      if (start <= auxmap_start && auxmap_end - 1 <= end - 1)
-        {
-          /* Consider [start,end-1] \ [auxmap_start,auxmap_end-1]
-             = [start,auxmap_start-1] u [auxmap_end,end-1].  */
-          if (start < auxmap_start)
-            if (callback (locals, start, auxmap_start))
+  {
+    char *p = mem;
+    char *p_end = mem + len;
+    while (p < p_end)
+      {
+        struct kinfo_vmentry *kve = (struct kinfo_vmentry *) p;
+        unsigned long start = kve->kve_start;
+        unsigned long end = kve->kve_end;
+        if (start <= auxmap_start && auxmap_end - 1 <= end - 1)
+          {
+            /* Consider [start,end-1] \ [auxmap_start,auxmap_end-1]
+               = [start,auxmap_start-1] u [auxmap_end,end-1].  */
+            if (start < auxmap_start)
+              if (callback (locals, start, auxmap_start))
+                break;
+            if (auxmap_end - 1 < end - 1)
+              if (callback (locals, auxmap_end, end))
+                break;
+          }
+        else
+          {
+            if (callback (locals, start, end))
               break;
-          if (auxmap_end - 1 < end - 1)
-            if (callback (locals, auxmap_end, end))
-              break;
-        }
-      else
-        {
-          if (callback (locals, start, end))
-            break;
-        }
-      p += kve->kve_structsize;
-    }
+          }
+        p += kve->kve_structsize;
+      }
+  }
   munmap (auxmap, memneed);
   return 0;
 }
