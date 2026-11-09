@@ -1,5 +1,5 @@
 /* Test that the handler can be exited multiple times.
-   Copyright (C) 2002-2006, 2008, 2011, 2016, 2021, 2023  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002-2006, 2008, 2011, 2016, 2021, 2023, 2026  Bruno Haible <bruno@clisp.org>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -14,9 +14,7 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
-#ifndef _MSC_VER
-# include <config.h>
-#endif
+#include <config.h>
 
 #include "sigsegv.h"
 #include <stdint.h>

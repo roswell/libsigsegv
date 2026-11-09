@@ -1,6 +1,7 @@
 /* Test that libsigsegv does not interfere with internal fault handling
    inside system calls.
    Copyright (C) 2009  Eric Blake <ebb9@byu.net>
+   Copyright (C) 2026  Bruno Haible <bruno@clisp.org>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -15,9 +16,7 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
-#ifndef _MSC_VER
-# include <config.h>
-#endif
+#include <config.h>
 
 #include "sigsegv.h"
 

@@ -1,5 +1,5 @@
 /* Test that stack overflow and SIGSEGV are correctly distinguished.
-   Copyright (C) 2002-2025  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002-2026  Bruno Haible <bruno@clisp.org>
    Copyright (C) 2010 Eric Blake <eblake@redhat.com>
 
    This program is free software: you can redistribute it and/or modify
@@ -15,9 +15,7 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
-#ifndef _MSC_VER
-# include <config.h>
-#endif
+#include <config.h>
 
 /* On GNU/Hurd, when compiling with -D_FORTIFY_SOURCE=2, avoid an error
    "*** longjmp causes uninitialized stack frame ***: terminated".
