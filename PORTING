@@ -8,11 +8,13 @@ aarch64-apple-darwin20.3.0                       |   yes   |   yes   | 2.13
 aarch64-unknown-freebsd11.1                      |   yes   |   yes   | 2.13
 aarch64-unknown-freebsd12.2                      |   yes   |   yes   | 2.13
 aarch64c-unknown-freebsd14.0                     |   yes   |   yes   | 2.14+
+aarch64-unknown-freebsd13.2                      |   yes   |   yes   | 2.15
 aarch64-unknown-linux3.13.0-gnu-glibc2.19        |   yes   |   yes   | 2.13
 aarch64-unknown-linux3.16.0-gnu-glibc2.19        |   yes   |   yes   | 2.13
 aarch64-unknown-linux3.13.0-gnuabiarm-glibc2.19  |   yes   |   yes   | 2.13
 aarch64-unknown-linux5.10.7-musl                 |   yes   |   yes   | 2.13
 aarch64-unknown-linux5.3.18-gnu-glibc2.26        |   yes   |   yes   | 2.14
+aarch64-w64-mingw32                              |   yes   |   yes   | 2.16
 alpha-dec-osf4.0d                                |   yes   |   yes   | 2.1
 alpha-dec-osf4.0f                                |   yes   |   yes   | 2.1
 alphaev56-dec-osf4.0d                            |   yes   |   yes   | 2.6
@@ -95,6 +97,7 @@ i686-unknown-gnu0.9-glibc2.24                    |   yes   |   yes   | 2.13
 i686-unknown-gnu0.9-glibc2.28                    |   yes   |   yes   | 2.13
 i686-unknown-gnu0.9-glibc2.31                    |   yes   |   yes   | 2.14
 i686-unknown-gnu0.9-glibc2.34                    |   yes   |   yes   | 2.14
+i686-unknown-gnu0.9-glibc2.36                    |   yes   |   yes   | 2.15+
 i586-pc-haiku                                    |   yes   |   yes   | 2.13+
 i586-pc-linux2.2.14-gnu-glibc2.1                 |   yes   |   yes   | 2.1
 i686-pc-linux2.2.14-gnu-glibc2.1                 |   yes   |   yes   | 2.0
@@ -327,7 +330,8 @@ x86_64-apple-darwin10.6.0                        |   yes   |   yes   | 2.9
 x86_64-apple-darwin10.7.0                        |   yes   |   yes   | 2.8
 x86_64-apple-darwin15.6.0                        |   yes   |   yes   | 2.11
 x86_64-apple-darwin17.5.0                        |   yes   |   yes   | 2.13
-x86_64-unknown-gnu0.9-glibc2.40                  |   yes   |   yes   | 2.14+
+x86_64-unknown-gnu0.9-glibc2.40                  |   yes   |   yes   | 2.15+
+x86_64-unknown-gnu0.9-glibc2.41                  |   yes   |   yes   | 2.15+
 x86_64-unknown-haiku                             |   yes   |   yes   | 2.13+
 x86_64-unknown-linux2.4.21-gnu-glibc2.2          |   yes   |   yes   | 2.1
 x86_64-unknown-linux2.4.21-gnu-glibc2.3          |   yes   |   yes   | 2.1
@@ -390,6 +394,7 @@ x86_64-pc-linux4.19.34-musl                      |   yes   |   yes   | 2.13
 x86_64-pc-linux4.19.118-musl                     |   yes   |   yes   | 2.13
 x86_64-pc-linux5.4.43-musl                       |   yes   |   yes   | 2.13
 x86_64-pc-linux5.10.7-musl                       |   yes   |   yes   | 2.13
+x86_64-w64-mingw32                               |   yes   |   yes   | 2.16
 x86_64-unknown-freebsd7.2                        |   yes   |   yes   | 2.12
 x86_64-unknown-freebsd10.3                       |   yes   |   yes   | 2.12
 x86_64-unknown-freebsd10.4                       |   yes   |   yes   | 2.13
@@ -437,7 +442,7 @@ x86_64-unknown-openbsd6.8                        |   yes   |   yes   | 2.13
 x86_64-unknown-bitrig1.0                         |   yes   |   yes   | 2.12
 x86_64-pc-solaris2.10                            |   yes   |   yes   | 2.13
 x86_64-pc-solaris2.11.0                          |   yes   |   yes   | 2.13
-x86_64-pc-solaris2.11.3                          |   yes   |   yes   | 2.13
+x86_64-pc-solaris2.11.3                          |   yes   |   yes   | 2.15
 x86_64-pc-solaris2.11.4                          |   yes   |   yes   | 2.13
 x86_64-pc-solaris2.11-omnios                     |   yes   |   yes   | 2.13
 x86_64-pc-solaris2.11-openindiana                |   yes   |   yes   | 2.13
