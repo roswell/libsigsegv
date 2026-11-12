@@ -1,7 +1,7 @@
 dnl Autoconf configuration for libsigsegv.
 dnl Process this file with autoconf to produce a configure script.
 dnl
-dnl Copyright (C) 2002-2025  Bruno Haible <bruno@clisp.org>
+dnl Copyright (C) 2002-2026  Bruno Haible <bruno@clisp.org>
 dnl
 dnl This program is free software: you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
@@ -1133,6 +1133,27 @@ case "$host_os" in
     ;;
 esac
 AM_CONDITIONAL([WINDOWS_MSVC], [$is_msvc])
+
+
+dnl Some platforms need special code.
+is_windows_x86_64=false
+case "$host_os" in
+  mingw* | windows*)
+    case "$host_cpu" in
+      x86_64*) is_windows_x86_64=true ;;
+    esac
+    ;;
+esac
+AM_CONDITIONAL([PLATFORM_IS_WINDOWS_X86_64], [$is_windows_x86_64])
+is_windows_arm64=false
+case "$host_os" in
+  mingw* | windows*)
+    case "$host_cpu" in
+      aarch64*) is_windows_arm64=true ;;
+    esac
+    ;;
+esac
+AM_CONDITIONAL([PLATFORM_IS_WINDOWS_ARM64], [$is_windows_arm64])
 
 
 dnl Test for features used in tests.

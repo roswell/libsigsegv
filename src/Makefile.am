@@ -1,5 +1,5 @@
 ## Makefile for libsigsegv/src.
-## Copyright (C) 2002-2006, 2008-2011, 2016-2018, 2021-2023, 2025 Bruno Haible <bruno@clisp.org>
+## Copyright (C) 2002-2006, 2008-2011, 2016-2018, 2021-2023, 2025-2026 Bruno Haible <bruno@clisp.org>
 ##
 ## This program is free software: you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -17,6 +17,12 @@
 ## Process this file with automake to produce Makefile.in.
 
 AUTOMAKE_OPTIONS = 1.5 gnits no-dependencies
+EXTRA_DIST =
+BUILT_SOURCES =
+MOSTLYCLEANFILES = core *.stackdump
+CLEANFILES =
+DISTCLEANFILES =
+MAINTAINERCLEANFILES =
 
 RM = rm -f
 
@@ -67,8 +73,9 @@ noinst_HEADERS = \
   leave.h \
   stackvma.h
 
-EXTRA_DIST = \
-  handler-none.c handler-unix.c handler-macos.c handler-win32.c \
+EXTRA_DIST += \
+  handler-none.c handler-unix.c handler-macos.c \
+  handler-win32.c windows-x86_64.c windows-arm64.s windows-arm64.asm \
   stackvma-none.c stackvma-simple.c stackvma-linux.c stackvma-freebsd.c \
   stackvma-netbsd.c stackvma-aix.c stackvma-procfs.c stackvma-cygwin.c \
   stackvma-beos.c stackvma-mach.c stackvma-mquery.c \
@@ -78,7 +85,33 @@ EXTRA_DIST = \
 AM_CPPFLAGS = -I. -I$(srcdir)
 DEFS = @DEFS@
 
-libsigsegv_la_SOURCES = handler.c stackvma.c leave.c dispatcher.c version.c
+libsigsegv_la_SOURCES = \
+  handler.c \
+  stackvma.c \
+  leave.c \
+  dispatcher.c \
+  version.c
+if PLATFORM_IS_WINDOWS_X86_64
+libsigsegv_la_SOURCES += \
+  windows-x86_64.c
+endif
+
+libsigsegv_la_LIBADD       =
+libsigsegv_la_DEPENDENCIES =
+if PLATFORM_IS_WINDOWS_ARM64
+windows-arm64.lo : $(srcdir)/windows-arm64.s $(srcdir)/windows-arm64.asm libsigsegv_la-version.lo
+	if test '@OBJEXT@' = obj; then \
+	  armasm64 -o windows-arm64.@OBJEXT@ $(srcdir)/windows-arm64.asm \
+	  && mkdir -p .libs \
+	  && cp windows-arm64.@OBJEXT@ .libs/windows-arm64.@OBJEXT@ \
+	  && sed -e 's/libsigsegv_la-version/windows-arm64/g' < libsigsegv_la-version.lo > windows-arm64.lo; \
+	else \
+	  $(LTCOMPILE) -c -o windows-arm64.lo $(srcdir)/windows-arm64.s; \
+	fi
+MOSTLYCLEANFILES           += windows-arm64.lo
+libsigsegv_la_LIBADD       += windows-arm64.lo
+libsigsegv_la_DEPENDENCIES += windows-arm64.lo
+endif
 
 libsigsegv_la_LDFLAGS = \
   -rpath $(libdir) \
@@ -119,4 +152,4 @@ uninstall-local:
 	$(RM) $(DESTDIR)$(includedir)/sigsegv.h
 
 
-DISTCLEANFILES = sigsegv.h
+DISTCLEANFILES += sigsegv.h

@@ -70,7 +70,7 @@ static void
 stackoverflow_handler_continuation (void *arg1, void *arg2, void *arg3)
 {
   int arg = (int) (long) arg1;
-  longjmp (mainloop, arg);
+  stackoverflow_longjmp (mainloop, arg);
 }
 
 static void

@@ -1,3 +1,34 @@
+2026-11-12  Bruno Haible  <bruno@clisp.org>
+
+	Add support for 64-bit native Windows.
+	* configure.ac (PLATFORM_IS_WINDOWS_X86_64, PLATFORM_IS_WINDOWS_ARM64):
+	New conditionals.
+	* src/sigsegv.h.in: Include <setjmp.h>.
+	(stackoverflow_longjmp): New declaration or macro.
+	* src/handler-win32.c (stack_overflow_handler): Use 'address' as the
+	guard page address, not info.BaseAddress.
+	(setsp_trampoline): New declaration.
+	(main_exception_filter): Support the registers and calling conventions
+	of x86_64 and arm64.
+	(do_install_main_exception_filter): On 64-bit Windows, use
+	AddVectoredExceptionHandler instead of SetUnhandledExceptionFilter.
+	* src/stackvma-win32.c (DumpProcessMemoryMap): Print 64-bit addresses
+	correctly.
+	* src/windows-x86_64.c: New file.
+	* src/windows-arm64.s: New file.
+	* src/windows-arm64.asm: New file.
+	* src/Makefile.am (BUILT_SOURCES, MOSTLYCLEANFILES, CLEANFILES,
+	MAINTAINERCLEANFILES): New variables.
+	(EXTRA_DIST): Add windows-x86_64.c, windows-arm64.s, windows-arm64.asm.
+	(libsigsegv_la_SOURCES): Conditionally add windows-x86_64.c.
+	(libsigsegv_la_LIBADD, libsigsegv_la_DEPENDENCIES): New variables.
+	(windows-arm64.lo): New rule.
+	* tests/test-catch-stackoverflow1.c
+	(stackoverflow_handler_continuation): Use stackoverflow_longjmp.
+	* tests/test-catch-stackoverflow2.c
+	(stackoverflow_handler_continuation): Likewise.
+	* NEWS: Mention the change.
+
 2026-11-09  Bruno Haible  <bruno@clisp.org>
 
 	tests: Assume the GNU Build System also with MSVC.

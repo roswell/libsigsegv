@@ -1,5 +1,5 @@
 /* Determine the virtual memory area of a given address.  Win32 version.
-   Copyright (C) 2002, 2016  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2002, 2016, 2026  Bruno Haible <bruno@clisp.org>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -33,12 +33,12 @@ static void DumpProcessMemoryMap()
         case MEM_COMMIT:  printf("*"); break;
         default: printf("?"); break;
         }
-      printf(" 0x%lx - 0x%lx",
+      printf(" 0x%llx - 0x%llx",
              (uintptr_t)info.BaseAddress,
              (uintptr_t)info.BaseAddress+info.RegionSize-1);
       if (info.State != MEM_FREE)
         {
-          printf(" (0x%lx) ",(uintptr_t)info.AllocationBase);
+          printf(" (0x%llx) ",(uintptr_t)info.AllocationBase);
           /* info.AllocationProtect is apparently irrelevant.  */
           switch (info.Protect & ~(PAGE_GUARD|PAGE_NOCACHE))
             {

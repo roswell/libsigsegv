@@ -1,5 +1,5 @@
 /* Page fault handling library.
-   Copyright (C) 1998-1999, 2002, 2004-2011, 2016-2018, 2021-2023, 2025  Bruno Haible <bruno@clisp.org>
+   Copyright (C) 1998-1999, 2002, 2004-2011, 2016-2018, 2021-2023, 2025-2026  Bruno Haible <bruno@clisp.org>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -45,6 +45,9 @@
 # undef SIGSTKSZ
 # define SIGSTKSZ 16384
 #endif
+
+/* Get jmp_buf, longjmp().  */
+#include <setjmp.h>
 
 /* HAVE_SIGSEGV_RECOVERY
    is defined if the system supports catching SIGSEGV.  */
@@ -201,6 +204,25 @@ extern int stackoverflow_install_handler (stackoverflow_handler_t handler,
  * Deinstalls the stack overflow handler.
  */
 extern void stackoverflow_deinstall_handler (void);
+
+/*
+ * stackoverflow_longjmp() is like longjmp(), except that it fixes a problem
+ * on 64-bit native Windows:  There, longjmp() unwinds the stack and therefore
+ * does not work for jumping from the alternate stack to the normal stack:
+ * It triggers an exception with code 0xC0000028 = STATUS_BAD_STACK, which means
+ * "An invalid or unaligned stack was encountered during an unwind operation."
+ */
+#if defined _WIN32 && defined _WIN64
+extern
+# if (defined __GNUC__ && __GNUC__ >= 3) || defined __clang__ || (defined __SUNPRO_C && __SUNPRO_C >= 0x5110)
+__attribute__ ((__noreturn__))
+# elif defined _MSC_VER && _MSC_VER >= 1200
+__declspec (noreturn)
+# endif
+void stackoverflow_longjmp (jmp_buf env, int val);
+#else
+# define stackoverflow_longjmp longjmp
+#endif
 
 /* -------------------------------------------------------------------------- */
 
