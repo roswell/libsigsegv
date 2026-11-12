@@ -1,5 +1,5 @@
 ## Makefile for libsigsegv/tests.
-## Copyright (C) 2002-2003, 2008-2010, 2016, 2021 Bruno Haible <bruno@clisp.org>
+## Copyright (C) 2002-2003, 2008-2010, 2016, 2021, 2026 Bruno Haible <bruno@clisp.org>
 ##
 ## This program is free software: you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ AUTOMAKE_OPTIONS = 1.11 gnits no-dependencies color-tests
 TESTS = \
   test-catch-segv1 \
   test-catch-segv2 \
-  test-segv-dispatcher1 \
+  test-segv-dispat1 \
   test-catch-stackoverflow1 \
   test-catch-stackoverflow2
 
@@ -33,9 +33,16 @@ LDADD = ../src/libsigsegv.la
 noinst_PROGRAMS = \
   test-catch-segv1 \
   test-catch-segv2 \
-  test-segv-dispatcher1 \
+  test-segv-dispat1 \
   test-catch-stackoverflow1 \
   test-catch-stackoverflow2
+# Compile the test source test-segv-dispatcher1.c to an executable named
+# 'test-segv-dispat1'. This avoids a test failure on native Windows, with
+# the MSVC toolchain, a) in 32-bit mode on x86_64, b) on arm64: A program
+# whose file name has a substring "patch" in it fails with "Permission denied"
+# when launched from a Cygwin window, or shows an UAC dialog when launched
+# from outside Cygwin.
+test_segv_dispat1_SOURCES = test-segv-dispatcher1.c
 
 if CYGWIN
 TESTS += cygwin1

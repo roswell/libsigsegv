@@ -1,5 +1,12 @@
 2026-11-12  Bruno Haible  <bruno@clisp.org>
 
+	tests: Avoid a test failure with MSVC.
+	* tests/Makefile.am (TESTS, noinst_PROGRAMS): Use test-segv-dispat1
+	instead of test-segv-dispatcher1.
+	(test_segv_dispat1_SOURCES): New variable.
+
+2026-11-12  Bruno Haible  <bruno@clisp.org>
+
 	Add support for 64-bit native Windows.
 	* configure.ac (PLATFORM_IS_WINDOWS_X86_64, PLATFORM_IS_WINDOWS_ARM64):
 	New conditionals.
