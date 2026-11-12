@@ -1,7 +1,7 @@
 New in 2.16:
 
 * Added support for 64-bit native Windows.
-  <sigsegv> now declares a function stackoverflow_longjmp, that should be
+  <sigsegv.h> now declares a function stackoverflow_longjmp, that should be
   used (instead of longjmp) to jump out of the alternate stack, back to
   the main stack.
 
