@@ -159,8 +159,10 @@ stack_overflow_handler (uintptr_t faulting_page_address, stackoverflow_context_t
   }
 
   /* We can put the new guard page on the first existing page.  It would also be
-     possible to put it at the second or third existing page, for instance.  */
-  uintptr_t guard_page = address;
+     possible to put it at the second or third existing page, for instance.
+     In fact, in some 64-bit configurations (especially when DEBUG_HANDLER is 1)
+     the first existing page does not work; the third one works much better.  */
+  uintptr_t guard_page = address + 2 * 0x1000;
 
   /* TODO: Consider the minimum thread stack size.
      <https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-setthreadstackguarantee>

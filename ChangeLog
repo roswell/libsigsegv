@@ -1,5 +1,11 @@
 2026-11-13  Bruno Haible  <bruno@clisp.org>
 
+	Make guard page handling more reliable on 64-bit native Windows.
+	* src/handler-win32.c (stack_overflow_handler): Use the third existing
+	page.
+
+2026-11-13  Bruno Haible  <bruno@clisp.org>
+
 	Improve debuggability on native Windows.
 	* src/handler-win32.c (DEBUG_HANDLER, DEBUG_MAIN_HANDLER): New macros.
 	(stack_overflow_handler): Test DEBUG_HANDLER.
