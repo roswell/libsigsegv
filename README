@@ -72,7 +72,9 @@ point in the application.  This library supports both uses.  In the second
 case, the handler must ensure to restore the normal signal mask (because
 many signals are blocked while the handler is executed), and must also
 call sigsegv_leave_handler() to transfer control; then only it can longjmp
-away.
+away.  For the latter, it needs to use the function stackoverflow_longjmp(),
+declared in <sigsegv.h>, because on native Windows, the system's longjmp()
+function is not suitable for this purpose.
 
 Note that longjmping back to a central point in the application can leave
 the application in an inconsistent state, because

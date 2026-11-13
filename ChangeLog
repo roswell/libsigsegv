@@ -1,5 +1,10 @@
 2026-11-13  Bruno Haible  <bruno@clisp.org>
 
+	Document stackoverflow_longjmp.
+	* README: Mention stackoverflow_longjmp.
+
+2026-11-13  Bruno Haible  <bruno@clisp.org>
+
 	Make guard page handling more reliable on 64-bit native Windows.
 	* src/handler-win32.c (stack_overflow_handler): Use the third existing
 	page.
