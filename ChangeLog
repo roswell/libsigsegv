@@ -1,5 +1,12 @@
 2026-11-13  Bruno Haible  <bruno@clisp.org>
 
+	Improve debuggability on native Windows.
+	* src/handler-win32.c (DEBUG_HANDLER, DEBUG_MAIN_HANDLER): New macros.
+	(stack_overflow_handler): Test DEBUG_HANDLER.
+	(main_exception_filter): Test DEBUG_MAIN_HANDLER.
+
+2026-11-13  Bruno Haible  <bruno@clisp.org>
+
 	tests: Improve debuggability on native Windows.
 	* tests/test-catch-stackoverflow1.c: After each printf, do an
 	'fflush (stdout)'.

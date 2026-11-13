@@ -18,6 +18,13 @@
 
 #include "sigsegv.h"
 
+/* Whether to enable debugging output.  */
+#define DEBUG_HANDLER       0
+/* Whether to enable debugging output in the main_exception_filter function.
+   In 32-bit mode, this can often make the main_exception_filter function
+   crash.  Therefore, enable it only in 64-bit mode.  */
+#define DEBUG_MAIN_HANDLER  (DEBUG_HANDLER && defined _WIN64)
+
 #define WIN32_LEAN_AND_MEAN /* avoid including junk */
 #include <windows.h>
 #include <winerror.h>
@@ -28,6 +35,10 @@
  * extern BOOL VirtualProtect (LPVOID Address, DWORD Size, DWORD NewProtect, PDWORD OldProtect);
  * extern DWORD GetLastError (void);
  */
+
+#if DEBUG_HANDLER
+# include <stdio.h>
+#endif
 
 /* On Cygwin, the "system calls" are actually library calls.  If the user
    asks for them to return with errno = EFAULT, we do this by combining
@@ -108,6 +119,10 @@ static size_t stk_extra_stack_size;
 static void
 stack_overflow_handler (uintptr_t faulting_page_address, stackoverflow_context_t context)
 {
+#if DEBUG_HANDLER
+  puts ("In stack_overflow_handler"); fflush (stdout);
+#endif
+
   /* The Microsoft library has a function _resetstkoflw() for reinstalling the
      guard page.
      <https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/resetstkoflw>
@@ -166,9 +181,15 @@ stack_overflow_handler (uintptr_t faulting_page_address, stackoverflow_context_t
     if (VirtualProtect ((void *) guard_page, 0x1000, PAGE_NOACCESS, &oldprot))
       goto ok;
  failed:
+#if DEBUG_HANDLER
+  puts ("In stack_overflow_handler: failed."); fflush (stdout);
+#endif
   for (;;)
     (*stk_user_handler) (1, context);
  ok:
+#if DEBUG_HANDLER
+  puts ("In stack_overflow_handler: ok."); fflush (stdout);
+#endif
   for (;;)
     (*stk_user_handler) (0, context);
 }
@@ -183,6 +204,12 @@ extern void setsp_trampoline (void);
 static LONG WINAPI
 main_exception_filter (EXCEPTION_POINTERS *ExceptionInfo)
 {
+#if DEBUG_MAIN_HANDLER
+  printf ("In main_exception_filter: Code = 0x%x, NumberParameters = %u\n",
+          ExceptionInfo->ExceptionRecord->ExceptionCode,
+          ExceptionInfo->ExceptionRecord->NumberParameters);
+  fflush (stdout);
+#endif
   if ((stk_user_handler
        && ExceptionInfo->ExceptionRecord->ExceptionCode == EXCEPTION_STACK_OVERFLOW
       )
@@ -196,7 +223,7 @@ main_exception_filter (EXCEPTION_POINTERS *ExceptionInfo)
 #endif
      )
     {
-#if 0 /* for debugging only */
+#if DEBUG_MAIN_HANDLER
       printf ("Exception!\n");
       printf ("Code = 0x%x\n",
               ExceptionInfo->ExceptionRecord->ExceptionCode);
@@ -327,6 +354,9 @@ main_exception_filter (EXCEPTION_POINTERS *ExceptionInfo)
               ExceptionInfo->ContextRecord->X10 = (uintptr_t)&stack_overflow_handler;
               ExceptionInfo->ContextRecord->X0 = faulting_page_address;
               ExceptionInfo->ContextRecord->X1 = (uintptr_t) safe_context;
+#endif
+#if DEBUG_MAIN_HANDLER
+              puts ("In main_exception_filter: returning CONTINUE_EXECUTION."); fflush (stdout);
 #endif
               return EXCEPTION_CONTINUE_EXECUTION;
             }
