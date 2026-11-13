@@ -66,7 +66,7 @@
 extern "C" {
 #endif
 
-#define LIBSIGSEGV_VERSION 0x020F    /* version number: (major<<8) + minor */
+#define LIBSIGSEGV_VERSION 0x0210    /* version number: (major<<8) + minor */
 extern
 #if @WOE32DLL@
 # if defined IN_LIBSIGSEGV

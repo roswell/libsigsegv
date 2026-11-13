@@ -1,5 +1,13 @@
 2026-11-13  Bruno Haible  <bruno@clisp.org>
 
+	Prepare for version 2.16.
+	* configure.ac (AC_INIT): Bump version to 2.16.
+	* src/sigsegv.h.in (LIBSIGSEGV_VERSION): Likewise.
+	* README: Likewise.
+	* src/Makefile.am (LIBSIGSEGV_VERSION_INFO): Bump to 2:9:0.
+
+2026-11-13  Bruno Haible  <bruno@clisp.org>
+
 	Document stackoverflow_longjmp.
 	* README: Mention stackoverflow_longjmp.
 
