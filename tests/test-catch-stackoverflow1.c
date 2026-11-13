@@ -80,7 +80,7 @@ stackoverflow_handler (int emergency, stackoverflow_context_t scp)
   if (!(addr >= stack_lower_bound && addr <= stack_upper_bound))
     abort ();
   pass++;
-  printf ("Stack overflow %d caught.\n", pass);
+  printf ("Stack overflow %d caught.\n", pass); fflush (stdout);
   sigprocmask (SIG_SETMASK, &mainsigset, NULL);
   sigsegv_leave_handler (stackoverflow_handler_continuation,
                          (void *) (long) (emergency ? -1 : pass), NULL, NULL);
@@ -133,11 +133,13 @@ main ()
   switch (setjmp (mainloop))
     {
     case -1:
-      printf ("emergency exit\n"); exit (1);
+      printf ("emergency exit\n"); fflush (stdout);
+      exit (1);
     case 0: case 1:
-      printf ("Starting recursion pass %d.\n", pass + 1);
+      printf ("Starting recursion pass %d.\n", pass + 1); fflush (stdout);
       recurse (0);
-      printf ("no endless recursion?!\n"); exit (1);
+      printf ("no endless recursion?!\n"); fflush (stdout);
+      exit (1);
     case 2:
       break;
     default:
@@ -147,7 +149,7 @@ main ()
   /* Validate that the alternate stack did not overflow.  */
   check_alternate_stack_no_overflow ();
 
-  printf ("Test passed.\n");
+  printf ("Test passed.\n"); fflush (stdout);
   exit (0);
 }
 

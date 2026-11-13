@@ -1,3 +1,10 @@
+2026-11-13  Bruno Haible  <bruno@clisp.org>
+
+	tests: Improve debuggability on native Windows.
+	* tests/test-catch-stackoverflow1.c: After each printf, do an
+	'fflush (stdout)'.
+	* tests/test-catch-stackoverflow2.c: Likewise.
+
 2026-11-12  Bruno Haible  <bruno@clisp.org>
 
 	tests: Avoid a test failure with MSVC.

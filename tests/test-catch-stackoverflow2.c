@@ -78,10 +78,12 @@ stackoverflow_handler (int emergency, stackoverflow_context_t scp)
 {
   pass++;
   if (pass <= 2)
-    printf ("Stack overflow %d caught.\n", pass);
+    {
+      printf ("Stack overflow %d caught.\n", pass); fflush (stdout);
+    }
   else
     {
-      printf ("Segmentation violation misdetected as stack overflow.\n");
+      printf ("Segmentation violation misdetected as stack overflow.\n"); fflush (stdout);
       exit (1);
     }
   sigprocmask (SIG_SETMASK, &mainsigset, NULL);
@@ -99,11 +101,13 @@ sigsegv_handler (void *address, int emergency)
   pass++;
   if (pass <= 2)
     {
-      printf ("Stack overflow %d missed.\n", pass);
+      printf ("Stack overflow %d missed.\n", pass); fflush (stdout);
       exit (1);
     }
   else
-    printf ("Segmentation violation correctly detected.\n");
+    {
+      printf ("Segmentation violation correctly detected.\n"); fflush (stdout);
+    }
   sigprocmask (SIG_SETMASK, &mainsigset, NULL);
   return sigsegv_leave_handler (stackoverflow_handler_continuation,
                                 (void *) (long) pass, NULL, NULL);
@@ -189,11 +193,13 @@ main ()
   switch (setjmp (mainloop))
     {
     case -1:
-      printf ("emergency exit\n"); exit (1);
+      printf ("emergency exit\n"); fflush (stdout);
+      exit (1);
     case 0: case 1:
-      printf ("Starting recursion pass %d.\n", pass + 1);
+      printf ("Starting recursion pass %d.\n", pass + 1); fflush (stdout);
       recurse (0);
-      printf ("no endless recursion?!\n"); exit (1);
+      printf ("no endless recursion?!\n"); fflush (stdout);
+      exit (1);
     case 2:
       *(volatile int *) (page + 0x678) = 42;
       break;
@@ -209,7 +215,7 @@ main ()
   /* Validate that the alternate stack did not overflow.  */
   check_alternate_stack_no_overflow ();
 
-  printf ("Test passed.\n");
+  printf ("Test passed.\n"); fflush (stdout);
   exit (0);
 }
 
